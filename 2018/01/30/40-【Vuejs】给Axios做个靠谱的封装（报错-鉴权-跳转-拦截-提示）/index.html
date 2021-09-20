@@ -1,102 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>40-【Vuejs】给Axios做个靠谱的封装（报错,鉴权,跳转,拦截,提示） | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="阅读原文 Vue 折腾记 - (10) 给axios做个挺靠谱的封装(报错,鉴权,跳转,拦截,提示)  前言不推荐完全copy过去,可以看看我是如何针对我这边业务，做的一个axios的封装及实现的思路。   需求及实现 统一捕获接口报错 弹窗提示 报错重定向 基础鉴权 表单序列化  实现功能 统一捕获接口报错 : 用的axios内置的拦截器 弹窗提示: 引入 Element UI的Message">
-<meta property="og:type" content="article">
-<meta property="og:title" content="40-【Vuejs】给Axios做个靠谱的封装（报错,鉴权,跳转,拦截,提示）">
-<meta property="og:url" content="http://example.com/2018/01/30/40-%E3%80%90Vuejs%E3%80%91%E7%BB%99Axios%E5%81%9A%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84%E5%B0%81%E8%A3%85%EF%BC%88%E6%8A%A5%E9%94%99-%E9%89%B4%E6%9D%83-%E8%B7%B3%E8%BD%AC-%E6%8B%A6%E6%88%AA-%E6%8F%90%E7%A4%BA%EF%BC%89/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="阅读原文 Vue 折腾记 - (10) 给axios做个挺靠谱的封装(报错,鉴权,跳转,拦截,提示)  前言不推荐完全copy过去,可以看看我是如何针对我这边业务，做的一个axios的封装及实现的思路。   需求及实现 统一捕获接口报错 弹窗提示 报错重定向 基础鉴权 表单序列化  实现功能 统一捕获接口报错 : 用的axios内置的拦截器 弹窗提示: 引入 Element UI的Message">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2018-01-30T15:00:14.000Z">
-<meta property="article:modified_time" content="2021-09-20T03:31:47.686Z">
-<meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Vuejs">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><meta name="description" content="王平安个人博客,pingan8787,前端开发,人工智能,AI,深度学习,前端框架vue,angular,react,nodejs,python,numpy,pandas,anaconda,Tensorflow,高等数学,概率论,统计学神经网络,"><title>40-【Vuejs】给Axios做个靠谱的封装（报错,鉴权,跳转,拦截,提示） · pingan8787</title><meta name="description" content="阅读原文 Vue 折腾记 - (10) 给axios做个挺靠谱的封装(报错,鉴权,跳转,拦截,提示)
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+前言不推荐完全copy过去,可以看看我是如何针对我这边业务，做的一个axios的封装及实现的思路。  
+需求及实现
+统一捕获接口报错
+弹窗提示
+报错重定向
+基础鉴权
+表单序列化
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-40-【Vuejs】给Axios做个靠谱的封装（报错-鉴权-跳转-拦截-提示）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2018/01/30/40-%E3%80%90Vuejs%E3%80%91%E7%BB%99Axios%E5%81%9A%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84%E5%B0%81%E8%A3%85%EF%BC%88%E6%8A%A5%E9%94%99-%E9%89%B4%E6%9D%83-%E8%B7%B3%E8%BD%AC-%E6%8B%A6%E6%88%AA-%E6%8F%90%E7%A4%BA%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2018-01-30T15:00:14.000Z" itemprop="datePublished">2018-01-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      40-【Vuejs】给Axios做个靠谱的封装（报错,鉴权,跳转,拦截,提示）
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <blockquote>
+实现功能
+统一捕"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script type="text/javascript" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js"></script><script type="text/javascript" src="https://hm.baidu.com/hm.js?de7c89214c05d551ef3ec12341cd0b9e"></script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;border-radius:15px;"><h3 title=""><a href="/">pingan8787</a></h3></div></div><ul class="my_tages_ul clearfix"><li class="my_tages_li next pagbuttons"><a class="btn" target="_blank" rel="noopener" href="http://www.pingan8787.com/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"> 前端开发</a></li><li class="my_tages_li next pagbuttons"><a class="btn btn" target="_blank" rel="noopener" href="http://www.pingan8787.com/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"> 人工智能</a></li><li class="my_tages_li next pagbuttons"><a class="btn btn" target="_blank" rel="noopener" href="http://www.pingan8787.com/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"> 深度学习</a></li></ul><ul class="my_icon"><li class="my_icon_li"><a target="_blank" rel="noopener" href="https://github.com/pingan8787" title="github"><img src="http://images.pingan8787.com/assets/icon_26_github.png" alt="github"></a></li><li class="my_icon_li"><a target="_blank" rel="noopener" href="https://www.yuque.com/wangpingan/cute-frontend" title="语雀"><img src="http://images.pingan8787.com/assets/icon_26_yuque.png" alt="语雀"></a></li><li class="my_icon_li"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/cute-javascript" title="知乎"><img src="http://images.pingan8787.com/icon_zhihu.png" alt="知乎"></a></li><li class="my_icon_li"><a target="_blank" rel="noopener" href="https://juejin.im/user/586fc337a22b9d0058807d53/posts" title="掘金"><img src="http://images.pingan8787.com/icon_juejin.png" alt="掘金"></a></li><li class="my_icon_li"><a target="_blank" rel="noopener" href="https://segmentfault.com/blog/pingan8787" title="思否"><img src="http://images.pingan8787.com/icon_sf.png" alt="思否"></a></li><li class="my_icon_li"><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36380426" title="CSDN"><img src="http://images.pingan8787.com/icon_csdn.png" alt="CSDN"></a></li><li class="my_icon_li"><a target="_blank" rel="noopener" href="https://www.jianshu.com/u/2ec5d94afd60" title="简书"><img src="http://images.pingan8787.com/icon_jianshu.png" alt="简书"></a></li></ul><div style="text-align:center;"><wb:follow-button uid="1689651205" type="red_1" style="margin-top:10px;width:67px;height:24px;display: inline-block;"></wb:follow-button></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>博客作者：</span></a><a href="https://github.com/pingan8787" target="_blank"> pingan8787（leo）</a><div class="by_farbox"> <a href="https://beian.miit.gov.cn/" target="_blank">备案编号：闽ICP备17012095号-1</a></div></div></div><s></s><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">Home</a></li><li><a href="/leo">关于Leo</a></li><li><a href="/production">作品</a></li><li><a href="/Catalog">目录</a></li><li><a href="http://js.pingan8787.com" target="_blank">Cute-JavaScript</a></li><li><a href="https://github.com/pingan8787" target="_blank">Github</a></li></div><!--.information//.back_btn
+  //li
+    //if is_post()
+      //a.fa.fa-chevron-left(onclick="window.history.go(-1)") 
+    //else
+      //a.fa.fa-chevron-left(onclick="window.history.go(-1)",style="display:none;") 
+//.avatar
+//  img(src= url_for('images/logo@2x.png'))--></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>40-【Vuejs】给Axios做个靠谱的封装（报错,鉴权,跳转,拦截,提示）</a></h3></div><div class="post-content"><blockquote>
 <p>阅读原文 <a target="_blank" rel="noopener" href="https://juejin.im/post/59a22e71518825242c422604">Vue 折腾记 - (10) 给axios做个挺靠谱的封装(报错,鉴权,跳转,拦截,提示)</a></p>
 </blockquote>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>不推荐完全copy过去,可以看看我是如何针对我这边业务，做的一个axios的封装及实现的思路。  </p>
@@ -126,151 +46,4 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">  // 请求地址</span><br><span class="line">  url: <span class="string">&quot;/user&quot;</span>,</span><br><span class="line">  // 请求类型</span><br><span class="line">  method: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">  // 请根路径</span><br><span class="line">  baseURL: <span class="string">&quot;http://www.mt.com/api&quot;</span>,</span><br><span class="line">  // 请求前的数据处理</span><br><span class="line">  transformRequest: [function(data) &#123;&#125;],</span><br><span class="line">  // 请求后的数据处理</span><br><span class="line">  transformResponse: [function(data) &#123;&#125;],</span><br><span class="line">  // 自定义的请求头</span><br><span class="line">  headers: &#123; <span class="string">&quot;x-Requested-With&quot;</span>: <span class="string">&quot;XMLHttpRequest&quot;</span> &#125;,</span><br><span class="line">  // URL查询对象</span><br><span class="line">  params: &#123; <span class="built_in">id</span>: <span class="number">12</span> &#125;,</span><br><span class="line">  // 查询对象序列化函数</span><br><span class="line">  paramsSerializer: function(params) &#123;&#125;,</span><br><span class="line">  // request body</span><br><span class="line">  data: &#123; key: <span class="string">&quot;aa&quot;</span> &#125;,</span><br><span class="line">  // 超时设置s</span><br><span class="line">  timeout: <span class="number">1000</span>,</span><br><span class="line">  // 跨域是否带Token</span><br><span class="line">  withCredentials: false,</span><br><span class="line">  // 自定义请求处理</span><br><span class="line">  adapter: function(resolve, reject, config) &#123;&#125;,</span><br><span class="line">  // 身份验证信息</span><br><span class="line">  auth: &#123; uname: <span class="string">&quot;&quot;</span>, pwd: <span class="string">&quot;12&quot;</span> &#125;,</span><br><span class="line">  // 响应的数据格式 json / blob /document /arraybuffer / text / stream</span><br><span class="line">  responseType: <span class="string">&quot;json&quot;</span>,</span><br><span class="line">  // xsrf 设置</span><br><span class="line">  xsrfCookieName: <span class="string">&quot;XSRF-TOKEN&quot;</span>,</span><br><span class="line">  xsrfHeaderName: <span class="string">&quot;X-XSRF-TOKEN&quot;</span>,</span><br><span class="line"></span><br><span class="line">  // 下传和下载进度回调</span><br><span class="line">  onUploadProgress: function(progressEvent) &#123;</span><br><span class="line">    Math.<span class="built_in">round</span>(progressEvent.loaded * <span class="number">100</span> / progressEvent.total);</span><br><span class="line">  &#125;,</span><br><span class="line">  onDownloadProgress: function(progressEvent) &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  // 最多转发数，用于node.js</span><br><span class="line">  maxRedirects: <span class="number">5</span>,</span><br><span class="line">  // 最大响应数据大小</span><br><span class="line">  maxContentLength: <span class="number">2000</span>,</span><br><span class="line">  // 自定义错误状态码范围</span><br><span class="line">  validateStatus: function(status) &#123;</span><br><span class="line">    <span class="keyword">return</span> status &gt;= <span class="number">200</span> &amp;&amp; status &lt; <span class="number">300</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  // 用于node.js</span><br><span class="line">  httpAgent: new http.Agent(&#123; keepAlive: true &#125;),</span><br><span class="line">  httpsAgent: new https.Agent(&#123; keepAlive: true &#125;),</span><br><span class="line"></span><br><span class="line">  // 用于设置跨域请求代理</span><br><span class="line">  proxy: &#123;</span><br><span class="line">    host: <span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line">    port: <span class="number">8080</span>,</span><br><span class="line">    auth: &#123;</span><br><span class="line">      username: <span class="string">&quot;aa&quot;</span>,</span><br><span class="line">      password: <span class="string">&quot;2123&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  // 用于取消请求</span><br><span class="line">  cancelToken: new CancelToken(function(cancel) &#123;&#125;)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我这个封装虽说不是万金油版本,但是我感觉大多用axios结合vue的小伙伴,稍微改改都能直接拿来用~~~哟吼吼,哟吼吼…..</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2018/01/30/40-%E3%80%90Vuejs%E3%80%91%E7%BB%99Axios%E5%81%9A%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84%E5%B0%81%E8%A3%85%EF%BC%88%E6%8A%A5%E9%94%99-%E9%89%B4%E6%9D%83-%E8%B7%B3%E8%BD%AC-%E6%8B%A6%E6%88%AA-%E6%8F%90%E7%A4%BA%EF%BC%89/" data-id="ckts3ejur007o4d9ket4mesa8" data-title="40-【Vuejs】给Axios做个靠谱的封装（报错,鉴权,跳转,拦截,提示）" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/01/31/41-%E3%80%90Webpack%E3%80%91%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B%E6%95%B4%E7%90%86%EF%BC%88%E6%95%B4%E7%90%86%E4%B8%AD%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          41-【Webpack】入门教程整理（整理中）
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/01/29/39-%E3%80%90JavaScript%E3%80%91JavaScript%E5%85%AB%E5%BC%A0%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">39-【JavaScript】JavaScript八张思维导图</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
-          </li>
-        
-          <li>
-            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2021 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
-</body>
-</html>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-01-30</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Vuejs/" title="Vuejs">Vuejs </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,https://pingan8787.github.io/2018/01/30/40-【Vuejs】给Axios做个靠谱的封装（报错-鉴权-跳转-拦截-提示）/,pingan8787,40-【Vuejs】给Axios做个靠谱的封装（报错,鉴权,跳转,拦截,提示）,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2018/01/31/41-%E3%80%90Webpack%E3%80%91%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B%E6%95%B4%E7%90%86%EF%BC%88%E6%95%B4%E7%90%86%E4%B8%AD%EF%BC%89/" title="41-【Webpack】入门教程整理（整理中）">Post Anterior</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2018/01/29/39-%E3%80%90JavaScript%E3%80%91JavaScript%E5%85%AB%E5%BC%A0%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/" title="39-【JavaScript】JavaScript八张思维导图">Próximo post</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
