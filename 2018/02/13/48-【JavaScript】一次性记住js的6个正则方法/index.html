@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>48-【JavaScript】一次性记住js的6个正则方法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="阅读原文  我时常感到困惑，为什么有些知识我总是觉得模糊，其实就是想的少，总结的少，大多数人也如此，有疑惑不清楚就找出来，想明白或者想不明白都记录下来自己的收获，比扭头忘记还是要好很多吧。。好我觉得js中的正则我不是很清楚，那么来看一下吧。首先6这个具象的数字可以帮助我们整体记忆了，666哈哈    范围js中有两个类可以让正则发挥作用   创建1var re &#x3D; &#x2F;ab+c&#x2F;   方式一：正则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="48-【JavaScript】一次性记住js的6个正则方法">
+<meta property="og:url" content="http://example.com/2018/02/13/48-%E3%80%90JavaScript%E3%80%91%E4%B8%80%E6%AC%A1%E6%80%A7%E8%AE%B0%E4%BD%8Fjs%E7%9A%846%E4%B8%AA%E6%AD%A3%E5%88%99%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="阅读原文  我时常感到困惑，为什么有些知识我总是觉得模糊，其实就是想的少，总结的少，大多数人也如此，有疑惑不清楚就找出来，想明白或者想不明白都记录下来自己的收获，比扭头忘记还是要好很多吧。。好我觉得js中的正则我不是很清楚，那么来看一下吧。首先6这个具象的数字可以帮助我们整体记忆了，666哈哈    范围js中有两个类可以让正则发挥作用   创建1var re &#x3D; &#x2F;ab+c&#x2F;   方式一：正则">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://varnull.cn/content/images/2018/02/WX20180211-182555@2x.png">
+<meta property="article:published_time" content="2018-02-13T14:44:26.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.693Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://varnull.cn/content/images/2018/02/WX20180211-182555@2x.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-48-【JavaScript】一次性记住js的6个正则方法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/02/13/48-%E3%80%90JavaScript%E3%80%91%E4%B8%80%E6%AC%A1%E6%80%A7%E8%AE%B0%E4%BD%8Fjs%E7%9A%846%E4%B8%AA%E6%AD%A3%E5%88%99%E6%96%B9%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2018-02-13T14:44:26.000Z" itemprop="datePublished">2018-02-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      48-【JavaScript】一次性记住js的6个正则方法
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a target="_blank" rel="noopener" href="http://varnull.cn/yi-ci-ji-zhu-jsde-6ge-zheng-ze-fang-fa/">阅读原文</a></p>
+</blockquote>
+<p>我时常感到困惑，为什么有些知识我总是觉得模糊，其实就是想的少，总结的少，大多数人也如此，有疑惑不清楚就找出来，想明白或者想不明白都记录下来自己的收获，比扭头忘记还是要好很多吧。。好我觉得js中的正则我不是很清楚，那么来看一下吧。<br>首先6这个具象的数字可以帮助我们整体记忆了，666哈哈   </p>
+<h2 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h2><p>js中有两个类可以让正则发挥作用<br><img src="http://varnull.cn/content/images/2018/02/WX20180211-182555@2x.png" alt="正则图片">  </p>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/ab+c/</span>  </span><br></pre></td></tr></table></figure>
+<p>方式一：正则表达字面量，这种直接是常量的表示用法可以让js解析器提高性能  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">&#x27;ab+c&#x27;</span>)  </span><br></pre></td></tr></table></figure>
+<p>方式二：构造函数，这种方式可以在runtime的时候动态确定正则是什么，更加灵活  </p>
+<h2 id="常用特殊字符"><a href="#常用特殊字符" class="headerlink" title="常用特殊字符"></a>常用特殊字符</h2><p>来记忆一些常用特殊字符，这个是正则本身的范畴了，是不是总觉得记不住？其实我也记不住，每次都是去搜索和online验证来完成一些任务。我也困恼过，其实最后还是因为自己写的少吧，唯手熟尔。。。下面的总结不写具体内容，只列出具体特殊字符和分类，可以尝试一下说出他们的意义，我觉得比看表格更有利于记忆。。。   </p>
+<ul>
+<li>匹配量的：* + ? {n} {n,} {n,m} .   </li>
+<li>匹配位置的：^ $   </li>
+<li>匹配并且需要支持分组的时候需要括号来包裹：(匹配的模式)   </li>
+<li>匹配条件的：|   </li>
+<li>匹配集合的：[]   </li>
+<li>匹配非集合的：[^]<br>还有大量的由\和字母组成的特殊含义的匹配模式，这些用到的时候查询就可以了，没有必要记住，其实我是记不住。。。   </li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>例子是最好的老师。。。。 例子来源于MDN</p>
+<ul>
+<li><p>我想得到匹配后的数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myRe = <span class="regexp">/d(b+)d/g</span>;  </span><br><span class="line">myRe.exec(<span class="string">&#x27;cdbbdbsdbdbz&#x27;</span>) <span class="comment">// [&quot;dbbd&quot;, &quot;bb&quot;, index: 1, input: &quot;cdbbdbsdbdbz&quot;]  </span></span><br><span class="line">myRe.exec(<span class="string">&#x27;cdbbdbsdbdbz&#x27;</span>) <span class="comment">// [&quot;dbd&quot;, &quot;b&quot;, index: 7, input: &quot;cdbbdbsdbdbz&quot;]  </span></span><br><span class="line">myRe.exec(<span class="string">&#x27;cdbbdbsdbdbz&#x27;</span>) <span class="comment">// null  </span></span><br></pre></td></tr></table></figure>
+<p>注意对于每个正则对象的exec每次调用都只返回一个匹配，如果需要拿到全部匹配就需要while循环获取，循环结束标志是返回值为null   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;cdbbdbsdbdbz&#x27;</span>.match(<span class="regexp">/d(b+)d/g</span>) <span class="comment">// [&quot;dbbd&quot;, &quot;dbd&quot;]  </span></span><br><span class="line"><span class="string">&#x27;cdbbdbsdbdbz&#x27;</span>.match(<span class="regexp">/d(b+)d/</span>) <span class="comment">// [&quot;dbbd&quot;, &quot;bb&quot;, index: 1, input: &quot;cdbbdbsdbdbz&quot;]  </span></span><br></pre></td></tr></table></figure>
+<p><code>string</code>的<code>match</code>挺奇怪的，如果是global匹配则出所有匹配的数组，如果不是，则出第一个匹配的字符串，以及相应的捕获内容   </p>
+</li>
+<li><p>我想得到是否匹配</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;hello world!&#x27;</span>;  </span><br><span class="line"><span class="keyword">var</span> result = <span class="regexp">/^hello/</span>.test(str); <span class="comment">// true  </span></span><br></pre></td></tr></table></figure></li>
+<li><p>我只想得到第一次匹配的位置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;cdbbdbsdbdbz&#x27;</span>.search(<span class="regexp">/d(b+)d/</span>) <span class="comment">// 1  </span></span><br><span class="line"><span class="string">&#x27;xxx&#x27;</span>.search(<span class="regexp">/d(b+)d/</span>) <span class="comment">// -1 没有匹配  </span></span><br></pre></td></tr></table></figure></li>
+<li><p>我想按照匹配拆分字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> names = <span class="string">&#x27;Harry Trump ;Fred Barney; Helen Rigby ; Bill Abel ;Chris Hand &#x27;</span>;  </span><br><span class="line"><span class="keyword">var</span> re = <span class="regexp">/\s*;\s*/</span>;  </span><br><span class="line"><span class="keyword">var</span> nameList = names.split(re);  </span><br><span class="line"><span class="comment">// [ &quot;Harry Trump&quot;, &quot;Fred Barney&quot;, &quot;Helen Rigby&quot;, &quot;Bill Abel&quot;, &quot;Chris Hand &quot; ]</span></span><br></pre></td></tr></table></figure></li>
+<li><p>我想按照匹配覆盖字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/apples/gi</span>;  </span><br><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;Apples are round, and apples are juicy.&#x27;</span>;  </span><br><span class="line"><span class="keyword">var</span> newstr = str.replace(re, <span class="string">&#x27;oranges&#x27;</span>);  </span><br><span class="line"><span class="comment">// // oranges are round, and oranges are juicy.</span></span><br></pre></td></tr></table></figure>
+<p>这个replace方法的用法着实比较多，只放了最基础用法，当有需求的时候再查就好了，整体有概念了再实践比强行记忆要好吧~   </p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/02/13/48-%E3%80%90JavaScript%E3%80%91%E4%B8%80%E6%AC%A1%E6%80%A7%E8%AE%B0%E4%BD%8Fjs%E7%9A%846%E4%B8%AA%E6%AD%A3%E5%88%99%E6%96%B9%E6%B3%95/" data-id="ckts3ejuz00884d9k7t440k6e" data-title="48-【JavaScript】一次性记住js的6个正则方法" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/21/49-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%912017%E5%85%A8%E5%B9%B4%E6%80%BB%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          49-【总结】2017全年总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/07/47-%E3%80%90JavaScript%E3%80%91%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">47-【JavaScript】小知识点整理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

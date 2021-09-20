@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？ | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="本文思路来自实际项目的重构总结，欢迎纠正和交流。如果对你有帮助，还请点赞👍收藏支持一下啦。  最近重构一个老项目，发现其中处理请求的拦截器写得相当乱，于是我将整个项目的请求处理层重构了，目前已经在项目中正常运行。 本文会和大家分享我的重构思路和后续优化的思考，为方便与大家分享，我用 Vue3 实现一个简单 demo，思路是一致的，有兴趣的朋友可以在我 Github 查看，本文会以这个 Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？">
+<meta property="og:url" content="http://example.com/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本文思路来自实际项目的重构总结，欢迎纠正和交流。如果对你有帮助，还请点赞👍收藏支持一下啦。  最近重构一个老项目，发现其中处理请求的拦截器写得相当乱，于是我将整个项目的请求处理层重构了，目前已经在项目中正常运行。 本文会和大家分享我的重构思路和后续优化的思考，为方便与大家分享，我用 Vue3 实现一个简单 demo，思路是一致的，有兴趣的朋友可以在我 Github 查看，本文会以这个 Vue">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ce1a9b0a66249048f323ed9b4b89478~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/93071e340443455baa6465c74b738cdc~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/300d5d2b343f47d9822f38308b501ba3~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d35ad954a504d1f9245c9d3fbeee597~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8308f8e7297f480a88f70716351853b4~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="article:published_time" content="2021-07-28T14:11:08.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.670Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="HTTP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ce1a9b0a66249048f323ed9b4b89478~tplv-k3u1fbpfcp-zoom-1.image">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/" class="article-date">
+  <time class="dt-published" datetime="2021-07-28T14:11:08.000Z" itemprop="datePublished">2021-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文思路来自实际项目的重构总结，欢迎纠正和交流。如果对你有帮助，还请点赞👍收藏支持一下啦。</p>
+</blockquote>
+<p>最近重构一个老项目，发现其中处理请求的拦截器写得相当乱，于是我将整个项目的请求处理层重构了，目前已经在项目中正常运行。</p>
+<p>本文会和大家分享我的重构思路和后续优化的思考，为方便与大家分享，我用 Vue3 实现一个简单 demo，思路是一致的，有兴趣的朋友可以<a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo-JavaScript/blob/master/Cute-Summary/useful-request-demo/index.html">在我 Github 查看</a>，本文会以这个 Vue 实现的 demo 为例介绍。</p>
+<p>本文我会主要和大家分享以下几点：</p>
+<ol>
+<li>问题分析和方案设计；</li>
+<li>重构后效果；</li>
+<li>开发过程；</li>
+<li>后期优化点；</li>
+</ol>
+<p>如果你还不清楚什么是 HTTP 请求和响应拦截器，那么可以先看看<a target="_blank" rel="noopener" href="https://juejin.cn/post/6885471967714115597">《77.9K Star 的 Axios 项目有哪些值得借鉴的地方》</a> 。</p>
+<h2 id="一、需求思考和方案设计"><a href="#一、需求思考和方案设计" class="headerlink" title="一、需求思考和方案设计"></a>一、需求思考和方案设计</h2><h3 id="1-问题分析"><a href="#1-问题分析" class="headerlink" title="1. 问题分析"></a>1. 问题分析</h3><p>目前旧项目经过多位同事参与开发，拦截器存在以下问题：</p>
+<ul>
+<li>代码比较混乱，可读性差；</li>
+<li>每个拦截器职责混乱，存在相互依赖；</li>
+<li>逻辑上存在问题；</li>
+<li>团队内部不同项目无法复用；</li>
+</ul>
+<h3 id="2-方案设计"><a href="#2-方案设计" class="headerlink" title="2. 方案设计"></a>2. 方案设计</h3><p>分析上面问题后，我初步的方案如下：<br>参考<strong>插件化架构设计</strong>，<strong>独立每个拦截器</strong>，将每个拦截器抽离成单独文件维护，做到<strong>职责单一</strong>，然后通过<strong>拦截器调度器</strong>进行调度和注册。</p>
+<p>其拦截器调度过程如下图：<br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ce1a9b0a66249048f323ed9b4b89478~tplv-k3u1fbpfcp-zoom-1.image" alt="拦截器调度过程"></p>
+<h2 id="二、重构后效果"><a href="#二、重构后效果" class="headerlink" title="二、重构后效果"></a>二、重构后效果</h2><p>代码其实比较简单，这里先看下最后实现效果：</p>
+<h3 id="1-目录分层更加清晰"><a href="#1-目录分层更加清晰" class="headerlink" title="1. 目录分层更加清晰"></a>1. 目录分层更加清晰</h3><p>重构后请求处理层的目录分层更加清晰，大致如下：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/93071e340443455baa6465c74b738cdc~tplv-k3u1fbpfcp-zoom-1.image" alt="目录分层"></p>
+<h3 id="2-拦截器开发更加方便"><a href="#2-拦截器开发更加方便" class="headerlink" title="2. 拦截器开发更加方便"></a>2. 拦截器开发更加方便</h3><p>在后续业务拓展新的拦截器，仅需 3 个步骤既可以完成拦截器的开发和使用，拦截器调度器会<strong>自动调用所有拦截器</strong>：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/300d5d2b343f47d9822f38308b501ba3~tplv-k3u1fbpfcp-zoom-1.image" alt="拦截器开发更加方便"></p>
+<h3 id="3-每个拦截器职责更加单一，可插拔"><a href="#3-每个拦截器职责更加单一，可插拔" class="headerlink" title="3. 每个拦截器职责更加单一，可插拔"></a>3. 每个拦截器职责更加单一，可插拔</h3><p>将每个拦截器抽成一个文件去实现，让每个拦截器<strong>职责分离且单一</strong>，当不需要使用某个拦截器时，随时可以替换，灵活插拔。</p>
+<h2 id="三、开发过程"><a href="#三、开发过程" class="headerlink" title="三、开发过程"></a>三、开发过程</h2><p>这里以我单独抽出来的<a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo-JavaScript/blob/master/Cute-Summary/useful-request-demo/index.html">这个 demo 项目</a>为例来介绍。</p>
+<h3 id="1-初始化目录结构"><a href="#1-初始化目录结构" class="headerlink" title="1. 初始化目录结构"></a>1. 初始化目录结构</h3><p>按照前面设计的方案，首先需要在项目中创建一下目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- request</span><br><span class="line">	- index.js      // 拦截器调度器</span><br><span class="line">  - interceptors  </span><br><span class="line">    - request     // 用来存放每个请求拦截器</span><br><span class="line">    	- index.js  // 管理所有请求拦截器，并做排序</span><br><span class="line">    - response    // 用来存放每个响应拦截器</span><br><span class="line">    	- index.js  // 管理所有响应拦截器，并做排序</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-定义拦截器调度器"><a href="#2-定义拦截器调度器" class="headerlink" title="2. 定义拦截器调度器"></a>2. 定义拦截器调度器</h3><p>因为项目采用 <a target="_blank" rel="noopener" href="https://github.com/axios/axios">axios 请求库</a>，所以我们需要先知道 axios 拦截器的使用方法，这里简单看下 <a target="_blank" rel="noopener" href="https://github.com/axios/axios#interceptors">axios 文档上如何使用拦截器</a>的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加请求拦截器</span></span><br><span class="line">axios.interceptors.request.use(<span class="function"><span class="keyword">function</span> (<span class="params">config</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 业务 逻辑</span></span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 业务 逻辑</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加响应拦截器</span></span><br><span class="line">axios.interceptors.response.use(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 业务 逻辑</span></span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 业务逻辑</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>从上面代码，我们可以知道，使用拦截器的时候，只需调用 <code>axios.interceptors</code> 对象上对应方法即可，因此我们可以将这块逻辑抽取出来：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/request/interceptors/index.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; log &#125; <span class="keyword">from</span> <span class="string">&#x27;../log&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;./request/index&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> response <span class="keyword">from</span> <span class="string">&#x27;./response/index&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> runInterceptors = <span class="function"><span class="params">instance</span> =&gt;</span> &#123;</span><br><span class="line">    log(<span class="string">&#x27;[runInterceptors]&#x27;</span>, instance);</span><br><span class="line">  	<span class="keyword">if</span>(!instance) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置请求拦截器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> request) &#123;</span><br><span class="line">        instance.interceptors.request</span><br><span class="line">            .use(<span class="function"><span class="params">config</span> =&gt;</span> request[key](config));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置响应拦截器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> response) &#123;</span><br><span class="line">        instance.interceptors.response</span><br><span class="line">            .use(<span class="function"><span class="params">result</span> =&gt;</span> response[key](result));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就是我们的<strong>核心拦截器调度器</strong>，目前实现导入所有请求拦截器和响应拦截器后，通过 <code>for</code> 循环，注册所有拦截器，最后将整个 axios 实例返回出去。</p>
+<h3 id="3-定义简单的请求拦截器和响应拦截器"><a href="#3-定义简单的请求拦截器和响应拦截器" class="headerlink" title="3. 定义简单的请求拦截器和响应拦截器"></a>3. 定义简单的请求拦截器和响应拦截器</h3><p>这里我们做简单演示，创建以下两个拦截器：</p>
+<ol>
+<li>请求拦截器：<strong>setLoading</strong>，作用是在发起请求前，显示一个全局 Toast 框，提示“加载中…”文案。</li>
+<li>响应拦截器：<strong>setLoading</strong>，作用是在请求响应后，关闭页面中的 Toast 框。</li>
+</ol>
+<p>为了统一开发规范，我们约定插件开发规范如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  拦截器名称：xxx</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> interceptorName = <span class="function"><span class="params">options</span> =&gt;</span> &#123;</span><br><span class="line">  log(<span class="string">&quot;[interceptor.request]interceptorName:&quot;</span>, options);</span><br><span class="line">	<span class="comment">// 拦截器业务</span></span><br><span class="line">  <span class="keyword">return</span> options;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> interceptorName;</span><br></pre></td></tr></table></figure>
+
+<p>首先创建文件 <code>src/request/interceptors/request/</code> 目录下创建 <code>setLoading.js</code>  文件，按照上面约定的插件开发规范，我们完成下面插件开发：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/request/interceptors/request/setLoading.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Toast &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; log &#125; <span class="keyword">from</span> <span class="string">&quot;../../log&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  拦截器名称：全局设置请求的 loading 动画</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> setLoading = <span class="function"><span class="params">options</span> =&gt;</span> &#123;</span><br><span class="line">  log(<span class="string">&quot;[interceptor.request]setLoading:&quot;</span>, options);</span><br><span class="line"></span><br><span class="line">  Toast.loading(&#123;</span><br><span class="line">    <span class="attr">duration</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">message</span>: <span class="string">&#x27;加载中...&#x27;</span>,</span><br><span class="line">    <span class="attr">forbidClick</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> options;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> setLoading;</span><br></pre></td></tr></table></figure>
+
+<p>然后在导出该请求拦截器，并且导出的是个<strong>数组</strong>，方便拦截器调度器进行统一注册：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/request/interceptors/request/index.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> setLoading <span class="keyword">from</span> <span class="string">&#x27;./setLoading&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> [</span><br><span class="line">    setLoading</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>按照相同方式，我们开发响应拦截器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/request/interceptors/response/setLoading.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Toast &#125; <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; log &#125; <span class="keyword">from</span> <span class="string">&quot;../../log&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  拦截器名称：关闭全局请求的 loading 动画</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> setLoading = <span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">  log(<span class="string">&quot;[interceptor.response]setLoading:&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// example: 请求返回成功时，关闭所有 toast 框</span></span><br><span class="line">  <span class="keyword">if</span>(result &amp;&amp; result.success)&#123;</span><br><span class="line">    Toast.clear();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> setLoading;</span><br></pre></td></tr></table></figure>
+
+<p>导出响应拦截器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/request/interceptors/response/index.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> setLoading <span class="keyword">from</span> <span class="string">&#x27;./setLoading&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> [</span><br><span class="line">    setLoading</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-全局设置-axios-拦截器"><a href="#4-全局设置-axios-拦截器" class="headerlink" title="4. 全局设置 axios 拦截器"></a>4. 全局设置 axios 拦截器</h3><p>按照前面相同步骤，我又多写了几个拦截器：<br>请求拦截器：</p>
+<ul>
+<li>setSecurityInformation.js：为请求的 url 添加安全参数；</li>
+<li>setSignature.js：为请求的请求头添加加签信息；</li>
+<li>setToken.js： 为请求的请求头添加 token 信息；</li>
+</ul>
+<p>响应拦截器：</p>
+<ul>
+<li>setError.js：处理响应结果的出错情况，如关闭所有 toast 框；</li>
+<li>setInvalid.js：处理响应结果的登录失效情况，如跳转到登录页；</li>
+<li>setResult.js：处理响应结果的数据嵌套太深的问题，将 <code>result.data.data.data</code> 这类返回结果处理成 <code>result.data</code> 格式；</li>
+</ul>
+<p>至于是如何实现的，大家有兴趣可以<a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo-JavaScript/blob/master/Cute-Summary/useful-request-demo/index.html">在我 Github 查看</a>。</p>
+<p>然后我们可以将 axios 进行二次封装，导出 <code>request</code> 对象供业务使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/request/index.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; runInterceptors &#125; <span class="keyword">from</span> <span class="string">&#x27;./interceptors/index&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> requestConfig = &#123; <span class="attr">timeout</span>: <span class="number">10000</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> request = axios.create(requestConfig);</span><br><span class="line">request = runInterceptors(request);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> request;</span><br></pre></td></tr></table></figure>
+
+<p>到这边就完成。</p>
+<p>在业务中需要发起请求，可以这么使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&lt;button @click=&quot;send&quot;&gt;发起请求&lt;/button&gt;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import request from &#x27;./../request/index.js&#x27;;</span><br><span class="line"></span><br><span class="line">const send = async () =&gt; &#123;</span><br><span class="line">  const result = await request(&#123;</span><br><span class="line">    url: &#x27;https://httpbin.org/headers&#x27;,</span><br><span class="line">    method: &#x27;get&#x27;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-测试一下"><a href="#5-测试一下" class="headerlink" title="5. 测试一下"></a>5. 测试一下</h3><p>开发到这边就差不多，我们发送个请求，可以看到所有拦截器执行过程如下：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9d35ad954a504d1f9245c9d3fbeee597~tplv-k3u1fbpfcp-zoom-1.image" alt="日志输出"></p>
+<p>看看请求头信息：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8308f8e7297f480a88f70716351853b4~tplv-k3u1fbpfcp-zoom-1.image" alt="请求头"></p>
+<p>可以看到我们开发的请求拦截器已经生效。</p>
+<h2 id="四、Taro-中使用"><a href="#四、Taro-中使用" class="headerlink" title="四、Taro 中使用"></a>四、Taro 中使用</h2><p>由于 <a target="_blank" rel="noopener" href="https://taro-docs.jd.com/">Taro</a> 中已经提供了 <a target="_blank" rel="noopener" href="https://taro-docs.jd.com/taro/docs/2.x/apis/network/request/request">Taro.request</a> 方法作为请求方法，我们可以不需要使用 axios 发请求。</p>
+<p>基于上面代码进行改造，也很简单，只需要更改 2 个地方：</p>
+<h3 id="1-修改封装请求的方法"><a href="#1-修改封装请求的方法" class="headerlink" title="1. 修改封装请求的方法"></a>1. 修改封装请求的方法</h3><p>主要是更换 axios 为 Taro.request 方法，并使用 addInterceptor  方法导入拦截器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/request/index.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Taro <span class="keyword">from</span> <span class="string">&quot;@tarojs/taro&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; runInterceptors &#125; <span class="keyword">from</span> <span class="string">&#x27;./interceptors/index&#x27;</span>;</span><br><span class="line"></span><br><span class="line">Taro.addInterceptor(runInterceptors);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> request = Taro.request;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> requestTask = Taro.RequestTask; <span class="comment">// 看需求，是否需要</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> addInterceptor = Taro.addInterceptor; <span class="comment">// 看需求，是否需要</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-修改拦截器调度器"><a href="#2-修改拦截器调度器" class="headerlink" title="2. 修改拦截器调度器"></a>2. 修改拦截器调度器</h3><p>由于 axios 和 <code>Taro.request</code> 添加拦截器的方法不同，所以也需要进行更换：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;./interceptors/request&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> response <span class="keyword">from</span> <span class="string">&#x27;./interceptors/response&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> interceptor = &#123;</span><br><span class="line">    request,</span><br><span class="line">    response</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getInterceptor = <span class="function">(<span class="params">chain = &#123;&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 设置请求拦截器</span></span><br><span class="line">  <span class="keyword">let</span> requestParams = chain.requestParams;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> request) &#123;</span><br><span class="line">    requestParams = request[key](requestParams);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置响应拦截器</span></span><br><span class="line">  <span class="keyword">let</span> responseObject = chain.proceed(requestParams);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> response) &#123;</span><br><span class="line">    responseObject = responseObject.then(<span class="function"><span class="params">res</span> =&gt;</span> response[key](res));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> responseObject;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>具体 API 可以看 <a target="_blank" rel="noopener" href="https://taro-docs.jd.com/taro/docs/2.x/apis/network/request/request">Taro.request</a> 文档，这里不过多介绍。</p>
+<h2 id="五、项目总结和思考"><a href="#五、项目总结和思考" class="headerlink" title="五、项目总结和思考"></a>五、项目总结和思考</h2><p>这次重构主要是按照已有业务进行重构，因此即使是重构后的请求层，仍然还有很多可以优化的点，目前我想到有这些，也算是我的一个 TODO LIST 了：</p>
+<h3 id="1-将请求层独立成库"><a href="#1-将请求层独立成库" class="headerlink" title="1. 将请求层独立成库"></a>1. 将请求层独立成库</h3><p>由于公司现在独立站点的项目较多，考虑到项目的统一开发规范，可以考虑将该请求层独立为私有库进行维护。<br>目前思路：</p>
+<ul>
+<li>参考插件化架构设计，通过 <a target="_blank" rel="noopener" href="https://github.com/lerna/lerna/">lerna</a> 做管理所有拦截器；</li>
+<li>升级 TypeScript，方便管理和开发；</li>
+<li>进行工程化改造，加入构建工具、单元测试、UMD等等；</li>
+<li>使用文档和开发文档完善。</li>
+</ul>
+<h3 id="2-支持可更换请求库"><a href="#2-支持可更换请求库" class="headerlink" title="2.  支持可更换请求库"></a>2.  支持可更换请求库</h3><p>单独抽这一点来讲，是因为目前我们前端团队使用的请求库较多，比较分散，所以考虑到通用性，需要增加支持可更换请求库方法。<br>目前思路：</p>
+<ul>
+<li>在已有请求层再抽象一层<strong>请求库适配层</strong>，定义统一接口；</li>
+<li>内置几种常见请求库的适配。</li>
+</ul>
+<h3 id="3-开发拦截器脚手架"><a href="#3-开发拦截器脚手架" class="headerlink" title="3. 开发拦截器脚手架"></a>3. 开发拦截器脚手架</h3><p>这个的目的其实很简单，让团队内其他人直接使用脚手架工具，按照内置脚手架模版，快速创建一个拦截器，进行后续开发，很大程度统一拦截器的开发规范。<br>目前思路：</p>
+<ul>
+<li>内置两套拦截器模版：请求拦截器和响应拦截器；</li>
+<li>脚手架开发比较简单，参数（如语言）根据业务需要再确定。</li>
+</ul>
+<h3 id="4-增强拦截器调度"><a href="#4-增强拦截器调度" class="headerlink" title="4. 增强拦截器调度"></a>4. 增强拦截器调度</h3><p>目前实现的这个功能还比较简单，还是得考虑增强拦截器调度。<br>目前思路：</p>
+<ul>
+<li>处理拦截器失败的情况；</li>
+<li>处理拦截器调度顺序的问题；</li>
+<li>拦截器同步执行、异步执行、并发执行、循环执行等等情况；</li>
+<li>可插拔的拦截器调度；</li>
+<li>考虑参考 Tapable 插件机制；</li>
+</ul>
+<h2 id="六、本文总结"><a href="#六、本文总结" class="headerlink" title="六、本文总结"></a>六、本文总结</h2><p>本文通过一次简单的项目重构总结出一个请求层拦截器调度方案，目的是为了实现所有<strong>拦截器职责单一</strong>、方便维护，并<strong>统一维护</strong>和<strong>自动调度</strong>，大大降低实际业务的拦截器开发上手难度。</p>
+<p>后续我仍有很多需要优化的地方，作为自己的一个 TODO LIST，如果是做成完全通用，则定位可能更偏向于拦截器调度容器，只提供一些通用拦截器，其余还是由开发者定义，库负责调度，但常用的请求库一般都已经做好，所以这样做的价值有待权衡。</p>
+<p>当然，目前还是优先作为团队内部私有库进行开发和使用，因为基本上团队内部使用的业务都差不多，只是项目不同。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/" data-id="ckts3ejud006i4d9kdxjq97jq" data-title="226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          227-【总结】如何优雅的在微信小程序使用SVG字体图标
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

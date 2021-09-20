@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>7-【Python】廖雪峰课程笔记（三） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="廖雪峰课程 Python笔记（三）一、学习网站 摘抄 廖雪峰 Python课程：点击打开  二、模块介绍在Python中，一个.py文件就称之为一个模块（Module）。使用模块将函数进行分组，更便于维护代码。并且编写代码不必从头开始，一个模块可以到处引用，节省开发时间。并且相同函数或变量名称在不同模块内部互不影响，但不能与内置模块名称冲突。Python内置模块：点击查看   模块命名：文件名称就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7-【Python】廖雪峰课程笔记（三）">
+<meta property="og:url" content="http://example.com/2017/12/21/7-%E3%80%90Python%E3%80%91%E5%BB%96%E9%9B%AA%E5%B3%B0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="廖雪峰课程 Python笔记（三）一、学习网站 摘抄 廖雪峰 Python课程：点击打开  二、模块介绍在Python中，一个.py文件就称之为一个模块（Module）。使用模块将函数进行分组，更便于维护代码。并且编写代码不必从头开始，一个模块可以到处引用，节省开发时间。并且相同函数或变量名称在不同模块内部互不影响，但不能与内置模块名称冲突。Python内置模块：点击查看   模块命名：文件名称就">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-21T13:57:18.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.711Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-7-【Python】廖雪峰课程笔记（三）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/21/7-%E3%80%90Python%E3%80%91%E5%BB%96%E9%9B%AA%E5%B3%B0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2017-12-21T13:57:18.000Z" itemprop="datePublished">2017-12-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      7-【Python】廖雪峰课程笔记（三）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="廖雪峰课程-Python笔记（三）"><a href="#廖雪峰课程-Python笔记（三）" class="headerlink" title="廖雪峰课程 Python笔记（三）"></a>廖雪峰课程 Python笔记（三）</h2><h3 id="一、学习网站"><a href="#一、学习网站" class="headerlink" title="一、学习网站"></a>一、学习网站</h3><blockquote>
+<p>摘抄 廖雪峰 Python课程：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">点击打开</a></p>
+</blockquote>
+<h3 id="二、模块介绍"><a href="#二、模块介绍" class="headerlink" title="二、模块介绍"></a>二、模块介绍</h3><p>在Python中，一个.py文件就称之为一个模块（Module）。使用模块将函数进行分组，更便于维护代码。并且编写代码不必从头开始，一个模块可以到处引用，节省开发时间。<br>并且相同函数或变量名称在不同模块内部互不影响，但不能与内置模块名称冲突。<br>Python内置模块：<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functions.html">点击查看</a>  </p>
+<h6 id="模块命名："><a href="#模块命名：" class="headerlink" title="模块命名："></a>模块命名：</h6><p>文件名称就是模块名称，如 <code>abc.py</code> 文件模块名就是 <code>abc</code><br>注意：  </p>
+<blockquote>
+<p>  模块名要遵循Python变量命名规范，不要使用中文、特殊字符；<br>  模块名不要和系统模块名冲突，最好先查看系统是否已存在该模块，检查方法是在Python交互环境执行import abc，若成功则说明系统存在此模块。</p>
+</blockquote>
+<h4 id="1、使用模块"><a href="#1、使用模块" class="headerlink" title="1、使用模块"></a>1、使用模块</h4><p>以内置 <code>sys</code> 模块为例，摘抄 <code>廖雪峰</code> 老师的案例代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python3                    # 标准注释 让这个hello.py文件直接在Unix/Linux/Mac上运行</span><br><span class="line"># -*- coding: utf-8 -*-                   # 标准注释 表示.py文件本身使用标准UTF-8编码</span><br><span class="line"></span><br><span class="line">&quot; a test module &quot;                         # 一个字符串，表示模块的文档注释，任何模块代码的第一个字符串都被视为模块的文档注释；</span><br><span class="line"></span><br><span class="line">__author__ = &quot;Michael Liao&quot;               # __author__变量把作者写进去，公开源代码后别人可知作者；</span><br><span class="line"></span><br><span class="line">## 👆以上就是Python模块的标准文件模板，可以不写。</span><br><span class="line"></span><br><span class="line">import sys                                # 导入模块</span><br><span class="line">def test():</span><br><span class="line">    args = sys.argv                       # sys模块内的argv变量，用list存储了命令行的所有参数。</span><br><span class="line">    if len(args)==1:</span><br><span class="line">        print(&quot;Hello, world!&quot;)</span><br><span class="line">    elif len(args)==2:</span><br><span class="line">        print(&quot;Hello, %s!&quot; % args[1])</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;Too many arguments!&quot;)</span><br><span class="line"></span><br><span class="line">if __name__==&quot;__main__&quot;: </span><br><span class="line">    test()</span><br><span class="line"># 用于做运行测试，原理：运行模块后，Python解释器把一个特殊变量__name__置为__main__</span><br><span class="line"># 而如果在其他地方导入该hello模块时，if判断将失败，后面代码不执行，即可作为运行测试。</span><br></pre></td></tr></table></figure>
+<p>注意：<br>argv至少有一个元素，因为第一个参数永远是该.py文件的名称：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; python3 hello.py</span><br><span class="line">&gt;&gt;&gt; sys.argv           # [&quot;hello.py&quot;]</span><br><span class="line">&gt;&gt;&gt; python3 hello.py Michael</span><br><span class="line">&gt;&gt;&gt; sys.argv           # [&quot;hello.py&quot;, &quot;Michael]</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、作用域"><a href="#2、作用域" class="headerlink" title="2、作用域"></a>2、作用域</h4><p>希望函数和变量仅在内部使用，可通过 <code>_</code> 前缀来实现。<br>正常的函数和变量名是公开的（public），可以直接被引用，比如：<code>abc</code>、<code>x123</code>、<code>PI</code>等。<br>特殊变量名如 <code>__xxx__</code> 可以直接引用但是有其他用途，比如之前的 <code>__author__</code> ，<code>__name__</code>就是特殊变量，一般我们直接写不要用这种。<br>非公开的（private）函数和变量名，如 <code>_xx</code> 和 <code>__xx</code> ，不能直接引用。  </p>
+<h6 id="外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。"><a href="#外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。" class="headerlink" title="外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。"></a>外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。</h6><h4 id="3、安装第三方模块"><a href="#3、安装第三方模块" class="headerlink" title="3、安装第三方模块"></a>3、安装第三方模块</h4><p>python需要通过包管理工具 <code>pip</code> 来安装第三方模块。<br>pip安装教程：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316090478912dab2a3a9e8f4ed49d28854b292f85bb000">点击打开</a><br>Windows安装要记得在安装时勾选了 <code>pip</code> 和 <code>Add python.exe to Path</code>。  </p>
+<p>安装完成，通过下面命令安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install packageName</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、安装常用模块"><a href="#4、安装常用模块" class="headerlink" title="4、安装常用模块"></a>4、安装常用模块</h4><p>可以通过命令行安装。<br>也可以使用 <code>Anaconda</code> 安装。</p>
+<h4 id="5、模块搜索路径"><a href="#5、模块搜索路径" class="headerlink" title="5、模块搜索路径"></a>5、模块搜索路径</h4><p>默认情况下，Python解释器会搜索 <code>当前目录</code> 、<code>所有已安装的内置模块</code> 和 <code>第三方模块</code> ，搜索路径存放在 <code>sys模块</code> 的 <code>path变量</code> 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.path</span><br><span class="line">[&quot;&quot;, &quot;/Library/Frameworks/Python.framework/Versions/3.6/lib/python36.zip&quot;, &quot;/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6&quot;, ..., &quot;/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages&quot;]</span><br></pre></td></tr></table></figure>
+<p>如果我们要添加自己的搜索目录，有两种方法：<br>一是直接修改 <code>sys.path</code> ，添加要搜索的目录：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.path.append(&quot;/Users/michael/my_py_scripts&quot;)</span><br></pre></td></tr></table></figure>
+<p>这种方法是在运行时修改，运行结束后失效。  </p>
+<p>第二种方法是设置环境变量 <code>PYTHONPATH</code> ，该环境变量的内容会被自动添加到模块搜索路径中。<br>设置方式与设置 <code>Path环境变量</code> 类似。注意只需要添加你自己的搜索路径，Python自己本身的搜索路径不受影响。  </p>
+<h4 id="3、常用内建模块"><a href="#3、常用内建模块" class="headerlink" title="3、常用内建模块"></a>3、常用内建模块</h4><p>python内置了许多非常有用的模块，无需额外安装和配置，即可直接使用。  </p>
+<h5 id="a-、datetime"><a href="#a-、datetime" class="headerlink" title="a)、datetime"></a>a)、datetime</h5><p>datetime是python处理日期和时间的标准库。  </p>
+<h6 id="获取当前日期和时间"><a href="#获取当前日期和时间" class="headerlink" title="获取当前日期和时间"></a>获取当前日期和时间</h6><p>由于 <code>datetime</code> 模块还包含一个 <code>datetime类</code> ，所以导入有2种方法。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 方法1：</span><br><span class="line">from datetime import datetime</span><br><span class="line"># 方法2：</span><br><span class="line">impot datetime.datetime</span><br><span class="line"></span><br><span class="line">now = datetime.now()</span><br><span class="line">print(now)         # 2017-12-04 22:29:25.865744</span><br><span class="line">print(type(now))   # &lt;class &quot;datetime.datetime&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><code>datetime.now()</code> 返回当前日期和时间，其类型是 <code>datetime</code>。</p>
+<h6 id="获取指定日期和时间"><a href="#获取指定日期和时间" class="headerlink" title="获取指定日期和时间"></a>获取指定日期和时间</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line">dt = datetime(2017,12,4,12,20)  # 用指定日期时间创建datetime</span><br><span class="line">print(dt)                       # 2017-12-04 12:20:00</span><br></pre></td></tr></table></figure>
+
+<h6 id="datetime转换为timestamp"><a href="#datetime转换为timestamp" class="headerlink" title="datetime转换为timestamp"></a>datetime转换为timestamp</h6><p>在计算机中，时间实际上是用 <code>数字表示</code> 的。我们把 <code>1970年1月1日 00:00:00 UTC+00:00时区</code> 的时刻称为 <code>epoch time</code> ，记为0（1970年以前的时间 <code>timestamp</code> 为负数），当前时间就是相对于 <code>epoch time</code> 的秒数，称为 <code>timestamp</code> 。即：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">timestamp = 0 = 1970-1-1 00:00:00 UTC+0:00</span><br><span class="line"># 对应的北京时间是（时差8小时）：</span><br><span class="line">timestamp = 0 = 1970-1-1 08:00:00 UTC+8:00</span><br></pre></td></tr></table></figure>
+<p>可见 <code>timestamp</code> 的值与时区毫无关系，因为 <code>timestamp</code> 一旦确定，其UTC时间就确定了，转换到任意时区的时间也是完全确定的，这就是为什么计算机存储的当前时间是以 <code>timestamp</code> 表示的，因为全球各地的计算机在任意时刻的 <code>timestamp</code> 都是完全相同的（假定时间已校准）。<br>把一个 <code>datetime类型</code> 转换为 <code>timestamp</code> 只需要简单调用 <code>timestamp()</code> 方法：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line">dt = datetime(2017,12,04,12,20)  # 用指定日期时间创建datetime</span><br><span class="line">dt.timestamp()                   # 把datetime转换成timestamp</span><br></pre></td></tr></table></figure>
+<p>另外：如果转换结果小数位，即小数位表示毫秒数。  </p>
+<h6 id="timestamp转换为datetime"><a href="#timestamp转换为datetime" class="headerlink" title="timestamp转换为datetime"></a>timestamp转换为datetime</h6><p>使用 <code>datetime</code> 提供的 <code>fromtimestamp()</code> 方法即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line">t = 1429417200.0</span><br><span class="line">print(datetime.fromtimestamp(t))  # 2015-04-19 12:20:00</span><br></pre></td></tr></table></figure>
+<p><code>timestamp</code> 也可以直接被转到UTC标准市区的时间。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line">t = 1429417200.0</span><br><span class="line">print(datetime.fromtimestamp(t))   # 本地时间： 2015-04-19 12:20:00</span><br><span class="line">print(datetime.utcfromtimestamp(t))# UTC时间： 2015-04-19 04:20:00</span><br></pre></td></tr></table></figure>
+
+<h6 id="str转换为datetime"><a href="#str转换为datetime" class="headerlink" title="str转换为datetime"></a>str转换为datetime</h6><p>通过 <code>datetime.strptime()</code> 实现。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line">cday = datetime.strptime(&quot;2017-12-04 22:51:59&quot;,&quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">print(cday)                        # 2017-12-04 22:51:59</span><br></pre></td></tr></table></figure>
+<p>关于时间格式 <code>%Y-%m-%d %H:%M:%S</code> ，可以查看官方介绍：<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior">点击打开</a>  </p>
+<h6 id="datetime转换为str"><a href="#datetime转换为str" class="headerlink" title="datetime转换为str"></a>datetime转换为str</h6><p>通过 <code>strftime()</code> 实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line">now = datetime.now()</span><br><span class="line">print(now.strftime(&quot;%a,%b,%d %H:%M&quot;))# Mon,Dec,04 22:55</span><br></pre></td></tr></table></figure>
+
+<h6 id="datetime加减"><a href="#datetime加减" class="headerlink" title="datetime加减"></a>datetime加减</h6><p>对日期和时间进行加减实际上就是把datetime往后或往前计算，得到新的datetime。<br>加减可以直接用 <code>+</code> 和 <code>-</code> 运算符，不过需要导入 <code>timedelta</code> 这个类:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime,timedelta</span><br><span class="line">now = datetime.now()</span><br><span class="line">print(now)                                   # 2017-12-04 23:01:31.882059</span><br><span class="line">print(now + timedelta(hours = 10))           # 2017-12-05 09:01:31.882059</span><br><span class="line">print(now - timedelta(days = 1))             # 2017-12-03 23:01:31.882059</span><br><span class="line">print(now + timedelta(days = 2,hours = 12))  # 2017-12-07 11:01:31.882059</span><br></pre></td></tr></table></figure>
+
+<h6 id="本地时间转换为UTC时间"><a href="#本地时间转换为UTC时间" class="headerlink" title="本地时间转换为UTC时间"></a>本地时间转换为UTC时间</h6><p>本地时间是指系统设定时区的时间，例如北京时间是 <code>UTC+8:00时区</code> 的时间，而UTC时间指 <code>UTC+0:00时区</code> 的时间。<br>一个 <code>datetime类型</code> 有一个时区属性 <code>tzinfo</code> ，但是默认为 <code>None</code> ，所以无法区分这个 <code>datetime</code> 到底是哪个时区，除非强行给 <code>datetime</code> 设置一个时区：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime, timedelta, timezone</span><br><span class="line">tz_utc_8 = timezone(timedelta(hours=8))  # 创建时区UTC+8:00</span><br><span class="line">now = datetime.now()</span><br><span class="line">print(now)                               # 2017-12-04 23:05:03.537432</span><br><span class="line">dt = now.replace(tzinfo=tz_utc_8)        # 强制设置为UTC+8:00</span><br><span class="line">print(dt)</span><br></pre></td></tr></table></figure>
+
+<h6 id="时区转换"><a href="#时区转换" class="headerlink" title="时区转换"></a>时区转换</h6><p>通过 <code>utcnow()</code> 拿到当前的UTC时间，再转换成任意时区的时间：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime, timedelta, timezone</span><br><span class="line">utc_dt = datetime.utcnow().replace(tzinfo=timezone.utc)</span><br><span class="line">print(utc_dt)                     # 2017-12-04 15:10:49.949725+00:00</span><br><span class="line"># astimezone()将转换时区为北京时间:</span><br><span class="line">bj_dt = utc_dt.astimezone(timezone(timedelta(hours=8)))</span><br><span class="line">print(bj_dt)                      # 2017-12-04 23:11:36.684443+08:00</span><br><span class="line"># astimezone()将转换时区为东京时间:</span><br><span class="line">tokyo_dt = utc_dt.astimezone(timezone(timedelta(hours=9)))</span><br><span class="line">print(tokyo_dt)                   # 2017-12-05 00:12:35.397543+09:00</span><br><span class="line"># astimezone()将bj_dt转换时区为东京时间:</span><br><span class="line">tokyo_dt2 = bj_dt.astimezone(timezone(timedelta(hours=9)))</span><br><span class="line">print(tokyo_dt2)                  # 2017-12-05 00:12:35.397543+09:00 </span><br></pre></td></tr></table></figure>
+<p>时区转换的关键在于，拿到一个 <code>datetime</code> 时，要获知其正确的时区，然后强制设置时区，作为基准时间。<br>利用带时区的 <code>datetime</code>，通过 <code>astimezone()</code> 方法，可以转换到任意时区。  </p>
+<blockquote>
+<p>注：不是必须从UTC+0:00时区转换到其他时区，任何带时区的datetime都可以正确转换，例如上述bj_dt到tokyo_dt的转换。</p>
+</blockquote>
+<h6 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h6><p><code>datetime</code> 表示的时间需要时区信息才能确定一个特定的时间，否则只能视为 <code>本地时间</code>。<br>如果要存储 <code>datetime</code> ，最佳方法是将其转换为 <code>timestamp</code> 再存储，因为 <code>timestamp</code> 的值与时区完全无关。</p>
+<h5 id="b-、collections模块"><a href="#b-、collections模块" class="headerlink" title="b)、collections模块"></a>b)、collections模块</h5><p>collections是Python内建的一个集合模块，提供了许多有用的集合类。</p>
+<h6 id="namedtuple"><a href="#namedtuple" class="headerlink" title="namedtuple"></a>namedtuple</h6><p>如用 <code>tuple</code> 表示一个二维坐标：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p = (1,2)</span><br></pre></td></tr></table></figure>
+<p>这个 <code>tuple</code> 很难看出是个坐标，即可以使用 <code>namedtulpe</code> 表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from collections import namedtuple</span><br><span class="line">Point = namedtuple(&quot;Point&quot;,[&quot;x&quot;,&quot;y&quot;])</span><br><span class="line">p = Point(1,2)</span><br><span class="line">print(p.x)        # 1</span><br><span class="line">print(p.y)        # 2</span><br></pre></td></tr></table></figure>
+<p>其格式如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">namedtuple(&quot;名称&quot;, [属性list]):</span><br></pre></td></tr></table></figure>
+<p><code>namedtuple</code> 是一个函数，创建一个自定义 <code>tuple</code> 对象，并规定 <code>tuple</code> 元素个数，我们可以用属性而不是索引来引用 <code>tuple</code> 的某个元素。<br>可以验证创建的 <code>Point对象</code> 是 <code>tuple</code> 的一种子类：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(isinstance(p,Point))  # True</span><br><span class="line">print(isinstance(p,tuple))  # True</span><br></pre></td></tr></table></figure>
+<p>然后创建一个圆：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Circle = nametuple(&quot;Circle&quot;,[&quot;x&quot;,&quot;y&quot;,&quot;r&quot;])</span><br></pre></td></tr></table></figure>
+
+<h6 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h6><p>使用 <code>list</code> 存储数据时，按索引访问元素很快，但是插入和删除元素就很慢了，因为 <code>list</code> 是线性存储，数据量大的时候，插入和删除 <code>效率很低</code> 。<br><code>deque</code> 是为了高效实现插入和删除操作的双向列表，适合用于 <code>队列和栈</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from collections import deque</span><br><span class="line">q = deque([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;])</span><br><span class="line">q.append(&quot;x&quot;)                 # 从后面入栈</span><br><span class="line">q.appendleft(&quot;y&quot;)             # 从前面入栈</span><br><span class="line">print(q)                      # deque([&quot;y&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;x&quot;])</span><br></pre></td></tr></table></figure>
+
+<h6 id="defaultdict"><a href="#defaultdict" class="headerlink" title="defaultdict"></a>defaultdict</h6><p>使用 <code>dict</code> 时，如果引用的 <code>Key</code> 不存在，就会抛出 <code>KeyError</code> 。如果希望 <code>key</code> 不存在时，返回一个 <code>默认值</code> ，就可以用 <code>defaultdict</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from collections import defaultdict</span><br><span class="line">dd = defaultdict(lambda:&quot;N/A&quot;)</span><br><span class="line">dd[&quot;key1&quot;] = [&quot;abc&quot;]</span><br><span class="line">print(dd[&quot;key1&quot;])             # &quot;abc&quot;</span><br><span class="line">print(dd[&quot;key2&quot;])             # &quot;N/A&quot;</span><br></pre></td></tr></table></figure>
+
+<h6 id="OrderedDict"><a href="#OrderedDict" class="headerlink" title="OrderedDict"></a>OrderedDict</h6><p>使用 <code>dict</code> 时，<code>Key</code> 是无序的。在对 <code>dict</code> 做迭代时，我们无法确定 <code>Key</code> 的顺序。如果要保持 <code>key</code> 的顺序，可以用 <code>OrderedDict</code> :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from collections import OrderedDict</span><br><span class="line">d = dict([(&quot;a&quot;,1),(&quot;b&quot;,2),(&quot;c&quot;,3)])</span><br><span class="line">print(d)            # dict的Key是无序的 &#123;&quot;a&quot;: 1, &quot;b&quot;: 2, &quot;c&quot;: 3&#125;</span><br><span class="line">od = OrderedDict([(&quot;a&quot;,1),(&quot;b&quot;,2),(&quot;c&quot;,3)])</span><br><span class="line">print(od)           # OrderedDict的Key是有序的 OrderedDict([(&quot;a&quot;, 1), (&quot;b&quot;, 2), (&quot;c&quot;, 3)])</span><br></pre></td></tr></table></figure>
+<p>注意：<code>OrderedDict</code> 的 <code>Key</code> 会按照插入的顺序排列，不是 <code>Key</code> 本身排序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">od = OrderedDict()</span><br><span class="line">od[&quot;z&quot;] = 1</span><br><span class="line">od[&quot;y&quot;] = 2</span><br><span class="line">od[&quot;x&quot;] = 3 </span><br><span class="line">print(list(od.keys())) # 按照插入的Key的顺序返回  [&quot;z&quot;, &quot;y&quot;, &quot;x&quot;]</span><br></pre></td></tr></table></figure>
+
+<h6 id="Counter"><a href="#Counter" class="headerlink" title="Counter"></a>Counter</h6><p><code>Counter</code> 是一个简单的计算器，比如计算字符出现的个数:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from collections import Counter</span><br><span class="line">c = Counter()</span><br><span class="line">for ch in &quot;programing&quot;:</span><br><span class="line">    c[ch] = c[ch]+1</span><br><span class="line">print(c)            # Counter(&#123;&quot;r&quot;: 2, &quot;g&quot;: 2, &quot;p&quot;: 1, &quot;o&quot;: 1, &quot;a&quot;: 1, &quot;m&quot;: 1, &quot;i&quot;: 1, &quot;n&quot;: 1&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>Counter</code> 实际上也是 <code>dict</code> 的一个子类，上面的结果可以看出，字符<code>&quot;g&quot;</code>、<code>&quot;m&quot;</code>、<code>&quot;r&quot;</code>各出现了两次，其他字符各出现了一次。</p>
+<h5 id="c-、base64"><a href="#c-、base64" class="headerlink" title="c)、base64"></a>c)、base64</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import base64</span><br><span class="line">base64.b64encode(b&quot;binary\x00string&quot;)      # 编码 b&quot;YmluYXJ5AHN0cmluZw==&quot;</span><br><span class="line">base64.b64decode(b&quot;YmluYXJ5AHN0cmluZw==&quot;)  # 解码 b&quot;binary\x00string&quot;</span><br><span class="line">base64.b64encode(b&quot;i\xb7\x1d\xfb\xef\xff&quot;) # 编码 b&quot;abcd++//&quot;</span><br><span class="line">base64.urlsafe_b64encode(b&quot;i\xb7\x1d\xfb\xef\xff&quot;)  # 编码 b&quot;abcd--__&quot;</span><br><span class="line">base64.urlsafe_b64decode(&quot;abcd--__&quot;)                # 解码 b&quot;i\xb7\x1d\xfb\xef\xff&quot;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/21/7-%E3%80%90Python%E3%80%91%E5%BB%96%E9%9B%AA%E5%B3%B0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" data-id="ckts3ejvr009w4d9k0yv425wj" data-title="7-【Python】廖雪峰课程笔记（三）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/23/8-%E3%80%90Python%E3%80%91NumPy%E5%9F%BA%E7%A1%80%E4%B9%8B100%E9%81%93%E7%BB%83%E4%B9%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          8-【Python】NumPy基础之100道练习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/21/6-%E3%80%90Python%E3%80%91%E5%BB%96%E9%9B%AA%E5%B3%B0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">6-【Python】廖雪峰课程笔记（二）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

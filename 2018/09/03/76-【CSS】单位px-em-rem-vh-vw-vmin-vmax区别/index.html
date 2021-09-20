@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>76-【CSS】单位px/em/rem/vh/vw/vmin/vmax区别 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#x70;&amp;#105;&amp;#x6e;&amp;#103;&amp;#x61;&amp;#110;&amp;#56;&amp;#55;&amp;#56;&amp;#x37;&amp;#64;&amp;#113;&amp;#x71;&amp;#46;&amp;#x63;&amp;#111;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章 https:&#x2F;&#x2F;0x9.me&#x2F;KMrv3    1.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="76-【CSS】单位px&#x2F;em&#x2F;rem&#x2F;vh&#x2F;vw&#x2F;vmin&#x2F;vmax区别">
+<meta property="og:url" content="http://example.com/2018/09/03/76-%E3%80%90CSS%E3%80%91%E5%8D%95%E4%BD%8Dpx-em-rem-vh-vw-vmin-vmax%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#x70;&amp;#105;&amp;#x6e;&amp;#103;&amp;#x61;&amp;#110;&amp;#56;&amp;#55;&amp;#56;&amp;#x37;&amp;#64;&amp;#113;&amp;#x71;&amp;#46;&amp;#x63;&amp;#111;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章 https:&#x2F;&#x2F;0x9.me&#x2F;KMrv3    1.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/a1.png">
+<meta property="og:image" content="http://images.pingan8787.com/a2.png">
+<meta property="og:image" content="http://images.pingan8787.com/a3.png">
+<meta property="og:image" content="http://images.pingan8787.com/a4.png">
+<meta property="article:published_time" content="2018-09-03T08:13:15.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.718Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="前端开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/a1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-76-【CSS】单位px-em-rem-vh-vw-vmin-vmax区别" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/09/03/76-%E3%80%90CSS%E3%80%91%E5%8D%95%E4%BD%8Dpx-em-rem-vh-vw-vmin-vmax%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time class="dt-published" datetime="2018-09-03T08:13:15.000Z" itemprop="datePublished">2018-09-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      76-【CSS】单位px/em/rem/vh/vw/vmin/vmax区别
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#105;&#x6e;&#103;&#x61;&#110;&#56;&#55;&#56;&#x37;&#64;&#113;&#x71;&#46;&#x63;&#111;&#109;">&#x70;&#105;&#x6e;&#103;&#x61;&#110;&#56;&#55;&#56;&#x37;&#64;&#113;&#x71;&#46;&#x63;&#111;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章</td>
+<td><a target="_blank" rel="noopener" href="https://0x9.me/KMrv3">https://0x9.me/KMrv3</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="1-px"><a href="#1-px" class="headerlink" title="1.px"></a>1.px</h3><p>相对长度单位，像素px是相对于显示器屏幕分辨率而言的。</p>
+<h3 id="2-em"><a href="#2-em" class="headerlink" title="2.em"></a>2.em</h3><p>相对长度单位，相对于当前对象内文本的字体尺寸。如当前对行内文本的字体尺寸未被人为设置，则相对于浏览器的默认字体尺寸。 </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>body</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;div1&quot;</span>&gt;</span>div1</span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;div2&quot;</span>&gt;</span>div2</span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;div3&quot;</span>&gt;</span>div3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">1.5em</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://images.pingan8787.com/a1.png" alt="预览">  </p>
+<p>计算关系是这样的：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">body的font-size是继承自跟元素html，html的尺寸是浏览器默认尺寸14px；</span><br><span class="line">div1的font-size=1.5*14px = 21px;</span><br><span class="line">div2的font-size=1.5*21px = 31.5px;</span><br><span class="line">div3的font-size=1.5*31.5px = 47.25px;</span><br></pre></td></tr></table></figure>
+<p>如果手动设置div2的font-size为40px，div3的font-size应该为1.5*40px = 60px。</p>
+<h3 id="3-rem"><a href="#3-rem" class="headerlink" title="3.rem"></a>3.rem</h3><p>相对长度单位。r 是<code>root</code>的缩写，相对于根元素<html>的字体大小。<br>例如还是上面的html代码，添加如下样式：  </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.div3</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">1.5rem</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://images.pingan8787.com/a2.png" alt="预览">   </p>
+<p>此时div3的font-size = 1.5<em>14px = 1.5</em>html的font-size。  </p>
+<p>另外需注意chrome强制最小字体为12号，即使设置成 10px 最终都会显示成 12px，当把html的font-size设置成10px,子节点rem的计算还是以12px为基准，所以网上很多文章提到的将html的font-size设为10方便计算不是那么可取。<br>rem在移动端应用可参考淘宝的页面<a target="_blank" rel="noopener" href="http://m.taobao.com/">http://m.taobao.com</a> (html的font-size通过动态计算获取)<br>页面基准320px(20px),html font-size值的计算：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ele=<span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;html&quot;</span>)[<span class="number">0</span>],</span><br><span class="line">size=<span class="built_in">document</span>.body.clientWidth/<span class="number">320</span>*<span class="number">20</span>;</span><br><span class="line">ele.style.fontSize=size+<span class="string">&quot;px&quot;</span></span><br></pre></td></tr></table></figure>
+<p>注：需设置meta缩放比1:1  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-vh-and-vw："><a href="#4-vh-and-vw：" class="headerlink" title="4.vh and vw："></a>4.vh and vw：</h3><p>相对于视口的高度和宽度，而不是父元素的（CSS百分比是相对于包含它的最近的父元素的高度和宽度）。  </p>
+<p>1vh 等于1/100的视口高度，1vw 等于1/100的视口宽度。  </p>
+<p>比如：浏览器高度900px，宽度为750px, 1 vh = 900px/100 = 9 px，1vw = 750px/100 = 7.5 px。  </p>
+<p>很容易实现与同屏幕等高的框：<code>.slide &#123; height: 100vh;&#125;</code><br>设置一个和屏幕同宽的标题，<code>h1&#123;font-size:100vw&#125;</code>，那标题的字体大小就会自动根据浏览器的宽度进行缩放，以达到字体和viewport大小同步的效果。  </p>
+<h3 id="5-vmin-and-vmax："><a href="#5-vmin-and-vmax：" class="headerlink" title="5.vmin and vmax："></a>5.vmin and vmax：</h3><p>关于视口高度和宽度两者的最小值或者最大值。<br>比如，浏览器的宽度设置为1200px，高度设置为800px， 1vmax = 1200/100px = 12px， 1vmin = 800/100px = 8px。如果宽度设置为600px,高度设置为1080px, 1vmin就等于6px, 1vmax则未10.8px。  </p>
+<p>有一个元素，你需要让它始终在屏幕上可见：  </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123; </span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100vmin</span>; </span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100vmin</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://images.pingan8787.com/a3.png" alt="预览">  </p>
+<p>如果你要让这个元素始终铺满整个视口的可见区域：  </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123; </span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100vmax</span>; </span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100vmax</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://images.pingan8787.com/a4.png" alt="预览">  </p>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><p>vw, vh, vmin, vmax：IE9+局部支持；<br>chrome/firefox/safari/opera支持；<br>ios safari 8+支持；<br>android browser4.4+支持；<br>chrome for android39支持；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/09/03/76-%E3%80%90CSS%E3%80%91%E5%8D%95%E4%BD%8Dpx-em-rem-vh-vw-vmin-vmax%E5%8C%BA%E5%88%AB/" data-id="ckts3ejvv00a84d9kb5ph1hki" data-title="76-【CSS】单位px/em/rem/vh/vw/vmin/vmax区别" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/03/77-%E3%80%90CSS%E3%80%91%E9%85%B7%E7%82%ABWave%E5%8A%A8%E7%94%BB/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          77-【CSS】酷炫Wave动画
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/03/75-%E3%80%90CSS%E3%80%91filter%E6%BB%A4%E9%95%9C%E5%B1%9E%E6%80%A7%E6%BC%94%E7%A4%BAdemo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">75-【CSS】filter滤镜属性演示demo</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

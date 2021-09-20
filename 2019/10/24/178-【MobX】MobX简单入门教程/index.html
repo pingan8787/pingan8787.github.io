@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>178-【MobX】MobX简单入门教程 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、MobX 介绍首先看下官网介绍：   MobX 是一个经过战火洗礼的库，它通过透明的函数响应式编程(transparently applying functional reactive programming - TFRP)使得状态管理变得简单和可扩展。MobX背后的哲学很简单:任何源自应用状态的东西都应该自动地获得。其中包括UI、数据序列化、服务器通讯，等等。  核心重点就是：MobX 通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="178-【MobX】MobX简单入门教程">
+<meta property="og:url" content="http://example.com/2019/10/24/178-%E3%80%90MobX%E3%80%91MobX%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、MobX 介绍首先看下官网介绍：   MobX 是一个经过战火洗礼的库，它通过透明的函数响应式编程(transparently applying functional reactive programming - TFRP)使得状态管理变得简单和可扩展。MobX背后的哲学很简单:任何源自应用状态的东西都应该自动地获得。其中包括UI、数据序列化、服务器通讯，等等。  核心重点就是：MobX 通">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/blog/20191024MobX_Cover.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/mobx.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/2019102303.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/20191024cover.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/2019102301.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/2019102302.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/2019_10_24guild_page.png">
+<meta property="article:published_time" content="2019-10-24T14:52:16.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.615Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/blog/20191024MobX_Cover.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-178-【MobX】MobX简单入门教程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/24/178-%E3%80%90MobX%E3%80%91MobX%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2019-10-24T14:52:16.000Z" itemprop="datePublished">2019-10-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      178-【MobX】MobX简单入门教程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images.pingan8787.com/blog/20191024MobX_Cover.png" alt="Cover"></p>
+<h1 id="一、MobX-介绍"><a href="#一、MobX-介绍" class="headerlink" title="一、MobX 介绍"></a>一、MobX 介绍</h1><p>首先看下官网介绍： </p>
+<blockquote>
+<p>MobX 是一个经过战火洗礼的库，它通过透明的函数响应式编程(transparently applying functional reactive programming - TFRP)使得状态管理变得简单和可扩展。MobX背后的哲学很简单:<br>任何源自应用状态的东西都应该自动地获得。<br>其中包括UI、数据序列化、服务器通讯，等等。</p>
+</blockquote>
+<p>核心重点就是：<strong>MobX 通过响应式编程实现简单高效，可扩展的状态管理</strong>。</p>
+<img src="http://images.pingan8787.com/blog/mobx.png" width="120px"/>
+
+<h2 id="React-和-Mobx-关系"><a href="#React-和-Mobx-关系" class="headerlink" title="React 和 Mobx 关系"></a>React 和 Mobx 关系</h2><p>React 和 MobX 相辅相成，相互合作。</p>
+<p>官网介绍：</p>
+<blockquote>
+<p>React 通过提供机制把应用状态转换为可渲染组件树并对其进行渲染。而MobX提供机制来存储和更新应用状态供 React 使用。</p>
+</blockquote>
+<h2 id="Mobx-工作流程"><a href="#Mobx-工作流程" class="headerlink" title="Mobx 工作流程"></a>Mobx 工作流程</h2><p>这里先了解下大概整理流程，接下来会结合代码，介绍每一个部分。</p>
+<p><img src="http://images.pingan8787.com/blog/2019102303.png" alt="2019102303.png"></p>
+<h2 id="本文概要"><a href="#本文概要" class="headerlink" title="本文概要"></a>本文概要</h2><p>本文使用的是 MobX 5 版本，主要将从以下几个方面介绍 MobX 的使用：</p>
+<ol>
+<li>配置 Webpack 的 MobX 开发环境</li>
+<li>MobX 常用 API 介绍（主要介绍与<strong>可观察数据</strong>相关的操作）</li>
+<li>MobX 简单实例</li>
+</ol>
+<p><img src="http://images.pingan8787.com/blog/20191024cover.png" alt="cover"></p>
+<h1 id="二、配置-Webpack-的-MobX-开发环境"><a href="#二、配置-Webpack-的-MobX-开发环境" class="headerlink" title="二、配置 Webpack 的 MobX 开发环境"></a>二、配置 Webpack 的 MobX 开发环境</h1><ul>
+<li>安装 webpack 和 babel 依赖包：</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm i webpack webpack-cli babel-core babel-preset-env babel-loader -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装 MobX 相关依赖包：</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cnpm i mobx-react -D</span><br><span class="line">cnpm i babel-plugin-transform-class-properties -D </span><br><span class="line">cnpm i babel-plugin-transform-decorators-legacy -D </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>webpack.config.js 中添加配置：</li>
+</ul>
+<p>注意：<code>transform-decorators-legacy</code> 一定放在第一个。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;development&#x27;</span>,</span><br><span class="line">    <span class="attr">entry</span>: path.resolve(__dirname, <span class="string">&#x27;src/index.js&#x27;</span>),</span><br><span class="line">    <span class="attr">output</span>: &#123;</span><br><span class="line">        <span class="attr">path</span>:  path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        <span class="attr">filename</span>: <span class="string">&#x27;main.js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">module</span>: &#123;</span><br><span class="line">        <span class="attr">rules</span>: [&#123;</span><br><span class="line">            <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span><br><span class="line">            exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">            use: &#123;</span><br><span class="line">                <span class="attr">loader</span>: <span class="string">&#x27;babel-loader&#x27;</span>,</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">presets</span>: [<span class="string">&#x27;env&#x27;</span>],</span><br><span class="line">                    <span class="attr">plugins</span>: [<span class="string">&#x27;transform-decorators-legacy&#x27;</span>, <span class="string">&#x27;transform-class-properties&#x27;</span>]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">devtool</span>: <span class="string">&#x27;inline-source-map&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = config</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="三、MobX-常用-API-介绍"><a href="#三、MobX-常用-API-介绍" class="headerlink" title="三、MobX 常用 API 介绍"></a>三、MobX 常用 API 介绍</h1><h2 id="1-设置可观察数据（observable）"><a href="#1-设置可观察数据（observable）" class="headerlink" title="1. 设置可观察数据（observable）"></a>1. 设置可观察数据（observable）</h2><h3 id="1-1-observable"><a href="#1-1-observable" class="headerlink" title="1.1 (@)observable"></a>1.1 (@)observable</h3><p><code>observable</code> 是一种让数据的变化可以被观察的方法，底层是通过把该属性转化成 <code>getter</code> / <code>setter</code> 来实现的。。</p>
+<p><code>observable</code> 值可以是 JS原始数据类型、引用类型、普通对象、类实例、数组和映射。</p>
+<h4 id="observable-使用"><a href="#observable-使用" class="headerlink" title="observable 使用"></a>observable 使用</h4><ul>
+<li>对于<strong>JS原始类型</strong>（<code>Number</code>/<code>String</code>/<code>Boolean</code>）， 使用<code>observable.box()</code>方法设置:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> num = observable.box(<span class="number">99</span>)</span><br><span class="line"><span class="keyword">const</span> str = observable.box(<span class="string">&#x27;leo&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> bool = observable.box(<span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取原始值  get()</span></span><br><span class="line"><span class="built_in">console</span>.log(num.get(),str.get(),bool.get())   <span class="comment">// 99 &quot;leo&quot; true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改原始值  set(params)</span></span><br><span class="line">num.set(<span class="number">100</span>);</span><br><span class="line">str.set(<span class="string">&#x27;pingan&#x27;</span>);</span><br><span class="line">bool.set(<span class="literal">false</span>);</span><br><span class="line"><span class="built_in">console</span>.log(num.get(),str.get(),bool.get())  <span class="comment">// 100 &quot;pingan&quot; false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对于<strong>数组</strong>、<strong>对象类型</strong>，使用 <code>observable()</code> 方法设置：   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> list = observable([<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>]);</span><br><span class="line">list[<span class="number">2</span>] = <span class="number">3</span>;</span><br><span class="line">list.push(<span class="number">5</span>) <span class="comment">// 可以调用数组方法</span></span><br><span class="line"><span class="built_in">console</span>.log(list[<span class="number">0</span>], list[<span class="number">1</span>], list[<span class="number">2</span>], list[<span class="number">3</span>]) <span class="comment">// 1 2 3 5</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = observable(&#123;<span class="attr">a</span>: <span class="string">&#x27;11&#x27;</span>, <span class="attr">b</span>: <span class="string">&#x27;22&#x27;</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(obj.a, obj.b) <span class="comment">// 11 22</span></span><br><span class="line">obj.a = <span class="string">&quot;leo&quot;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj.a, obj.b) <span class="comment">// leo 22</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>需要注意的是：</strong>应该避免<strong>下标越界</strong>去方法数组中的值，这样的数据将不会被 MobX 所监视：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> list = observable([<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>]);</span><br><span class="line"><span class="comment">// 错误</span></span><br><span class="line"><span class="built_in">console</span>.log(list[<span class="number">9</span>]) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>因此在实际开发中，需要注意数组长度的判断。</p>
+<ul>
+<li>对于<strong>映射</strong>（Map）类型，使用 <code>observable.map()</code> 方法设置：   </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map = observable.map(&#123; <span class="attr">key</span>: <span class="string">&quot;value&quot;</span>&#125;);</span><br><span class="line">map.set(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;new value&quot;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(map.has(<span class="string">&#x27;key&#x27;</span>))  <span class="comment">// true</span></span><br><span class="line">map.delete(<span class="string">&quot;key&quot;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(map.has(<span class="string">&#x27;key&#x27;</span>))  <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="observable-使用-1"><a href="#observable-使用-1" class="headerlink" title="@observable 使用"></a>@observable 使用</h4><p>MobX 也提供使用装饰器 <code>@observable</code> 来将其转换成可观察的，可以使用在实例的字段和属性上。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;observable&#125; <span class="keyword">from</span> <span class="string">&quot;mobx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Leo</span> </span>&#123;</span><br><span class="line">    @observable arr = [<span class="number">1</span>];</span><br><span class="line">    @observable obj = &#123;&#125;;</span><br><span class="line">    @observable map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">    @observable str = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">    @observable num = <span class="number">100</span>;</span><br><span class="line">    @observable bool = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> leo = <span class="keyword">new</span> Leo()</span><br><span class="line"><span class="built_in">console</span>.log(leo.arr[<span class="number">0</span>]) <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>相比于前面使用 <code>observable.box() </code>方法对<strong>JS原始类型</strong>（<code>Number</code>/<code>String</code>/<code>Boolean</code>）进行定义，装饰器 <code>@observable</code> 则可以直接定义这些类型。</p>
+<p>原因是装饰器 <code>@observable</code> 更进一步封装了 <code>observable.box()</code>。</p>
+<h2 id="2-响应可观察数据的变化"><a href="#2-响应可观察数据的变化" class="headerlink" title="2. 响应可观察数据的变化"></a>2. 响应可观察数据的变化</h2><h3 id="2-1-computed"><a href="#2-1-computed" class="headerlink" title="2.1 (@)computed"></a>2.1 (@)computed</h3><p><strong>计算值</strong>(computed values)是可以根据现有的状态或其它计算值进行组合计算的值。可以使实际可修改的状态尽可能的小。 </p>
+<p>此外计算值还是<strong>高度优化过</strong>的，所以尽可能的多使用它们。</p>
+<p><strong>可以简单理解为：</strong>它是<strong>相关状态变化时自动更新的值</strong>，可以将多个可观察数据合并成一个可观察数据，并且只有在<strong>被使用时才会自动更新</strong>。</p>
+<h4 id="知识点：使用方式"><a href="#知识点：使用方式" class="headerlink" title="知识点：使用方式"></a>知识点：使用方式</h4><ul>
+<li><strong>使用方式1：声明式创建</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;observable, computed&#125; <span class="keyword">from</span> <span class="string">&quot;mobx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Money</span> </span>&#123;</span><br><span class="line">    @observable price = <span class="number">0</span>;</span><br><span class="line">    @observable amount = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">price = <span class="number">1</span></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @computed <span class="keyword">get</span> <span class="title">total</span>() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="built_in">this</span>.amount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> m = <span class="keyword">new</span> Money()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(m.total) <span class="comment">// 2</span></span><br><span class="line">m.price = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(m.total) <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>使用方式2：使用 decorate 引入</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;decorate, observable, computed&#125; <span class="keyword">from</span> <span class="string">&quot;mobx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Money</span> </span>&#123;</span><br><span class="line">    price = <span class="number">0</span>;</span><br><span class="line">    amount = <span class="number">2</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">price = <span class="number">1</span></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">get</span> <span class="title">total</span>() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="built_in">this</span>.amount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">decorate(Money, &#123;</span><br><span class="line">    <span class="attr">price</span>: observable,</span><br><span class="line">    <span class="attr">amount</span>: observable,</span><br><span class="line">    <span class="attr">total</span>: computed</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> m = <span class="keyword">new</span> Money()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(m.total) <span class="comment">// 2</span></span><br><span class="line">m.price = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(m.total) <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>使用方式3：使用 observable.object 创建</strong></li>
+</ul>
+<p><code>observable.object</code> 和 <code>extendObservable</code> 都会自动将 <code>getter</code> 属性推导成<strong>计算属性</strong>，所以下面这样就足够了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;observable&#125; <span class="keyword">from</span> <span class="string">&quot;mobx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Money = observable.object(&#123;</span><br><span class="line">    <span class="attr">price</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">amount</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="keyword">get</span> <span class="title">total</span>() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="built_in">this</span>.amount</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Money.total) <span class="comment">// 0</span></span><br><span class="line">Money.price = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(Money.total) <span class="comment">// 10</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意点</strong></li>
+</ul>
+<p>如果任何影响计算值的值发生变化了，计算值将根据状态自动进行变化。</p>
+<p>如果前一个计算中使用的数据没有更改，计算属性将不会重新运行。 如果某个其它计算属性或 reaction 未使用该计算属性，也不会重新运行。 在这种情况下，它将被暂停。</p>
+<h4 id="知识点：computed-的-setter"><a href="#知识点：computed-的-setter" class="headerlink" title="知识点：computed 的 setter"></a>知识点：computed 的 setter</h4><p><code>computed</code> 的 <code>setter</code> 不能用来改变<strong>计算属性的值</strong>，而是用来它里面的成员，来使得 <code>computed</code> 发生变化。</p>
+<p>这里我们使用 <code>computed</code> 的第一种声明方式为例，其他几种方式实现起来类似：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;observable, computed&#125; <span class="keyword">from</span> <span class="string">&quot;mobx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Money</span> </span>&#123;</span><br><span class="line">    @observable price = <span class="number">0</span>;</span><br><span class="line">    @observable amount = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">price = <span class="number">1</span></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @computed <span class="keyword">get</span> <span class="title">total</span>() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.price * <span class="built_in">this</span>.amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">set</span> <span class="title">total</span>(<span class="params">n</span>)&#123;</span><br><span class="line">        <span class="built_in">this</span>.price = n + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> m = <span class="keyword">new</span> Money()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(m.total) <span class="comment">// 2</span></span><br><span class="line">m.price = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(m.total) <span class="comment">// 20</span></span><br><span class="line">m.total = <span class="number">6</span>;</span><br><span class="line"><span class="built_in">console</span>.log(m.total) <span class="comment">// 14</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面实现方式可以看出，<code>set total</code> 方法中接收一个参数 <code>n</code> 作为 <code>price</code> 的新值，我们调用 <code>m.total</code> 后设置了新的 <code>price</code>，于是 <code>m.total</code> 的值也随之发生改变。 </p>
+<p><strong>注意：</strong><br>一定在 geeter 之后定义 setter，一些 typescript 版本会认为声明了两个名称相同的属性。</p>
+<h4 id="知识点：computed-expression-函数"><a href="#知识点：computed-expression-函数" class="headerlink" title="知识点：computed(expression) 函数"></a>知识点：computed(expression) 函数</h4><p>一般可以通过下面两种方法观察变化，并获取计算值：</p>
+<ul>
+<li>方法1： 将 <code>computed</code> 作为函数调用，在返回的对象使用 <code>.get()</code> 来获取计算的当前值。</li>
+<li>方法2： 使用 <code>observe(callback)</code> 来观察值的改变，其计算后的值在 <code>.newValue</code> 上。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;observable, computed&#125; <span class="keyword">from</span> <span class="string">&quot;mobx&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> leo = observable.box(<span class="string">&#x27;hello&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> upperCaseName = computed(<span class="function">() =&gt;</span> leo.get().toUpperCase())</span><br><span class="line"><span class="keyword">let</span> disposer = upperCaseName.observe(<span class="function"><span class="params">change</span> =&gt;</span> <span class="built_in">console</span>.log(change.newValue))</span><br><span class="line">leo.set(<span class="string">&#x27;pingan&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>更详细的 <code>computed</code> 参数可以查看文档：<a target="_blank" rel="noopener" href="https://cn.mobx.js.org/refguide/computed-decorator.html">《Computed 选项》</a>。</p>
+<h4 id="知识点：错误处理"><a href="#知识点：错误处理" class="headerlink" title="知识点：错误处理"></a>知识点：错误处理</h4><p>计算值在计算期间抛出异常，则此异常会被捕获，并<strong>在读取其值的时候抛出异常</strong>。</p>
+<p>抛出异常<strong>不会中断跟踪</strong>，所有计算值可以从异常中恢复。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;observable, computed&#125; <span class="keyword">from</span> <span class="string">&quot;mobx&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> x = observable.box(<span class="number">10</span>)</span><br><span class="line"><span class="keyword">let</span> y = observable.box(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">let</span> div = computed(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(y.get() === <span class="number">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;y 为0了&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> x.get() / y.get()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">div.get() <span class="comment">// 5</span></span><br><span class="line">y.set(<span class="number">0</span>)  <span class="comment">// ok</span></span><br><span class="line">div.get() <span class="comment">// 报错，y 为0了</span></span><br><span class="line"></span><br><span class="line">y.set(<span class="number">5</span>)</span><br><span class="line">div.get() <span class="comment">// 恢复正常，返回 2</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>用法：</p>
+<ul>
+<li><code>computed(() =&gt; expression)</code></li>
+<li><code>computed(() =&gt; expression, (newValue) =&gt; void)</code></li>
+<li><code>computed(() =&gt; expression, options)</code></li>
+<li><code>@computed(&#123;equals: compareFn&#125;) get classProperty() &#123; return expression; &#125;</code></li>
+<li><code>@computed get classProperty() &#123; return expression; &#125;</code></li>
+</ul>
+<p>还有各种选项可以控制 <code>computed</code> 的行为。包括:</p>
+<ul>
+<li><code>equals: (value, value) =&gt; boolean</code> 用来重载默认检测规则的比较函数。 内置比较器有: <code>comparer.identity</code>, <code>comparer.default</code>, <code>comparer.structural</code>；</li>
+<li><code>requiresReaction: boolean</code> 在重新计算衍生属性之前，等待追踪的 <code>observables</code> 值发生变化；</li>
+<li><code>get: () =&gt; value)</code> 重载计算属性的 <code>getter</code>；</li>
+<li><code>set: (value) =&gt; void</code> 重载计算属性的 <code>setter</code>；</li>
+<li><code>keepAlive: boolean</code> 设置为 <code>true</code> 以自动保持计算值活动，而不是在没有观察者时暂停；</li>
+</ul>
+<h3 id="2-2-autorun"><a href="#2-2-autorun" class="headerlink" title="2.2 autorun"></a>2.2 autorun</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p><code>autorun</code> 直译就是<strong>自动运行</strong>的意思，那么我们要知道这两个问题：</p>
+<ul>
+<li>自动运行什么？</li>
+</ul>
+<p>即：自动运行传入 <code>autorun</code> 的参数函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, autorun &#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    @observable str = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">    @observable num = <span class="number">123</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> store = <span class="keyword">new</span> Store()</span><br><span class="line">autorun(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;store.str&#125;</span>--<span class="subst">$&#123;store.num&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// leo--123</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看出 <code>autorun</code> 自动被运行一次，并输出 <code>leo--123</code> 的值，显然这还不是自动运行。</p>
+<ul>
+<li>怎么触发自动运行？</li>
+</ul>
+<p><strong>当修改 autorun 中任意一个可观察数据</strong>即可触发自动运行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 紧接上部分代码</span></span><br><span class="line"></span><br><span class="line">store.str = <span class="string">&#x27;pingan&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// leo--123</span></span><br><span class="line"><span class="comment">// pingan--123</span></span><br></pre></td></tr></table></figure>
+
+<p>现在可以看到控制台输出这两个日志，证明 <code>autorun</code> 已经被执行两次。</p>
+<h4 id="知识点：观察-computed-的数据"><a href="#知识点：观察-computed-的数据" class="headerlink" title="知识点：观察 computed 的数据"></a>知识点：观察 computed 的数据</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, autorun &#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    @observable str = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">    @observable num = <span class="number">123</span>;</span><br><span class="line"></span><br><span class="line">    @computed <span class="keyword">get</span> <span class="title">all</span>()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;store.str&#125;</span>--<span class="subst">$&#123;store.num&#125;</span>`</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> store = <span class="keyword">new</span> Store()</span><br><span class="line">autorun(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(store.all)</span><br><span class="line">&#125;)</span><br><span class="line">store.str = <span class="string">&#x27;pingan&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// leo--123</span></span><br><span class="line"><span class="comment">// pingan--123</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看出，这样将 <code>computed</code> 的值在 <code>autorun</code> 中进行观察，也是可以达到一样的效果，这也是我们实际开发中常用到的。</p>
+<h4 id="知识点：computed-与-autorun-区别"><a href="#知识点：computed-与-autorun-区别" class="headerlink" title="知识点：computed 与 autorun 区别"></a>知识点：computed 与 autorun 区别</h4><p><strong>相同点：</strong></p>
+<p>都是响应式调用的表达式；</p>
+<p><strong>不同点：</strong></p>
+<ul>
+<li><code>@computed</code> 用于响应式的产生一个可以被其他 observer 使用的<strong>值</strong>；</li>
+<li><code>autorun</code> 不产生新的值，而是<strong>达到一个效果</strong>（如：打印日志，发起网络请求等命令式的副作用）；</li>
+<li><code>@computed</code>中，如果一个计算值不再被观察了，MobX 可以自动地将其<strong>垃圾回收</strong>，而 <code>autorun</code> 中的值必须要手动清理才行。</li>
+</ul>
+<h4 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h4><p><code>autorun</code> 默认会执行一次，以获取哪些可观察数据被引用。</p>
+<p><code>autorun</code> 的作用是在<strong>可观察数据被修改之后</strong>，<strong>自动去执行依赖可观察数据的行为</strong>，这个行为一直就是传入 <code>autorun</code> 的函数。</p>
+<h3 id="2-3-when"><a href="#2-3-when" class="headerlink" title="2.3 when"></a>2.3 when</h3><p>接收两个函数参数，第一个函数<strong>必须根据可观察数据来返回一个布尔值</strong>，当该布尔值为 <code>true</code> 时，才会去执行第二个函数，并且只会执行一次。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, when &#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Leo</span> </span>&#123;</span><br><span class="line">    @observable str = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">    @observable num = <span class="number">123</span>;</span><br><span class="line">    @observable bool = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> leo = <span class="keyword">new</span> Leo()</span><br><span class="line">when(<span class="function">() =&gt;</span> leo.bool, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;这是true&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">leo.bool = <span class="literal">true</span></span><br><span class="line"><span class="comment">// 这是true</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看出当 <code>leo.bool</code> 设置成 <code>true</code> 以后，<code>when</code> 的第二个方法便执行了。</p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ol>
+<li><p>第一个参数，必须是根据<strong>可观察数据</strong>来返回的布尔值，而不是普通变量的布尔值。</p>
+</li>
+<li><p>如果第一个参数默认值为 <code>true</code>，则 <code>when</code> 函数会默认执行一次。</p>
+</li>
+</ol>
+<h3 id="2-4-reaction"><a href="#2-4-reaction" class="headerlink" title="2.4 reaction"></a>2.4 reaction</h3><p>接收两个函数参数，第一个函数<strong>引用可观察数据，并返回一个可观察数据</strong>，作为第二个函数的参数。</p>
+<p><code>reaction</code> <strong>第一次渲染的时候，会先执行一次第一个函数</strong>，这样 MobX 就会知道哪些可观察数据被引用了。随后在这些数据被修改的时候，执行第二个函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, reaction &#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Leo</span> </span>&#123;</span><br><span class="line">    @observable str = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">    @observable num = <span class="number">123</span>;</span><br><span class="line">    @observable bool = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> leo = <span class="keyword">new</span> Leo()</span><br><span class="line">reaction(<span class="function">() =&gt;</span> [leo.str, leo.num], <span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arr)</span><br><span class="line">&#125;)</span><br><span class="line">leo.str = <span class="string">&#x27;pingan&#x27;</span></span><br><span class="line">leo.num = <span class="number">122</span></span><br><span class="line"><span class="comment">// [&quot;pingan&quot;, 122]</span></span><br><span class="line"><span class="comment">// [&quot;pingan&quot;, 122]</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我们依次修改 <code>leo.str</code> 和 <code>leo.num</code> 两个变量，会发现 <code>reaction</code> 方法被执行<strong>两次</strong>，在控制台输出<strong>两次</strong>结果 <code>[&quot;pingan&quot;, 122]</code> ，因为可观察数据 <code>str</code> 和 <code>num</code> <strong>分别</strong>被修改了一次。</p>
+<p><strong>实际使用场景：</strong></p>
+<p>当我们没有获取到数据的时候，没有必要去执行存缓存逻辑，当第一次获取到数据以后，就执行存缓存的逻辑。</p>
+<h3 id="2-5-小结"><a href="#2-5-小结" class="headerlink" title="2.5 小结"></a>2.5 小结</h3><ul>
+<li><p><code>computed</code> 可以将多个可观察数据组合成一个可观察数据；</p>
+</li>
+<li><p><code>autorun</code> 可以自动追踪所引用的可观察数据，并在数据发生变化时自动触发；</p>
+</li>
+<li><p><code>when</code> 可以设置自动触发变化的时机，是 <code>autorun</code> 的一个变种情况；</p>
+</li>
+<li><p><code>reaction</code> 可以通过分离可观察数据声明，以副作用的方式对 <code>autorun</code> 做出改进；</p>
+</li>
+</ul>
+<p>它们各有特点，互为补充，都能在合适场景中发挥重要作用。</p>
+<h2 id="3-修改可观察数据"><a href="#3-修改可观察数据" class="headerlink" title="3. 修改可观察数据"></a>3. 修改可观察数据</h2><p>在上一部分内容中，我们了解到，对可观察的数据做出反应的时候，需要我们手动修改可观察数据的值。这种修改是通过直接向变量赋值来实现的，虽然简单易懂，但是这样会带来一个较为严重的副作用，就是<strong>每次的修改</strong>都会触发 <code>autorun</code> 或者 <code>reaction</code> <strong>运行一次</strong>。多数情况下，这种高频的触发是完全没有必要的。</p>
+<p>比如用户对视图的一次点击操作需要很多修改 N 个状态变量，但是视图的更新只需要一次就够了。</p>
+<p>为了优化这个问题， MobX 引入了 <code>action</code> 。</p>
+<h3 id="3-1-action"><a href="#3-1-action" class="headerlink" title="3.1 (@)action"></a>3.1 (@)action</h3><p><code>action</code> 是修改任何状态的行为，使用 <code>action</code> 的好处是能<strong>将多次修改可观察状态合并成一次</strong>，从而减少触发 <code>autorun</code> 或者 <code>reaction</code> 的次数。</p>
+<p>可以理解成<strong>批量操作</strong>，即一次动作中包含多次修改可观察状态，此时只会在动作结束后，做一次性重新计算和反应。</p>
+<p><code>action</code> 也有两种使用方法，这里以 <code>decorate</code> 方式来介绍。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, computed, reaction, action&#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    @observable string = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">    @observable number = <span class="number">123</span>;</span><br><span class="line">    @action <span class="function"><span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.string = <span class="string">&#x27;pingan&#x27;</span></span><br><span class="line">        <span class="built_in">this</span>.number = <span class="number">100</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> store = <span class="keyword">new</span> Store()</span><br><span class="line">reaction(<span class="function">() =&gt;</span> [store.string, store.number], <span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arr)</span><br><span class="line">&#125;)</span><br><span class="line">store.bar() <span class="comment">// [&quot;pingan&quot;, 100]</span></span><br></pre></td></tr></table></figure>
+
+<p>当我们连续去修改 <code>store.string</code> 和 <code>store.number</code> 两个变量后，再运行 <code>store.bar()</code> 会发现，控制台值输出一次 <code>[&quot;pingan&quot;, 100]</code> ，这就说明 <code>reaction</code> 只被执行一次。</p>
+<h4 id="知识点：action-bound"><a href="#知识点：action-bound" class="headerlink" title="知识点：action.bound"></a>知识点：action.bound</h4><p>另外 <code>action</code> 还有一种特殊使用方法：<code>action.bound</code>，常常用来作为一个 <code>callback</code> 的方法参数，并且执行效果也是一样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, computed, reaction, action&#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    @observable string = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">    @observable number = <span class="number">123</span>;</span><br><span class="line">    @action.bound <span class="function"><span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.string = <span class="string">&#x27;pingan&#x27;</span></span><br><span class="line">        <span class="built_in">this</span>.number = <span class="number">100</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> store = <span class="keyword">new</span> Store()</span><br><span class="line">reaction(<span class="function">() =&gt;</span> [store.string, store.number], <span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arr)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> bar = store.bar;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">fun</span>)</span>&#123;</span><br><span class="line">    fun()</span><br><span class="line">&#125;</span><br><span class="line">foo(bar) <span class="comment">//[&quot;pingan&quot;, 100]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="知识点：runInAction-name-thunk"><a href="#知识点：runInAction-name-thunk" class="headerlink" title="知识点：runInAction(name?, thunk)"></a>知识点：runInAction(name?, thunk)</h4><p><code>runInAction</code> 是个简单的工具函数，它接收代码块并在(异步的)动作中执行。这对于即时创建和执行动作非常有用，例如在<strong>异步过程</strong>中。<code>runInAction(f)</code> 是 <code>action(f)()</code> 的语法糖。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, computed, reaction, action&#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    @observable string = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">    @observable number = <span class="number">123</span>;</span><br><span class="line">    @action.bound <span class="function"><span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.string = <span class="string">&#x27;pingan&#x27;</span></span><br><span class="line">        <span class="built_in">this</span>.number = <span class="number">100</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> store = <span class="keyword">new</span> Store()</span><br><span class="line">reaction(<span class="function">() =&gt;</span> [store.string, store.number], <span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(arr)</span><br><span class="line">&#125;)</span><br><span class="line">runInAction(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    store.string = <span class="string">&#x27;pingan&#x27;</span></span><br><span class="line">    store.number = <span class="number">100</span></span><br><span class="line">&#125;)<span class="comment">//[&quot;pingan&quot;, 100]</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="四、-Mobx-React-简单实例"><a href="#四、-Mobx-React-简单实例" class="headerlink" title="四、 Mobx-React 简单实例"></a>四、 Mobx-React 简单实例</h1><p>这里以简单计数器为例，实现点击按钮，数值累加的简单操作，如图：</p>
+<p><img src="http://images.pingan8787.com/blog/2019102301.png" alt="2019102301.png"></p>
+<p>在这个案例中，我们引用 <code>mobx-react</code> 库来实现，很明显可以看出 <code>mobx-react</code> 是作为 <code>mobx</code> 和 <code>react</code> 之前的桥梁。</p>
+<p>它将 <code>react</code> 组件转化为对可观察数据的反应，也就是将组件的 <code>render</code> 方法包装成 <code>autorun</code> 方法，使得状态变化时能自动重新渲染。</p>
+<p>详细可以查看：<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/mobx-react">https://www.npmjs.com/package/mobx-react</a> 。</p>
+<p>接下来开始我们的案例：</p>
+<h2 id="1-安装依赖和配置webpack"><a href="#1-安装依赖和配置webpack" class="headerlink" title="1. 安装依赖和配置webpack"></a>1. 安装依赖和配置webpack</h2><p>由于配置和前面第二节介绍差不多，所以这里会以第二节的配置为基础，添加配置。</p>
+<p>首先安装 <code>mobx-react</code> 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm i mobx-react -D</span><br></pre></td></tr></table></figure>
+
+<p>修改<code> webpack.config.js</code>，在 <code>presets</code> 配置中添加 <code>react</code> 进来：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// ... 省略其他</span><br><span class="line"><span class="deletion">- entry: path.resolve(__dirname, &#x27;src/index.js&#x27;),</span></span><br><span class="line"><span class="addition">+ entry: path.resolve(__dirname, &#x27;src/index.jsx&#x27;),</span></span><br><span class="line">module: &#123;</span><br><span class="line">    rules: [&#123;</span><br><span class="line">        test: /\.jsx?$/,</span><br><span class="line">        exclude: /node_modules/,</span><br><span class="line">        use: &#123;</span><br><span class="line">            loader: &#x27;babel-loader&#x27;,</span><br><span class="line">            options: &#123;</span><br><span class="line"><span class="deletion">-                 presets: [&#x27;env&#x27;],</span></span><br><span class="line"><span class="addition">+                 presets: [&#x27;env&#x27;, &#x27;react&#x27;],</span></span><br><span class="line">                plugins: [&#x27;transform-decorators-legacy&#x27;, &#x27;transform-class-properties&#x27;]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-初始化-React-项目"><a href="#2-初始化-React-项目" class="headerlink" title="2. 初始化 React 项目"></a>2. 初始化 React 项目</h2><p>这里初始化一下我们本次项目的简单骨架：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.jsx</span></span><br><span class="line"><span class="keyword">import</span> &#123; observable, action&#125; <span class="keyword">from</span> <span class="string">&#x27;mobx&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;observer, PropTypes <span class="keyword">as</span> observablePropTypes&#125; <span class="keyword">from</span> <span class="string">&#x27;mobx-react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Store();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">Foo</span> /&gt;</span></span>, <span class="built_in">document</span>.querySelector(<span class="string">&quot;#root&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>这些组件对应到我们最后页面效果如图：</p>
+<p><img src="http://images.pingan8787.com/blog/2019102302.png" alt="2019102302.png"></p>
+<h2 id="2-实现-Store-类"><a href="#2-实现-Store-类" class="headerlink" title="2. 实现 Store 类"></a>2. 实现 Store 类</h2><p><code>Store</code> 类用于存储数据。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Store</span> </span>&#123;</span><br><span class="line">    @observable cache = &#123; <span class="attr">queue</span>: [] &#125;</span><br><span class="line">    @action.bound <span class="function"><span class="title">refresh</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.cache.queue.push(<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-实现-Bar-和-Foo-组件"><a href="#3-实现-Bar-和-Foo-组件" class="headerlink" title="3. 实现 Bar 和 Foo 组件"></a>3. 实现 Bar 和 Foo 组件</h2><p>实现代码如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@observer</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">        <span class="attr">queue</span>: observablePropTypes.observableArray</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> queue = <span class="built_in">this</span>.props.queue;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;queue.length&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">        <span class="attr">cache</span>: observablePropTypes.observableObject</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> cache = <span class="built_in">this</span>.props.cache;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.props.refresh&#125;</span>&gt;</span>点击 + 1<span class="tag">&lt;/<span class="name">button</span>&gt;</span> 当前数值：<span class="tag">&lt;<span class="name">Bar</span> <span class="attr">queue</span>=<span class="string">&#123;cache.queue&#125;</span> /&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意： </p>
+<ol>
+<li><p>可观察数据类型中的数组，实际上并不是数组类型，这里需要用 <code>observablePropTypes.observableArray</code> 去声明它的类型，对象也是一样。</p>
+</li>
+<li><p><code>@observer</code> 在需要<strong>根据数据变换，而改变UI的组件去引用</strong>，另外建议<strong>有使用到相关数据的类</strong>都引用。</p>
+</li>
+<li><p>事实上，我们只需要记住 <code>observer</code> 方法，将所有 <code>React</code> 组件用 <code>observer</code> 修饰，就是 <code>react-mobx</code> 的用法。</p>
+</li>
+</ol>
+<h2 id="4-使用-Foo-组件"><a href="#4-使用-Foo-组件" class="headerlink" title="4. 使用 Foo 组件"></a>4. 使用 Foo 组件</h2><p>最后我们使用 <code>Foo</code> 组件，需要给它传递两个参数，这样 <code>Bar</code> 组件才能拿到并使用：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">cache</span>=<span class="string">&#123;store.cache&#125;</span> <span class="attr">refresh</span>=<span class="string">&#123;store.refresh&#125;/</span>&gt;</span></span>, </span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">&quot;#root&quot;</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><p>本文参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cn.mobx.js.org/">《MobX 官方文档》</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.imooc.com/learn/1012">茵风泳月《MobX 入门基础教程》</a></li>
+</ul>
+<h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><blockquote>
+<p>本文首发在 <a target="_blank" rel="noopener" href="http://www.pingan8787.com/">pingan8787个人博客</a>，如需转载请保留个人介绍。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#105;&#110;&#103;&#97;&#x6e;&#56;&#x37;&#x38;&#x37;&#64;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;">&#x70;&#105;&#110;&#103;&#97;&#x6e;&#56;&#x37;&#x38;&#x37;&#64;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>ES小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+</tbody></table>
+<h3 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h3><p><img src="http://images.pingan8787.com/blog/2019_10_24guild_page.png" alt="bg">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/24/178-%E3%80%90MobX%E3%80%91MobX%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" data-id="ckts3ejyc00me4d9k7hwxc1dh" data-title="178-【MobX】MobX简单入门教程" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/30/179-%E3%80%90%E5%85%A8%E6%A0%88%E4%BF%AE%E7%82%BC%E3%80%91OAuth2%E4%BF%AE%E7%82%BC%E5%AE%9D%E5%85%B8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          179-【全栈修炼】OAuth2修炼宝典
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/21/177-%E3%80%90JavaScript%E3%80%91%E6%A8%A1%E5%9D%97%E5%8C%96%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">177-【JavaScript】模块化方案总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

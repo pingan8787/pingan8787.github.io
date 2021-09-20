@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>144-【CuteJavaScript】Angular6入门项目（3.编写服务和引入RxJS） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#112;&amp;#105;&amp;#110;&amp;#x67;&amp;#x61;&amp;#x6e;&amp;#56;&amp;#55;&amp;#x38;&amp;#x37;&amp;#x40;&amp;#113;&amp;#x71;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="144-【CuteJavaScript】Angular6入门项目（3.编写服务和引入RxJS）">
+<meta property="og:url" content="http://example.com/2019/02/23/144-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%883-%E7%BC%96%E5%86%99%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%BC%95%E5%85%A5RxJS%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#112;&amp;#105;&amp;#110;&amp;#x67;&amp;#x61;&amp;#x6e;&amp;#56;&amp;#55;&amp;#x38;&amp;#x37;&amp;#x40;&amp;#113;&amp;#x71;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png">
+<meta property="og:image" content="http://images.pingan8787.com/angular_books_3_2.png">
+<meta property="og:image" content="http://images.pingan8787.com/2019_07_12guild_page.png">
+<meta property="article:published_time" content="2019-02-23T03:18:17.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.592Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-144-【CuteJavaScript】Angular6入门项目（3-编写服务和引入RxJS）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/02/23/144-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%883-%E7%BC%96%E5%86%99%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%BC%95%E5%85%A5RxJS%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2019-02-23T03:18:17.000Z" itemprop="datePublished">2019-02-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      144-【CuteJavaScript】Angular6入门项目（3.编写服务和引入RxJS）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png" alt="Angular封面"></p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#105;&#110;&#x67;&#x61;&#x6e;&#56;&#55;&#x38;&#x37;&#x40;&#113;&#x71;&#46;&#x63;&#x6f;&#109;">&#112;&#105;&#110;&#x67;&#x61;&#x6e;&#56;&#55;&#x38;&#x37;&#x40;&#113;&#x71;&#46;&#x63;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<h2 id="本文目录"><a href="#本文目录" class="headerlink" title="本文目录"></a>本文目录</h2><ul>
+<li>一、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70ae586fb9a049c64476a0">项目起步</a></li>
+<li>二、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70ae586fb9a049c64476a0">编写路由组件</a></li>
+<li>三、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b48d6fb9a04a0b22cbce">编写页面组件</a>   <ul>
+<li>1.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b48d6fb9a04a0b22cbce">编写单一组件</a></li>
+<li>2.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b48d6fb9a04a0b22cbce">模拟数据</a></li>
+<li>3.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b48d6fb9a04a0b22cbce">编写主从组件</a></li>
+</ul>
+</li>
+<li>四、<strong>编写服务</strong><ul>
+<li>1.<strong>为什么需要服务</strong></li>
+<li>2.<strong>编写服务</strong></li>
+</ul>
+</li>
+<li>五、<strong>引入RxJS</strong><ul>
+<li>1.<strong>关于RxJS</strong></li>
+<li>2.<strong>引入RxJS</strong></li>
+<li>3.<strong>改造数据获取方式</strong></li>
+</ul>
+</li>
+<li>六、改造组件<ul>
+<li>1.添加历史记录组件</li>
+<li>2.添加和删除历史记录</li>
+</ul>
+</li>
+<li>七、HTTP改造<ul>
+<li>1.引入HTTP</li>
+<li>2.通过HTTP请求数据</li>
+<li>3.通过HTTP修改数据</li>
+<li>4.通过HTTP增加数据</li>
+<li>5.通过HTTP删除数据</li>
+<li>6.通过HTTP查找数据</li>
+</ul>
+</li>
+</ul>
+<h2 id="四、编写服务"><a href="#四、编写服务" class="headerlink" title="四、编写服务"></a>四、编写服务</h2><p>截止到这部分，我们的<code>BooksComponent</code>组件获取和显示的都是本地模拟的数据。<br>接下来我们要开始对这些进行重构，让聚焦于为它的视图提供支持，这也让它更容易使用模拟服务进行单元测试。    </p>
+<h3 id="1-为什么需要服务"><a href="#1-为什么需要服务" class="headerlink" title="1.为什么需要服务"></a>1.为什么需要服务</h3><p>我们不应该让组件来直接获取或保存数据，它们应该聚焦于展示数据，而数据访问的工作交给其他服务来做。<br>这里我们需要创建一个名为<code>BooksService</code>的服务，让我们应用中所有的类都使用它来获取书本列表的数据，使用的时候，只需要将它通过Angular的<strong>依赖注入机制</strong>注入到需要用的组件的构造函数中。    </p>
+<p><strong>知识点：</strong><br>服务可以实现多个不同组件之间信息共享，后面我们还会将它注入到两个地方：<br><code>BooksService</code>中，使用该服务发送消息。<br><code>IndexService</code>中，使用该服务来展示消息。   </p>
+<p>接下来我们使用命令行，创建<code>BooksService </code>：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g service books</span><br></pre></td></tr></table></figure>
+<p>在生成的<code>books.service.ts</code>文件中：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line">@Injectable(&#123;</span><br><span class="line">  <span class="attr">providedIn</span>: <span class="string">&#x27;root&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>新导入了<code>@Injectable</code>装饰器，是为了让<code>BooksService</code>提供一个可注入的服务，并且它还可以拥有自己的待注入的依赖，简单理解就是<strong>如果你的服务需要依赖，那么你就需要导入它</strong>。<br>并且它接收该服务的元数据对象。    </p>
+<h3 id="2-编写服务"><a href="#2-编写服务" class="headerlink" title="2.编写服务"></a>2.编写服务</h3><p>接下来我们开始编写<code>books.service.ts</code>服务。    </p>
+<ul>
+<li>导入服务所需组件</li>
+</ul>
+<p>这里我们导入<code>Books</code>和<code>BookList</code>，并添加一个<code>getBooks</code>方法来返回所有书本的数据，并且还需要添加一个<code>getBooks</code>方法来返回指定id的书本信息:   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Books &#125; <span class="keyword">from</span> <span class="string">&#x27;./books&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BookList &#125; <span class="keyword">from</span> <span class="string">&#x27;./mock-books&#x27;</span>;</span><br><span class="line">@Injectable(&#123;</span><br><span class="line">  <span class="attr">providedIn</span>: <span class="string">&#x27;root&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">BooksService</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123; &#125;</span><br><span class="line">  getBookList(): Books[] &#123;</span><br><span class="line">    <span class="keyword">return</span> BookList;</span><br><span class="line">  &#125;</span><br><span class="line">  getBook(id: number): Books&#123;</span><br><span class="line">    <span class="keyword">return</span> BookList.find(<span class="function"><span class="params">book</span> =&gt;</span> book.id === id)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在我们使用这个服务之前，需要先注册该服务，因为我们在使用<code>ng g service books</code>命令创建服务时，CLI已经默认为我们添加了注册了，这是方法就是上面代码中的：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">providedIn: <span class="string">&#x27;root&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>表示将我们的服务注册在<strong>根注入器</strong>上，这样我们就可以把这个服务注入到任何享用的类上了。   </p>
+<ul>
+<li>修改<code>IndexComponent</code>   </li>
+</ul>
+<p>先删除<code>BookList</code>的引入，并修改<code>books</code>属性的定义：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; BooksService &#125; <span class="keyword">from</span> <span class="string">&#x27;../books.service&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">  <span class="attr">books</span> : Books[];</span><br><span class="line">  <span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后注入我们的<code>BooksService</code>服务，需要先往构造函数中添加一个私有的<code>booksservice</code>，使用注入的<code>BooksService</code>作为类型，理解成一个注入点：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line"><span class="function"><span class="title">constructor</span>(<span class="params">private booksservice: BooksService</span>)</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后我们需要添加一个<code>getBooks</code>方法来获取这些书本数据，并在生命周期函数<code>ngOnInit</code>中调用：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.getBooks();</span><br><span class="line">  &#125;</span><br><span class="line">  getBooks(): <span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.books = <span class="built_in">this</span>.booksservice.getBookList();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改<code>DetailComponent</code><br>我们先改造书本详情页的HTML结构：   <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- detail.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">&quot;books&quot;</span> <span class="attr">class</span>=<span class="string">&quot;detail&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h3</span>&gt;</span>《&#123;&#123;books.title&#125;&#125;》介绍<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;books.url&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>书本标题: &#123;&#123;books.title&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>书本作者: &#123;&#123;books.author&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>书本id: &#123;&#123;books.id&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">&quot;!books&quot;</span> <span class="attr">class</span>=<span class="string">&quot;detail&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h3</span>&gt;</span>暂无信息<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>*知识点**：<br>这里使用了<code>*ngIf</code>指令，当条件为<code>true</code>则显示其HTML内容。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// detail.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Books &#125; <span class="keyword">from</span> <span class="string">&#x27;../books&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BooksService &#125; <span class="keyword">from</span> <span class="string">&#x27;../books.service&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">DetailComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    private route: ActivatedRoute,</span></span></span><br><span class="line"><span class="params"><span class="function">    private location: Location,</span></span></span><br><span class="line"><span class="params"><span class="function">    private booksservice: BooksService  <span class="comment">// 引入BooksService服务</span></span></span></span><br><span class="line"><span class="params"><span class="function">  </span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="attr">books</span>: Books;  <span class="comment">// 定义books类型</span></span><br><span class="line">  <span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.getDetail()</span><br><span class="line">  &#125;</span><br><span class="line">  getDetail(): <span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> id = +<span class="built_in">this</span>.route.snapshot.paramMap.get(<span class="string">&#x27;id&#x27;</span>);</span><br><span class="line">    <span class="built_in">this</span>.getBooks(id);</span><br><span class="line">  &#125;</span><br><span class="line">  getBooks(id: number): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.books = <span class="built_in">this</span>.booksservice.getBook(id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码，主要定义了<code>getBooks</code>方法，当刚进入页面时，将书本<code>id</code>传入<code>getBooks</code>方法，去<code>BooksService</code>去获取对应id的书本信息，并复制给变量<code>books</code>，然后展示到页面。   </p>
+<p>改造之后，我们的页面显示依旧正常。   </p>
+<p><img src="http://images.pingan8787.com/angular_books_3_2.png" alt="图片3-2"></p>
+<p>但是我们要知道，这背后的逻辑已经改变了。   </p>
+<h2 id="五、引入RxJS改造项目"><a href="#五、引入RxJS改造项目" class="headerlink" title="五、引入RxJS改造项目"></a>五、引入RxJS改造项目</h2><h3 id="1-关于RxJS"><a href="#1-关于RxJS" class="headerlink" title="1.关于RxJS"></a>1.关于RxJS</h3><p>这里简单介绍关键概念，具体可以查看 <a target="_blank" rel="noopener" href="https://rxjs.dev/">RxJS 官网</a>，也可以参考 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/36d85f8cafdd">浅析Angular之RxJS</a>。    </p>
+<h4 id="什么是RxJS"><a href="#什么是RxJS" class="headerlink" title="什么是RxJS"></a>什么是RxJS</h4><p>RxJS全称<code>Reactive Extensions for JavaScript</code>，中文意思: JavaScript的响应式扩展。<br>RxJS主要是提供一种更加强大和优雅的方式，来利用响应式编程的模式，实现JavaScript的异步编程。   </p>
+<h4 id="RxJS优点"><a href="#RxJS优点" class="headerlink" title="RxJS优点"></a>RxJS优点</h4><ul>
+<li>纯净性；   </li>
+<li>流动性；    </li>
+</ul>
+<h4 id="RxJS核心概念"><a href="#RxJS核心概念" class="headerlink" title="RxJS核心概念"></a>RxJS核心概念</h4><p>RxJS 是基于观察者模式和迭代器模式以函数式编程思维来实现的。RxJS 中含有两个基本概念：<code>Observables</code> 与 <code>Observer</code>。<br><code>Observables</code> 作为被观察者，是一个值或事件的流集合；而 <code>Observer</code> 则作为观察者，根据 <code>Observables</code> 进行处理。它们之间的订阅发布关系(观察者模式) 如下：<br><strong>订阅</strong>：<code>Observer</code> 通过 <code>Observable</code> 提供的 <code>subscribe()</code> 方法订阅 <code>Observable</code>。<br><strong>发布</strong>：<code>Observable</code> 通过回调 <code>next</code> 方法向 <code>Observer</code> 发布事件。   </p>
+<p>———— 来源<a target="_blank" rel="noopener" href="http://www.semlinker.com/rxjs-observable/">Angular修仙之路 RxJS Observable</a> </p>
+<p>另外这里列出来一些核心，具体还是看官网咯，并且下面使用到的时候会具体介绍。   </p>
+<ul>
+<li><code>Observable</code> (可观察对象): 表示一个概念，这个概念是一个可调用的未来值或事件的集合。   </li>
+<li><code>Observer</code>(观察者): 一个回调函数的集合，它知道如何去监听由 <code>Observable</code> 提供的值。    </li>
+<li><code>Subscription</code> (订阅): 表示 <code>Observable</code> 的执行，主要用于取消 <code>Observable</code> 的执行。    </li>
+<li><code>Operators</code> (操作符): 采用函数式编程风格的纯函数 (<code>pure function</code>)，使用像 <code>map</code>、<code>filter</code>、<code>concat</code>、<code>flatMap</code> 等这样的操作符来处理集合。   </li>
+<li><code>Subject</code> (主体): 相当于 <code>EventEmitter</code>，并且是将值或事件多路推送给多个 <code>Observer</code> 的唯一方式。   </li>
+<li><code>Schedulers</code> (调度器): 用来控制并发并且是中央集权的调度员，允许我们在发生计算时进行协调，例如 <code>setTimeout</code> 或<code>requestAnimationFrame</code>或其他。   </li>
+</ul>
+<h3 id="2-引入RxJS"><a href="#2-引入RxJS" class="headerlink" title="2.引入RxJS"></a>2.引入RxJS</h3><p>在我们的真实应用中，我们必须要等到服务器响应后，我们才能获取到数据，因此这天生就需要用异步思维来操作。   </p>
+<p>由于Angular中已经自带RxJS，所以我们只要在需要使用的时候，引入即可使用：   </p>
+<h3 id="3-改造数据获取方式"><a href="#3-改造数据获取方式" class="headerlink" title="3.改造数据获取方式"></a>3.改造数据获取方式</h3><p>了解完RxJS的一些概念后，我们开始改造下这些书本的数据获取方式。   </p>
+<ul>
+<li>改造<code>BooksService</code>   </li>
+</ul>
+<p>首先我们从 RxJS 中导入 <code>Observable</code> 和 <code>of</code> 符号：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Observable, <span class="keyword">of</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;rxjs&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>知识点</strong>：<br><code>Observable</code>:  观察者模式中的观察者，具体可以参考 <a target="_blank" rel="noopener" href="http://www.semlinker.com/rxjs-observable/">Angular修仙之路 RxJS Observable</a><br><code>of</code>:  用来获取观察者拿到的数据，通常是一个<code>Observable</code>。   </p>
+<p>然后修改<code>getBookList</code>方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line">getBookList(): Observable&lt;Books[]&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">of</span>(BookList);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里 <code>of(BookList)</code> 返回一个<code> Observable&lt;Books[]&gt;</code>，它会发出单个值，这个值就是这些模拟书本的数组。   </p>
+<ul>
+<li>改造<code>IndexComponent</code>   </li>
+</ul>
+<p>这里也要修改<code>getBooks</code>方法，使用<code>subscribe</code>去订阅服务返回回来的值：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line">getBooks(): <span class="keyword">void</span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.booksservice.getBookList()</span><br><span class="line">    .subscribe(<span class="function"><span class="params">books</span> =&gt;</span> <span class="built_in">this</span>.books = books);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于原本直接赋值数据，在实际场景中是不可能这样同步的，所以这里<code>subscribe</code>函数，会在<code>Observable</code>发出数据以后，再把书本列表传到里面的回调函数，再复制给<code>books</code>属性。<br>使用这种异步方式，当 <code>BooksService</code> 从远端服务器获取英雄数据时，不用担心还没拿到数据就执行后面。   </p>
+<p>下一步，我们就要改造一下项目了。   </p>
+<p><strong>本部分内容到这结束</strong></p>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#105;&#x6e;&#103;&#x61;&#x6e;&#x38;&#55;&#56;&#x37;&#64;&#x71;&#113;&#x2e;&#99;&#111;&#x6d;">&#x70;&#105;&#x6e;&#103;&#x61;&#x6e;&#x38;&#55;&#56;&#x37;&#64;&#x71;&#113;&#x2e;&#99;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>JS小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<p><img src="http://images.pingan8787.com/2019_07_12guild_page.png" alt="bg">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/02/23/144-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%883-%E7%BC%96%E5%86%99%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%BC%95%E5%85%A5RxJS%EF%BC%89/" data-id="ckts3ejt4002r4d9k6jj29uz4" data-title="144-【CuteJavaScript】Angular6入门项目（3.编写服务和引入RxJS）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/02/23/145-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%884-%E6%94%B9%E9%80%A0%E7%BB%84%E4%BB%B6%E5%92%8C%E6%B7%BB%E5%8A%A0HTTP%E6%9C%8D%E5%8A%A1%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          145-【CuteJavaScript】Angular6入门项目（4.改造组件和添加HTTP服务）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/23/143-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%882-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E9%A1%B5%E9%9D%A2%E5%92%8C%E7%BB%84%E4%BB%B6%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">143-【CuteJavaScript】Angular6入门项目（2.构建项目页面和组件）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

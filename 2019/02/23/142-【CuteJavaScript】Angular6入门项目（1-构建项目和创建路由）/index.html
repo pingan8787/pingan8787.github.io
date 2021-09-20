@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>142-【CuteJavaScript】Angular6入门项目（1.构建项目和创建路由） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#112;&amp;#105;&amp;#110;&amp;#x67;&amp;#x61;&amp;#x6e;&amp;#56;&amp;#x37;&amp;#x38;&amp;#55;&amp;#64;&amp;#x71;&amp;#113;&amp;#46;&amp;#x63;&amp;#111;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="142-【CuteJavaScript】Angular6入门项目（1.构建项目和创建路由）">
+<meta property="og:url" content="http://example.com/2019/02/23/142-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%881-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%92%8C%E5%88%9B%E5%BB%BA%E8%B7%AF%E7%94%B1%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#112;&amp;#105;&amp;#110;&amp;#x67;&amp;#x61;&amp;#x6e;&amp;#56;&amp;#x37;&amp;#x38;&amp;#55;&amp;#64;&amp;#x71;&amp;#113;&amp;#46;&amp;#x63;&amp;#111;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pin">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png">
+<meta property="og:image" content="https://camo.githubusercontent.com/ded9be340188be8d3cb8ee2fd6adfe614f07e043/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031392f322f32332f313639313832386637643766663866373f773d38393526683d38343726663d706e6726733d313031303632">
+<meta property="og:image" content="https://camo.githubusercontent.com/9c67d00f8b707eae15fd6c5d1a907942641909ad/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031392f322f32332f313639313832386637633431386237393f773d35373926683d36333126663d706e6726733d3239313137">
+<meta property="og:image" content="http://images.pingan8787.com/2019_07_12guild_page.png">
+<meta property="article:published_time" content="2019-02-23T03:14:53.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.590Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-142-【CuteJavaScript】Angular6入门项目（1-构建项目和创建路由）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/02/23/142-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%881-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%92%8C%E5%88%9B%E5%BB%BA%E8%B7%AF%E7%94%B1%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2019-02-23T03:14:53.000Z" itemprop="datePublished">2019-02-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      142-【CuteJavaScript】Angular6入门项目（1.构建项目和创建路由）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png" alt="Angular封面"></p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#105;&#110;&#x67;&#x61;&#x6e;&#56;&#x37;&#x38;&#55;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;">&#112;&#105;&#110;&#x67;&#x61;&#x6e;&#56;&#x37;&#x38;&#55;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<h2 id="本文目录"><a href="#本文目录" class="headerlink" title="本文目录"></a>本文目录</h2><ul>
+<li><strong>一、项目起步</strong></li>
+<li><strong>二、编写路由组件</strong></li>
+<li>三、编写页面组件   <ul>
+<li>1.编写单一组件</li>
+<li>2.模拟数据</li>
+<li>3.编写主从组件</li>
+</ul>
+</li>
+<li>四、编写服务<ul>
+<li>1.为什么需要服务</li>
+<li>2.编写服务</li>
+</ul>
+</li>
+<li>五、引入RxJS<ul>
+<li>1.关于RxJS</li>
+<li>2.引入RxJS</li>
+<li>3.改造数据获取方式</li>
+</ul>
+</li>
+<li>六、改造组件<ul>
+<li>1.添加历史记录组件</li>
+<li>2.添加和删除历史记录</li>
+</ul>
+</li>
+<li>七、HTTP改造<ul>
+<li>1.引入HTTP</li>
+<li>2.通过HTTP请求数据</li>
+<li>3.通过HTTP修改数据</li>
+<li>4.通过HTTP增加数据</li>
+<li>5.通过HTTP删除数据</li>
+<li>6.通过HTTP查找数据</li>
+</ul>
+</li>
+<li>八、结语</li>
+</ul>
+<p>这个入门项目是我学习完<a target="_blank" rel="noopener" href="https://angular.cn/tutorial">Angular 英雄指南教程</a>后，自己手写的一个练习项目，一步一步来，最终的<a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo-JavaScript/tree/master/Cute-Angular/books%E9%A1%B9%E7%9B%AEdemo">项目源码可以这里查看</a>，大佬们请指点啦。    </p>
+<p>推荐两个Angular学习网站：   </p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://angular.cn/">Angular 中文网</a>   </li>
+<li><a target="_blank" rel="noopener" href="http://www.semlinker.com/">Angular 修仙之路</a>   </li>
+</ol>
+<p>还有呢，我没怎么关注到样式，所以样式会有点丑，主要都放在核心逻辑中了。<br><strong>最终实现：</strong>    </p>
+<ul>
+<li>首页书本列表数据展示</li>
+<li>各个页面静态/动态路由跳转</li>
+<li>本地模拟数据服务</li>
+<li>书本数据的增删改查</li>
+<li>父子组件通信</li>
+<li>常用指令使用和介绍</li>
+</ul>
+<p><img src="https://camo.githubusercontent.com/ded9be340188be8d3cb8ee2fd6adfe614f07e043/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031392f322f32332f313639313832386637643766663866373f773d38393526683d38343726663d706e6726733d313031303632" alt="图片结果"></p>
+<p>后面我将把这个系列的文章，收录到我的<a target="_blank" rel="noopener" href="http://js.pingan8787.com/">【CuteJavaScript】</a>中，里面有整理了<strong>ES6/7/8/9知识点</strong>和<strong>重温JS基础系列</strong>文章。   </p>
+<p>那么，快跟我一步步来完成这个入门项目吧。</p>
+<h2 id="零、Angular安装"><a href="#零、Angular安装" class="headerlink" title="零、Angular安装"></a>零、Angular安装</h2><p>Angular 需要 <code>Node.js</code> 的 <code>8.x</code> 或 <code>10.x</code> 版本。<br>检查你的<code>Node.js</code>版本，请在终端/控制台窗口中运行 <code>node -v</code> 命令。<br>要想安装<code> Node.js</code>，请访问 nodejs.org。   </p>
+<ol>
+<li>安装Angular CLI   </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @angular/cli</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>常用命令</li>
+</ol>
+<p>后续用到会详细介绍这些命令。</p>
+<ul>
+<li><p>启动服务，并打开新窗口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ng serve --open</span><br><span class="line"><span class="comment"># --open 可简写 -o</span></span><br></pre></td></tr></table></figure></li>
+<li><p>创建新组件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ng generate component books</span><br><span class="line"><span class="comment"># generate 可简写 g</span></span><br></pre></td></tr></table></figure></li>
+<li><p>创建新服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng generate service books</span><br></pre></td></tr></table></figure></li>
+<li><p>创建路由模块</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng generate module app-routing --flat --module=app</span><br></pre></td></tr></table></figure></li>
+<li><p>其他<br>另外Angular CLI还有很多的命令提供，详细可以查阅官方文档 <a target="_blank" rel="noopener" href="https://angular.cn/cli">Angular CLI 命令</a>。</p>
+</li>
+</ul>
+<p>最后搭建完是这样：    </p>
+<p><img src="https://camo.githubusercontent.com/9c67d00f8b707eae15fd6c5d1a907942641909ad/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031392f322f32332f313639313832386637633431386237393f773d35373926683d36333126663d706e6726733d3239313137" alt="图片创建"></p>
+<h2 id="一、项目起步"><a href="#一、项目起步" class="headerlink" title="一、项目起步"></a>一、项目起步</h2><ol>
+<li><p>创建项目    </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ng new books</span><br><span class="line"><span class="built_in">cd</span> books</span><br></pre></td></tr></table></figure></li>
+<li><p>创建所需的两个页面组件  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ng g component index</span><br><span class="line">ng g component detail</span><br></pre></td></tr></table></figure>
+<p><code>g</code>是<code>generate</code>的简写。   </p>
+</li>
+</ol>
+<h2 id="二、编写路由组件"><a href="#二、编写路由组件" class="headerlink" title="二、编写路由组件"></a>二、编写路由组件</h2><p>这里为了项目结构先起来，所以先简单配置一下路由，后面路由会调整，如果遇到什么不懂，可以查看<a target="_blank" rel="noopener" href="https://angular.cn/guide/router">Angular 路由与导航</a>。  </p>
+<ol>
+<li>安装<strong>路由模块</strong>    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g module app-routing --flat --module=app</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>知识点：</strong><br><code>--flat</code> 把这个文件放进了 <code>src/app</code> 中，而不是单独的目录中。<br><code>--module=app</code> 告诉 CLI 把它注册到 <code>AppModule</code> 的 <code>imports</code> 数组中。   </p>
+<ol start="2">
+<li>引入<strong>路由模块</strong>    <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app-routing.module.ts  </span></span><br><span class="line"><span class="keyword">import</span> &#123; RouterModule, Routes &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li>导出<strong>路由模块</strong>的指令  </li>
+</ol>
+<p>这里需要添加一个 <code>@NgModule.exports</code> 数组，并传入<code>RouterModule</code>，导出 <code>RouterModule</code> 让路由器的相关指令可以在 <code>AppModule</code> 中的组件中使用。   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app-routing.module.ts  </span></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [CommonModule],</span><br><span class="line">  <span class="attr">declarations</span>: [],</span><br><span class="line">  <span class="attr">exports</span>: [RouterModule]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>添加定义路由    </li>
+</ol>
+<p>这里添加路由的时候，记得将所需要指向的组件也引入进来，这里我们需要引入两个页面的组件：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app-routing.module.ts  </span></span><br><span class="line"><span class="keyword">import</span> &#123; IndexComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;./index/index.component&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DetailComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;./detail/detail.component&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>然后将我们所需要的路由定义在<code>routes</code>变量中，类型是我们引入的<code>Routes</code>：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app-routing.module.ts  </span></span><br><span class="line"><span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">redirectTo</span>:<span class="string">&#x27;/index&#x27;</span>, <span class="attr">pathMatch</span>:<span class="string">&#x27;full&#x27;</span> &#125;,    <span class="comment">// 1</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;index&#x27;</span>, <span class="attr">component</span>: IndexComponent&#125;,            <span class="comment">// 2</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;detail/:id&#x27;</span>, <span class="attr">component</span>: DetailComponent&#125;,      <span class="comment">// 3 </span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p><strong>知识点</strong>：<br><code>angular</code>的路由接收两个参数：   </p>
+<ul>
+<li><code>path</code>：用于匹配浏览器地址栏中 <code>URL</code> 的字符串。   </li>
+<li><code>component</code>：当导航到此路由时，路由器展示的组件名称。   </li>
+</ul>
+<p><strong>第1行代码</strong>：<br>作为路由系统的默认路由，当所有路由都不匹配的话，就会重定向到这个路由，并展示对应的组件。<br><strong>第2行代码</strong>：<br>正常情况下的路由配置。<br><strong>第3行代码</strong>：<br>配置的是携带参数的路由，在路由<code>/</code>后，用 <code>:</code> 拼接参数名来实现，<strong>获取这个参数的值的方法后面会介绍</strong>。</p>
+<p>另外，我们还可以这么传递参数，直接将数据通过路由传入，后面还会介绍：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">path</span>: <span class="string">&#x27;pathname&#x27;</span>, <span class="attr">component</span>: DemoComponent, <span class="attr">data</span>: &#123; <span class="attr">title</span>: <span class="string">&#x27;pingan8787&#x27;</span> &#125; &#125;,</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>添加路由监视   </li>
+</ol>
+<p>配置好路由还不能使用，需要一个监视路由变化的工具，这时候需要把<code>RouterModule</code>添加到 <code>@NgModule.imports</code> 数组中，并用 <code>routes</code> 来配置它。<br>这里只需要调用<code>imports</code>数组中的 <code>RouterModule.forRoot()</code> 函数就行了，就像这样：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app-routing.module.ts  </span></span><br><span class="line"><span class="attr">imports</span>: [ RouterModule.forRoot(routes) ],</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>添加路由出口   </li>
+</ol>
+<p>所谓的路由出口，就是路由所对应的组件展示的地方，接下来我们在<code>app.component.html</code>内容中，添加<code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code>：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- app.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span> 欢迎来到我的个人书屋! <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">router-outlet</span>&gt;</span><span class="tag">&lt;/<span class="name">router-outlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里的<code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code>就是我们路由输出的地方，也是组件展示的地方，简单理解就是，它会告诉路由器要在哪里显示路由的视图。   </p>
+<ol start="7">
+<li>添加路由链接   </li>
+</ol>
+<p>所谓的路由链接，就是出发路由跳转事件的地方，比如一个按钮，一张图片等，我们还是在<code>app.component.html</code>中，使用<code>&lt;a routerLink=&quot;/path&quot;&gt;&lt;/a&gt;</code>添加3个按钮：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- app.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span> 欢迎来到我的个人书屋! <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;&quot;</span>&gt;</span>重定向<span class="tag">&lt;/<span class="name">a</span>&gt;</span> | </span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/index&quot;</span>&gt;</span>打开首页<span class="tag">&lt;/<span class="name">a</span>&gt;</span> | </span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/detail/1&quot;</span>&gt;</span>打开书本详情<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">router-outlet</span>&gt;</span><span class="tag">&lt;/<span class="name">router-outlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这边3个按钮的路由，我们将上面定义的3种路由，传入到<code>routerLink</code>参数中，现在就项目就可以实现页面跳转了。    </p>
+<p>另外，这里还可以传入一个可选参数<code>routerLinkActive=&quot;className&quot;</code>，表示当这个<code>&lt;a&gt;</code>标签激活的时候显示的样式，值是一个字符串，为样式的类名：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/index&quot;</span> <span class="attr">routerLinkActive</span>=<span class="string">&quot;activeClass&quot;</span>&gt;</span>打开首页<span class="tag">&lt;/<span class="name">a</span>&gt;</span> | </span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>获取带参数路由的参数    </li>
+</ol>
+<p>在第7步中，我们点击 <strong>打开书本详情</strong> 按钮中，在路由中带了参数，这时候我们需要这么来获取这个参数：    </p>
+<ul>
+<li><p>先导出模块<code>ActivatedRoute</code>和<code>Location</code>：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// detail.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; ActivatedRoute &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Location &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/common&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>再注入到构造函数中，并将值作为私有变量：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// detail.component.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">DetailComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    private route: ActivatedRoute,</span></span></span><br><span class="line"><span class="params"><span class="function">    private location: Location</span></span></span><br><span class="line"><span class="params"><span class="function">  </span>)</span> &#123; &#125;</span><br><span class="line">  <span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><em>知识点：</em>*<br><code>ActivatedRoute</code> 保存该 <code>DetailComponent</code> 实例的路由信息。可以从这个组件获取URL中的路由参数和其他数据。<br><code>Location</code> 是一个 <code>Angular</code> 的服务，用来与浏览器打交道。后续会使用它来导航回上一个视图。    </p>
+</li>
+<li><p>提取路由参数：  </p>
+</li>
+</ul>
+<p>这里声明<code>getDetail</code>方法，提取路由参数，并<code>ngOnInit</code><strong>生命周期钩子方法</strong>在中执行。    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// detail.component.ts</span></span><br><span class="line"><span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.getDetail()</span><br><span class="line">&#125;</span><br><span class="line">getDetail(): <span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> id = +<span class="built_in">this</span>.route.snapshot.paramMap.get(<span class="string">&#x27;id&#x27;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`此课本的id是<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>知识点</strong>：<br><code>route.snapshot</code> 是一个路由信息的<strong>静态快照</strong>，抓取自组件刚刚创建完毕之后。<br><code>paramMap</code> 是一个URL中路由所携带的参数值的对象。”id”对应的值就是要获取的书本的 id。<br><strong>注意</strong>：<br>路由参数总会是字符串。这里我们使用 (+) 操作符，将字符串转换成数字。     </p>
+<p>现在在浏览器上刷新下页面，再点击 <strong>打开书本详情</strong> 按钮，可以看到控制台输出了<code>此课本的id是1</code>的结果。<br>到这一步，我们算是把路由配置完成了，接下来可以开始做页面的逻辑了。    </p>
+<p><strong>本部分内容到这结束</strong></p>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#x69;&#x6e;&#x67;&#x61;&#110;&#56;&#55;&#x38;&#x37;&#64;&#113;&#113;&#46;&#x63;&#111;&#x6d;">&#112;&#x69;&#x6e;&#x67;&#x61;&#110;&#56;&#55;&#x38;&#x37;&#64;&#113;&#113;&#46;&#x63;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>JS小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<p><img src="http://images.pingan8787.com/2019_07_12guild_page.png" alt="bg">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/02/23/142-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%881-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%92%8C%E5%88%9B%E5%BB%BA%E8%B7%AF%E7%94%B1%EF%BC%89/" data-id="ckts3ejt2002m4d9kamf93s3r" data-title="142-【CuteJavaScript】Angular6入门项目（1.构建项目和创建路由）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/02/23/143-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%882-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E9%A1%B5%E9%9D%A2%E5%92%8C%E7%BB%84%E4%BB%B6%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          143-【CuteJavaScript】Angular6入门项目（2.构建项目页面和组件）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/18/141-%E3%80%90Nodejs%E3%80%91Nodejs%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E6%A8%A1%E5%9D%97fs/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">141-【Nodejs】Nodejs文件管理模块fs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

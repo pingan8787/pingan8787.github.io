@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>145-【CuteJavaScript】Angular6入门项目（4.改造组件和添加HTTP服务） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#x70;&amp;#105;&amp;#x6e;&amp;#x67;&amp;#97;&amp;#x6e;&amp;#x38;&amp;#55;&amp;#56;&amp;#x37;&amp;#64;&amp;#113;&amp;#x71;&amp;#46;&amp;#99;&amp;#111;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pinga">
+<meta property="og:type" content="article">
+<meta property="og:title" content="145-【CuteJavaScript】Angular6入门项目（4.改造组件和添加HTTP服务）">
+<meta property="og:url" content="http://example.com/2019/02/23/145-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%884-%E6%94%B9%E9%80%A0%E7%BB%84%E4%BB%B6%E5%92%8C%E6%B7%BB%E5%8A%A0HTTP%E6%9C%8D%E5%8A%A1%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#x70;&amp;#105;&amp;#x6e;&amp;#x67;&amp;#97;&amp;#x6e;&amp;#x38;&amp;#55;&amp;#56;&amp;#x37;&amp;#64;&amp;#113;&amp;#x71;&amp;#46;&amp;#99;&amp;#111;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pinga">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png">
+<meta property="og:image" content="http://images.pingan8787.com/angular_books_5_1.png">
+<meta property="og:image" content="http://images.pingan8787.com/angular_books_5_2.png">
+<meta property="og:image" content="http://images.pingan8787.com/angular_books_5_3.png">
+<meta property="og:image" content="http://images.pingan8787.com/angular_books_result.png">
+<meta property="og:image" content="http://images.pingan8787.com/2019_07_12guild_page.png">
+<meta property="article:published_time" content="2019-02-23T03:18:33.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.593Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-145-【CuteJavaScript】Angular6入门项目（4-改造组件和添加HTTP服务）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/02/23/145-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%884-%E6%94%B9%E9%80%A0%E7%BB%84%E4%BB%B6%E5%92%8C%E6%B7%BB%E5%8A%A0HTTP%E6%9C%8D%E5%8A%A1%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2019-02-23T03:18:33.000Z" itemprop="datePublished">2019-02-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      145-【CuteJavaScript】Angular6入门项目（4.改造组件和添加HTTP服务）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png" alt="Angular封面"></p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#105;&#x6e;&#x67;&#97;&#x6e;&#x38;&#55;&#56;&#x37;&#64;&#113;&#x71;&#46;&#99;&#111;&#109;">&#x70;&#105;&#x6e;&#x67;&#97;&#x6e;&#x38;&#55;&#56;&#x37;&#64;&#113;&#x71;&#46;&#99;&#111;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<h2 id="本文目录"><a href="#本文目录" class="headerlink" title="本文目录"></a>本文目录</h2><ul>
+<li>一、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70ae586fb9a049c64476a0">项目起步</a></li>
+<li>二、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70ae586fb9a049c64476a0">编写路由组件</a></li>
+<li>三、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b48d6fb9a04a0b22cbce">编写页面组件</a>   <ul>
+<li>1.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b48d6fb9a04a0b22cbce">编写单一组件</a></li>
+<li>2.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b48d6fb9a04a0b22cbce">模拟数据</a></li>
+<li>3.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b48d6fb9a04a0b22cbce">编写主从组件</a></li>
+</ul>
+</li>
+<li>四、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b5486fb9a049d7484fdf">编写服务</a><ul>
+<li>1.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b5486fb9a049d7484fdf">为什么需要服务</a></li>
+<li>2.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b5486fb9a049d7484fdf">编写服务</a></li>
+</ul>
+</li>
+<li>五、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b5486fb9a049d7484fdf">引入RxJS</a><ul>
+<li>1.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b5486fb9a049d7484fdf">关于RxJS</a></li>
+<li>2.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b5486fb9a049d7484fdf">引入RxJS</a></li>
+<li>3.<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70b5486fb9a049d7484fdf">改造数据获取方式</a></li>
+</ul>
+</li>
+<li>六、<strong>改造组件</strong><ul>
+<li>1.<strong>添加历史记录组件</strong></li>
+<li>2.<strong>添加和删除历史记录</strong></li>
+</ul>
+</li>
+<li>七、<strong>HTTP改造</strong><ul>
+<li>1.<strong>引入HTTP</strong></li>
+<li>2.<strong>通过HTTP请求数据</strong></li>
+<li>3.<strong>通过HTTP修改数据</strong></li>
+<li>4.<strong>通过HTTP增加数据</strong></li>
+<li>5.<strong>通过HTTP删除数据</strong></li>
+<li>6.<strong>通过HTTP查找数据</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="六、改造组件"><a href="#六、改造组件" class="headerlink" title="六、改造组件"></a>六、改造组件</h2><p>从这里开始，我们要使用RxJS来改造组件和添加新功能了，让整个项目更加完善。    </p>
+<h3 id="1-添加历史记录组件"><a href="#1-添加历史记录组件" class="headerlink" title="1.添加历史记录组件"></a>1.添加历史记录组件</h3><ul>
+<li>创建<code>HistoryComponent</code>组件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g component hostory</span><br></pre></td></tr></table></figure>
+然后在<code>app.component.html</code>文件夹中添加组件：   <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- app.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">app-history</span>&gt;</span><span class="tag">&lt;/<span class="name">app-history</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-添加增删改查功能"><a href="#2-添加增删改查功能" class="headerlink" title="2.添加增删改查功能"></a>2.添加增删改查功能</h3><p>这里我们要开始做书本的增删改查功能，需要先创建一个<code>HistoryService</code>服务，方便我们实现这几个功能：   </p>
+<ul>
+<li><p>创建<code>HistoryService</code>服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g service <span class="built_in">history</span></span><br></pre></td></tr></table></figure>
+<p>然后在生成的ts文件中，增加<code>add</code>和<code>clear</code>方法，<code>add</code>方法用来添加历史记录到<code>history</code>数组中，<code>clear</code>方法则是清空<code>history</code>数组：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// history.service.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">HistoryService</span> </span>&#123;</span><br><span class="line">    <span class="attr">history</span>: string[] = [];</span><br><span class="line">    <span class="function"><span class="title">add</span>(<span class="params">history: string</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.history.push(history);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">clear</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.history = [];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用<code>HistoryService</code>服务</p>
+</li>
+</ul>
+<p>在将这个服务，注入到<code>BooksService</code>中，并改造<code>getBooks</code>方法：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; HistoryService &#125; <span class="keyword">from</span> <span class="string">&#x27;./history.service&#x27;</span>;</span><br><span class="line"><span class="function"><span class="title">constructor</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    private historyservice: HistoryService</span></span></span><br><span class="line"><span class="params"><span class="function"></span>)</span> &#123; &#125;</span><br><span class="line">getBooks(): <span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.historyservice.add(<span class="string">&#x27;请求书本数据&#x27;</span>)</span><br><span class="line">    <span class="built_in">this</span>.booksservice.getBookList()</span><br><span class="line">        .subscribe(<span class="function"><span class="params">books</span> =&gt;</span> <span class="built_in">this</span>.books = books);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以用相同方法，在<code>IndexComponent</code>中添加<code>访问首页书本列表</code>的记录。    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; HistoryService &#125; <span class="keyword">from</span> <span class="string">&#x27;../history.service&#x27;</span>;</span><br><span class="line"><span class="function"><span class="title">constructor</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    private booksservice: BooksService,</span></span></span><br><span class="line"><span class="params"><span class="function">    private historyservice: HistoryService</span></span></span><br><span class="line"><span class="params"><span class="function"></span>)</span> &#123; &#125;</span><br><span class="line">getBooks(): <span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.historyservice.add(<span class="string">&#x27;访问首页书本列表&#x27;</span>);</span><br><span class="line">    <span class="built_in">this</span>.booksservice.getBookList()</span><br><span class="line">        .subscribe(<span class="function"><span class="params">books</span> =&gt;</span> <span class="built_in">this</span>.books = books);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，将我们的<code>HistoryService</code>注入到<code>HistoryComponent</code>中，然后才能将历史数据显示到页面上：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// history.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; HistoryService &#125; <span class="keyword">from</span> <span class="string">&#x27;../history.service&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">HistoryComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">private historyservice: HistoryService</span>)</span> &#123; &#125;</span><br><span class="line">    <span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- history.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">&quot;historyservice.history.length&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>操作历史：<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;clear&quot;</span></span></span><br><span class="line"><span class="tag">        (<span class="attr">click</span>)=<span class="string">&quot;historyservice.clear()&quot;</span></span></span><br><span class="line"><span class="tag">        &gt;</span>清除<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of historyservice.history&quot;</span>&gt;</span>&#123;&#123;item&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>代码解释</strong>：<br><code>*ngIf=&quot;historyservice.history.length&quot;</code>，是为了防止还没有拿到历史数据，导致后面的报错。<br><code>(click)=&quot;historyservice.clear()&quot;</code>, 绑定我们服务中的<code>clear</code>事件，实现清除缓存。<br><code>*ngFor=&quot;let item of historyservice.history&quot;</code>，将我们的历史数据渲染到页面上。   </p>
+<p>到了这一步，就能看到历史数据了，每次也换到首页，都会增加一条。    </p>
+<p><img src="http://images.pingan8787.com/angular_books_5_1.png" alt="图片5-1"></p>
+<p>接下来，我们要在书本详情页也加上历史记录的统计，导入文件，注入服务，然后改造<code>getBooks</code>方法，实现历史记录的统计：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// detail.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; HistoryService &#125; <span class="keyword">from</span> <span class="string">&#x27;../history.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">DetailComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">        private route: ActivatedRoute,</span></span></span><br><span class="line"><span class="params"><span class="function">        private location: Location,</span></span></span><br><span class="line"><span class="params"><span class="function">        private booksservice: BooksService,</span></span></span><br><span class="line"><span class="params"><span class="function">        private historyservice: HistoryService</span></span></span><br><span class="line"><span class="params"><span class="function">    </span>)</span> &#123; &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    getBooks(id: number): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.books = <span class="built_in">this</span>.booksservice.getBook(id);</span><br><span class="line">        <span class="built_in">this</span>.historyservice.add(<span class="string">`查看书本<span class="subst">$&#123;<span class="built_in">this</span>.books.title&#125;</span>，id为<span class="subst">$&#123;<span class="built_in">this</span>.books.id&#125;</span>`</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.books)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://images.pingan8787.com/angular_books_5_2.png" alt="图片5-2"></p>
+<p>这时候就可以在历史记录中，看到这些操作的记录了，并且<strong>清除</strong>按钮也正常使用。   </p>
+<h2 id="七、HTTP改造"><a href="#七、HTTP改造" class="headerlink" title="七、HTTP改造"></a>七、HTTP改造</h2><p>原本我只想写到上一章，但是想到，我们实际开发中，哪有什么本地数据，基本上数据都是要从服务端去请求，所以这边也有必要引入这一张，模拟实际的HTTP请求。   </p>
+<h3 id="1-引入HTTP"><a href="#1-引入HTTP" class="headerlink" title="1.引入HTTP"></a>1.引入HTTP</h3><p>在这一章，我们使用Angular提供的 <code>HttpClient</code> 来添加一些数据持久化特性。<br>然后实现对书本数据进行<strong>获取，增加，修改，删除和查找</strong>功能。 </p>
+<p><code>HttpClient</code>是Angular通过 HTTP 与远程服务器通讯的机制。    </p>
+<p>这里我们为了让<code>HttpClient</code>在整个应用全局使用，所以将<code>HttpClient</code>导入到根模块<code>app.module.ts</code>中，然后把它加入 <code>@NgModule.imports</code> 数组：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; HttpClientModule &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/common/http&#x27;</span>;</span><br><span class="line">@NgModule(&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="attr">imports</span>: [</span><br><span class="line">        BrowserModule,</span><br><span class="line">        AppRoutingModule,</span><br><span class="line">        HttpClientModule</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这边我们使用 <a target="_blank" rel="noopener" href="https://github.com/angular/in-memory-web-api">内存 Web API（In-memory Web API） </a>模拟出的远程数据服务器通讯。<br><strong>注意：</strong> 这个内存 Web API 模块与 Angular 中的 HTTP 模块无关。</p>
+<p>通过下面命令来安装：   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install angular-in-memory-web-api --save</span><br></pre></td></tr></table></figure>
+<p>然后在<code>app.module.ts</code>中导入 <code>HttpClientInMemoryWebApiModule</code> 和 <code>InMemoryDataService</code> 类（后面创建）：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.module.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; HttpClientInMemoryWebApiModule &#125; <span class="keyword">from</span> <span class="string">&#x27;angular-in-memory-web-api&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; InMemoryDataService &#125;  <span class="keyword">from</span> <span class="string">&#x27;./in-memory-data.service&#x27;</span>;</span><br><span class="line">@NgModule(&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">imports</span>: [</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        HttpClientInMemoryWebApiModule.forRoot(</span><br><span class="line">        InMemoryDataService, &#123;<span class="attr">dataEncapsulation</span>:<span class="literal">false</span>&#125;</span><br><span class="line">        )</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppModule</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>知识点：</strong><br><code>forRoot()</code> 配置方法接受一个 InMemoryDataService 类（初期的内存数据库）作为参数。   </p>
+<p>然后我们要创建<code>InMemoryDataService</code>类：   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g service InMemoryData</span><br></pre></td></tr></table></figure>
+<p>并将生成的<code>in-memory-data.service.ts</code>修改为：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// in-memory-data.service.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; InMemoryDbService &#125; <span class="keyword">from</span> <span class="string">&#x27;angular-in-memory-web-api&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Books &#125; <span class="keyword">from</span> <span class="string">&#x27;./books&#x27;</span>;</span><br><span class="line">@Injectable(&#123;</span><br><span class="line">  <span class="attr">providedIn</span>: <span class="string">&#x27;root&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">InMemoryDataService</span> <span class="title">implements</span> <span class="title">InMemoryDbService</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">createDb</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> books = [</span><br><span class="line">      &#123;</span><br><span class="line">          <span class="attr">id</span>: <span class="number">1</span>, </span><br><span class="line">          <span class="attr">url</span>: <span class="string">&#x27;https://img3.doubanio.com/view/subject/m/public/s29988481.jpg&#x27;</span>,</span><br><span class="line">          <span class="attr">title</span>: <span class="string">&#x27;像火焰像灰烬&#x27;</span>,</span><br><span class="line">          <span class="attr">author</span>: <span class="string">&#x27;程姬&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// 省略其他9条数据</span></span><br><span class="line">    ];</span><br><span class="line">    <span class="keyword">return</span> &#123;books&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里先总结<code>InMemoryDbService</code>所提供的RESTful API，后面都要用到：<br>例如如果<code>url</code>是<code>api/books</code>，那么  </p>
+<ul>
+<li>查询所有成员：以<strong>GET</strong>方法访问<code>api/books</code>    </li>
+<li>查询某个成员：以<strong>GET</strong>方法访问<code>api/books/id</code>，比如<code>id</code>是<code>1</code>，那么访问<code>api/books/1</code>  </li>
+<li>更新某个成员：以<strong>PUT</strong>方法访问<code>api/books/id</code>   </li>
+<li>删除某个成员：以<strong>DELETE</strong>方法访问<code>api/books/id</code>    </li>
+<li>增加一个成员：以<strong>POST</strong>方法访问<code>api/books</code>   </li>
+</ul>
+<h3 id="2-通过HTTP请求数据"><a href="#2-通过HTTP请求数据" class="headerlink" title="2.通过HTTP请求数据"></a>2.通过HTTP请求数据</h3><p>现在要为接下来的网络请求做一些准备，先在<code>books.service.ts</code>中引入HTTP符号，然后注入<code>HttpClient</code>并改造：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; HttpClient, HttpHeaders&#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/common/http&#x27;</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">BooksService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">        private historyservice: HistoryService,</span></span></span><br><span class="line"><span class="params"><span class="function">        private http: HttpClient</span></span></span><br><span class="line"><span class="params"><span class="function">    </span>)</span> &#123; &#125;</span><br><span class="line">    private <span class="function"><span class="title">log</span>(<span class="params">histories: string</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.historyservice.add(<span class="string">`正在执行：<span class="subst">$&#123;histories&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    private booksUrl = <span class="string">&#x27;api/books&#x27;</span>; <span class="comment">// 提供一个API供调用</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我们还新增一个私有方法<code>log</code>和一个私有变量<code>booksUrl</code>。    </p>
+<p>接下来我们要开始发起http请求数据，开始改造<code>getBookList</code>方法：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">getBookList(): Observable&lt;Books[]&gt; &#123;</span><br><span class="line">    <span class="built_in">this</span>.historyservice.add(<span class="string">&#x27;请求书本数据&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.get&lt;Books[]&gt;(<span class="built_in">this</span>.booksUrl);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>这里我们使用 <code>http.get</code> 替换了 <code>of</code>，其它没修改，但是应用仍然在正常工作，这是因为这两个函数都返回了 <code>Observable&lt;Hero[]&gt;</code>。   </p>
+<p>实际开发中，我们还需要考虑到<strong>请求的错误处理</strong>，要捕获错误，我们就要使用 RxJS 的 <code>catchError()</code> 操作符来建立对 Observable 结果的处理管道（pipe）。   </p>
+<p>我们引入<code>catchError </code>并改造原本<code>getBookList</code>方法：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line">getBookList(): Observable&lt;Books[]&gt; &#123;</span><br><span class="line">    <span class="built_in">this</span>.historyservice.add(<span class="string">&#x27;请求书本数据&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.get&lt;Books[]&gt;(<span class="built_in">this</span>.booksUrl).pipe(</span><br><span class="line">        catchError(<span class="built_in">this</span>.handleError&lt;Books[]&gt;(<span class="string">&#x27;getHeroes&#x27;</span>, []))</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line">private handleError&lt;T&gt; (operation = <span class="string">&#x27;operation&#x27;</span>, result?: T) &#123;</span><br><span class="line">    <span class="keyword">return</span> (error: any): Observable&lt;T&gt; =&gt; &#123;</span><br><span class="line">        <span class="built_in">this</span>.log(<span class="string">`<span class="subst">$&#123;operation&#125;</span> 失败: <span class="subst">$&#123;error.message&#125;</span>`</span>); <span class="comment">// 发出错误通知</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">of</span>(result <span class="keyword">as</span> T); <span class="comment">// 返回空结果避免程序出错</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>知识点</strong>：<br><code>.pipe()</code> 方法用来扩展 <code>Observable</code> 的结果。<br><code>catchError()</code> 操作符会拦截失败的 Observable。并把错误对象传给错误处理器，错误处理器会处理这个错误。<br><code>handleError()</code> 错误处理函数做了两件事，发出错误通知和返回空结果避免程序出错。   </p>
+<p>这里还需要使用<code>tap</code>操作符改造<code>getBookList</code>方法，来窥探<code>Observable</code>数据流，它会查看<code>Observable</code>的值，然后我们使用<code>log</code>方法，记录一条历史记录。<br><code>tap</code> 回调不会改变这些值本身。   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line">getBookList(): Observable&lt;Books[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.get&lt;Books[]&gt;(<span class="built_in">this</span>.booksUrl)</span><br><span class="line">        .pipe(</span><br><span class="line">            tap( <span class="function"><span class="params">_</span> =&gt;</span> <span class="built_in">this</span>.log(<span class="string">&#x27;请求书本数据&#x27;</span>)),</span><br><span class="line">            catchError(<span class="built_in">this</span>.handleError&lt;Books[]&gt;(<span class="string">&#x27;getHeroes&#x27;</span>, []))</span><br><span class="line">        );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-通过HTTP修改数据"><a href="#3-通过HTTP修改数据" class="headerlink" title="3.通过HTTP修改数据"></a>3.通过HTTP修改数据</h3><p>这里我们需要在原来<code>DetailComponent</code>上面，添加一个输入框、保存按钮和返回按钮，就像这样：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- detail.component.html --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 前面代码省略 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>修改信息：<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>新标题：</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> [(<span class="attr">ngModel</span>)]=<span class="string">&quot;books.title&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入新标题&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;save()&quot;</span>&gt;</span>保存<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;goBack()&quot;</span>&gt;</span>返回<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这边切记一点，一定要在<code>app.module.ts</code>中引入 <code>FormsModule</code>模块，并在<code>@NgModule</code>的<code>imports</code>中引入，不然要报错了。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.module.ts</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">import</span> &#123; FormsModule &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/forms&#x27;</span>; </span><br><span class="line">@NgModule(&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">imports</span>: [</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        FormsModule</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>input</code>框绑定书本的标题<code>books.title</code>，而保存按钮绑定一个<code>save()</code>方法，这里还要实现这个方法：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// detail.component.ts</span></span><br><span class="line">save(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.historyservice.updateBooks(<span class="built_in">this</span>.books)</span><br><span class="line">        .subscribe(<span class="function">() =&gt;</span> <span class="built_in">this</span>.goBack());</span><br><span class="line">&#125;</span><br><span class="line">goBack(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.location.back();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里通过调用<code>BooksService</code>的<code>updateBooks</code>方法，将当前修改后的书本信息修改到源数据中，这里我们需要去<code>books.service.ts</code>中添加<code>updateBooks</code>方法：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">updateBooks(books: Books): Observable&lt;any&gt;&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.put(<span class="built_in">this</span>.booksUrl, books, httpOptions).pipe(</span><br><span class="line">        tap(<span class="function"><span class="params">_</span> =&gt;</span> <span class="built_in">this</span>.log(<span class="string">`修改书本的id是<span class="subst">$&#123;books.id&#125;</span>`</span>)),</span><br><span class="line">        catchError(<span class="built_in">this</span>.handleError&lt;Books&gt;(<span class="string">`getBooks请求是id为<span class="subst">$&#123;books.id&#125;</span>`</span>))</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p><strong>知识点</strong>：<br><code>HttpClient.put()</code> 方法接受三个参数：<code>URL 地址</code>、<code>要修改的数据</code>和<code>其他选项</code>。<br><code>httpOptions</code> 常量需要定义在<code>@Injectable</code>修饰器之前。   </p>
+<p>现在，我们点击首页，选择一本书进入详情，修改标题然后保存，会发现，首页上这本书的名称也会跟着改变呢。这算是好了。     </p>
+<h3 id="4-通过HTTP增加数据"><a href="#4-通过HTTP增加数据" class="headerlink" title="4.通过HTTP增加数据"></a>4.通过HTTP增加数据</h3><p>我们可以新增一个页面，并添加上路由和按钮：   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g component add</span><br></pre></td></tr></table></figure>
+<p>添加路由：     </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app-routing.module.ts</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">import</span> &#123; AddComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;./add/add.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes: Routes = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">redirectTo</span>:<span class="string">&#x27;/index&#x27;</span>, <span class="attr">pathMatch</span>:<span class="string">&#x27;full&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;index&#x27;</span>, <span class="attr">component</span>: IndexComponent&#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;detail/:id&#x27;</span>, <span class="attr">component</span>: DetailComponent&#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;add&#x27;</span>, <span class="attr">component</span>: AddComponent&#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>添加路由入口：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- app.component.html --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 省略一些代码 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/add&quot;</span>&gt;</span>添加书本<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>编辑添加书本的页面：    </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- add.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;add&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>添加书本：<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>标题：</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> [(<span class="attr">ngModel</span>)]=<span class="string">&quot;books.title&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入标题&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>作者：</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> [(<span class="attr">ngModel</span>)]=<span class="string">&quot;books.author&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入作者&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>书本id：</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> [(<span class="attr">ngModel</span>)]=<span class="string">&quot;books.id&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入书本id&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>封面地址：</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> [(<span class="attr">ngModel</span>)]=<span class="string">&quot;books.url&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入封面地址&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;add(books)&quot;</span>&gt;</span>添加<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>初始化添加书本的数据：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// add.component.ts</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">import</span> &#123; Books &#125; <span class="keyword">from</span> <span class="string">&#x27;../books&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BooksService &#125; <span class="keyword">from</span> <span class="string">&#x27;../books.service&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; HistoryService &#125; <span class="keyword">from</span> <span class="string">&#x27;../history.service&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Location &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/common&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AddComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">    <span class="attr">books</span>: Books = &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">author</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">        private location: Location,</span></span></span><br><span class="line"><span class="params"><span class="function">        private booksservice: BooksService,</span></span></span><br><span class="line"><span class="params"><span class="function">        private historyservice: HistoryService</span></span></span><br><span class="line"><span class="params"><span class="function">    </span>)</span> &#123; &#125;</span><br><span class="line">    <span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">    add(books: Books): <span class="keyword">void</span>&#123;</span><br><span class="line">        books.title = books.title.trim();</span><br><span class="line">        books.author = books.author.trim();</span><br><span class="line">        <span class="built_in">this</span>.booksservice.addBooks(books)</span><br><span class="line">        .subscribe( <span class="function"><span class="params">book</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.historyservice.add(<span class="string">`新增书本<span class="subst">$&#123;books.title&#125;</span>，id为<span class="subst">$&#123;books.id&#125;</span>`</span>);</span><br><span class="line">            <span class="built_in">this</span>.location.back();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在<code>books.service.ts</code>中添加<code>addBooks</code>方法，来添加一本书本的数据：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line">addBooks(books: Books): Observable&lt;Books&gt;&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.post&lt;Books&gt;(<span class="built_in">this</span>.booksUrl, books, httpOptions).pipe(</span><br><span class="line">        tap(<span class="function">(<span class="params">newBook: Books</span>) =&gt;</span> <span class="built_in">this</span>.log(<span class="string">`新增书本的id为<span class="subst">$&#123;newBook.id&#125;</span>`</span>)),</span><br><span class="line">        catchError(<span class="built_in">this</span>.handleError&lt;Books&gt;(<span class="string">&#x27;添加新书&#x27;</span>))</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>现在就可以正常添加书本啦。   </p>
+<p><img src="http://images.pingan8787.com/angular_books_5_3.png" alt="图片5-3"></p>
+<h3 id="5-通过HTTP删除数据"><a href="#5-通过HTTP删除数据" class="headerlink" title="5.通过HTTP删除数据"></a>5.通过HTTP删除数据</h3><p>这里我们先为每个书本后面添加一个删除按钮，并绑定删除事件<code>delete</code>：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- books.component.html --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 省略一些代码 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;delete&quot;</span> (<span class="attr">click</span>)=<span class="string">&quot;delete(list)&quot;</span>&gt;</span>X<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; BooksService &#125; <span class="keyword">from</span> <span class="string">&#x27;../books.service&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">BooksComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">  @Input() list: Books;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">    private booksservice: BooksService</span></span></span><br><span class="line"><span class="params"><span class="function">  </span>)</span> &#123; &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">delete</span>(books: Books): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.booksservice.deleteBooks(books)</span><br><span class="line">      .subscribe();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后还要再<code>books.service.ts</code>中添加<code>deleteBooks</code>方法来删除：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line">deleteBooks(books: Books): Observable&lt;Books&gt;&#123;</span><br><span class="line">    <span class="keyword">const</span> id = books.id;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.booksUrl&#125;</span>/<span class="subst">$&#123;id&#125;</span>`</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.delete&lt;Books&gt;(url, httpOptions).pipe(</span><br><span class="line">        tap(<span class="function"><span class="params">_</span> =&gt;</span> <span class="built_in">this</span>.log(<span class="string">`删除书本<span class="subst">$&#123;books.title&#125;</span>，id为<span class="subst">$&#123;books.id&#125;</span>`</span>)),</span><br><span class="line">        catchError(<span class="built_in">this</span>.handleError&lt;Books&gt;(<span class="string">&#x27;删除书本&#x27;</span>))</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里需要在删除书本结束后，通知<code>IndexComponent</code>将数据列表中的这条数据删除，这里还需要再了解一下<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010730126/article/details/68080139">Angular 父子组件数据通信</a>。<br>然后我们在父组件<code>IndexComponent</code>上添加<code>change</code>事件监听，并传入本地的<code>funChange</code>：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">app-books</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of books&quot;</span> [<span class="attr">list</span>]=<span class="string">&quot;item&quot;</span></span></span><br><span class="line"><span class="tag">    (<span class="attr">change</span>) = <span class="string">&quot;funChange(item, $event)&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span><span class="tag">&lt;/<span class="name">app-books</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在对应的<code>index.component.ts</code>中添加<code>funChange</code>方法：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line"><span class="function"><span class="title">funChange</span>(<span class="params">books, $event</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.books = <span class="built_in">this</span>.books.filter(<span class="function"><span class="params">h</span> =&gt;</span> h.id !== books.id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来，我们在子组件<code>BooksComponent</code>上多导入<code>Output</code>和<code>EventEmitter</code>，并添加<code>@Output()</code>修饰器和调用<code>emit</code>：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, OnInit, Input, Output, EventEmitter &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">BooksComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ... </span></span><br><span class="line">    @Output()</span><br><span class="line">    change = <span class="keyword">new</span> EventEmitter()</span><br><span class="line">    <span class="comment">// ... </span></span><br><span class="line">    <span class="keyword">delete</span>(books: Books): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.booksservice.deleteBooks(books)</span><br><span class="line">        .subscribe(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.change.emit(books);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就实现了我们父子组件之间的事件传递啦，现在我们的页面还是正常运行，并且删除一条数据后，页面数据会更新。   </p>
+<h3 id="6-通过HTTP查找数据"><a href="#6-通过HTTP查找数据" class="headerlink" title="6.通过HTTP查找数据"></a>6.通过HTTP查找数据</h3><p>还是在<code>books.service.ts</code>，我们添加一个方法<code>getBooks</code>，来实现通过ID来查找指定书本，因为我们是通过ID查找，所以返回的是单个数据，这里就是<code>Observable&lt;Books&gt;</code>类型：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.service.ts</span></span><br><span class="line">getBooks(id: number): Observable&lt;Books&gt;&#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.booksUrl&#125;</span>/<span class="subst">$&#123;id&#125;</span>`</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.http.get&lt;Books&gt;(url).pipe(</span><br><span class="line">        tap( <span class="function"><span class="params">_</span> =&gt;</span> <span class="built_in">this</span>.log(<span class="string">`请求书本的id为<span class="subst">$&#123;id&#125;</span>`</span>)),</span><br><span class="line">        catchError(<span class="built_in">this</span>.handleError&lt;Books&gt;(<span class="string">`getBooks请求是id为<span class="subst">$&#123;id&#125;</span>`</span>))</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，这里 <code>getBooks</code> 会返回 <code>Observable&lt;Books&gt;</code>，是一个可观察的单个对象，而不是一个可观察的对象数组。    </p>
+<h2 id="八、结语"><a href="#八、结语" class="headerlink" title="八、结语"></a>八、结语</h2><p>这个项目其实很简单，但是我还是一步一步的写下来，一方面让自己更熟悉Angular，另一方面也是希望能帮助到更多朋友哈~<br>最终效果：    </p>
+<p><img src="http://images.pingan8787.com/angular_books_result.png" alt="图片结果"></p>
+<p><strong>本部分内容到这结束</strong></p>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#105;&#x6e;&#103;&#x61;&#110;&#x38;&#x37;&#x38;&#55;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#112;&#105;&#x6e;&#103;&#x61;&#110;&#x38;&#x37;&#x38;&#55;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>JS小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<p><img src="http://images.pingan8787.com/2019_07_12guild_page.png" alt="bg">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/02/23/145-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%884-%E6%94%B9%E9%80%A0%E7%BB%84%E4%BB%B6%E5%92%8C%E6%B7%BB%E5%8A%A0HTTP%E6%9C%8D%E5%8A%A1%EF%BC%89/" data-id="ckts3ejy100lu4d9k6sw59q7p" data-title="145-【CuteJavaScript】Angular6入门项目（4.改造组件和添加HTTP服务）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/03/146-%E3%80%90CuteJavaScript%E3%80%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BD%93%E6%A8%A1%E5%BC%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          146-【CuteJavaScript】设计模式——单体模式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/23/144-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%883-%E7%BC%96%E5%86%99%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%BC%95%E5%85%A5RxJS%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">144-【CuteJavaScript】Angular6入门项目（3.编写服务和引入RxJS）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

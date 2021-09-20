@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>114-【JavaScript】【重温基础】1.语法和数据类型 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#x70;&amp;#105;&amp;#x6e;&amp;#x67;&amp;#97;&amp;#110;&amp;#56;&amp;#55;&amp;#x38;&amp;#x37;&amp;#x40;&amp;#113;&amp;#x71;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="114-【JavaScript】【重温基础】1.语法和数据类型">
+<meta property="og:url" content="http://example.com/2018/12/10/114-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%911-%E8%AF%AD%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#x70;&amp;#105;&amp;#x6e;&amp;#x67;&amp;#97;&amp;#110;&amp;#56;&amp;#55;&amp;#x38;&amp;#x37;&amp;#x40;&amp;#113;&amp;#x71;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E5%B0%81%E9%9D%A2.png">
+<meta property="article:published_time" content="2018-12-09T16:09:01.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.563Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="重温基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E5%B0%81%E9%9D%A2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-114-【JavaScript】【重温基础】1-语法和数据类型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/12/10/114-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%911-%E8%AF%AD%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time class="dt-published" datetime="2018-12-09T16:09:01.000Z" itemprop="datePublished">2018-12-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      114-【JavaScript】【重温基础】1.语法和数据类型
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images.pingan8787.com/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E5%B0%81%E9%9D%A2.png" alt="重温基础封面"></p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#105;&#x6e;&#x67;&#97;&#110;&#56;&#55;&#x38;&#x37;&#x40;&#113;&#x71;&#x2e;&#x63;&#x6f;&#109;">&#x70;&#105;&#x6e;&#x67;&#97;&#110;&#56;&#55;&#x38;&#x37;&#x40;&#113;&#x71;&#x2e;&#x63;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+</tbody></table>
+<hr>
+<p>最近开始把精力放在重新复习JavaScript的基础知识上面，不再太追求各种花枝招展的前端框架，框架再多，适合实际项目才是最重要。<br>上星期在掘金发布了几篇文章，其中最大块算是 <a target="_blank" rel="noopener" href="https://juejin.im/post/5c02b106f265da61764aa0c1">【复习资料】ES6/ES7/ES8/ES9资料整理(个人整理)</a>，也是让我好好把这些规范复习了一遍，虽然不是完全的原创，而是自己的一些复习笔记，但是还是让我感觉还是挺有用的，在项目开发过程中，有有意识的去使用到这些新的规范。<br>这次开始复习 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide">MDN</a> 这个系列的文章，巩固好自己的基础，也让自己养成记录学习的习惯，当然这些文章我也会同步到自己的博客。<br>希望自己的文章会对各位有所帮助，也欢迎各位大佬指点。 </p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Grammar_and_Types">1.MDN 语法和数据类型</a></p>
+<hr>
+<p>正文开始</p>
+<p><strong>本章节复习的是JS中的基本语法，变量声明，数据类型和字面量。</strong>    </p>
+<p>首先要记住：JavaScript 对大小写敏感，即<code>var att;</code> 和 <code>var Att</code> 是两个不同变量。   </p>
+<h1 id="1-注释"><a href="#1-注释" class="headerlink" title="1.注释"></a>1.注释</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单行注释</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    多行注释</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="2-声明"><a href="#2-声明" class="headerlink" title="2. 声明"></a>2. 声明</h1><p>JavaScript有三种声明方式：   </p>
+<ul>
+<li><code>var</code> 声明一个变量，可赋一个初始值。   </li>
+<li><code>let</code> 声明一个块作用域的局部变量，可赋一个初始值。  </li>
+<li><code>const</code> 声明一个块作用域的只读命名的常量。   </li>
+</ul>
+<h2 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h2><p>变量的名字又叫做“<strong>标识符</strong>”，必须以字母、下划线（<code>_</code>）或者美元符号（<code>$</code>）开头，并且区分大小写。<br>变量声明有三种方式：   </p>
+<ul>
+<li>如<code>var a = 1</code>，声明局部变量和全局变量。</li>
+<li>如<code>a = 1</code>，声明一个全局变量，且在严格模式报错，不应该使用。</li>
+<li>如<code>let a = 1</code>，声明一个块作用域的局部变量。  </li>
+</ul>
+<p><strong>注意</strong>：   </p>
+<ul>
+<li>若没有为变量赋初始值，则值默认为<code>undefined</code>；  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a;</span><br><span class="line"><span class="built_in">console</span>.log(a);   <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure></li>
+<li>若没有声明变量而直接使用，会抛出<code>ReferenceError</code>错误；   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(b);   <span class="comment">// Uncaught ReferenceError: b is not defined</span></span><br></pre></td></tr></table></figure></li>
+<li>当变量值为<code>undefined</code>时，布尔值环境会当做<code>false</code>，数值环境会当做<code>NaN</code>；   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="keyword">if</span>(!a)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;a为undefined&#x27;</span>); <span class="comment">// a为undefined</span></span><br><span class="line">&#125;</span><br><span class="line">a + <span class="number">1</span>;  <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>当变量值为<code>null</code>时，布尔值环境会当做<code>false</code>，数值环境会当做<code>0</code>；  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">if</span>(!a)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;a为unll&#x27;</span>); <span class="comment">// a为unll</span></span><br><span class="line">&#125;</span><br><span class="line">a + <span class="number">1</span>;  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><strong>全局变量</strong>：即声明在函数之外，当前文档所有地方都可以访问；<br><strong>局部遍历</strong>：即声明在函数内部，仅在当前函数内可以访问；<br>在ES5之前没有语句<strong>块作用域</strong>的概念，并只能使用<code>var</code>进行声明，用<code>var</code>声明的变量，在函数内和全局都可以访问，而在ES6开始，将只能在声明的作用域中使用：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">a; <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="keyword">let</span> b = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">b; <span class="comment">// ReferenceError: b is not defined</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="变量声明提前"><a href="#变量声明提前" class="headerlink" title="变量声明提前"></a>变量声明提前</h2><p>即将变量的声明提升到函数或语句的顶部，并返回<code>undefined</code>直到变量被初始化操作。<br><strong>千万注意</strong>：<br>ES5以及之前，才有变量声明提前，在ES6开始就不存在变量提升。   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES5及之前</span></span><br><span class="line"><span class="built_in">console</span>.log(a);   <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);   <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6开始</span></span><br><span class="line"><span class="built_in">console</span>.log(b);   <span class="comment">// Uncaught ReferenceError: b1 is not defined</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(b);   <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函数提升"><a href="#函数提升" class="headerlink" title="函数提升"></a>函数提升</h2><p>函数声明有两种方式：<strong>函数声明</strong>和<strong>函数表达式</strong>两种方式：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line">f();   <span class="comment">// &#x27;hi leo&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;hi leo&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数表达式</span></span><br><span class="line">g();   <span class="comment">// Uncaught TypeError: g is not a function</span></span><br><span class="line"><span class="keyword">var</span> g = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">// 换成 let 声明也一样</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;hi leo&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><p>全局变量默认是全局对象（<code>window</code>）的属性，常常使用<code>window.variable</code>语法来设置和访问全局变量。<br>这边还需要记住：</p>
+<ul>
+<li><strong>ES5之中</strong>，顶层对象的属性等价于全局变量（浏览器环境中顶层对象是<code>window</code>，Node中是<code>global</code>对象）；  </li>
+<li><strong>ES6之中</strong>，<code>var</code>/<code>function</code>声明的全局变量，依然是顶层对象的属性，但是<code>let</code>/<code>const</code>/<code>class</code>声明的全局变量不属于顶层对象的属性，即ES6开始，全局变量和顶层对象的属性是分开的。      <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES5</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line"><span class="built_in">window</span>.a; <span class="comment">// &#x27;leo&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line"><span class="built_in">window</span>.b; <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>ES6之后我们可以使用<code>const</code>来声明一个只读的常量，并且在<strong>声明时必须赋值</strong>，之后在相同作用域中<strong>不能赋值</strong>也<strong>不能重新声明</strong>，否则报错。   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a;   </span><br><span class="line"><span class="comment">// Uncaught SyntaxError: Missing initializer in const declaration</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">b = <span class="string">&#x27;hi&#x27;</span>;</span><br><span class="line"><span class="comment">// Uncaught TypeError: Assignment to constant variable.</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a1 = <span class="string">&#x27;hi&#x27;</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a1);</span><br><span class="line">&#125;</span><br><span class="line">f(); <span class="comment">// &#x27;hi&#x27;</span></span><br><span class="line"><span class="keyword">const</span> a1 = <span class="string">&#x27;hi leo&#x27;</span>;</span><br><span class="line">a1; <span class="comment">// &quot;hi leo&quot;</span></span><br></pre></td></tr></table></figure>
+<p>尽管<code>const</code>声明的变量不能直接修改值，但是对于对象和数组，却是不受保护可以修改的：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;<span class="attr">name</span>:<span class="string">&#x27;leo&#x27;</span>,<span class="attr">age</span>:<span class="number">25</span>&#125;;</span><br><span class="line">a.name = <span class="string">&#x27;pingan&#x27;</span>; <span class="comment">// a =&gt; &#123;name: &quot;pingan&quot;, age: 25&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = [<span class="string">&#x27;hi&#x27;</span>, <span class="string">&#x27;leo&#x27;</span>];</span><br><span class="line">b[<span class="number">1</span>] = <span class="string">&#x27;pingan&#x27;</span>;   <span class="comment">// b =&gt; [&quot;hi&quot;, &quot;pingan&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-数据结构和类型"><a href="#3-数据结构和类型" class="headerlink" title="3.数据结构和类型"></a>3.数据结构和类型</h1><h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>JavaScript中一共分为<strong>7</strong>中不同类型：  </p>
+<ul>
+<li>六种<strong>原型</strong>数据类型：   <ul>
+<li>1.Boolean : 布尔值，true和false;  </li>
+<li>2.null : 对大小写敏感（即<code>null</code>/<code>Null</code>/<code>NULL</code>完全不同）;   </li>
+<li>3.undefined : 空类型，变量未定义时候的值；   </li>
+<li>4.Number : 数值类型，如<code>100</code>;  </li>
+<li>5.String : 字符串类型，如’hi pingan’;</li>
+<li>6.Symbol（ES6新增） : 表示一种唯一且不可变的数据;  </li>
+</ul>
+</li>
+<li>以及Object对象类型</li>
+</ul>
+<h2 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h2><p>由于JavaScript是门动态类型语言，因此在开发过程可以不需要指定数据类型，在执行时会自动转换：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">100</span>;</span><br><span class="line">a = <span class="string">&#x27;hi leo&#x27;</span>; <span class="comment">// 这样不报错</span></span><br></pre></td></tr></table></figure>
+<p>另外还有：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a1 = <span class="string">&#x27;10&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> b1 = <span class="number">20</span>;</span><br><span class="line">a1 + b1; <span class="comment">// 30</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a2 = <span class="string">&#x27;leo &#x27;</span> + <span class="number">10</span> + <span class="string">&#x27; age&#x27;</span>; <span class="comment">// &#x27;leo 10 age&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;10&#x27;</span> - <span class="number">5</span>;  <span class="comment">// 5</span></span><br><span class="line"><span class="string">&#x27;10&#x27;</span> + <span class="number">5</span>;  <span class="comment">// 105</span></span><br></pre></td></tr></table></figure>
+<p><strong>转换字符串为数字小技巧</strong><br>小技巧很多，这里说个最简单的：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样不会使两个数字计算总和：  </span></span><br><span class="line"><span class="string">&#x27;1.1&#x27;</span> + <span class="string">&#x27;1.2&#x27;</span>;   <span class="comment">// &#x27;1.11.2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实际上要这样：</span></span><br><span class="line">+<span class="string">&#x27;1.1&#x27;</span> + +<span class="string">&#x27;1.2&#x27;</span>; <span class="comment">// 2.3</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="4-字面量"><a href="#4-字面量" class="headerlink" title="4.字面量"></a>4.字面量</h1><p>字面量是用来表示<strong>如何表达这个值</strong>，简单理解就是<strong>变量赋值时右边的都是字面量</strong>。比如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="string">&#x27;hi leo&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p><code>hi leo</code>为字符串字面量，<code>a</code>为变量名。<br>字面量分为七种：  </p>
+<ul>
+<li>1.数组字面量</li>
+<li>2.布尔字面量</li>
+<li>3.浮点数字面量</li>
+<li>4.整数字面量</li>
+<li>5.对象字面量</li>
+<li>6.正则字面量</li>
+<li>7.字符串字面量</li>
+</ul>
+<h2 id="数组字面量"><a href="#数组字面量" class="headerlink" title="数组字面量"></a>数组字面量</h2><p>使用数组字面量创建数组的时，指定元素的值，并作为数组的初始化，从而确定数组长度。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="string">&#x27;hi&#x27;</span>,<span class="string">&#x27;leo&#x27;</span>,<span class="string">&#x27;hello&#x27;</span>,<span class="string">&#x27;pingan&#x27;</span>];</span><br><span class="line">a[<span class="number">1</span>];     <span class="comment">// &#x27;leo&#x27;</span></span><br><span class="line">a.length; <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<p>若使用多余逗号，作为数组字面量，则值为<code>undefined</code>，并且数组长度也会正常计算：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="string">&#x27;hi&#x27;</span>, ,<span class="string">&#x27;leo&#x27;</span>];</span><br><span class="line">a[<span class="number">0</span>];  <span class="comment">// &#x27;hi&#x27;</span></span><br><span class="line">a[<span class="number">1</span>];  <span class="comment">// undefined</span></span><br><span class="line">a.length; <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="布尔字面量"><a href="#布尔字面量" class="headerlink" title="布尔字面量"></a>布尔字面量</h2><p>只有<code>true</code>和<code>false</code>：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="整数字面量"><a href="#整数字面量" class="headerlink" title="整数字面量"></a>整数字面量</h2><p>整数可以用十进制（基数为10）、十六进制（基数为16）、八进制（基数为8）以及二进制（基数为2）表示。   </p>
+<h2 id="浮点数字面量"><a href="#浮点数字面量" class="headerlink" title="浮点数字面量"></a>浮点数字面量</h2><p>浮点数字面量组成：  </p>
+<ul>
+<li>一个十进制的整数，可以带正负号;</li>
+<li>小数点</li>
+<li>小数部分（只能十进制）</li>
+<li>指数部分<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">3.14</span>;  <span class="comment">// 3.14</span></span><br><span class="line"><span class="keyword">let</span> b = -<span class="number">.001</span>; <span class="comment">// -0.001</span></span><br><span class="line"><span class="keyword">let</span> c = -<span class="number">3.14e+12</span>; <span class="comment">// -3.14*1012</span></span><br><span class="line"><span class="keyword">let</span> d = <span class="number">.1e-23</span>;<span class="comment">// 0.1*10 - 23 = 10-24 = 1e-24</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="对象字面量"><a href="#对象字面量" class="headerlink" title="对象字面量"></a>对象字面量</h2><p>对象字面量是由<code>&#123;&#125;</code>包含一个或多个 <code>键:值</code> 对的列表：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a1 = <span class="string">&#x27;hi leo&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> a2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> <span class="string">&#x27;my name is pingan&#x27;</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    <span class="attr">n1</span> : <span class="string">&#x27;pingan&#x27;</span>,</span><br><span class="line">    <span class="attr">n2</span> : a1,</span><br><span class="line">    <span class="attr">n3</span> : a2()</span><br><span class="line">&#125;</span><br><span class="line">obj; <span class="comment">// &#123;n1: &quot;pingan&quot;, n2: &quot;hi leo&quot;, n3: &quot;my name is pingan&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>也可以使用任意数字或字符串作为对象属性的名字，但必须用<code>&#39;&#39;</code>引号包裹：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    <span class="string">&quot;&quot;</span> : <span class="string">&quot;hi leo&quot;</span>,</span><br><span class="line">    <span class="string">&quot;!&quot;</span> : <span class="string">&quot;hi pingan&quot;</span>,</span><br><span class="line">    <span class="number">2</span> : <span class="string">&#x27;hi number&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">obj;     <span class="comment">// &#123;2: &quot;hi number&quot;, &quot;&quot;: &quot;hi leo&quot;, !: &quot;hi pingan&quot;&#125;</span></span><br><span class="line">obj[<span class="string">&quot;&quot;</span>]; <span class="comment">// &quot;hi leo&quot;</span></span><br><span class="line">obj[<span class="number">2</span>];  <span class="comment">// &quot;hi number&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="正则字面量"><a href="#正则字面量" class="headerlink" title="正则字面量"></a>正则字面量</h2><p>使用字符被正斜杠“<code>/</code>”围起来的表达式：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="regexp">/ab+c/</span>; </span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串字面量"><a href="#字符串字面量" class="headerlink" title="字符串字面量"></a>字符串字面量</h2><p>使用单引号（<code>&#39;&#39;</code>）或者双引号（<code>&quot;&quot;</code>）括起来的字符串：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line">a.length;  <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p>ES6中新增了<strong>模板字符串</strong>，作用于：  </p>
+<ul>
+<li>方便拼接字符串</li>
+<li>有效实现字符串换行  </li>
+<li>防止注入攻击  </li>
+<li>建立基于字符串的高级数据抽象     <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 拼接字符串</span></span><br><span class="line"><span class="keyword">let</span> name = <span class="string">&#x27;leo&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> a = <span class="string">`</span></span><br><span class="line"><span class="string">    hi <span class="subst">$&#123;name&#125;</span></span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line">a; <span class="comment">// &#x27;hi leo&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 换行</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="string">`</span></span><br><span class="line"><span class="string">    hi</span></span><br><span class="line"><span class="string">    leo</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line">b;</span><br><span class="line"><span class="comment">// &quot;</span></span><br><span class="line"><span class="comment">//     hi</span></span><br><span class="line"><span class="comment">//     leo</span></span><br><span class="line"><span class="comment">// &quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><em>常用特殊字符</em>*:   </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\b</code></td>
+<td>退格符</td>
+</tr>
+<tr>
+<td><code>\f</code></td>
+<td>换页符</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>换行符</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>回车符</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>Tab (制表符)</td>
+</tr>
+<tr>
+<td><code>\v</code></td>
+<td>垂直制表符</td>
+</tr>
+<tr>
+<td><code>\&#39;</code></td>
+<td>单引号</td>
+</tr>
+<tr>
+<td><code>\&quot;</code></td>
+<td>双引号</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>反斜杠字符（\）</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>本部分内容到这结束</strong></p>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#105;&#x6e;&#x67;&#x61;&#x6e;&#x38;&#55;&#x38;&#55;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#x6d;">&#112;&#105;&#x6e;&#x67;&#x61;&#x6e;&#x38;&#55;&#x38;&#55;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>JS小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/12/10/114-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%911-%E8%AF%AD%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" data-id="ckts3ejsc000y4d9ke4k5e4px" data-title="114-【JavaScript】【重温基础】1.语法和数据类型" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/11/115-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%912-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%92%8C%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          115-【JavaScript】【重温基础】2.流程控制和错误处理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/08/113-%E3%80%90CSS%E3%80%91verticle-align%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">113-【CSS】verticle-align详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

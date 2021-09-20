@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>105-【JavaScript】JS箭头函数的适用和不适用的场景 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#x70;&amp;#105;&amp;#110;&amp;#x67;&amp;#97;&amp;#110;&amp;#x38;&amp;#x37;&amp;#x38;&amp;#55;&amp;#x40;&amp;#x71;&amp;#x71;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="105-【JavaScript】JS箭头函数的适用和不适用的场景">
+<meta property="og:url" content="http://example.com/2018/11/18/105-%E3%80%90JavaScript%E3%80%91JS%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%82%E7%94%A8%E5%92%8C%E4%B8%8D%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%BA%E6%99%AF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#x70;&amp;#105;&amp;#110;&amp;#x67;&amp;#97;&amp;#110;&amp;#x38;&amp;#x37;&amp;#x38;&amp;#55;&amp;#x40;&amp;#x71;&amp;#x71;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pi">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-11-18T10:28:26.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.556Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-105-【JavaScript】JS箭头函数的适用和不适用的场景" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/11/18/105-%E3%80%90JavaScript%E3%80%91JS%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%82%E7%94%A8%E5%92%8C%E4%B8%8D%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%BA%E6%99%AF/" class="article-date">
+  <time class="dt-published" datetime="2018-11-18T10:28:26.000Z" itemprop="datePublished">2018-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      105-【JavaScript】JS箭头函数的适用和不适用的场景
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#105;&#110;&#x67;&#97;&#110;&#x38;&#x37;&#x38;&#55;&#x40;&#x71;&#x71;&#x2e;&#x63;&#x6f;&#x6d;">&#x70;&#105;&#110;&#x67;&#97;&#110;&#x38;&#x37;&#x38;&#55;&#x40;&#x71;&#x71;&#x2e;&#x63;&#x6f;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="JavaScript-箭头函数究竟是什么？"><a href="#JavaScript-箭头函数究竟是什么？" class="headerlink" title="JavaScript 箭头函数究竟是什么？"></a>JavaScript 箭头函数究竟是什么？</h2><p>JavaScript 箭头函数大致相当于 <code>python</code> 中的 <code>lambda</code> 函数 或 <code>Ruby</code> 中的<code> blocks</code>。  </p>
+<p>这些是匿名函数，它们有自己的特殊语法，接受一定数量的参数，并在其封闭的作用域的上下文（即定义它们的函数或其他代码）中操作。  </p>
+<p>让我们依次分解这些部分。  </p>
+<h3 id="箭头函数语法"><a href="#箭头函数语法" class="headerlink" title="箭头函数语法"></a>箭头函数语法</h3><p>箭头函数具有单一的总体结构，然后在特殊情况下可以通过多种方式简化它们。 核心结构如下所示：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(argument1, argument2, ... argumentN) =&gt; &#123;</span><br><span class="line">  <span class="comment">// function body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>括号内的是参数列表，后跟“胖箭头”（<code>=&gt;</code>），最后是函数体。  </p>
+<p>这与传统函数非常相似，我们只是省略 <code>function</code> 关键字并在参数后添加一个胖箭头（<code>=&gt;</code>）。</p>
+<p>然而，有许多方法可以简化箭头函数。    </p>
+<p>首先，如果函数体是单个表达式，则可以不使用花括号并将其置于内联中（省略大括号直接将表达式写在一行中）。 表达式的结果将由函数返回。 例如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> add = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b;</span><br></pre></td></tr></table></figure>
+<p>其次，如果只有一个参数，你甚至可以省略参数的括号。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getFirst = <span class="function"><span class="params">array</span> =&gt;</span> array[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+<p>正如您所看到的，这是一些非常简洁的语法，我们将重点介绍后面的好处。</p>
+<h3 id="高级语法"><a href="#高级语法" class="headerlink" title="高级语法"></a>高级语法</h3><p>有一些高级语法可以了解一下。  </p>
+<p>首先，如果您尝试使用内联单行表达式语法，但您返回的值是对象字面量。您可能会认为这看起来应该是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(name, description) =&gt; &#123;<span class="attr">name</span>: name, <span class="attr">description</span>: description&#125;;</span><br></pre></td></tr></table></figure>
+<p>问题是这种语法比较含糊不清，容易引起歧义 ： 看起来好像你正试图创建一个传统的函数体。 如果你碰巧想要一个对象的单个表达式，请用括号包裹该对象：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(name, description) =&gt; (&#123;<span class="attr">name</span>: name, <span class="attr">description</span>: description&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="封闭的上下文作用域"><a href="#封闭的上下文作用域" class="headerlink" title="封闭的上下文作用域"></a>封闭的上下文作用域</h3><p>与其他形式的函数不同，箭头函数没有自己的 <a target="_blank" rel="noopener" href="https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0">执行期上下文</a>。  </p>
+<p>实际上，这意味着 this 和 arguments 都是从它们的父函数继承而来的。  </p>
+<p>例如，使用和不使用箭头函数比较以下代码：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> test = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;test object&#x27;</span>,</span><br><span class="line">  <span class="attr">createAnonFunction</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">this</span>.name);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"> </span><br><span class="line">  <span class="attr">createArrowFunction</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">this</span>.name);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们有一个简单的 <code>test</code> 对象，有两个方法 – 每个方法都返回一个匿名函数。   </p>
+<p>不同之处在于第一个方法使用传统函数表达式，而后者中使用箭头函数。  </p>
+<p>如果我们使用相同参数，在控制台中运行它们，我们会得到完全不一样的结果。   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> anon = test.createAnonFunction(<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> arrow = test.createArrowFunction(<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>);</span><br><span class="line">anon();  <span class="comment">// undefined  &#123;&#125;</span></span><br><span class="line">arrow(); <span class="comment">//test object  &#123; &#x27;0&#x27;: &#x27;hello&#x27;, &#x27;1&#x27;: &#x27;world&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+<p>第一个匿名函数有自己的函数上下文，因此当您调用它时，<code>test</code> 对象的 <code>this.name</code> 没有可用的引用，也没有创建它时调用的参数。</p>
+<p>另一个，箭头函数具有与创建它的函数完全相同的函数上下文，使其可以访问 <code>argumetns</code> 和 <code>test</code> 对象。</p>
+<h3 id="使用箭头函数改进您的代码"><a href="#使用箭头函数改进您的代码" class="headerlink" title="使用箭头函数改进您的代码"></a>使用箭头函数改进您的代码</h3><p>传统 <code>lambda</code> 函数的主要用例之一，就是用于遍历列表中的项，现在用 <code>JavaScript</code> 箭头函数实现。   </p>
+<p>比如你有一个有值的数组，你想去 <code>map</code> 遍历每一项，这时使用箭头函数非常理想：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> words = [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;WORLD&#x27;</span>, <span class="string">&#x27;Whatever&#x27;</span>];</span><br><span class="line"><span class="keyword">const</span> downcasedWords = words.map(<span class="function"><span class="params">word</span> =&gt;</span> word.toLowerCase());</span><br></pre></td></tr></table></figure>
+<p>一个非常常见的例子是提取对象中的某个特定值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> names = objects.map(<span class="function"><span class="params">object</span> =&gt;</span> object.name);</span><br></pre></td></tr></table></figure>
+<p>类似地，当用现代迭代样式取代传统的 for 循环，一般我们使用 forEach 循环，箭头函数能够保持 <code>this</code> 来自于父级，让他们非常直观</p>
+<p>类似的，当用 forEach 来替换传统 for循环的时候，实际上箭头函数会直观的保持 <code>this</code>来自于父一级</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.examples.forEach(<span class="function"><span class="params">example</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.runExample(example);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Promises-和-Promise-链"><a href="#Promises-和-Promise-链" class="headerlink" title="Promises 和 Promise 链"></a>Promises 和 Promise 链</h3><p>箭头函数的另一个可以使代码更清晰，更直观的地方是管理异步代码。</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Promises</a> 使得管理异步代码变得容易很多（即使你很欢快地使用 <code>async</code> / <code>await</code>，你仍然应该理解 <a target="_blank" rel="noopener" href="https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8"><code>async</code> / <code>await</code> 是建立在 Promises 之上的</a> ！）</p>
+<p>但是，虽然使用 <code>promises</code>仍然需要定义在异步代码或调用完成后运行的函数。</p>
+<p>这是箭头函数的理想位置，特别是如果您生成的函数是有状态的，同时想引用对象中的某些内容。 例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.doSomethingAsync().then(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.storeResult(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="对象转换"><a href="#对象转换" class="headerlink" title="对象转换"></a>对象转换</h3><p>箭头函数的另一个常见且极其强大的用途是封装对象转换。</p>
+<p>例如，在 Vue.js 中，有一种通用模式，用于使用 <code>mapState</code> 将 Vuex 存储的各个部分直接包含到 Vue 组件中。</p>
+<p>这涉及定义一组 “<code>mappers</code>” ，这些 “<code>mappers</code>” 将从原始的完整的 <code>state</code> 对象转换为提取所涉及组件所需的内容。</p>
+<p>这些简单的转换使用箭头函数再合适不过了。比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">computed</span>: &#123;</span><br><span class="line">    ...mapState(&#123;</span><br><span class="line">      <span class="attr">results</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.results,</span><br><span class="line">      <span class="attr">users</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.users,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="你不应该使用箭头函数的情景"><a href="#你不应该使用箭头函数的情景" class="headerlink" title="你不应该使用箭头函数的情景"></a>你不应该使用箭头函数的情景</h3><p>在许多情况下，使用箭头函数不是一个好主意。 他们不仅不会帮助你，而且会给你带来一些不必要的麻烦。</p>
+<p>第一个是对象的方法。 这是一个函数上下文的例子，这对于我们理解很有帮助。</p>
+<p>有一段时间使用 Class（类）属性语法和箭头函数的组合，作为创建“自动绑定方法”的方式，例如， 事件处理程序可以使用，但仍然绑定到类的方法。</p>
+<p>这看起来像是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">  counter = <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">  handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.counter++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，即使 <code>handleClick</code> 由事件处理程序调用，而不是在 <code>Counter</code> 实例的上下文中调用，它仍然可以访问实例的数据。</p>
+<p>这种方法的缺点很多，在本文中很好地记录。</p>
+<p>虽然使用这种方法确实为您提供了具有绑定函数的快捷方式，但该函数以多种不直观的方式运行，如果您尝试将此对象作为原型进行子类化/使用，则会不利于测试，同时也会产生很多问题。</p>
+<p>相反，使用常规函数，如果需要，将其绑定到构造函数中的实例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">  counter = <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="title">handleClick</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.counter++;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.handleClick = <span class="built_in">this</span>.handleClick.bind(<span class="built_in">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="深层的调用链"><a href="#深层的调用链" class="headerlink" title="深层的调用链"></a>深层的调用链</h3><p>箭头函数可能让你遇到麻烦的另一个地方是，它们被用于许多不同的组合，特别是在函数深层调用链中。</p>
+<p>核心原因与匿名函数相同 – 它们给出了非常糟糕的堆栈跟踪。</p>
+<p>如果你的函数只是向下一级，比如在迭代器里面，那也不是太糟糕，但是如果你把所有的函数定义为箭头函数，并在它们之间来回调用，你就会陷入困境 遇到一个错误的时候，只是收到错误消息，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;anonymous&#125;()</span><br><span class="line">&#123;anonymous&#125;()</span><br><span class="line">&#123;anonymous&#125;()</span><br><span class="line">&#123;anonymous&#125;()</span><br><span class="line">&#123;anonymous&#125;()</span><br></pre></td></tr></table></figure>
+
+<h3 id="有动态上下文的函数"><a href="#有动态上下文的函数" class="headerlink" title="有动态上下文的函数"></a>有动态上下文的函数</h3><p>箭头函数可能让您遇到麻烦的最后一种情况就是吗， this 是动态绑定的时候。</p>
+<p>如果您在这些位置使用箭头函数，那么动态绑定将不起作用，并且你（或稍后使用你的代码的其他人）可能会对事情未按预期执行的原因感到困惑。</p>
+<p>一些典型的例子：</p>
+<ul>
+<li>事件处理程序是通过将 this 设置为事件的 currentTarget 属性来调用。  </li>
+<li>如果您仍在使用 jQuery ，则大多数 jQuery 方法将 this 设置为已选择的 dom 元素。  </li>
+<li>如果您正在使用 Vue.js ，则方法和计算函数通常将 this 设置为 Vue 组件。<br>当然你可以故意使用箭头函数来覆盖这种行为，但特别是在 jQuery 和 Vue 的情况下，这通常会干扰正常运行，让你感到困惑的是为什么看起来与附近其他代码相同的代码不起作用。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>箭头函数是 JavaScript 语言的一个非常有必要的补充，并且在许多情况下使代码更符合人们的阅读习惯。</p>
+<p>然而，像所有其他特性一样，它们有优点和缺点。 我们应该将它们作为我们工具箱中的另一个工具，而不是作为所有函数的全面替代品。</p>
+<p>英文原文：<a target="_blank" rel="noopener" href="https://zendev.com/2018/10/01/javascript-arrow-functions-how-why-when.html">https://zendev.com/2018/10/01/javascript-arrow-functions-how-why-when.html</a><br>中文地址：<a target="_blank" rel="noopener" href="https://www.css88.com/archives/10033">https://www.css88.com/archives/10033</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/11/18/105-%E3%80%90JavaScript%E3%80%91JS%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%82%E7%94%A8%E5%92%8C%E4%B8%8D%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%BA%E6%99%AF/" data-id="ckts3ejs3000f4d9k90hz1vix" data-title="105-【JavaScript】JS箭头函数的适用和不适用的场景" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/21/106-%E3%80%90CSS%E3%80%91%E4%B8%89%E7%A7%8D%E6%96%87%E5%AD%97%E6%B8%90%E5%8F%98%E8%89%B2%E7%9A%84%E5%AE%9E%E7%8E%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          106-【CSS】三种文字渐变色的实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/31/104-%E3%80%90%E9%9D%A2%E8%AF%95%E9%A2%98%E3%80%912018%E8%BF%91%E6%9C%9F%E5%90%84%E5%A4%A7%E5%85%AC%E5%8F%B8%E9%9D%A2%E8%AF%95%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">104-【面试题】2018近期各大公司面试题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>195-【Webpack】分析Webpack运行机制 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="原文地址：【工具篇】2 | Webpack的运行机制 作者 | 思语 阅读时间 | 34分钟**  webpack 是一个 JS 代码模块化的打包工具，藉由它强大的扩展能力，随着社区的发展，逐渐成为一个功能完善的构建工具，目前webpack已更新第五版本。   webpack的与共不同webpack 是前端常用的打包工具，可以看作是模块打包机，它的工作主要是分析项目结构，找到JavaScript模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="195-【Webpack】分析Webpack运行机制">
+<meta property="og:url" content="http://example.com/2020/02/12/195-%E3%80%90Webpack%E3%80%91%E5%88%86%E6%9E%90Webpack%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原文地址：【工具篇】2 | Webpack的运行机制 作者 | 思语 阅读时间 | 34分钟**  webpack 是一个 JS 代码模块化的打包工具，藉由它强大的扩展能力，随着社区的发展，逐渐成为一个功能完善的构建工具，目前webpack已更新第五版本。   webpack的与共不同webpack 是前端常用的打包工具，可以看作是模块打包机，它的工作主要是分析项目结构，找到JavaScript模">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480528734-6b482042-4110-4415-b39e-3df70e15a4de.jpeg#align=left&display=inline&height=315&originHeight=460&originWidth=1080&size=0&status=done&style=none&width=740">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/186051/1581480529449-fa18cf20-055f-487a-b767-130ee45d202b.png#align=left&display=inline&height=323&originHeight=382&originWidth=874&size=0&status=done&style=none&width=740">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480528723-34663a4f-73a5-4bd0-bb0f-eeda701db965.jpeg#align=left&display=inline&height=1336&originHeight=1175&originWidth=651&size=0&status=done&style=none&width=740">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480528948-c3b63438-8967-4b03-b554-1824739aef9e.jpeg#align=left&display=inline&height=164&originHeight=164&originWidth=498&size=0&status=done&style=none&width=498">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480529491-cc4e9bf8-d71c-4d0b-b22b-7f6834dff19a.jpeg#align=left&display=inline&height=154&originHeight=154&originWidth=440&size=0&status=done&style=none&width=440">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480529430-df07eeb4-9a33-4ff4-9967-c62f17102e10.jpeg#align=left&display=inline&height=391&originHeight=570&originWidth=1080&size=0&status=done&style=none&width=740">
+<meta property="article:published_time" content="2020-02-12T04:33:56.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.633Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480528734-6b482042-4110-4415-b39e-3df70e15a4de.jpeg#align=left&display=inline&height=315&originHeight=460&originWidth=1080&size=0&status=done&style=none&width=740">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-195-【Webpack】分析Webpack运行机制" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/02/12/195-%E3%80%90Webpack%E3%80%91%E5%88%86%E6%9E%90Webpack%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" class="article-date">
+  <time class="dt-published" datetime="2020-02-12T04:33:56.000Z" itemprop="datePublished">2020-02-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      195-【Webpack】分析Webpack运行机制
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480528734-6b482042-4110-4415-b39e-3df70e15a4de.jpeg#align=left&display=inline&height=315&originHeight=460&originWidth=1080&size=0&status=done&style=none&width=740"><br />原文地址：<a target="_blank" rel="noopener" href="https://www.javazhiyin.com/50313.html">【工具篇】2 | Webpack的运行机制</a></p>
+<p>作者 | 思语</p>
+<p>阅读时间 | <strong>34分钟</strong><br />**</p>
+<blockquote>
+<p>webpack 是一个 JS 代码模块化的打包工具，藉由它强大的扩展能力，随着社区的发展，逐渐成为一个功能完善的构建工具，目前webpack已更新第五版本。</p>
+</blockquote>
+<p><a name="lwDAa"></a></p>
+<h1 id="webpack的与共不同"><a href="#webpack的与共不同" class="headerlink" title="webpack的与共不同"></a>webpack的与共不同</h1><p>webpack 是前端常用的打包工具，可以看作是模块打包机，它的工作主要是分析项目结构，找到JavaScript模块以及一些浏览器无法直接编译的其它拓展语言（比如sass，ts等等），对项目整体进行解析、加工、打包、优化。<br /><strong>Q：WebPack 和 Grunt 以及 Gulp 相比有什么特性？</strong><br /><strong>A：</strong>同作为前端打包工具，Webpack和另外两个没有太多的可比性，相对而言，Gulp/Grunt更倾向于专业的流程打包工具，而WebPack提供的是一整套模块化的解决方案，webpack所能做的事情更多更完善，至今为止webpack以及发展到了5.x版本，webpack的优点使得Webpack在很多场景下可以替代Gulp/Grunt类的工具。<br /><strong>Grunt、Gulp的工作方式</strong>是：在一个配置文件中，指明对某些文件进行类似编译，组合，压缩等任务的具体步骤，工具之后可以自动替你完成这些任务。<br /><strong>Webpack的工作方式</strong>是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包为一个（或多个）浏览器可识别的JavaScript文件。<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/186051/1581480529449-fa18cf20-055f-487a-b767-130ee45d202b.png#align=left&display=inline&height=323&originHeight=382&originWidth=874&size=0&status=done&style=none&width=740"><br><a name="nSO7R"></a></p>
+<h1 id="webpack-内部工作机制"><a href="#webpack-内部工作机制" class="headerlink" title="webpack 内部工作机制"></a>webpack 内部工作机制</h1><p>以webpack4为例，上篇文章 <a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzU3Mzc2NDY1MQ==&mid=2247484364&idx=1&sn=7e3b9513cc2d71b44c2ccfc5559898ad&chksm=fd3de688ca4a6f9e6c1760a870611d28b3085bfa887d9ef3e0c7bb2c91470c7638f8d7c5cc8e&scene=21#wechat_redirect">【工具篇】1 | Webpack的基本使用</a> 已经详细介绍webpack的基本使用方法，下面将探讨 webpack 内部运行机制和其构建优化。<br />了解 webpack 的内部工作流程，有助于我们解决日常使用 webpack 时遇到的一些问题，也有助于我们更好地理解 webpack loader 和 plugin 的使用。<br />先暂时抛开复杂的 loader 和 plugin 机制（以后将详细介绍），webpack 本质上就是一个 JS Module Bundler，用于将多个代码模块进行打包，首先通过一个相对简单的 JS Module Bunlder 的基础工作流程是如何运行的，在了解了 bundler 如何工作的基础上，再进一步去整理 webpack 整个流程，将 loader 和 plugin 的机制弄明白。</p>
+<blockquote>
+<p>以下内容将 module bundler 简称为 bundler。</p>
+</blockquote>
+<p><a name="DL9Z5"></a></p>
+<h2 id="1-bundler-的基础流程"><a href="#1-bundler-的基础流程" class="headerlink" title="1.bundler 的基础流程"></a>1.bundler 的基础流程</h2><p>bundler 从构建入口出发，解析代码，分析出代码模块依赖关系，然后将依赖的代码模块组合在一起，在 JavaScript bundler 中，还需要提供一些胶水代码让多个代码模块可以协同工作，相互引用。首先是解析代码、分析依赖关系，对于 ES6 Module 以及 CommonJS Modules 语法定义的模块，例如这样的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// entry.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; bar &#125; <span class="keyword">from</span> <span class="string">&#x27;./bar.js&#x27;</span>; <span class="comment">// 依赖 ./bar.js 模块</span></span><br><span class="line"><span class="comment">// bar.js</span></span><br><span class="line"><span class="keyword">const</span> foo = <span class="built_in">require</span>(<span class="string">&#x27;./foo.js&#x27;</span>); <span class="comment">// 依赖 ./foo.js 模块</span></span><br></pre></td></tr></table></figure>
+<p>bundler 需要从这个入口代码（第一段）中解析出依赖 bar.js，然后再读取 bar.js 这个代码文件，解析出依赖 foo.js 代码文件，继续解析其依赖，递归下去，直至没有更多的依赖模块，最终形成一颗模块依赖树。<br />分析出依赖关系后，bunlder 需要将依赖关系中涉及的所有文件组合到一起，由于依赖代码的执行是有先后顺序以及会引用模块内部不同的内容，不能简单地将代码拼接到一起。webpack 会利用 JavaScript Function 的特性提供一些代码来将各个模块整合到一起，即是将每一个模块包装成一个 JS Function，提供一个引用依赖模块的方法，如下面例子中的 <code>__webpack__require__</code>，这样做，既可以避免变量相互干扰，又能够有效控制执行顺序，简单的代码例子如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将各个依赖模块的代码用 modules 的方式组织起来打包成一个文件</span></span><br><span class="line"><span class="comment">// entry.js</span></span><br><span class="line">modules[<span class="string">&#x27;./entry.js&#x27;</span>] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; bar &#125; = __webpack__require__(<span class="string">&#x27;./bar.js&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// bar.js</span></span><br><span class="line">modules[<span class="string">&#x27;./bar.js&#x27;</span>] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> foo = __webpack__require__(<span class="string">&#x27;./foo.js&#x27;</span>)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// foo.js</span></span><br><span class="line">modules[<span class="string">&#x27;./foo.js&#x27;</span>] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 已经执行的代码模块结果会保存在这里</span></span><br><span class="line"><span class="keyword">const</span> installedModules = &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__webpack__require__</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ... </span></span><br><span class="line">  <span class="comment">// 如果 installedModules 中有就直接获取</span></span><br><span class="line">  <span class="comment">// 没有的话从 modules 中获取 function 然后执行，将结果缓存在 installedModules 中然后返回结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们在介绍 bundler 的基础流程时，把各个部分的实现细节简化了，这有利于我们从整体的角度去看清楚整个轮廓，至于某一部分的具体实现，例如解析代码依赖，模块依赖关系管理，胶水代码的生成等，深入细节的话会比较复杂，以后再对其专题分析。</p>
+<hr>
+<p><a name="slbOI"></a></p>
+<h2 id="2-webpack-的结构"><a href="#2-webpack-的结构" class="headerlink" title="2.webpack 的结构"></a>2.webpack 的结构</h2><p>webpack 需要高扩展性，在插件实现方面，webpack 利用了 tapable 库来协助实现对于整个构建流程各个步骤的控制。在基于 tapable 库定义主要构建流程后，并使用 tapable 库添加了各类的钩子方法来拓展 webpack，同时对外提供了相对强大的扩展性，即 plugin 的机制。<br />下面是 webpack 运行过程中的几个重要概念：</p>
+<ul>
+<li><strong>Compiler</strong><br />webpack 的支柱引擎，实例化时定义 webpack 构建主要流程，同时创建构建时使用的核心对象 compilation；<br /></li>
+<li><strong>Compilation</strong><br />由 Compiler 实例化，存储构建过程中各流程使用到的数据，用于控制这些数据的变化；<br /></li>
+<li><strong>Chunk</strong><br />即用于表示 chunk 的类，对于构建时需要的 chunk 对象由 Compilation 创建后保存管理；<br /></li>
+<li><strong>Module</strong><br />用于表示代码模块的类，衍生出很多子类用于处理不同的情况，关于代码模块的所有信息都会存在 Module 实例中，例如 <code>dependencies</code> 记录代码模块的依赖等；<br /></li>
+<li><strong>Parser</strong><br />基于 acorn 来分析 AST 语法树，解析出代码模块的依赖；<br /></li>
+<li><strong>Dependency</strong><br />解析时用于保存代码模块对应的依赖使用的对象；<br /></li>
+<li><strong>Template</strong><br />生成最终代码要使用到的代码模板；<br /><blockquote>
+<p>官方对于 Compiler 和 Compilation 的定义是：<br><strong>compiler</strong> 对象代表了完整的 webpack 环境配置。这个对象在启动 webpack 时被一次性建立，并配置好所有可操作的设置，包括 options，loader 和 plugin。当在 webpack 环境中应用一个插件时，插件将收到此 compiler 对象的引用。可以使用它来访问 webpack 的主环境。<br><strong>compilation</strong> 对象代表了一次资源版本构建。当运行 webpack 开发环境中间件时，每当检测到一个文件变化，就会创建一个新的 compilation，从而生成一组新的编译资源。一个 compilation 对象表现了当前的模块资源、编译生成资源、变化的文件、以及被跟踪依赖的状态信息。compilation 对象也提供了很多关键步骤的回调，以供插件做自定义处理时选择使用。</p>
+</blockquote>
+</li>
+</ul>
+<p>下面是 webpack 内部工作流程中比较重要的几个部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.创建 Compiler -&gt; </span><br><span class="line">2.调用 compiler.run 开始构建 -&gt;</span><br><span class="line">3.创建 Compilation -&gt; </span><br><span class="line">4.基于配置开始创建 Chunk -&gt; </span><br><span class="line">5.使用 Parser 从 Chunk 开始解析依赖 -&gt; </span><br><span class="line">6.使用 Module 和 Dependency 管理代码模块相互关系 -&gt; </span><br><span class="line">7.使用 Template 基于 Compilation 的数据生成结果代码</span><br></pre></td></tr></table></figure>
+<p>上述只是大概流程，实际流程细节相对复杂，一方面是技术实现的细节有一定复杂度，另一方面是实现的功能逻辑上也有一定复杂度，深入介绍的话，篇幅会很长，并且可能效果不理想，当我们还没到了要去实现具体功能的时候，无须关注那么具体的实现细节，只需要站在更高的层面去分析整体的流程。更细节的部分将在 Node篇 进一步探讨。<br><a name="5PPiP"></a></p>
+<h1 id="从源码中探索-webpack"><a href="#从源码中探索-webpack" class="headerlink" title="从源码中探索 webpack"></a>从源码中探索 webpack</h1><p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480528723-34663a4f-73a5-4bd0-bb0f-eeda701db965.jpeg#align=left&display=inline&height=1336&originHeight=1175&originWidth=651&size=0&status=done&style=none&width=740"><br />webpack 主要的构建处理方法都在 <code>Compilation</code> 中，按照官网的说法，<code>Compilation</code> 模块会被 <code>Compiler</code> 用来创建新的编译（或新的构建）。<code>compilation</code> 实例能够访问所有的模块和它们的依赖（大部分是循环依赖）。它会对应用程序的依赖图中所有模块进行字面上的编译(literal compilation)。在编译阶段，模块会被加载(loaded)、封存(sealed)、优化(optimized)、分块(chunked)、哈希(hashed)和重新创建(restored)，下面仅对下面几个个关键部分来探讨一下。</p>
+<hr>
+<p><a name="SKGao"></a></p>
+<h2 id="1-Tapable"><a href="#1-Tapable" class="headerlink" title="1.Tapable"></a>1.Tapable</h2><p>webpack4重写了Tapable, 是webpack的插件组织的核心。它提供给各个插件钩子，在事件触发时执行这些挂载的方法。webapck的插件里必须有apply()方法，当其被调用的时候webpack将钩子上的方法挂载到各个事件下面有点像nodejs里EventEmitter的<code>$on</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.hooks = &#123;</span><br><span class="line">            <span class="attr">accelerate</span>: <span class="keyword">new</span> SyncHook([<span class="string">&quot;newSpeed&quot;</span>]),</span><br><span class="line">            <span class="attr">brake</span>: <span class="keyword">new</span> SyncHook(),</span><br><span class="line">            <span class="attr">calculateRoutes</span>: <span class="keyword">new</span> AsyncParallelHook([<span class="string">&quot;source&quot;</span>, <span class="string">&quot;target&quot;</span>, <span class="string">&quot;routesList&quot;</span>])</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">setSpeed</span>(<span class="params">newSpeed</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.hooks.accelerate.call(newSpeed);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上代码所示先是在实例化的过程中注册了三个钩子函数，在实例上调用方法时触发钩子函数。</p>
+<hr>
+<p><a name="3ASHj"></a></p>
+<h2 id="2-Compiler"><a href="#2-Compiler" class="headerlink" title="2.Compiler"></a>2.Compiler</h2><p>最高层的实例，初始化配置，提供全局性的钩子比如done, compilation。其他的Tapable实例需要通过其访问，如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">compiler.hooks.compilation.tap(</span><br><span class="line">      <span class="string">&quot;myFirstWebpackPlugin&quot;</span>,</span><br><span class="line">      <span class="function">(<span class="params">compilation, params</span>) =&gt;</span> &#123;</span><br><span class="line">        compilation.hooks.seal.tap()</span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<p><a name="mLrk1"></a></p>
+<h2 id="3-addEntry-和-addModuleChain"><a href="#3-addEntry-和-addModuleChain" class="headerlink" title="3.addEntry 和 _addModuleChain"></a>3.addEntry 和 _addModuleChain</h2><p><code>addEntry</code> 这个方法顾名思义，用于把配置的入口加入到构建的任务中去，当解析好 webpack 配置，准备好开始构建时，便会执行 <code>addEntry</code> 方法，而 <code>addEntry</code> 会调用 <code>_addModuleChain</code> 来为入口文件（入口文件这个时候等同于第一个依赖）创建一个对应的 <code>Module</code> 实例。<br /><code>_addModuleChain</code> 方法会根据入口文件这第一个依赖的类型创建一个 <code>moduleFactory</code>，然后再使用这个 <code>moduleFactory</code> 给入口文件创建一个 <code>Module</code> 实例，这个 <code>Module</code> 实例用来管理后续这个入口构建的相关数据信息，关于 <code>Module</code> 类的具体实现可以参考这个源码：lib/Module.js，这个是个基础类，大部分我们构建时使用的代码模块的 <code>Module</code> 实例是 lib/NormalModule.js 这个类创建的。<br />我们介绍 <code>addEntry</code> 主要是为了寻找整个构建的起点，让这一切有迹可循，后续的深入可以从这个点出发。</p>
+<hr>
+<p><a name="naLK9"></a></p>
+<h2 id="4-buildModule"><a href="#4-buildModule" class="headerlink" title="4.buildModule"></a>4.buildModule</h2><p>当一个 <code>Module</code> 实例被创建后，比较重要的一步是执行 <code>compilation.buildModule</code> 这个方法，这个方法主要会调用 <code>Module</code> 实例的 <code>build</code> 方法，这个方法主要就是创建 <code>Module</code> 实例需要的一些东西，对我们梳理流程来说，这里边最重要的部分就是调用自身的 runLoaders 方法。<br /><code>runLoaders</code> 这个方法是 webpack 依赖的这个类库实现的：loader-runner，这个方法也比较容易理解，就是执行对应的 loaders，将代码源码内容一一交由配置中指定的 loader 处理后，再把处理的结果保存起来。<br />上面提到的 <code>Module</code> 实例的 <code>build</code> 方法在执行完对应的 loader，处理完模块代码自身的转换后，还有相当重要的一步是调用 Parser 的实例来解析自身依赖的模块，解析后的结果存放在 <code>module.dependencies</code> 中，首先保存的是依赖的路径，后续会经由 <code>compilation.processModuleDependencies</code> 方法，再来处理各个依赖模块，递归地去建立整个依赖关系树。</p>
+<hr>
+<p><a name="ZieAu"></a></p>
+<h2 id="5-Compilation-的钩子"><a href="#5-Compilation-的钩子" class="headerlink" title="5.Compilation 的钩子"></a>5.Compilation 的钩子</h2><p>由Compiler创建，整个构建就在这里完成，进行依赖图构建，优化资源，渲染出runtime时的代码等。下面的4个实例都是发生在这个阶段。webpack 会使用 tapable 库给整个流程的各个步骤拓展钩子方法，便于特定的环节执行时触发相应的事件，注册的事件函数便可以调整构建时的上下文数据，或者做额外的处理工作，这就是 webpack 的 plugin 机制。在 webpack 执行入口处 lib/webpack.js 有这么一段代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (options.plugins &amp;&amp; <span class="built_in">Array</span>.isArray(options.plugins)) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> plugin <span class="keyword">of</span> options.plugins) &#123;</span><br><span class="line">        plugin.apply(compiler); <span class="comment">// 调用每一个 plugin 的 apply 方法，把 compiler 实例传递过去</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>plugin 的 <code>apply</code> 方法就是用来给 <code>compiler</code> 实例注册事件钩子函数的，而 <code>compiler</code> 的一些事件钩子中可以获得 <code>compilation</code> 实例的引用，通过引用又可以给 <code>compilation</code> 实例注册事件函数，以此类推，便可以将 plugin 的能力覆盖到整个 webpack 构建过程。<br><a name="ml0IN"></a></p>
+<h2 id="6-Resolver"><a href="#6-Resolver" class="headerlink" title="6.Resolver"></a>6.Resolver</h2><p>当你请求一个模块的时候，你将模块名或者相对地址发给模块解析器，它会去解析出绝对地址去寻找那个模块，看是否存在，如果存在则返回相应的模块信息，包括上下文等。这里的请求可以类似网络请求一样携带上查询参数之类的，Resolver将会返回额外信息。webpack4里将Resolver这个实例抽出来单独发了一个包enhanced-resolve, 抽象出来可以便于用户实现自己的Resolver。<br><a name="aB9wM"></a></p>
+<h2 id="7-ModuleFactory"><a href="#7-ModuleFactory" class="headerlink" title="7.ModuleFactory"></a>7.ModuleFactory</h2><p>模块工厂就是负责构造模块的实例，介绍两种NormalModuleFactory和ContextModuleFactory。两者不同的地方在于后者用于解析动态import()，模块工厂主要是用于将Resolver解析成功的请求里的源码从文件中拿出，在内存中创建一个模块对象（NormalModule）。<br><a name="83QcQ"></a></p>
+<h2 id="8-Parser"><a href="#8-Parser" class="headerlink" title="8.Parser"></a>8.Parser</h2><p>Parser主要用于将代码解析成AST抽象语法树.可以在ast查看代码转换成AST后的样子。webpack默认采用acorn解析器，babel是babylon。Parser将ModuleFactory返回的对象里的代码字符串转换成AST后进行解析，发现import或者require或者define类似模块引用时会将这些引用信息也就是依赖添加到当前模块的对象里，这样每个模块对象里不但有自己模块的信息还包含它的依赖信息。webpack会在不仅仅会在模块声明处触发事件，它甚至会在解析到变量时也触发事件。如下在webpack/lib/Parser.js里可以看到如下三个钩子函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">varDeclaration: <span class="keyword">new</span> HookMap(<span class="function">() =&gt;</span> <span class="keyword">new</span> SyncBailHook([<span class="string">&quot;declaration&quot;</span>])),</span><br><span class="line">    <span class="attr">varDeclarationLet</span>: <span class="keyword">new</span> HookMap(<span class="function">() =&gt;</span> <span class="keyword">new</span> SyncBailHook([<span class="string">&quot;declaration&quot;</span>])),</span><br><span class="line">    <span class="attr">varDeclarationConst</span>: <span class="keyword">new</span> HookMap(<span class="function">() =&gt;</span> <span class="keyword">new</span> SyncBailHook([<span class="string">&quot;declaration&quot;</span>])),</span><br></pre></td></tr></table></figure>
+<p>Template负责生成运行时的代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 源码</span></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line">    <span class="keyword">var</span> multiply  = <span class="built_in">require</span>(<span class="string">&#x27;./multiply&#x27;</span>)</span><br><span class="line">    <span class="keyword">var</span> sum = <span class="function">(<span class="params">a,b</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a+b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">module</span>.exports = sum;</span><br><span class="line"><span class="comment">// multiply.js</span></span><br><span class="line">    <span class="built_in">module</span>.exports = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a*b</span><br><span class="line"><span class="comment">// 生成的runtime</span></span><br><span class="line">[</span><br><span class="line"><span class="comment">/* 0 */</span></span><br><span class="line"><span class="comment">/***/</span> (<span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">module</span>, <span class="built_in">exports</span>, __webpack_require__</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> multiply  = __webpack_require__(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">var</span> sum = <span class="function">(<span class="params">a,b</span>)=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> a+b;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">module</span>.exports = sum;</span><br><span class="line"><span class="comment">/***/</span> &#125;),</span><br><span class="line"><span class="comment">/* 1 */</span></span><br><span class="line"><span class="comment">/***/</span> (<span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">module</span>, <span class="built_in">exports</span></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">module</span>.exports = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a*b</span><br><span class="line"><span class="comment">/***/</span> &#125;)</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>如上面代码所示，里面包含三个模板，分别负责chunk、module、dependency。chunk是包含多个模块的数组，就是外面数组的形式；module就是里面用立即执行函数包围的部分；dependency就是将原先import，require等引用模块部分转换成 <strong>webpack_require。</strong><br><a name="VFhoR"></a></p>
+<h1 id="优化webpack构建速度"><a href="#优化webpack构建速度" class="headerlink" title="优化webpack构建速度"></a>优化webpack构建速度</h1><p>刚刚前面我们了解到了 webpack 大致工作流程，在实际工作业务里，我们的前端项目会随着时间推移和业务发展，经过不断的迭代重构，页面可能会越来越多，或者功能和业务代码会越来越多，又或者依赖的外部类库会多而复杂，这个时候原本不足为道的 webpack 构建时间消耗就会慢慢地进入我们的视野。<br />构建消耗的时间变长了，如果是使用 CI 服务来做构建，大部分情况下我们无须等待，其实影响不大。但是本地的 webpack 开发环境服务启动时的速度和我们日常开发工作息息相关，在一些性能不是特别突出的设备上（例如便携式笔记本等等），启动时的长时间等待可能会让你越来越受不了。<br />试想一下，如果你使用 webpack build 的时长可以达到十多分钟左右，这种场景下，就算用 CI 服务，在遇见需要紧急发布修复问题时，也会让人很抓狂。所以不仅要会使用 webpack，还需要掌握如何优化 webpack 的构建性能。</p>
+<hr>
+<p><a name="Sn2vc"></a></p>
+<h2 id="1-让-webpack-少干点活"><a href="#1-让-webpack-少干点活" class="headerlink" title="1.让 webpack 少干点活"></a>1.让 webpack 少干点活</h2><p>提升 webpack 构建速度本质上就是想办法让 webpack 少干点活，活少了速度自然快了，尽量避免 webpack 去做一些不必要的事情。<br><a name="J6gOS"></a></p>
+<h2 id="2-减少-resolve-的解析"><a href="#2-减少-resolve-的解析" class="headerlink" title="2.减少 resolve 的解析"></a>2.减少 resolve 的解析</h2><p>在前边第三小节我们详细介绍了 webpack 的 <code>resolve</code> 配置，如果我们可以精简 <code>resolve</code> 配置，让 webpack 在查询模块路径时尽可能快速地定位到需要的模块，不做额外的查询工作，那么 webpack 的构建速度也会快一些，下面举个例子，介绍如何在 <code>resolve</code> 这一块做优化：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">resolve: &#123;</span><br><span class="line">  <span class="attr">modules</span>: [</span><br><span class="line">    path.resolve(__dirname, <span class="string">&#x27;node_modules&#x27;</span>), <span class="comment">// 使用绝对路径指定 node_modules，不做过多查询</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// 删除不必要的后缀自动补全，少了文件后缀的自动匹配，即减少了文件路径查询的工作</span></span><br><span class="line">  <span class="comment">// 其他文件可以在编码时指定后缀，如 import(&#x27;./index.scss&#x27;)</span></span><br><span class="line">  <span class="attr">extensions</span>: [<span class="string">&quot;.js&quot;</span>], </span><br><span class="line">  <span class="comment">// 避免新增默认文件，编码时使用详细的文件路径，代码会更容易解读，也有益于提高构建速度</span></span><br><span class="line">  <span class="attr">mainFiles</span>: [<span class="string">&#x27;index&#x27;</span>],</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>上述是可以从配置 <code>resolve</code> 下手提升 webpack 构建速度的配置例子。<br />我们在编码时，如果是使用我们自己本地的代码模块，尽可能编写完整的路径，避免使用目录名，如：<code>import &#39;./lib/slider/index.js&#39;</code>，这样的代码既清晰易懂，webpack 也不用去多次查询来确定使用哪个文件，一步到位。<br><a name="fmcyX"></a></p>
+<h2 id="3-把-loader-应用的文件范围缩小"><a href="#3-把-loader-应用的文件范围缩小" class="headerlink" title="3.把 loader 应用的文件范围缩小"></a>3.把 loader 应用的文件范围缩小</h2><p>我们在使用 loader 的时候，尽可能把 loader 应用的文件范围缩小，只在最少数必须的代码模块中去使用必要的 loader，例如 node_modules 目录下的其他依赖类库文件，基本就是直接编译好可用的代码，无须再经过 loader 处理了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">rules: [ </span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">test</span>: <span class="regexp">/.jsx?/</span>,</span><br><span class="line">    include: [ </span><br><span class="line">      path.resolve(__dirname, <span class="string">&#x27;src&#x27;</span>), </span><br><span class="line">      <span class="comment">// 限定只在 src 目录下的 js/jsx 文件需要经 babel-loader 处理</span></span><br><span class="line">      <span class="comment">// 通常我们需要 loader 处理的文件都是存放在 src 目录</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">use</span>: <span class="string">&#x27;babel-loader&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>如上边这个例子，如果没有配置 <code>include</code>，所有的外部依赖模块都经过 Babel 处理的话，构建速度也是会收很大影响的。<br><a name="BKETp"></a></p>
+<h2 id="4-减少-plugin-的消耗"><a href="#4-减少-plugin-的消耗" class="headerlink" title="4.减少 plugin 的消耗"></a>4.减少 plugin 的消耗</h2><p>webpack 的 plugin 会在构建的过程中加入其它的工作步骤，如果可以的话，适当地移除掉一些没有必要的 plugin。<br />这里再提一下 webpack 4.x 的 mode，区分 mode 会让 webpack 的构建更加有针对性，更加高效。例如当 mode 为 development 时，webpack 会避免使用一些提高应用代码加载性能的配置项，如 UglifyJsPlugin，ExtractTextPlugin 等，这样可以更快地启动开发环境的服务，而当 mode 为 production 时，webpack 会避免使用一些便于 debug 的配置，来提升构建时的速度，例如极其消耗性能的 Source Maps 支持。<br><a name="Gx85G"></a></p>
+<h2 id="5-换种方式处理图片"><a href="#5-换种方式处理图片" class="headerlink" title="5.换种方式处理图片"></a>5.换种方式处理图片</h2><p>我们在前边的小节提到图片可以使用 webpack 的 image-webpack-loader 来压缩图片，在对 webpack 构建性能要求不高的时候，这样是一种很简便的处理方式，但是要考虑提高 webpack 构建速度时，这一块的处理就得重新考虑一下了，思考一下是否有必要在 webpack 每次构建时都处理一次图片压缩。<br />这里介绍一种解决思路，我们可以直接使用 imagemin 来做图片压缩，编写简单的命令即可。然后使用 pre-commit 这个类库来配置对应的命令，使其在 <code>git commit</code> 的时候触发，并且将要提交的文件替换为压缩后的文件。<br />这样提交到代码仓库的图片就已经是压缩好的了，以后在项目中再次使用到的这些图片就无需再进行压缩处理了，image-webpack-loader 也就没有必要了。<br><a name="RobGJ"></a></p>
+<h2 id="6-使用-DLLPlugin"><a href="#6-使用-DLLPlugin" class="headerlink" title="6.使用 DLLPlugin"></a>6.使用 DLLPlugin</h2><p>DLLPlugin 是 webpack 官方提供的一个插件，也是用来分离代码的，和 <code>optimization.splitChunks</code>（3.x 版本的是 CommonsChunkPlugin）有异曲同工之妙，之所以把 DLLPlugin 放到 webpack 构建性能优化这一部分，是因为它的配置相对繁琐，如果项目不涉及性能优化这一块，基本上使用 <code>optimization.splitChunks</code> 即可。<br />我们来看一下 DLLPlugin 如何使用，使用这个插件时需要额外的一个构建配置，用来打包公共的那一部分代码，举个例子，假设这个额外配置是 <code>webpack.dll.config.js</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;vendor&#x27;</span>,</span><br><span class="line">  <span class="attr">entry</span>: [<span class="string">&#x27;lodash&#x27;</span>], <span class="comment">// 这个例子我们打包 lodash 作为公共类库</span></span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">&quot;dist&quot;</span>),</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&quot;vendor.js&quot;</span>,</span><br><span class="line">    <span class="attr">library</span>: <span class="string">&quot;vendor_[hash]&quot;</span> <span class="comment">// 打包后对外暴露的类库名称</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;vendor_[hash]&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>: path.resolve(__dirname, <span class="string">&quot;dist/manifest.json&quot;</span>), <span class="comment">// 使用 DLLPlugin 在打包的时候生成一个 manifest 文件</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后就是我们正常的应用构建配置，在那个的基础上添加两个一个新的 <code>webpack.DllReferencePlugin</code> 配置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DllReferencePlugin(&#123;</span><br><span class="line">      <span class="attr">manifest</span>: path.resolve(__dirname, <span class="string">&#x27;dist/manifest.json&#x27;</span>), </span><br><span class="line">      <span class="comment">// 指定需要用到的 manifest 文件，</span></span><br><span class="line">      <span class="comment">// webpack 会根据这个 manifest 文件的信息，分析出哪些模块无需打包，直接从另外的文件暴露出来的内容中获取</span></span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在构建的时候，我们需要优先使用 <code>webpack.dll.config.js</code> 来打包，如 <code>webpack -c webpack.dll.config.js --mode production</code>，构建后生成公共代码模块的文件 <code>vendor.js</code> 和 <code>manifest.json</code>，然后再进行应用代码的构建。<br />你会发现构建结果的应用代码中不包含 lodash 的代码内容，这一部分代码内容会放在 <code>vendor.js</code> 这个文件中，而你的应用要正常使用的话，需要在 HTML 文件中按顺序引用这两个代码文件，如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;vendor.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;main.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其实作用和 <code>optimization.splitChunks</code> 很相似，但是有个区别，DLLPlugin 构建出来的内容无需每次都重新构建，后续应用代码部分变更时，你不用再执行配置为 <code>webpack.dll.config.js</code> 这一部分的构建，沿用原本的构建结果即可，所以相比 <code>optimization.splitChunks</code>，使用 DLLPlugin 时，构建速度是会有显著提高的。<br />但是很显然，DLLPlugin 的配置要麻烦得多，并且需要关心你公共部分代码的变化，当你升级 lodash（即你的公共部分代码的内容变更）时，要重新去执行 <code>webpack.dll.config.js</code> 这一部分的构建，不然沿用的依旧是旧的构建结果，使用上并不如 <code>optimization.splitChunks</code> 来得方便。这是一种取舍，根据项目的实际情况采用合适的做法。<br />还有一点需要注意的是，html-webpack-plugin 并不会自动处理 DLLPlugin 分离出来的那个公共代码文件，我们需要自己处理这一部分的内容，可以考虑使用 add-asset-html-webpack-plugin，关于这一个的使用就不讲解了，详细参考官方的说明文档：使用 add-asset-html-webpack-plugin。<br><a name="YMyUS"></a></p>
+<h1 id="webpack-4-x-的构建性能"><a href="#webpack-4-x-的构建性能" class="headerlink" title="webpack 4.x 的构建性能"></a>webpack 4.x 的构建性能</h1><p>从官方发布的 webpack 4.0 更新日志来看，webpack 4.0 版本做了很多关于提升构建性能的工作，我觉得比较重要的改进有这么几个：</p>
+<ul>
+<li>AST 可以直接从 loader 直接传递给 webpack，避免额外的解析，对这一个优化细节有兴趣的可以查看这个 PR。<br /></li>
+<li>使用速度更快的 md4 作为默认的 hash 方法，对于大型项目来说，文件一多，需要 hash 处理的内容就多，webpack 的 hash 处理优化对整体的构建速度提升应该还是有一定的效果的。<br /></li>
+<li>Node 语言层面的优化，如用 <code>for of</code> 替换 <code>forEach</code>，用 <code>Map</code> 和 <code>Set</code> 替换普通的对象字面量等等，这一部分就不展开讲了，有兴趣的同学可以去 webpack 的 PRs 寻找更多的内容。<br /></li>
+<li>默认开启 uglifyjs-webpack-plugin 的 <code>cache</code> 和 <code>parallel</code>，即缓存和并行处理，这样能大大提高 production mode 下压缩代码的速度。<br /></li>
+</ul>
+<p>除此之外，还有比较琐碎的一些内容，可以查阅：<strong>webpack release 4.0</strong>，留意 <strong>performance</strong> 关键词。<br />很显然，webpack 的开发者们越来越关心 webpack 构建性能的问题，有一个关于 webpack 4.x 和 3.x 构建性能的简单对比：</p>
+<blockquote>
+<p>6 entries, dev mode, source maps off, using a bunch of loaders and plugins. dat speed ⚡️</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480528948-c3b63438-8967-4b03-b554-1824739aef9e.jpeg#align=left&display=inline&height=164&originHeight=164&originWidth=498&size=0&status=done&style=none&width=498">speed webpack of 4.x<img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480529491-cc4e9bf8-d71c-4d0b-b22b-7f6834dff19a.jpeg#align=left&display=inline&height=154&originHeight=154&originWidth=440&size=0&status=done&style=none&width=440">speed webpack of 3.x<br />从这个对比的例子上看，4.x 的构建性能对比 3.x 是有很显著的提高，而 webpack 官方后续计划加入多核运算，持久化缓存等特性来进一步提升性能所以，及时更新 webpack 版本，也是提升构建性能的一个有效方式。<br><a name="3YB8E"></a></p>
+<h1 id="webpack5新特性"><a href="#webpack5新特性" class="headerlink" title="webpack5新特性"></a>webpack5新特性</h1><p><a name="8gZ4A"></a></p>
+<h2 id="1-编译器的优化"><a href="#1-编译器的优化" class="headerlink" title="1.编译器的优化"></a>1.编译器的优化</h2><p>如果大家读过Webpack的源码一定知道Compiler的重要性，在Webpack中充斥着大量的钩子和触发事件。<br /><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1581480529430-df07eeb4-9a33-4ff4-9967-c62f17102e10.jpeg#align=left&display=inline&height=391&originHeight=570&originWidth=1080&size=0&status=done&style=none&width=740"><br />在新的版本中，编译器在使用完毕后应该被关闭，因为它们在进入或退出空闲状态时，拥有这些状态的 hook。 插件可以用这些 hook 来执行不太重要的工作（比如：持久性缓存把缓存慢慢地存储到磁盘上）。同时插件的作者应该预见到某些用户可能会忘记关闭编译器，所以 当编译器关闭所有剩下的工作时应尽快完成。 然后回调将会通知已彻底完成。当你升级到 v5 时，请确保在完成工作后使用 Node.js API 调用 Compiler.close。<br><a name="hoPkR"></a></p>
+<h2 id="2-Node-js-polyfills-自动被移除"><a href="#2-Node-js-polyfills-自动被移除" class="headerlink" title="2.Node.js polyfills 自动被移除"></a>2.Node.js polyfills 自动被移除</h2><p>过去，Webpack 4版本附带了大多数 Node.js 核心模块的 polyfills，一旦前端使用了任何核心模块，这些模块就会自动应用，但是其实有些是不必要的。 V5中的尝试是自动停止 polyfilling 这些核心模块，并侧重于前端兼容的模块。当迁移到 v5时，最好尽可能使用前端兼容的模块，并尽可能手动添加核心模块的polyfills。 Webpack鼓励大家多提交自己的意见，因为这个更改可能会也可能不会进入最终的 v5版本。<br><a name="0Qcn7"></a></p>
+<h2 id="3-打包大小限制"><a href="#3-打包大小限制" class="headerlink" title="3.打包大小限制"></a>3.打包大小限制</h2><p>在V4版本中默认情况下，仅能处理javascript的大小。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">optimization</span>: &#123;</span><br><span class="line">        <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">            <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">                <span class="attr">commons</span>: &#123;</span><br><span class="line">                    <span class="attr">chunks</span>: <span class="string">&quot;all&quot;</span>,</span><br><span class="line">                    <span class="attr">name</span>: <span class="string">&quot;commons&quot;</span>,</span><br><span class="line">                    <span class="attr">minChunks</span>: <span class="number">1</span>,</span><br><span class="line">                    <span class="attr">minSize</span>: <span class="string">&quot;数值&quot;</span>,</span><br><span class="line">                    <span class="attr">maxSize</span>: <span class="string">&quot;数值&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>V5版本之后，更加自由化。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">optimization</span>: &#123;</span><br><span class="line">        <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">            <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">                <span class="attr">commons</span>: &#123;</span><br><span class="line">                    <span class="attr">chunks</span>: <span class="string">&quot;all&quot;</span>,</span><br><span class="line">                    <span class="attr">name</span>: <span class="string">&quot;commons&quot;</span>,</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">//最小的文件大小 超过之后将不予打包</span></span><br><span class="line">            <span class="attr">minSize</span>: &#123;</span><br><span class="line">                <span class="attr">javascript</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="attr">style</span>: <span class="number">0</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">//最大的文件 超过之后继续拆分</span></span><br><span class="line">            <span class="attr">maxSize</span>: &#123;</span><br><span class="line">                <span class="attr">javascript</span>: <span class="number">1</span>, <span class="comment">//故意写小的效果更明显</span></span><br><span class="line">                <span class="attr">style</span>: <span class="number">3000</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="R2caR"></a></p>
+<h2 id="4-按需加载"><a href="#4-按需加载" class="headerlink" title="4.按需加载"></a>4.按需加载</h2><p>以前当我们想在index.js内部 import(./async.js”).then(…)的时候，如果我们什么也不加。V4会默认对这些文件生成一堆0.js,1.js,2.js…是多么的整齐.所以我们需要使用<br />import(/* webpackChunkName: “name” */ “module”) 才能化解这份尴尬。今天V5可以在开发模式中启用了一个新命名的块 id 算法，该算法提供块(以及文件名)可读的引用。 模块 ID 由其相对于上下文的路径确定。 块 ID 是由块的内容决定的，所以你不再需要使用Magic Comments。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//src文件夹index.js</span></span><br><span class="line"><span class="keyword">import</span>(<span class="string">&quot;./async.js&quot;</span>).then(<span class="function">(<span class="params">_</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(_.data);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;Hello Webpack5&quot;</span>)</span><br><span class="line"><span class="comment">//src文件夹async.js</span></span><br><span class="line"><span class="keyword">const</span> data = <span class="string">&quot;异步数据，测试&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> data;</span><br></pre></td></tr></table></figure>
+<p>再次编译之后src_async_js.js 就躺在了dist里。如果这个时候去执行 npm run prod 会在dist里出现一个已数字开头的js文件。<br><a name="ehRbK"></a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>上面我们介绍了 webpack 打包的工资流程，以及优化 webpack 构建速度的一些方法：</p>
+<ul>
+<li>减少 <code>resolve</code> 的解析<br /></li>
+<li>减少 plugin 的消耗<br /></li>
+<li>换种方式处理图片<br /></li>
+<li>使用 DLLPlugin<br /></li>
+<li>积极更新 webpack 版本<br /></li>
+</ul>
+<p>当我们面对因项目过大而导致的构建性能问题时，我们也可以换个角度，思考在 webpack 之上的另外一些解决方案，不要过分依赖于 webpack。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/02/12/195-%E3%80%90Webpack%E3%80%91%E5%88%86%E6%9E%90Webpack%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" data-id="ckts3ejyj00mr4d9kcjj87l6s" data-title="195-【Webpack】分析Webpack运行机制" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/02/13/196-%E3%80%90JavaScript%E3%80%91%E4%B8%80%E6%96%87%E5%AD%A6%E4%BC%9A%E5%88%A4%E6%96%AD%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E4%B8%BA%E6%95%B0%E7%BB%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          196-【JavaScript】一文学会判断变量是否为数组
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/01/194-%E3%80%90Web%E6%8A%80%E6%9C%AF%E3%80%91%E7%94%A8preload%E9%A2%84%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E8%B5%84%E6%BA%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">194-【Web技术】用preload预加载页面资源</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>35-【Python】回归算法整理[线性回归/梯度下降] | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、机器学习分类机器学习分为：有监督学习，无监督学习和半监督学习。    参考文章 机器学习两种方法——监督学习和无监督学习（通俗理解）  1、有监督学习通过给定的训练数据集中学习出一个函数（模型参数），当新数据到来时，可以根据这个函数预测结果。有监督学习的训练集要求包括输入和输出，也就是特征和目标。有监督学习是最常见的 分类 问题，通过已有的训练样本（即已知数据及其对应输出）去训练得到一个最优模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="35-【Python】回归算法整理[线性回归&#x2F;梯度下降]">
+<meta property="og:url" content="http://example.com/2018/01/22/35-%E3%80%90Python%E3%80%91%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E6%95%B4%E7%90%86-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、机器学习分类机器学习分为：有监督学习，无监督学习和半监督学习。    参考文章 机器学习两种方法——监督学习和无监督学习（通俗理解）  1、有监督学习通过给定的训练数据集中学习出一个函数（模型参数），当新数据到来时，可以根据这个函数预测结果。有监督学习的训练集要求包括输入和输出，也就是特征和目标。有监督学习是最常见的 分类 问题，通过已有的训练样本（即已知数据及其对应输出）去训练得到一个最优模">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_0_%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_1_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_2_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_3_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_4_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_5_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_6_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92.png?raw=true">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_7_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92.png?raw=true">
+<meta property="og:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_8_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92.png?raw=true">
+<meta property="article:published_time" content="2018-01-22T15:17:56.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.681Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_0_%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE.png?raw=true">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-35-【Python】回归算法整理-线性回归-梯度下降" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/01/22/35-%E3%80%90Python%E3%80%91%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E6%95%B4%E7%90%86-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" class="article-date">
+  <time class="dt-published" datetime="2018-01-22T15:17:56.000Z" itemprop="datePublished">2018-01-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      35-【Python】回归算法整理[线性回归/梯度下降]
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、机器学习分类"><a href="#一、机器学习分类" class="headerlink" title="一、机器学习分类"></a>一、机器学习分类</h2><p>机器学习分为：有监督学习，无监督学习和半监督学习。  </p>
+<blockquote>
+<p>参考文章 <a target="_blank" rel="noopener" href="http://blog.csdn.net/zb1165048017/article/details/48579677">机器学习两种方法——监督学习和无监督学习（通俗理解）</a></p>
+</blockquote>
+<h3 id="1、有监督学习"><a href="#1、有监督学习" class="headerlink" title="1、有监督学习"></a>1、有监督学习</h3><p>通过给定的训练数据集中学习出一个函数（模型参数），当新数据到来时，可以根据这个函数预测结果。<br>有监督学习的训练集要求包括输入和输出，也就是特征和目标。<br>有监督学习是最常见的 <code>分类</code> 问题，通过已有的训练样本（即已知数据及其对应输出）去训练得到一个最优模型，再利用这个模型将所有的输入映射为响应的数据，对输出进行简单的判断从而实现分类的目的。也就具有了对位置数据分类的能力。<br>有监督学习的目标往往是让计算机去学习我们已经创建好的分类系统（模型）。  </p>
+<p>有监督学习是 <code>训练神经网络</code> 和 <code>决策树</code> 的常见技术。这两个技术高度依赖事先确定的分类系统给出的信息。<br>对于神经网络，系统分类利用信息判断网络的错误，然后不断调整网络参数。<br>对于决策树，分类系统用它来判断哪些属性提供了最多的信息。<br>常见的有监督学习算法：回归分析和统计分类。最典型的算法是KNN和SVM。  </p>
+<h3 id="2、无监督学习"><a href="#2、无监督学习" class="headerlink" title="2、无监督学习"></a>2、无监督学习</h3><p>输入数据没有被标记，也没有确定的结果。样本数据类别未知，需要根据样本间的相似性对样本集进行分类试图使类内差距最小化，类间差距最大化。<br>通俗点将就是实际应用中，不少情况下无法预先知道样本的标签，也就是说没有训练样本对应的类别，因而只能从原先没有样本标签的样本集开始学习分类器设计。<br>非监督学习目标不是告诉计算机怎么做，而是让它（计算机）自己去学习怎样做事情。<br>无监督学习的方法分为两大类：<br>(1) 一类为基于概率密度函数估计的直接方法：指设法找到各类别在特征空间的分布参数，再进行分类。<br>(2) 另一类是称为基于样本间相似性度量的简洁聚类方法：其原理是设法定出不同类别的核心或初始内核，然后依据样本与核心之间的相似性度量将样本聚集成不同的类别。<br>利用聚类结果，可以提取数据集中隐藏信息，对未来数据进行分类和预测。应用于数据挖掘，模式识别，图像处理等。  </p>
+<h3 id="3、二者区别"><a href="#3、二者区别" class="headerlink" title="3、二者区别"></a>3、二者区别</h3><ul>
+<li><p>有监督学习：必须要有训练集和测试样本。在训练集中找规律，而对测试样本使用这种规律。     </p>
+</li>
+<li><p>无监督学习：没有训练集，只有一组数据，在该数据集中寻找规律。  </p>
+</li>
+<li><p>有监督学习：有监督学习是识别事物，识别的结果表现在给待识别数据上加上标签。因此训练集必须由带标签的样本组成。  </p>
+</li>
+<li><p>无监督学习：无监督学习是只有要分析数据集的本身，没有标签，如果发现数据集呈现某种聚集性，则可按自然的聚集性分类，但不予以某种预先分类标签对上号为目的。  </p>
+</li>
+<li><p>非监督学习方法在寻找数据集中的规律性，这种规律性并不一定要达到划分数据集的目的，也就是说不一定要“分类”。这一点是比有监督学习方法的用途要广。譬如分析一堆数据的主分量，或分析数据集有什么特点都可以归于非监督学习方法的范畴。  </p>
+</li>
+<li><p>用非监督学习方法分析数据集的主分量与用K-L变换计算数据集的主分量又有区别。后者从方法上讲不是学习方法。因此用K-L变换找主分量不属于无监督学习方法，即方法上不是。而通过学习逐渐找到规律性这体现了学习方法这一点。在人工神经元网络中寻找主分量的方法属于无监督学习方法。   </p>
+</li>
+</ul>
+<h3 id="4、总结"><a href="#4、总结" class="headerlink" title="4、总结"></a>4、总结</h3><p><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_0_%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE.png?raw=true" alt="思维导图">   </p>
+<h2 id="二、线性回归"><a href="#二、线性回归" class="headerlink" title="二、线性回归"></a>二、线性回归</h2><p>简单解释：最终得到的结果是个具体的数值，成为线性回归。  </p>
+<blockquote>
+<p>延伸学习 <a href="blog.csdn.net/xbinworld/article/details/43919445">机器学习方法：回归（一）：线性回归Linear regression</a><br>还有一类叫 <code>分类</code> ，这个最终预测的结果是一个类别值，比如这个数值属于A类还是B类。    </p>
+</blockquote>
+<blockquote>
+<p>Sklearn 安装:  </p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install scikit-learn</span><br><span class="line">或者  </span><br><span class="line">conda install scikit-learn</span><br></pre></td></tr></table></figure>
+
+<h3 id="1、回归问题"><a href="#1、回归问题" class="headerlink" title="1、回归问题"></a>1、回归问题</h3><p>例如银行借钱，需要填写 <code>工资</code> 和 <code>年龄</code> 来判断要分配多少 <code>额度</code> ，其中 <code>工资</code> 和 <code>年龄</code> 便称为特征，<code>额度</code> 称为目标。<br><code>hθ</code> ：银行最终借款额度, <code>x1</code> ：工资, <code>x2</code> ：年龄, <code>θ1</code> ：工资的权重参数, <code>θ2</code> ：年龄的权重参数。<br>假设为每一行添加一列权重参数为 <code>x0</code> ，且值为 <code>1</code>。<br><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_1_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true" alt="线性回归案例1"><br>第二个方程式为将第一个方程式转换成 <code>向量</code> 形式。   </p>
+<p><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_2_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true" alt="线性回归案例2"><br><code>独立同分布</code> ： 每个样本（这里是误差）不相关称为 <code>独立</code> ，每个误差具有相同的分布称为 <code>同分布</code> 。（高斯分布就是正态分布）   </p>
+<p><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_3_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true" alt="线性回归案例3"><br><code>L(θ)</code> ：似然函数，值越大代表模型越好。  </p>
+<p>显然求累乘和的难度很高，于是这里引入 <code>对数似然函数</code> ，求解过程如下：<br><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_4_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true" alt="线性回归案例4"><br><code>J(θ)</code> ：目标函数，值越大代表模型越好。   </p>
+<p>对等式两边求导：<br><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_5_%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0.png?raw=true" alt="线性回归案例5"><br><code>θ</code> 就是最终要得到的目标结果。  </p>
+<h2 id="2、代码实现"><a href="#2、代码实现" class="headerlink" title="2、代码实现"></a>2、代码实现</h2><p>按照上面的结论来写下面的模型就很简单了。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinearRegression</span>():</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">    self.w = <span class="literal">None</span>   <span class="comment"># w参数就是上面公式里面的 θ</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">fit</span>(<span class="params">self, X, y</span>):</span></span><br><span class="line">    <span class="comment"># Insert constant ones for bias weights  为偏置权重插入常数</span></span><br><span class="line">    <span class="built_in">print</span>(X.shape)</span><br><span class="line">    X = np.insert(X, <span class="number">0</span>, <span class="number">1</span>, axis=<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(X.shape)</span><br><span class="line">    X_ = np.linalg.inv(X.T.dot(X))   <span class="comment"># X_ 表示处理完后的X值</span></span><br><span class="line">    self.w = X_.dot(X.T).dot(y)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">predict</span>(<span class="params">self, X</span>):</span></span><br><span class="line">    <span class="comment"># Insert constant ones for bias weights  为偏置权重插入常数</span></span><br><span class="line">    X =np.insert(X, <span class="number">0</span>, <span class="number">1</span>, axis=<span class="number">1</span>)</span><br><span class="line">    y_pred = X.dot(self.w)</span><br><span class="line">    <span class="keyword">return</span> y_pred</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mean_squared_error</span>(<span class="params">y_true, y_pred</span>):</span></span><br><span class="line">  mse = np.mean(np.power(y_true - y_pred,<span class="number">2</span>))</span><br><span class="line">  <span class="keyword">return</span> mse</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">  <span class="comment"># Load the diabetes datasets 加载数据</span></span><br><span class="line">  diabetes = datasets.load_diabetes()</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Use only one feature 只使用一个特性</span></span><br><span class="line">  X = diabetes.data[:, np.newaxis, <span class="number">2</span>]</span><br><span class="line">  <span class="built_in">print</span>(X.shape)</span><br><span class="line">  <span class="comment"># Split the data into training 使用这些数据做测试</span></span><br><span class="line">  <span class="comment"># x_train, y_train 训练集  x_test,y_test 测试集</span></span><br><span class="line">  x_train, x_test = X[:-<span class="number">20</span>],X[-<span class="number">20</span>:] </span><br><span class="line">  y_train, y_test = diabetes.target[:-<span class="number">20</span>],diabetes.target[-<span class="number">20</span>:]</span><br><span class="line">  clf = LinearRegression()</span><br><span class="line">  clf.fit(x_train, y_train)</span><br><span class="line">  y_pred = clf.predict(x_test)</span><br><span class="line"></span><br><span class="line">  <span class="comment">#Print the mean squared error</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;Mean Square Error:&quot;</span>,mean_squared_error(y_test, y_pred))</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Plot the results </span></span><br><span class="line">  plt.scatter(x_test[:,<span class="number">0</span>], y_test, color=<span class="string">&quot;black&quot;</span>)</span><br><span class="line">  plt.plot(x_test[:,<span class="number">0</span>], y_pred, color=<span class="string">&quot;blue&quot;</span>, linewidth=<span class="number">3</span>)</span><br><span class="line">  plt.show()</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、Logistic回归（逻辑回归）"><a href="#二、Logistic回归（逻辑回归）" class="headerlink" title="二、Logistic回归（逻辑回归）"></a>二、Logistic回归（逻辑回归）</h2><p>Logistic Regression（逻辑回归）是机器学习中一个非常非常常见的模型，在实际生产环境中也常常被使用，是一种经典的分类模型（不是回归模型）。<br>虽然是种回归，实际是拿来做数据分类，得出每个类别的概率。<br>逻辑回归只能做 <code>二分类问题</code> ，不是A类就是B类。  </p>
+<blockquote>
+<p>延伸学习 <a target="_blank" rel="noopener" href="http://blog.csdn.net/programmer_wei/article/details/52072939">Logistic Regression（逻辑回归）原理及公式推导</a></p>
+</blockquote>
+<h3 id="1、逻辑回归问题"><a href="#1、逻辑回归问题" class="headerlink" title="1、逻辑回归问题"></a>1、逻辑回归问题</h3><p>将数据进行分类，这里通过 <code>Sigmoid函数</code> 来说明：<br><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_6_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92.png?raw=true" alt="逻辑回归1">   </p>
+<p>其中，传入任意数值 <code>z</code> 到 <code>g(z)</code> 函数都会返回一个 0~1 之间的数值，通过指定 <code>中间阀值</code> （通常是0.5），便将原始数据划分为两类，大于中间阀值0.5的为1这类，小于中间阀值0.5的为0这类。<br>将结果值 <code>g(z)</code> 看作概率，即 <code>Sigmoid函数</code> 可以将任意实数转换为概率。将一个回归问题转换成分类问题。<br><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_7_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92.png?raw=true" alt="逻辑回归2"><br><img src="https://github.com/pingan8787/Leo_MachineLearing/blob/master/1-Python/4-%E3%80%8A%E5%94%90%E5%AE%87%E8%BF%AApython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%8B/images/5_8_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92.png?raw=true" alt="逻辑回归3">   </p>
+<h2 id="2、梯度下降"><a href="#2、梯度下降" class="headerlink" title="2、梯度下降"></a>2、梯度下降</h2><blockquote>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/p/5970503.html">梯度下降（Gradient Descent）小结</a><br>代码实现：（计算那高尔夫球离球洞距离和准确度）</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一、绘制图像</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">pga = pd.read_csv(<span class="string">&quot;../data/pga.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据归一化</span></span><br><span class="line">pga.distance = (pga.distance - pga.distance.mean()) / pga.distance.std()</span><br><span class="line">pga.accuracy = (pga.accuracy - pga.accuracy.mean()) / pga.accuracy.std()</span><br><span class="line"><span class="comment"># 绘图</span></span><br><span class="line">plt.scatter(pga.distance, pga.accuracy)</span><br><span class="line">plt.xlabel(<span class="string">&quot;初始化距离&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;初始化准确值&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 二、计算梯度下降</span></span><br><span class="line"><span class="comment">## 1、非梯度下降法</span></span><br><span class="line"><span class="comment">## 定义目标函数(损失函数)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cost</span>(<span class="params">theta0, theta, x, y</span>):</span></span><br><span class="line">    J = <span class="number">0</span></span><br><span class="line">    m = <span class="built_in">len</span>(x)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">        h = theta * x[i] + theta0</span><br><span class="line">        J += (h - y[i])**<span class="number">2</span></span><br><span class="line">    J /= (<span class="number">2</span>*m)</span><br><span class="line">    <span class="keyword">return</span> J</span><br><span class="line"><span class="built_in">print</span>(cost(<span class="number">0</span>, <span class="number">1</span>, pga.distance, pga.accuracy))</span><br><span class="line"></span><br><span class="line">theta0 = <span class="number">100</span></span><br><span class="line">thetals = np.linspace(-<span class="number">3</span>, <span class="number">2</span>, <span class="number">100</span>)</span><br><span class="line">costs = []</span><br><span class="line"><span class="keyword">for</span> thetal <span class="keyword">in</span> thetals:</span><br><span class="line">    costs.append(cost(theta0, thetal, pga.distance, pga.accuracy))</span><br><span class="line">plt.plot(thetals, costs)</span><br><span class="line">plt.show()    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 2、梯度下降法</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br><span class="line">x = np.linspace(-<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>)</span><br><span class="line">y = np.linspace(-<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>)</span><br><span class="line">X,Y = np.meshgrid(x, y)</span><br><span class="line">Z = X**<span class="number">2</span> + Y **<span class="number">2</span></span><br><span class="line">fig = plt.figure()</span><br><span class="line">ax = fig.gca(projection=<span class="string">&quot;3d&quot;</span>)</span><br><span class="line">ax.plot_surface(X=X,Y=Y,Z=Z)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">theta0s = np.linspace(-<span class="number">2</span>, <span class="number">2</span>, <span class="number">100</span>)</span><br><span class="line">theta1s = np.linspace(-<span class="number">2</span>, <span class="number">2</span>, <span class="number">100</span>)</span><br><span class="line">COST = np.empty(shape = (<span class="number">100</span>, <span class="number">100</span>))</span><br><span class="line">TOS, T1S = np.meshgrid(theta0s, theta1s)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        COST[i, j] = cost(TOS[<span class="number">0</span>, i], T1S[j, <span class="number">0</span>], pga.distance, pga.accuracy)</span><br><span class="line">fig2 = plt.figure()</span><br><span class="line">ax = fig2.gca(projection=<span class="string">&quot;3d&quot;</span>)</span><br><span class="line">ax.plot_surface(X = TOS, Y=T1S, Z=COST)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment">### 对θ0和θ1求偏导</span></span><br><span class="line"><span class="comment">### θ0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partial_cost_theta1</span>(<span class="params">theta0, theta1, x, y</span>):</span></span><br><span class="line">    h = theta0 + theta1 * x</span><br><span class="line">    diff = (h - y) * x</span><br><span class="line">    partial = diff.<span class="built_in">sum</span>() / (x.shape[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> partial</span><br><span class="line"></span><br><span class="line">partial1 = partial_cost_theta1(<span class="number">0</span>, <span class="number">5</span>, pga.distance, pga.accuracy)</span><br><span class="line"></span><br><span class="line"><span class="comment">### θ1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partial_cost_theta0</span>(<span class="params">theta0, theta1, x, y</span>):</span></span><br><span class="line">    h = theta0 + theta1 * x</span><br><span class="line">    diff = (h - y)</span><br><span class="line">    partial = diff.<span class="built_in">sum</span>() / (x.shape[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> partial</span><br><span class="line"></span><br><span class="line">partial1 = partial_cost_theta0(<span class="number">1</span>, <span class="number">1</span>, pga.distance, pga.accuracy)</span><br><span class="line"><span class="comment">### 定义更新函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradient_descent</span>(<span class="params">x, y, a;pha=<span class="number">0.1</span>, theta0 = <span class="number">0</span>, theta1 = <span class="number">0</span></span>):</span></span><br><span class="line">    max_epochs = <span class="number">1000</span> <span class="comment"># 最大循环次数</span></span><br><span class="line">    counter = <span class="number">0</span>       <span class="comment"># 当前循环次数</span></span><br><span class="line">    c = cost(theta1, theta0, pga.distance, pga.accuracy)  <span class="comment"># 计算当前目标函数值</span></span><br><span class="line">    costs = [c]       <span class="comment"># 添加值作为图像显示</span></span><br><span class="line">    convergence_thres = <span class="number">0.000001</span></span><br><span class="line">    cprev = c + <span class="number">10</span></span><br><span class="line">    theta0s = [theta0]</span><br><span class="line">    theta1s = [theta1]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (np.<span class="built_in">abs</span>(cprev - c) &gt; convergence_thres) <span class="keyword">and</span> (counter &lt; max_epochs):</span><br><span class="line">        cprev = c</span><br><span class="line">        <span class="comment"># 参数更新  导数 * 步长 = 下降距离</span></span><br><span class="line">        update0 = alpha * partial_cost_theta0(theta0, theta1, x, y)</span><br><span class="line">        update1 = alpha * partial_cost_theta1(theta0, theta1, x, y)</span><br><span class="line">        <span class="comment"># 实际更新 梯度下降</span></span><br><span class="line">        theta0 -= update0</span><br><span class="line">        theta1 -= update1</span><br><span class="line">        <span class="comment"># 保存数据</span></span><br><span class="line">        theta0s.append(theta0)</span><br><span class="line">        theta1s.append(theta1)</span><br><span class="line"></span><br><span class="line">        c = cost(theta0, theta1, pga.distance, pga.accuracy)</span><br><span class="line">        costs.append(c)</span><br><span class="line">        counter += <span class="number">1</span>  <span class="comment"># 计算次数</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;theta0&quot;</span>:theta0, <span class="string">&quot;theta1&quot;</span>: theta1, <span class="string">&quot;costs&quot;</span>: costs&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Theta1 = &quot;</span>,gradient_descent(pga.distance, pga.accuracy)[<span class="string">&quot;theta1&quot;</span>])</span><br><span class="line">descend = gradient_descent(pga.distance, pga.accuracy, alpha=<span class="number">.01</span>)</span><br><span class="line">plt.scatter(<span class="built_in">range</span>(<span class="built_in">len</span>(descend[<span class="string">&quot;costs&quot;</span>])),descend[<span class="string">&quot;costs&quot;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/01/22/35-%E3%80%90Python%E3%80%91%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E6%95%B4%E7%90%86-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" data-id="ckts3ejuo007e4d9k6q351w6i" data-title="35-【Python】回归算法整理[线性回归/梯度下降]" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/24/36-%E3%80%90WebSocket%E3%80%91%E9%87%8D%E6%96%B0%E5%A4%8D%E4%B9%A0WebSocket/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          36-【WebSocket】重新复习WebSocket
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/16/34-%E3%80%90Python%E3%80%91%E5%9B%BE%E5%83%8F%E7%BB%98%E5%88%B6%E5%B7%A5%E5%85%B7Seaborn-%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E7%BB%98%E5%9B%BE/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">34-【Python】图像绘制工具Seaborn[回归分析绘图]</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

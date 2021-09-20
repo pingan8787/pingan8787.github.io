@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>189-【微前端】每日优鲜供应链前端团队微前端改造 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="【微前端】7- 每日优鲜供应链前端团队微前端改造文 掘金号 Terry豆 @每日优鲜  著作权归作者所有。商业转载请联系本账号获得授权，非商业转载请注明每日优鲜大前端团队以及原文地址。   一、需求以及成果我所在团队是做toB业务的，技术栈是Vue，团队目前有十多个典型的toB业务（菜单+内容布局），这些业务都是服务于一个大平台的，因为历史原因，每个业务都是独立的，都有一个html入口，所以当用户">
+<meta property="og:type" content="article">
+<meta property="og:title" content="189-【微前端】每日优鲜供应链前端团队微前端改造">
+<meta property="og:url" content="http://example.com/2019/12/24/189-%E3%80%90%E5%BE%AE%E5%89%8D%E7%AB%AF%E3%80%91%E6%AF%8F%E6%97%A5%E4%BC%98%E9%B2%9C%E4%BE%9B%E5%BA%94%E9%93%BE%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%94%B9%E9%80%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="【微前端】7- 每日优鲜供应链前端团队微前端改造文 掘金号 Terry豆 @每日优鲜  著作权归作者所有。商业转载请联系本账号获得授权，非商业转载请注明每日优鲜大前端团队以及原文地址。   一、需求以及成果我所在团队是做toB业务的，技术栈是Vue，团队目前有十多个典型的toB业务（菜单+内容布局），这些业务都是服务于一个大平台的，因为历史原因，每个业务都是独立的，都有一个html入口，所以当用户">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/webp/186051/1577196362755-932ee761-e270-4353-9768-cdb53ea60e6f.webp#align=left&display=inline&height=855&originHeight=855&originWidth=1280&size=0&status=done&style=none&width=1280">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/gif/186051/1577196362769-fe0a2f98-a877-4838-8ec7-79a5ede828b3.gif#align=left&display=inline&height=705&originHeight=705&originWidth=1215&size=0&status=done&style=none&width=1215">
+<meta property="article:published_time" content="2019-12-24T14:08:53.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.625Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="微前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/webp/186051/1577196362755-932ee761-e270-4353-9768-cdb53ea60e6f.webp#align=left&display=inline&height=855&originHeight=855&originWidth=1280&size=0&status=done&style=none&width=1280">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-189-【微前端】每日优鲜供应链前端团队微前端改造" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/12/24/189-%E3%80%90%E5%BE%AE%E5%89%8D%E7%AB%AF%E3%80%91%E6%AF%8F%E6%97%A5%E4%BC%98%E9%B2%9C%E4%BE%9B%E5%BA%94%E9%93%BE%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%94%B9%E9%80%A0/" class="article-date">
+  <time class="dt-published" datetime="2019-12-24T14:08:53.000Z" itemprop="datePublished">2019-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      189-【微前端】每日优鲜供应链前端团队微前端改造
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="【微前端】7-每日优鲜供应链前端团队微前端改造"><a href="#【微前端】7-每日优鲜供应链前端团队微前端改造" class="headerlink" title="【微前端】7- 每日优鲜供应链前端团队微前端改造"></a>【微前端】7- 每日优鲜供应链前端团队微前端改造</h1><p>文 掘金号 Terry豆 @每日优鲜</p>
+<blockquote>
+<p>著作权归作者所有。商业转载请联系本账号获得授权，非商业转载请注明每日优鲜大前端团队以及原文地址。</p>
+</blockquote>
+<p><a name="tKl2V"></a></p>
+<h2 id="一、需求以及成果"><a href="#一、需求以及成果" class="headerlink" title="一、需求以及成果"></a>一、需求以及成果</h2><p>我所在团队是做toB业务的，技术栈是Vue，团队目前有十多个典型的toB业务（菜单+内容布局），这些业务都是服务于一个大平台的，因为历史原因，每个业务都是独立的，都有一个html入口，所以当用户在这个大平台上使用这十多个业务的时候，每当切换系统时，页面都会刷新，体验很差；在开发层面，这十多个业务又有太多共同之处，每次修改成本都很高。<br />最近有一个很重要的需求X，内容是这样的：从十多个项目中，每个项目抽取若干功能组成一个新项目，基于现有架构的话，每当点击来自不同系统的功能页面就要刷新一次，这是不可接受的。为了新需求X重复开发一遍这些业务功能又不现实，所以从技术角度来看，架构改造不可避免。<br />经过一番调研比对，我们决定使用当下比较火的 <a target="_blank" rel="noopener" href="https://single-spa.js.org/">SingleSpa</a> 来完成改造（iframe方案尝试过，不太适合我们的场景），目前改造已完成，我们实现了以下效果：</p>
+<ul>
+<li>只有一个不包含子项目（子项目指的是那十多个业务）资源的主项目，主项目只有一个html入口，子项目通过主项目来按需加载，子系统间切换不再刷新；</li>
+<li>菜单栏、登录、退出等功能都从子项目剥离，写在主项目里，再有相关改动只需修改主项目，包括错误监控、埋点等行为，只需处理一个主项目，十几个子项目不再需要处理；</li>
+<li>子项目原本需要加载的公共部分（如vue、vuex、vue-router、ivew/element、私有npm包等），全部由主项目调度，配合webpack的externals功能通过外链的方式按需加载，一旦有一个子项目加载过，下一个子项目就不需要再加载，这样一来每个子项目的dist文件里就只有子项目自己的业务代码（最终子项目包的体积缩小了80%，只有几十k），项目实际加载速度快了很多，肉眼可见；</li>
+<li>子项目并没有重新开发，只是进行了一些改造，接入了微前端这套架构，所以新需求X的开发成本也极大的降低了，接入功能同时可供未来新增子项目使用；</li>
+<li>我们的项目有自己的tab系统（类似浏览器的tab页签），这些tab页签通过keep-alive和一系列对缓存的处理，使其体验接近原生浏览器tab。<br><a name="yyJnt"></a><h2 id="二、展示以及技术点"><a href="#二、展示以及技术点" class="headerlink" title="二、展示以及技术点"></a>二、展示以及技术点</h2><a name="SUszb"></a><h3 id="图1：项目外观示意图："><a href="#图1：项目外观示意图：" class="headerlink" title="图1：项目外观示意图："></a>图1：项目外观示意图：</h3><img src="https://cdn.nlark.com/yuque/0/2019/webp/186051/1577196362755-932ee761-e270-4353-9768-cdb53ea60e6f.webp#align=left&display=inline&height=855&originHeight=855&originWidth=1280&size=0&status=done&style=none&width=1280"><blockquote>
+<p>做微前端改造之前，蓝色系区域都是用公共包的方式由每个子项目引入，所以子项目运行的时候展示的蓝色系部分都是相同的，给人一种在使用同一个系统的错觉，实际上切换系统的时候整个页面都要重新载入。</p>
+</blockquote>
+</li>
+</ul>
+<p>微前端改造后，只有橘红色区域是变化的，页面也不再刷新。<br><a name="B8mXG"></a></p>
+<h3 id="图2：局部效果动图"><a href="#图2：局部效果动图" class="headerlink" title="图2：局部效果动图"></a>图2：局部效果动图</h3><p><img src="https://cdn.nlark.com/yuque/0/2019/gif/186051/1577196362769-fe0a2f98-a877-4838-8ec7-79a5ede828b3.gif#align=left&display=inline&height=705&originHeight=705&originWidth=1215&size=0&status=done&style=none&width=1215"></p>
+<blockquote>
+<p>图2展示了图1中的tab页签区以及子项目展示区。信息做了马赛克处理。</p>
+</blockquote>
+<p>乍一看没什么特别的，但如果我说这些tab<strong>分别来自于不同git仓库的独立vue项目</strong>呢？<br />这就是这套微前端架构的强大之处，让<strong>不同单页vue项目可以随意组合成一个项目，而这些项目自己又是独立的vue项目</strong>。</p>
+<blockquote>
+<p>仔细看图2中路由的变化，<strong>hash路由的第一级</strong>决定了要加载哪个子项目（work、sms、tms是三个不同的git工程），不同子项目间的切换也完全没有刷新😁<br>为了让tab切换不刷新，这里使用了keep-alive去缓存页面，考虑到内存性能，在关闭tab页签时通过一些方法(主要是keep-alive的exclude属性)去除了keep-alive缓存，同时为了让子项目间的tab切换也不刷新，对图3下面提到的包装器也进行了不小的改造。让tab切换不刷新只是为了提升用户体验，这一步不是必要的，有一定的成本。</p>
+</blockquote>
+<p><a name="htxsA"></a></p>
+<h3 id="图3：部署架构示意图"><a href="#图3：部署架构示意图" class="headerlink" title="图3：部署架构示意图"></a>图3：部署架构示意图</h3><p>实现一套微前端架构，可以把其分成四部分（参考：<a target="_blank" rel="noopener" href="https://alili.tech/archive/11052bf4/">alili.tech/archive/110…</a> ）</p>
+<ul>
+<li>加载器：也就是微前端架构的核心，图3中的“加载器JS文件”就是由加载器打包压缩出来的，这是原始的加载器：<a target="_blank" rel="noopener" href="https://github.com/Fantasy9527/lotus-scaffold-micro-frontend-portal">github.com/Fantasy9527…</a> —— <strong>可以把它理解成电源</strong></li>
+<li>包装器：有了加载器，我们要把现有的vue项目包装一下，使得加载器可以使用它们，这是原始的包装器：<a target="_blank" rel="noopener" href="https://github.com/CanopyTax/single-spa-vue">github.com/CanopyTax/s…</a> ——  <strong>如果想改造，建议改造这个部分，它相当于电源适配器</strong></li>
+<li>主项目：一般是包含所有项目公共部分的项目—— <strong>它相当于电器底座</strong></li>
+<li>子项目：众多展示在主项目内容区的项目—— <strong>它相当于你要使用的电器</strong></li>
+</ul>
+<p>所以是这么个概念：<strong>电源(加载器)→电源适配器(包装器)→️电器底座(主项目)→️电器(子项目)️</strong></p>
+<blockquote>
+<p>主项目和子项目都需要用包装器包装，只不过主项目的配置写法有不同<br>加载器和包装器需要根据自己的需求做一些二次开发</p>
+</blockquote>
+<p><strong>总的来说是这样一个流程：用户访问index.html后，浏览器运行加载器的js文件，加载器去读取图4中的配置文件，然后注册配置文件中配置的各个项目后，首先加载主项目(菜单等)，再通过路由判定，动态远程加载子项目。</strong><br />这里有个<a target="_blank" rel="noopener" href="https://github.com/joeldenning/coexisting-vue-microfrontends">vue微前端版demo</a>，包含最基础的<strong>效果与源码</strong>，务必研究一下这个demo再结合以上理论来帮助理解<br />*远程加载的子项目资源要在chrome的network中的xhr那一栏才能看到<br><a name="rgOXs"></a></p>
+<h3 id="图4：图3中的apps-config-js"><a href="#图4：图3中的apps-config-js" class="headerlink" title="图4：图3中的apps.config.js"></a>图4：图3中的apps.config.js</h3><p>用户访问index.html后，js加载器会加载apps.config.js。<br />无论路由是什么，每次必会首先加载主项目，再根据路由来匹配要加载哪个子项目。<br />apps.config.js的生成如图3的绿色部分所示:</p>
+<blockquote>
+<p>在资源服务器上起一个监听服务(我使用的是nodejs脚本+pm2守护)，原有子项目的部署方式完全不变(前后端完全分离，资源带hash)，当监听服务检测到文件改动时，去子项目部署文件夹里找它的index.html，把入口js用如下正则匹配出来，写入apps.config.js。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// content[i]为子项目文件夹名称。这段代码是nodejs脚本片段。</span></span><br><span class="line"><span class="keyword">const</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`src=&quot;\(\\/<span class="subst">$&#123;content[i]&#125;</span>\\/index\\.\\w&#123;8&#125;.js\)`</span>) <span class="comment">// 对应图中的 /brain/index.3c4b55cf.js</span></span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>图4中的brain即是主项目，它的base属性为true，其余子项目的base属性为false</p>
+</blockquote>
+<p><a name="H2Rhy"></a></p>
+<h2 id="三、一些技术细节"><a href="#三、一些技术细节" class="headerlink" title="三、一些技术细节"></a>三、一些技术细节</h2><p>这里说的的项目打包都是基于webpack。<br><a name="4lc1Y"></a></p>
+<h3 id="System-js"><a href="#System-js" class="headerlink" title="System.js"></a>System.js</h3><p>它是实现远程加载子项目的核心。<br />我们使用的是0.21版本的：<a target="_blank" rel="noopener" href="https://github.com/systemjs/systemjs/tree/0.21">github.com/systemjs/sy…</a><br />因为要动态通过http引入外部js，又不影响在开发的时候使用import、require方法，所以找到了systemjs来做这件事。<br />根据systemjs文档说明，我们只需要把子项目打成umd格式(umd糅合了AMD和CommonJS)的包即可动态外部加载。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 每个子项目的webpack.config.js</span></span><br><span class="line"><span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">path</span>: xxx,</span><br><span class="line">    <span class="attr">publicPath</span>: xxx,</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;[name].[chunkhash:8].js&#x27;</span>,</span><br><span class="line">    <span class="attr">chunkFilename</span>: <span class="string">&#x27;js/[name].[chunkhash:8].chunk.js&#x27;</span>,</span><br><span class="line">    <span class="attr">libraryTarget</span>: <span class="string">&#x27;umd&#x27;</span>, <span class="comment">// 这里一定要写成umd，不然打出来的包system.js无法读取</span></span><br><span class="line">    <span class="attr">library</span>: xxx, <span class="comment">//模块的名称</span></span><br><span class="line">&#125;,</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><a name="ZHCNo"></a></p>
+<h3 id="Webpack-Externals"><a href="#Webpack-Externals" class="headerlink" title="Webpack Externals"></a>Webpack Externals</h3><p>文档：<a target="_blank" rel="noopener" href="https://www.webpackjs.com/configuration/externals/">www.webpackjs.com/configurati…</a><br />这么多同类型的vue项目，一定有大量的重复代码、重复引用，所以这是一块巨大的性能优化点，通过配置externals可以极大减小子项目打包出来的体积。<br />我并没有完全按照文档说明的方式来从CDN引入，原因是这样的：入口index.html只有一个，如果按文档来做，一次引入所有CDN资源，可能子项目A用得到这些，但子项目B用不到这些，而我只访问了子项目B而已，这样不就多加载了无用的资源吗？<br />经过一番调研，同样利用systemjs解决了这个问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 每个子项目自己的webpack.config.js，根据使用情况设置externals</span></span><br><span class="line"> <span class="attr">externals</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;axios&#x27;</span>: <span class="string">&#x27;axios&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;vue&#x27;</span>: <span class="string">&#x27;Vue&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;vue-router&#x27;</span>: <span class="string">&#x27;VueRouter&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;vuex&#x27;</span>: <span class="string">&#x27;Vuex&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;iview&#x27;</span>: <span class="string">&#x27;iview&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;moment&#x27;</span>: <span class="string">&#x27;moment&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;echarts&#x27;</span>: <span class="string">&#x27;echarts&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;@mfb/pc-utils-micro&#x27;</span>:<span class="string">&#x27;@mfb/pc-utils-micro&#x27;</span>, <span class="comment">// 私有公共方法包</span></span><br><span class="line">      <span class="string">&#x27;@mfb/pc-components-micro&#x27;</span>:<span class="string">&#x27;@mfb/pc-components-micro&#x27;</span>, <span class="comment">// 私有公共组件包</span></span><br><span class="line">      <span class="comment">// &#x27;@mfb/pc-components-micro&#x27;:&#x27;@mfb/pc-components-micro-0.2.1&#x27;, // 如果需要指定版本,则用这一行替换上一行 </span></span><br><span class="line">      ...</span><br><span class="line">  &#125;,</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// index.html 整个微前端的唯一入口</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;system.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">  SystemJS.config(&#123;</span></span><br><span class="line"><span class="javascript">    <span class="attr">map</span>: &#123;</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;Vue&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/vue/2.5.17/vue.min.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;vue&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/vue/2.5.17/vue.min.js&quot;</span>, <span class="comment">// 因为iview前置需要vue，是小写的，就又声明了一次</span></span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;Vuex&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/vuex/3.0.1/vuex.min.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;VueRouter&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/vueRouter/3.0.1/vue-router.min.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;iview&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/iview/3.3.2/iview.min.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;moment&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/moment/2.22.2/moment.min.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;axios&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/axios/0.15.3/axios.min.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;echarts&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/echarts/4.2.1/echarts.min.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;@mfb/pc-utils-micro&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/mfb-pc-utils-micro/mfb-pc-utils-micro-0.0.6.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;@mfb/pc-components-micro&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/mfb-pc-components-micro/mfb-pc-components-micro-0.0.42.js&quot;</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">&quot;@mfb/pc-components-micro-0.2.1&quot;</span>: <span class="string">&quot;//xxx.cdn.cn/static/mfb-pc-components-micro/mfb-pc-components-micro-0.2.1.js&quot;</span> <span class="comment">// 如果需要指定版本</span></span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  &#125;)</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>如此一来，systemjs只是在加载index.html时注册了这些CDN地址，不会直接去加载，当子项目里用到的时候，systemjs会接管模块引入，systemjs会去上面注册的map中查找匹配的模块，就再动态去加载资源。这样就避免了不同子项目在这套架构下产生的多余加载。</p>
+<blockquote>
+<p>按我们的配置，webpack打包后，externals配置的模块不会打包进bundle，会被摘出来按umd规范通过requre/define方式去加载。<br>看systemjs源码会发现它重新定义了require和define方法，所以它能接管externals的外部引入过程。</p>
+</blockquote>
+<p><a name="uloS1"></a></p>
+<h2 id="四、总结体会"><a href="#四、总结体会" class="headerlink" title="四、总结体会"></a>四、总结体会</h2><p><em>我最直白的感受是实现了项目级别的模块化，把不同项目变成了一个个模块来拼装组合，也就是说模块化从项目内提升到了项目本身</em><br /><strong>总结一下使用这套架构收到的好处，分为以下几点：</strong></p>
+<ul>
+<li>缩小项目打包体积(平均每个子项目bundle不到100k)，而整合后的公共资源只需加载一次，性能得到很大提升 (技术角度)</li>
+<li>用户体验更好，用户感知不到自己在使用多个不同的项目，更加平顺流畅 (产品角度)</li>
+<li>不同git的项目经过改造后，可以随意以项目内每个路由页面为单元拼装成一个新项目，产品灵活性本质上得到提升 (产品/技术角度)</li>
+<li>技术尝新，使用业界比较先进的微前端理念，几十个项目，成千上百个功能也能很好的分模块管理。 (管理角度)</li>
+</ul>
+<p><strong>也是有很多麻烦之处，需要消耗一定成本：</strong></p>
+<ul>
+<li>因为多个vue实例在同一个document里，需要避免全局变量污染、全局监听污染、样式污染等，需要制定接入规范。</li>
+<li>使用了external抽离公共模块(比如Vue、Vue-router等)后，构造函数(或者Class)的污染也需要避免，比如Vue.mixin、Vue.components、Vue<br>.use等等都需要做一些额外的工作去避免它们产生冲突。</li>
+<li>如果你也想要tab切换不刷新(使用keep-alive)，那需要做的工作更多，主要是处理缓存，防止堆内存溢出（用chrome自带的performance monitor查看），还有项目间切换时路由钩子等等的处理。</li>
+</ul>
+<p>不过跟收益比起来，这些成本就不算什么了~<br />最后要说一下，<strong>并不是所有场景都适合微前端</strong>，尤其是项目规模小、数量少的场景不建议使用。<br />什么样的<strong>场景</strong>适合这套架构呢？一般有以下特征：</p>
+<ul>
+<li>项目很<strong>多</strong>，规模很<strong>大</strong>，都是每个项目<strong>独立使用</strong>git此类仓库维护的、技术栈为vue/react/angular的这类应用</li>
+<li>需要整合到统一平台上，你正在寻找<strong>可能比iframe更合适</strong>的替代方案</li>
+<li>项目A有功能A1、A2、A3,项目B有功能B1、B2、B3，产品经理要你把A2、B1、B3组合成一个<strong>包含这些功能的新项目</strong></li>
+</ul>
+<p><strong>可能你会问：为什么不一开始就把所有需要整合的功能用一个git来维护？</strong><br />答：理想是美好的，谁也没有先知能力，随着公司业务发展亦或是组织架构的改变、人员更迭，以上场景是几乎不可避免的；我很难想象十多个项目的好几百个功能都在一个git里管理起来有多困难。<br /><strong>可能你还会问，那我把需要整合的业务整合成到一个git仓库呢？</strong><br />答：这当然是一个解决办法，前提是整合的成本你能接受；并且将来还有这类需求呢？每次都要手动整合业务代码到同一个git仓库吗？假设所有人都只维护这个整合完的git仓库，并行的需求线多了，上线时间会不会拥挤？一个功能产生了致命错误，会不会所有功能跟着出问题？<br />最后我想说：<br /><em><strong>我们做这套框架的初衷是解决眼前的问题，然而发现它附带的潜力价值却比想象的多得多。</strong></em></p>
+<p>作者：每日优鲜大前端团队<br />链接：<a target="_blank" rel="noopener" href="https://juejin.im/post/5d7f702ce51d4561f777e258">https://juejin.im/post/5d7f702ce51d4561f777e258</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/12/24/189-%E3%80%90%E5%BE%AE%E5%89%8D%E7%AB%AF%E3%80%91%E6%AF%8F%E6%97%A5%E4%BC%98%E9%B2%9C%E4%BE%9B%E5%BA%94%E9%93%BE%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%94%B9%E9%80%A0/" data-id="ckts3ejty00544d9k5zoh9geg" data-title="189-【微前端】每日优鲜供应链前端团队微前端改造" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/04/190-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%912019%E5%85%A8%E5%B9%B4%E6%80%BB%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          190-【总结】2019全年总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/18/188-%E3%80%90%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97%E3%80%91File%E5%92%8CFileList%E5%92%8CFileReader%E5%AF%B9%E8%B1%A1%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">188-【前端知乎系列】File和FileList和FileReader对象详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

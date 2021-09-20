@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>199-【Webpack】彻底搞懂并实现webpack热更新原理 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="原文地址：https:&#x2F;&#x2F;segmentfault.com&#x2F;a&#x2F;1190000020310371  HMR是什么  使用场景   配置使用HMR  配置webpack 解析webpack打包后的文件内容 配置HMR   HMR原理  debug服务端源码  服务端简易实现 服务端调试阶段   debug客户端源码  客户端简易实现 客户端调试阶段   问题  总结 HMR是什么HMR即Hot Mo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="199-【Webpack】彻底搞懂并实现webpack热更新原理">
+<meta property="og:url" content="http://example.com/2020/03/11/199-%E3%80%90Webpack%E3%80%91%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E5%B9%B6%E5%AE%9E%E7%8E%B0webpack%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原文地址：https:&#x2F;&#x2F;segmentfault.com&#x2F;a&#x2F;1190000020310371  HMR是什么  使用场景   配置使用HMR  配置webpack 解析webpack打包后的文件内容 配置HMR   HMR原理  debug服务端源码  服务端简易实现 服务端调试阶段   debug客户端源码  客户端简易实现 客户端调试阶段   问题  总结 HMR是什么HMR即Hot Mo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666973-5b57ede4-45d0-4e23-b722-ad85fcc78f1a.jpeg#align=left&display=inline&height=548&originHeight=548&originWidth=800&size=0&status=done&style=none&width=800">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666081-f8da2fc1-bc9b-494d-9376-0c5a4c129876.jpeg#align=left&display=inline&height=1430&originHeight=1430&originWidth=2088&size=0&status=done&style=none&width=2088">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666100-67768253-890b-4e3f-abd3-8b313b9dcd75.jpeg#align=left&display=inline&height=1430&originHeight=1430&originWidth=2088&size=0&status=done&style=none&width=2088">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666119-c372f841-c5ce-41ac-835c-ec0dbaa8031c.jpeg#align=left&display=inline&height=1430&originHeight=1430&originWidth=2088&size=0&status=done&style=none&width=2088">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666129-b464ba02-d967-42db-a140-2b8321df9985.jpeg#align=left&display=inline&height=4244&originHeight=4244&originWidth=4436&size=0&status=done&style=none&width=4436">
+<meta property="article:published_time" content="2020-03-11T15:20:35.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.638Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666973-5b57ede4-45d0-4e23-b722-ad85fcc78f1a.jpeg#align=left&display=inline&height=548&originHeight=548&originWidth=800&size=0&status=done&style=none&width=800">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-199-【Webpack】彻底搞懂并实现webpack热更新原理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/03/11/199-%E3%80%90Webpack%E3%80%91%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E5%B9%B6%E5%AE%9E%E7%8E%B0webpack%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2020-03-11T15:20:35.000Z" itemprop="datePublished">2020-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      199-【Webpack】彻底搞懂并实现webpack热更新原理
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>原文地址：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371">https://segmentfault.com/a/1190000020310371</a></p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#HMR%E6%98%AF%E4%BB%80%E4%B9%88">HMR是什么</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF">使用场景</a></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8HMR">配置使用HMR</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E9%85%8D%E7%BD%AEwebpack">配置webpack</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E8%A7%A3%E6%9E%90webpack%E6%89%93%E5%8C%85%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9">解析webpack打包后的文件内容</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E9%85%8D%E7%BD%AEHMR">配置HMR</a></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#HMR%E5%8E%9F%E7%90%86">HMR原理</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#debug%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%BA%90%E7%A0%81">debug服务端源码</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%AE%80%E6%98%93%E5%AE%9E%E7%8E%B0">服务端简易实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%B0%83%E8%AF%95%E9%98%B6%E6%AE%B5">服务端调试阶段</a></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#debug%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%BA%90%E7%A0%81">debug客户端源码</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%AE%80%E6%98%93%E5%AE%9E%E7%8E%B0">客户端简易实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B0%83%E8%AF%95%E9%98%B6%E6%AE%B5">客户端调试阶段</a></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E9%97%AE%E9%A2%98">问题</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#%E6%80%BB%E7%BB%93">总结</a><br><a name="item-2"></a></p>
+<h2 id="HMR是什么"><a href="#HMR是什么" class="headerlink" title="HMR是什么"></a>HMR是什么</h2><p><code>HMR</code>即<code>Hot Module Replacement</code>是指当你对代码修改并保存后，<code>webpack</code>将会对代码进行重新打包，并将改动的模块发送到浏览器端，浏览器用新的模块替换掉旧的模块，去实现局部更新页面而非整体刷新页面。接下来将从使用到实现一版简易功能带领大家深入浅出<code>HMR</code>。<br />文章首发于<a target="_blank" rel="noopener" href="https://github.com/careteenL/webpack-hmr">@careteen/webpack-hmr</a>，转载请注明来源即可。<br><a name="item-2-1"></a></p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666973-5b57ede4-45d0-4e23-b722-ad85fcc78f1a.jpeg#align=left&display=inline&height=548&originHeight=548&originWidth=800&size=0&status=done&style=none&width=800"><br />如上图所示，一个注册页面包含<code>用户名</code>、<code>密码</code>、<code>邮箱</code>三个必填输入框，以及一个<code>提交</code>按钮，当你在调试<code>邮箱</code>模块改动了代码时，没做任何处理情况下是会刷新整个页面，频繁的改动代码会浪费你大量时间去重新填写内容。预期是保留<code>用户名</code>、<code>密码</code>的输入内容，而只替换<code>邮箱</code>这一模块。这一诉求就需要借助<code>webpack-dev-server</code>的热模块更新功能。<br />相对于<code>live reload</code>整体刷新页面的方案，<code>HMR</code>的优点在于可以保存应用的状态，提高开发效率。<br><a name="item-3"></a></p>
+<h2 id="配置使用HMR"><a href="#配置使用HMR" class="headerlink" title="配置使用HMR"></a>配置使用HMR</h2><p><a name="item-3-2"></a></p>
+<h3 id="配置webpack"><a href="#配置webpack" class="headerlink" title="配置webpack"></a>配置webpack</h3><p>首先借助<code>webpack</code>搭建项目</p>
+</li>
+<li><p>初识化项目并导入依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir webpack-hmr &amp;&amp; <span class="built_in">cd</span> webpack-hmr</span><br><span class="line">npm i -y</span><br><span class="line">npm i -S webpack webpack-cli webpack-dev-server html-webpack-plugin</span><br></pre></td></tr></table></figure></li>
+<li><p>配置文件<code>webpack.config.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">&#x27;webpack&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> htmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">&#x27;html-webpack-plugin&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&#x27;development&#x27;</span>, <span class="comment">// 开发模式不压缩代码，方便调试</span></span><br><span class="line">  <span class="attr">entry</span>: <span class="string">&#x27;./src/index.js&#x27;</span>, <span class="comment">// 入口文件</span></span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">path</span>: path.join(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;main.js&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="attr">contentBase</span>: path.join(__dirname, <span class="string">&#x27;dist&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> htmlWebpackPlugin(&#123;</span><br><span class="line">      <span class="attr">template</span>: <span class="string">&#x27;./src/index.html&#x27;</span>,</span><br><span class="line">      <span class="attr">filename</span>: <span class="string">&#x27;index.html&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>新建<code>src/index.html</code>模板文件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie=edge&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Webpack Hot Module Replacement<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>新建<code>src/index.js</code>入口文件编写简单逻辑</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> root = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">render</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  root.innerHTML = <span class="built_in">require</span>(<span class="string">&#x27;./content.js&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">render()</span><br></pre></td></tr></table></figure></li>
+<li><p>新建依赖文件<code>src/content.js</code>导出字符供index渲染页面</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ret = <span class="string">&#x27;Hello Webpack Hot Module Replacement&#x27;</span></span><br><span class="line"><span class="built_in">module</span>.exports = ret</span><br><span class="line"><span class="comment">// export default ret</span></span><br></pre></td></tr></table></figure></li>
+<li><p>配置<code>package.json</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;webpack-dev-server&quot;</span>,</span><br><span class="line">    <span class="string">&quot;build&quot;</span>: <span class="string">&quot;webpack&quot;</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>然后<code>npm run dev</code>即可启动项目</p>
+</li>
+<li><p>通过<code>npm run build</code>打包生成静态资源到<code>dist</code>目录</p>
+</li>
+</ul>
+<p>接下来先分析下<code>dist</code>目录中的文件<br><a name="item-3-3"></a></p>
+<h3 id="解析webpack打包后的文件内容"><a href="#解析webpack打包后的文件内容" class="headerlink" title="解析webpack打包后的文件内容"></a>解析webpack打包后的文件内容</h3><ul>
+<li>webpack自己实现的一套commonjs规范讲解</li>
+<li>区分commonjs和esmodule</li>
+</ul>
+<p>dist目录结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── index.html</span><br><span class="line">└── main.js</span><br></pre></td></tr></table></figure>
+<p><a name="AsJuz"></a></p>
+<h4 id="其中index-html内容如下"><a href="#其中index-html内容如下" class="headerlink" title="其中index.html内容如下"></a>其中<code>index.html</code>内容如下</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;main.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>html-webpack-plugin</code>插件将入口文件及其依赖通过<code>script</code>标签引入<br><a name="Tf06E"></a></p>
+<h4 id="先对main-js内容去掉注释和无关内容进行分析"><a href="#先对main-js内容去掉注释和无关内容进行分析" class="headerlink" title="先对main.js内容去掉注释和无关内容进行分析"></a>先对<code>main.js</code>内容去掉注释和无关内容进行分析</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">modules</span>) </span>&#123; <span class="comment">// webpackBootstrap</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br><span class="line">(&#123;</span><br><span class="line">  <span class="string">&quot;./src/content.js&quot;</span>:</span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params"><span class="built_in">module</span>, <span class="built_in">exports</span></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">eval</span>(<span class="string">&quot;var ret = &#x27;Hello Webpack Hot Module Replacement&#x27;\n\nmodule.exports = ret\n// export default ret\n\n&quot;</span>);</span><br><span class="line">    &#125;),</span><br><span class="line">  <span class="string">&quot;./src/index.js&quot;</span>: (<span class="function"><span class="keyword">function</span> (<span class="params"><span class="built_in">module</span>, <span class="built_in">exports</span>, __webpack_require__</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">eval</span>(<span class="string">&quot;var root = document.getElementById(&#x27;root&#x27;)\nfunction render () &#123;\n  root.innerHTML = __webpack_require__(/*! ./content.js */ \&quot;./src/content.js\&quot;)\n&#125;\nrender()\n\n\n&quot;</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>可见webpack打包后会产出一个自执行函数，其参数为一个对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;./src/content.js&quot;</span>: (<span class="function"><span class="keyword">function</span> (<span class="params"><span class="built_in">module</span>, <span class="built_in">exports</span></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">eval</span>(<span class="string">&quot;...&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>键为入口文件或依赖文件相对于根目录的相对路径，值则是一个函数，其中使用<code>eval</code>执行文件的内容字符。</p>
+<ul>
+<li><p>再进入自执行函数体内，可见webpack自己实现了一套<code>commonjs</code>规范</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">modules</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 模块缓存</span></span><br><span class="line">  <span class="keyword">var</span> installedModules = &#123;&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断是否有缓存</span></span><br><span class="line">    <span class="keyword">if</span> (installedModules[moduleId]) &#123;</span><br><span class="line">      <span class="keyword">return</span> installedModules[moduleId].exports;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 没有缓存则创建一个模块对象并将其放入缓存</span></span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">module</span> = installedModules[moduleId] = &#123;</span><br><span class="line">      <span class="attr">i</span>: moduleId,</span><br><span class="line">      <span class="attr">l</span>: <span class="literal">false</span>, <span class="comment">// 是否已加载</span></span><br><span class="line">      <span class="attr">exports</span>: &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 执行模块函数</span></span><br><span class="line">    modules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__);</span><br><span class="line">    <span class="comment">// 将状态置为已加载</span></span><br><span class="line">    <span class="built_in">module</span>.l = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// 返回模块对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// 加载入口文件</span></span><br><span class="line">  <span class="keyword">return</span> __webpack_require__(__webpack_require__.s = <span class="string">&quot;./src/index.js&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果对上面&gt; <code>commonjs</code>规范感兴趣可以前往我的另一篇文章&gt; <a target="_blank" rel="noopener" href="https://github.com/careteenL/blog/blob/master/src/20181201-node/module.md">手摸手带你实现commonjs规范</a><br>给出上面代码主要是先对webpack的产出文件混个眼熟，不要惧怕。其实任何一个不管多复杂的事物都是由更小更简单的东西组成，剖开它认识它爱上它。<br><a name="item-3-4"></a></p>
+<h3 id="配置HMR"><a href="#配置HMR" class="headerlink" title="配置HMR"></a>配置HMR</h3><p>接下来配置并感受一下热更新带来的便捷开发<br /><code>webpack.config.js</code>配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="attr">hot</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p><code>./src/index.js</code>配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">module</span>.hot) &#123;</span><br><span class="line">  <span class="built_in">module</span>.hot.accept([<span class="string">&#x27;./content.js&#x27;</span>], <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    render()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当更改<code>./content.js</code>的内容并保存时，可以看到页面没有刷新，但是内容已经被替换了。<br />这对提高开发效率意义重大。接下来将一层层剖开它，认识它的实现原理。<br><a name="item-4"></a></p>
+<h2 id="HMR原理"><a href="#HMR原理" class="headerlink" title="HMR原理"></a>HMR原理</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666081-f8da2fc1-bc9b-494d-9376-0c5a4c129876.jpeg#align=left&display=inline&height=1430&originHeight=1430&originWidth=2088&size=0&status=done&style=none&width=2088"><br />如上图所示，右侧<code>Server</code>端使用<code>webpack-dev-server</code>去启动本地服务，内部实现主要使用了<code>webpack</code>、<code>express</code>、<code>websocket</code>。</p>
+</li>
+<li><p>使用<code>express</code>启动本地服务，当浏览器访问资源时对此做响应。</p>
+</li>
+<li><p>服务端和客户端使用<code>websocket</code>实现长连接</p>
+</li>
+<li><p><code>webpack</code>监听源文件的变化，即当开发者保存文件时触发<code>webpack</code>的重新编译。</p>
+<ul>
+<li>每次编译都会生成<code>hash值</code>、<code>已改动模块的json文件</code>、<code>已改动模块代码的js文件</code></li>
+<li>编译完成后通过<code>socket</code>向客户端推送当前编译的<code>hash戳</code></li>
+</ul>
+</li>
+<li><p>客户端的<code>websocket</code>监听到有文件改动推送过来的<code>hash戳</code>，会和上一次对比</p>
+<ul>
+<li>一致则走缓存</li>
+<li>不一致则通过<code>ajax</code>和<code>jsonp</code>向服务端获取最新资源</li>
+</ul>
+</li>
+<li><p>使用<code>内存文件系统</code>去替换有修改的内容实现局部刷新</p>
+</li>
+</ul>
+<p>上图先只看个大概，下面将从服务端和客户端两个方面进行详细分析<br><a name="item-5"></a></p>
+<h2 id="debug服务端源码"><a href="#debug服务端源码" class="headerlink" title="debug服务端源码"></a>debug服务端源码</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666100-67768253-890b-4e3f-abd3-8b313b9dcd75.jpeg#align=left&display=inline&height=1430&originHeight=1430&originWidth=2088&size=0&status=done&style=none&width=2088"><br /><strong>现在也只需要关注上图的右侧服务端部分，左侧可以暂时忽略。下面步骤主要是debug服务端源码分析其详细思路，也给出了代码所处的具体位置，感兴趣的可以先行定位到下面的代码处设置断点，然后观察数据的变化情况。也可以先跳过阅读此步骤。</strong></p>
+<ol>
+<li><p>启动<code>webpack-dev-server</code>服务器，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/bin/webpack-dev-server.js#L173">@webpack-dev-server/webpack-dev-server.js#L173</a></p>
+</li>
+<li><p>创建webpack实例，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/bin/webpack-dev-server.js#L89">@webpack-dev-server/webpack-dev-server.js#L89</a></p>
+</li>
+<li><p>创建Server服务器，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/bin/webpack-dev-server.js#L107">@webpack-dev-server/webpack-dev-server.js#L107</a></p>
+</li>
+<li><p>添加webpack的done事件回调，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/lib/Server.js#L122">@webpack-dev-server/Server.js#L122</a></p>
+</li>
+<li><p>编译完成向客户端发送消息，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/lib/Server.js#L184">@webpack-dev-server/Server.js#L184</a></p>
+</li>
+<li><p>创建express应用app，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/lib/Server.js#L123">@webpack-dev-server/Server.js#L123</a></p>
+</li>
+<li><p>设置文件系统为内存文件系统，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-middleware/blob/v3.7.0/lib/fs.js#L115">@webpack-dev-middleware/fs.js#L115</a></p>
+</li>
+<li><p>添加webpack-dev-middleware中间件，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/lib/Server.js#L125">@webpack-dev-server/Server.js#L125</a></p>
+</li>
+<li><p>中间件负责返回生成的文件，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-middleware/blob/v3.7.0/lib/middleware.js#L20">@webpack-dev-middleware/middleware.js#L20</a></p>
+</li>
+<li><p>启动webpack编译，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-middleware/blob/v3.7.0/index.js#L51">@webpack-dev-middleware/index.js#L51</a></p>
+</li>
+<li><p>创建http服务器并启动服务，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/lib/Server.js#L135">@webpack-dev-server/Server.js#L135</a></p>
+</li>
+<li><p>使用sockjs在浏览器端和服务端之间建立一个 websocket 长连接，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/lib/Server.js#L745">@webpack-dev-server/Server.js#L745</a></p>
+</li>
+<li><p>创建socket服务器，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/lib/servers/SockJSServer.js#L34">@webpack-dev-server/SockJSServer.js#L34</a><br><a name="item-5-5"></a></p>
+<h3 id="服务端简易实现"><a href="#服务端简易实现" class="headerlink" title="服务端简易实现"></a>服务端简易实现</h3><p>上面是我通过debug得出dev-server运行流程比较核心的几个点，下面将其<a target="_blank" rel="noopener" href="https://github.com/careteenL/webpack-hmr/blob/master/dev-server.js">抽象整合到一个文件中</a>。<br><a name="2zgyu"></a></p>
+<h4 id="启动webpack-dev-server服务器"><a href="#启动webpack-dev-server服务器" class="headerlink" title="启动webpack-dev-server服务器"></a>启动webpack-dev-server服务器</h4><p>先导入所有依赖</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>) <span class="comment">// 解析文件路径</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>) <span class="comment">// 启动本地服务</span></span><br><span class="line"><span class="keyword">const</span> mime = <span class="built_in">require</span>(<span class="string">&#x27;mime&#x27;</span>) <span class="comment">// 获取文件类型 实现一个静态服务器</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">&#x27;webpack&#x27;</span>) <span class="comment">// 读取配置文件进行打包</span></span><br><span class="line"><span class="keyword">const</span> MemoryFileSystem = <span class="built_in">require</span>(<span class="string">&#x27;memory-fs&#x27;</span>) <span class="comment">// 使用内存文件系统更快，文件生成在内存中而非真实文件</span></span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">&#x27;./webpack.config&#x27;</span>) <span class="comment">// 获取webpack配置文件</span></span><br></pre></td></tr></table></figure>
+<p><a name="juOkB"></a></p>
+<h4 id="创建webpack实例"><a href="#创建webpack实例" class="headerlink" title="创建webpack实例"></a>创建webpack实例</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> compiler = webpack(config)</span><br></pre></td></tr></table></figure>
+<p>compiler代表整个webpack编译任务，全局只有一个<br><a name="zSNHn"></a></p>
+<h4 id="创建Server服务器"><a href="#创建Server服务器" class="headerlink" title="创建Server服务器"></a>创建Server服务器</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">compiler</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.compiler = compiler</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">listen</span>(<span class="params">port</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.server.listen(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`服务器已经在<span class="subst">$&#123;port&#125;</span>端口上启动了`</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> server = <span class="keyword">new</span> Server(compiler)</span><br><span class="line">server.listen(<span class="number">8000</span>)</span><br></pre></td></tr></table></figure>
+<p>在后面是通过express来当启动服务的<br><a name="1u6aE"></a></p>
+<h4 id="添加webpack的done事件回调"><a href="#添加webpack的done事件回调" class="headerlink" title="添加webpack的done事件回调"></a>添加webpack的done事件回调</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">constructor</span>(<span class="params">compiler</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> sockets = []</span><br><span class="line">    <span class="keyword">let</span> lasthash</span><br><span class="line">    compiler.hooks.done.tap(<span class="string">&#x27;webpack-dev-server&#x27;</span>, <span class="function">(<span class="params">stats</span>) =&gt;</span> &#123;</span><br><span class="line">      lasthash = stats.hash</span><br><span class="line">      <span class="comment">// 每当新一个编译完成后都会向客户端发送消息</span></span><br><span class="line">      sockets.forEach(<span class="function"><span class="params">socket</span> =&gt;</span> &#123;</span><br><span class="line">        socket.emit(<span class="string">&#x27;hash&#x27;</span>, stats.hash) <span class="comment">// 先向客户端发送最新的hash值</span></span><br><span class="line">        socket.emit(<span class="string">&#x27;ok&#x27;</span>) <span class="comment">// 再向客户端发送一个ok</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><code>webpack</code>编译后提供提供了一系列钩子函数，以供插件能访问到它的各个生命周期节点，并对其打包内容做修改。<code>compiler.hooks.done</code>则是插件能修改其内容的最后一个节点。<br />编译完成通过<code>socket</code>向客户端发送消息，推送每次编译产生的<code>hash</code>。另外如果是热更新的话，还会产出二个补丁文件，里面描述了从上一次结果到这一次结果都有哪些chunk和模块发生了变化。<br />使用<code>let sockets = []</code>数组去存放当打开了多个Tab时每个Tab的<code>socket实例</code>。<br><a name="xz9K1"></a></p>
+<h4 id="创建express应用app"><a href="#创建express应用app" class="headerlink" title="创建express应用app"></a>创建express应用app</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> express()</span><br></pre></td></tr></table></figure>
+<p><a name="szEAX"></a></p>
+<h4 id="设置文件系统为内存文件系统"><a href="#设置文件系统为内存文件系统" class="headerlink" title="设置文件系统为内存文件系统"></a>设置文件系统为内存文件系统</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fs = <span class="keyword">new</span> MemoryFileSystem()</span><br></pre></td></tr></table></figure>
+<p>使用<code>MemoryFileSystem</code>将<code>compiler</code>的产出文件打包到内存中。<br><a name="bUYUN"></a></p>
+<h4 id="添加webpack-dev-middleware中间件"><a href="#添加webpack-dev-middleware中间件" class="headerlink" title="添加webpack-dev-middleware中间件"></a>添加webpack-dev-middleware中间件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">middleware</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (req.url === <span class="string">&#x27;/favicon.ico&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.sendStatus(<span class="number">404</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// /index.html   dist/index.html</span></span><br><span class="line">    <span class="keyword">let</span> filename = path.join(config.output.path, req.url.slice(<span class="number">1</span>))</span><br><span class="line">    <span class="keyword">let</span> stat = fs.statSync(filename)</span><br><span class="line">    <span class="keyword">if</span> (stat.isFile()) &#123; <span class="comment">// 判断是否存在这个文件,如果在的话直接把这个读出来发给浏览器</span></span><br><span class="line">      <span class="keyword">let</span> content = fs.readFileSync(filename)</span><br><span class="line">      <span class="keyword">let</span> contentType = mime.getType(filename)</span><br><span class="line">      res.setHeader(<span class="string">&#x27;Content-Type&#x27;</span>, contentType)</span><br><span class="line">      res.statusCode = res.statusCode || <span class="number">200</span></span><br><span class="line">      res.send(content)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res.sendStatus(<span class="number">404</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  app.use(middleware)</span><br></pre></td></tr></table></figure>
+<p>使用expres启动了本地开发服务后，使用中间件去为其构造一个静态服务器，并使用了内存文件系统，使读取文件后存放到内存中，提高读写效率，最终返回生成的文件。<br><a name="Vjj1z"></a></p>
+<h4 id="启动webpack编译"><a href="#启动webpack编译" class="headerlink" title="启动webpack编译"></a>启动webpack编译</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compiler.watch(&#123;&#125;, <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;又一次编译任务成功完成了&#x27;</span>)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>以监控的模式启动一次webpack编译，当编译成功之后执行回调<br><a name="CLwCf"></a></p>
+<h4 id="创建http服务器并启动服务"><a href="#创建http服务器并启动服务" class="headerlink" title="创建http服务器并启动服务"></a>创建http服务器并启动服务</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">constructor</span>(<span class="params">compiler</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">this</span>.server = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>).createServer(app)</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">listen</span>(<span class="params">port</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.server.listen(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`服务器已经在<span class="subst">$&#123;port&#125;</span>端口上启动了`</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><a name="2ghPp"></a></p>
+<h4 id="使用sockjs在浏览器端和服务端之间建立一个-websocket-长连接"><a href="#使用sockjs在浏览器端和服务端之间建立一个-websocket-长连接" class="headerlink" title="使用sockjs在浏览器端和服务端之间建立一个 websocket 长连接"></a>使用sockjs在浏览器端和服务端之间建立一个 websocket 长连接</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">constructor</span>(<span class="params">compiler</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">this</span>.server = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>).createServer(app)</span><br><span class="line">    <span class="keyword">let</span> io = <span class="built_in">require</span>(<span class="string">&#x27;socket.io&#x27;</span>)(<span class="built_in">this</span>.server)</span><br><span class="line">    io.on(<span class="string">&#x27;connection&#x27;</span>, <span class="function">(<span class="params">socket</span>) =&gt;</span> &#123;</span><br><span class="line">      sockets.push(socket)</span><br><span class="line">      socket.emit(<span class="string">&#x27;hash&#x27;</span>, lastHash)</span><br><span class="line">      socket.emit(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>启动一个 websocket服务器，然后等待连接来到，连接到来之后存进sockets池<br />当有文件改动，webpack重新编译时，向客户端推送<code>hash</code>和<code>ok</code>两个事件<br><a name="item-5-6"></a></p>
+<h3 id="服务端调试阶段"><a href="#服务端调试阶段" class="headerlink" title="服务端调试阶段"></a>服务端调试阶段</h3><p>感兴趣的可以根据上面<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020310371#debug%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%BA%90%E7%A0%81">debug服务端源码</a>所带的源码位置，并在浏览器的调试模式下设置断点查看每个阶段的值。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node dev-server.js</span><br></pre></td></tr></table></figure>
+<p>使用我们自己编译的<code>dev-server.js</code>启动服务，可看到页面可以正常展示，但还没有实现热更新。<br />下面将调式客户端的源代码分析其实现流程。<br><a name="item-6"></a></p>
+<h2 id="debug客户端源码"><a href="#debug客户端源码" class="headerlink" title="debug客户端源码"></a>debug客户端源码</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666119-c372f841-c5ce-41ac-835c-ec0dbaa8031c.jpeg#align=left&display=inline&height=1430&originHeight=1430&originWidth=2088&size=0&status=done&style=none&width=2088"><br /><strong>现在也只需要关注上图的左侧客户端部分，右侧可以暂时忽略。下面步骤主要是debug客户端源码分析其详细思路，也给出了代码所处的具体位置，感兴趣的可以先行定位到下面的代码处设置断点，然后观察数据的变化情况。也可以先跳过阅读此步骤。</strong><br />debug客户端源码分析其详细思路</p>
+</li>
+<li><p>webpack-dev-server/client端会监听到此hash消息，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/client-src/default/index.js#L54">@webpack-dev-server/index.js#L54</a></p>
+</li>
+<li><p>客户端收到ok的消息后会执行reloadApp方法进行更新，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/client-src/default/index.js#L101">index.js#L101</a></p>
+</li>
+<li><p>在reloadApp中会进行判断，是否支持热更新，如果支持的话发射webpackHotUpdate事件，如果不支持则直接刷新浏览器，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack-dev-server/blob/v3.7.2/client-src/default/utils/reloadApp.js#L7">reloadApp.js#L7</a></p>
+</li>
+<li><p>在webpack/hot/dev-server.js会监听webpackHotUpdate事件，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/hot/dev-server.js#L55">dev-server.js#L55</a></p>
+</li>
+<li><p>在check方法里会调用module.hot.check方法，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/hot/dev-server.js#L13">dev-server.js#L13</a></p>
+</li>
+<li><p>HotModuleReplacement.runtime请求Manifest，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/lib/HotModuleReplacement.runtime.js#L180">HotModuleReplacement.runtime.js#L180</a></p>
+</li>
+<li><p>它通过调用 JsonpMainTemplate.runtime的hotDownloadManifest方法，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/lib/web/JsonpMainTemplate.runtime.js#L23">JsonpMainTemplate.runtime.js#L23</a></p>
+</li>
+<li><p>调用JsonpMainTemplate.runtime的hotDownloadUpdateChunk方法通过JSONP请求获取到最新的模块代码，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/lib/web/JsonpMainTemplate.runtime.js#L14">JsonpMainTemplate.runtime.js#L14</a></p>
+</li>
+<li><p>补丁JS取回来后会调用JsonpMainTemplate.runtime.js的webpackHotUpdate方法，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/lib/web/JsonpMainTemplate.runtime.js#L8">JsonpMainTemplate.runtime.js#L8</a></p>
+</li>
+<li><p>然后会调用HotModuleReplacement.runtime.js的hotAddUpdateChunk方法动态更新模块代码，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/lib/HotModuleReplacement.runtime.js#L222">HotModuleReplacement.runtime.js#L222</a></p>
+</li>
+<li><p>然后调用hotApply方法进行热更新，源代码地址<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/lib/HotModuleReplacement.runtime.js#L257">HotModuleReplacement.runtime.js#L257</a>、<a target="_blank" rel="noopener" href="https://github.com/webpack/webpack/blob/v4.39.1/lib/HotModuleReplacement.runtime.js#L278">HotModuleReplacement.runtime.js#L278</a><br><a name="item-6-7"></a></p>
+<h3 id="客户端简易实现"><a href="#客户端简易实现" class="headerlink" title="客户端简易实现"></a>客户端简易实现</h3><p>上面是我通过debug得出dev-server运行流程比较核心的几个点，下面将其<a target="_blank" rel="noopener" href="https://github.com/careteenL/webpack-hmr/blob/master/src/client.js">抽象整合成一个文件</a>。<br><a name="NUr0h"></a></p>
+<h4 id="webpack-dev-server-client端会监听到此hash消息"><a href="#webpack-dev-server-client端会监听到此hash消息" class="headerlink" title="webpack-dev-server/client端会监听到此hash消息"></a>webpack-dev-server/client端会监听到此hash消息</h4><p>在开发客户端功能之前，需要在<code>src/index.html</code>中引入<code>socket.io</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/socket.io/socket.io.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面连接socket并接受消息</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> socket = io(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">socket.on(<span class="string">&#x27;connect&#x27;</span>, onConnected)</span><br><span class="line"><span class="keyword">const</span> onConnected = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;客户端连接成功&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> hotCurrentHash <span class="comment">// lastHash 上一次 hash值 </span></span><br><span class="line"><span class="keyword">let</span> currentHash <span class="comment">// 这一次的hash值</span></span><br><span class="line">socket.on(<span class="string">&#x27;hash&#x27;</span>, <span class="function">(<span class="params">hash</span>) =&gt;</span> &#123;</span><br><span class="line">  currentHash = hash</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>将服务端webpack每次编译所产生<code>hash</code>进行缓存<br><a name="uvtiH"></a></p>
+<h4 id="客户端收到ok的消息后会执行reloadApp方法进行更新"><a href="#客户端收到ok的消息后会执行reloadApp方法进行更新" class="headerlink" title="客户端收到ok的消息后会执行reloadApp方法进行更新"></a>客户端收到ok的消息后会执行reloadApp方法进行更新</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">socket.on(<span class="string">&#x27;ok&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  reloadApp(<span class="literal">true</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a name="ZbSqA"></a></p>
+<h4 id="reloadApp中判断是否支持热更新"><a href="#reloadApp中判断是否支持热更新" class="headerlink" title="reloadApp中判断是否支持热更新"></a>reloadApp中判断是否支持热更新</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当收到ok事件后，会重新刷新app</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reloadApp</span>(<span class="params">hot</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (hot) &#123; <span class="comment">// 如果hot为true 走热更新的逻辑</span></span><br><span class="line">    hotEmitter.emit(<span class="string">&#x27;webpackHotUpdate&#x27;</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; <span class="comment">// 如果不支持热更新，则直接重新加载</span></span><br><span class="line">    <span class="built_in">window</span>.location.reload()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在reloadApp中会进行判断，是否支持热更新，如果支持的话发射webpackHotUpdate事件，如果不支持则直接刷新浏览器。<br><a name="KZYCi"></a></p>
+<h4 id="在webpack-hot-dev-server-js会监听webpackHotUpdate事件"><a href="#在webpack-hot-dev-server-js会监听webpackHotUpdate事件" class="headerlink" title="在webpack/hot/dev-server.js会监听webpackHotUpdate事件"></a>在webpack/hot/dev-server.js会监听webpackHotUpdate事件</h4><p>首先需要一个发布订阅去绑定事件并在合适的时机触发。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Emitter</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.listeners = &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">on</span>(<span class="params">type, listener</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.listeners[type] = listener</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">emit</span>(<span class="params">type</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.listeners[type] &amp;&amp; <span class="built_in">this</span>.listeners[type]()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> hotEmitter = <span class="keyword">new</span> Emitter()</span><br><span class="line">hotEmitter.on(<span class="string">&#x27;webpackHotUpdate&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!hotCurrentHash || hotCurrentHash == currentHash) &#123;</span><br><span class="line">    <span class="keyword">return</span> hotCurrentHash = currentHash</span><br><span class="line">  &#125;</span><br><span class="line">  hotCheck()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>会判断是否为第一次进入页面和代码是否有更新。<br>上面的发布订阅较为简单，且只支持先发布后订阅功能。对于一些较为复杂的场景可能需要先订阅后发布，此时可以移步&gt; <a target="_blank" rel="noopener" href="https://github.com/careteenL/event-emitter">@careteen/event-emitter</a>。其实现原理也挺简单，需要维护一个离线事件栈存放还没发布就订阅的事件，等到订阅时可以取出所有事件执行。<br><a name="IOT6r"></a></p>
+<h4 id="在check方法里会调用module-hot-check方法"><a href="#在check方法里会调用module-hot-check方法" class="headerlink" title="在check方法里会调用module.hot.check方法"></a>在check方法里会调用module.hot.check方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hotCheck</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  hotDownloadManifest().then(<span class="function"><span class="params">update</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> chunkIds = <span class="built_in">Object</span>.keys(update.c)</span><br><span class="line">    chunkIds.forEach(<span class="function"><span class="params">chunkId</span> =&gt;</span> &#123;</span><br><span class="line">      hotDownloadUpdateChunk(chunkId)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面也提到过webpack每次编译都会产生<code>hash值</code>、<code>已改动模块的json文件</code>、<code>已改动模块代码的js文件</code>，<br />此时先使用<code>ajax</code>请求<code>Manifest</code>即服务器这一次编译相对于上一次编译改变了哪些module和chunk。<br />然后再通过<code>jsonp</code>获取这些已改动的module和chunk的代码。<br><a name="vjb3D"></a></p>
+<h4 id="调用hotDownloadManifest方法"><a href="#调用hotDownloadManifest方法" class="headerlink" title="调用hotDownloadManifest方法"></a>调用hotDownloadManifest方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hotDownloadManifest</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> request = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">    <span class="comment">//hot-update.json文件里存放着从上一次编译到这一次编译 取到差异</span></span><br><span class="line">    <span class="keyword">let</span> requestPath = <span class="string">&#x27;/&#x27;</span> + hotCurrentHash + <span class="string">&quot;.hot-update.json&quot;</span></span><br><span class="line">    request.open(<span class="string">&#x27;GET&#x27;</span>, requestPath, <span class="literal">true</span>)</span><br><span class="line">    request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (request.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> update = <span class="built_in">JSON</span>.parse(request.responseText)</span><br><span class="line">        resolve(update)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    request.send()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="ndg3N"></a></p>
+<h4 id="调用hotDownloadUpdateChunk方法通过JSONP请求获取到最新的模块代码"><a href="#调用hotDownloadUpdateChunk方法通过JSONP请求获取到最新的模块代码" class="headerlink" title="调用hotDownloadUpdateChunk方法通过JSONP请求获取到最新的模块代码"></a>调用hotDownloadUpdateChunk方法通过JSONP请求获取到最新的模块代码</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hotDownloadUpdateChunk</span>(<span class="params">chunkId</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> script = <span class="built_in">document</span>.createElement(<span class="string">&#x27;script&#x27;</span>)</span><br><span class="line">  script.charset = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line">  <span class="comment">// /main.xxxx.hot-update.js</span></span><br><span class="line">  script.src = <span class="string">&#x27;/&#x27;</span> + chunkId + <span class="string">&quot;.&quot;</span> + hotCurrentHash + <span class="string">&quot;.hot-update.js&quot;</span></span><br><span class="line">  <span class="built_in">document</span>.head.appendChild(script)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里解释下为什么使用<code>JSONP</code>获取而不直接利用<code>socket</code>获取最新代码？主要是因为<code>JSONP</code>获取的代码可以直接执行。<br><a name="ztLF2"></a></p>
+<h4 id="调用webpackHotUpdate方法"><a href="#调用webpackHotUpdate方法" class="headerlink" title="调用webpackHotUpdate方法"></a>调用webpackHotUpdate方法</h4><p>当客户端把最新的代码拉到浏览之后</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.webpackHotUpdate = <span class="function"><span class="keyword">function</span> (<span class="params">chunkId, moreModules</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 循环新拉来的模块</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> moduleId <span class="keyword">in</span> moreModules) &#123;</span><br><span class="line">    <span class="comment">// 从模块缓存中取到老的模块定义</span></span><br><span class="line">    <span class="keyword">let</span> oldModule = __webpack_require__.c[moduleId]</span><br><span class="line">    <span class="comment">// parents哪些模块引用这个模块 children这个模块引用了哪些模块</span></span><br><span class="line">    <span class="comment">// parents=[&#x27;./src/index.js&#x27;]</span></span><br><span class="line">    <span class="keyword">let</span> &#123;</span><br><span class="line">      parents,</span><br><span class="line">      children</span><br><span class="line">    &#125; = oldModule</span><br><span class="line">    <span class="comment">// 更新缓存为最新代码 缓存进行更新</span></span><br><span class="line">    <span class="keyword">let</span> <span class="built_in">module</span> = __webpack_require__.c[moduleId] = &#123;</span><br><span class="line">      <span class="attr">i</span>: moduleId,</span><br><span class="line">      <span class="attr">l</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">exports</span>: &#123;&#125;,</span><br><span class="line">      parents,</span><br><span class="line">      children,</span><br><span class="line">      <span class="attr">hot</span>: <span class="built_in">window</span>.hotCreateModule(moduleId)</span><br><span class="line">    &#125;</span><br><span class="line">    moreModules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__)</span><br><span class="line">    <span class="built_in">module</span>.l = <span class="literal">true</span> <span class="comment">// 状态变为加载就是给module.exports 赋值了</span></span><br><span class="line">    parents.forEach(<span class="function"><span class="params">parent</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// parents=[&#x27;./src/index.js&#x27;]</span></span><br><span class="line">      <span class="keyword">let</span> parentModule = __webpack_require__.c[parent]</span><br><span class="line">      <span class="comment">// _acceptedDependencies=&#123;&#x27;./src/title.js&#x27;,render&#125;</span></span><br><span class="line">      parentModule &amp;&amp; parentModule.hot &amp;&amp; parentModule.hot._acceptedDependencies[moduleId] &amp;&amp; parentModule.hot._acceptedDependencies[moduleId]()</span><br><span class="line">    &#125;)</span><br><span class="line">    hotCurrentHash = currentHash</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="nMRoh"></a></p>
+<h4 id="hotCreateModule的实现"><a href="#hotCreateModule的实现" class="headerlink" title="hotCreateModule的实现"></a>hotCreateModule的实现</h4><p>实现我们可以在业务代码中定义需要热更新的模块以及回调函数，将其存放在<code>hot._acceptedDependencies</code>中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.hotCreateModule = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> hot = &#123;</span><br><span class="line">    <span class="attr">_acceptedDependencies</span>: &#123;&#125;,</span><br><span class="line">    <span class="function"><span class="title">dispose</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="comment">// 销毁老的元素</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">accept</span>: <span class="function"><span class="keyword">function</span> (<span class="params">deps, callback</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; deps.length; i++) &#123;</span><br><span class="line">        <span class="comment">// hot._acceptedDependencies=&#123;&#x27;./title&#x27;: render&#125;</span></span><br><span class="line">        hot._acceptedDependencies[deps[i]] = callback</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> hot</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在<code>webpackHotUpdate</code>中进行调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">parents.forEach(<span class="function"><span class="params">parent</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// parents=[&#x27;./src/index.js&#x27;]</span></span><br><span class="line">      <span class="keyword">let</span> parentModule = __webpack_require__.c[parent]</span><br><span class="line">      <span class="comment">// _acceptedDependencies=&#123;&#x27;./src/title.js&#x27;,render&#125;</span></span><br><span class="line">      parentModule &amp;&amp; parentModule.hot &amp;&amp; parentModule.hot._acceptedDependencies[moduleId] &amp;&amp; parentModule.hot._acceptedDependencies[moduleId]()</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<p>最后调用hotApply方法进行热更新<br><a name="item-6-8"></a></p>
+<h3 id="客户端调试阶段"><a href="#客户端调试阶段" class="headerlink" title="客户端调试阶段"></a>客户端调试阶段</h3><p>经过上述实现了一个基本版的HMR，可更改代码保存的同时查看浏览器并非整体刷新，而是局部更新代码进而更新视图。在涉及到大量表单的需求时大大提高了开发效率。<br><a name="item-7"></a></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2></li>
+</ol>
+<ul>
+<li><p>如何实现commonjs规范？<br>感兴趣的可前往&gt; <a target="_blank" rel="noopener" href="https://github.com/careteenL/blog/blob/master/src/20181201-node/module.md">debug CommonJs规范</a>了解其实现原理。</p>
+</li>
+<li><p>webpack实现流程以及各个生命周期的作用是什么？<br>webpack主要借助了&gt; <code>tapable</code>这个库所提供的一系列同步/异步钩子函数贯穿整个生命周期。&gt; <img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1583939666129-b464ba02-d967-42db-a140-2b8321df9985.jpeg#align=left&display=inline&height=4244&originHeight=4244&originWidth=4436&size=0&status=done&style=none&width=4436">基于此我实现了一版简易的&gt; <a target="_blank" rel="noopener" href="https://github.com/careteenL/webpack">webpack</a>，源码100+行，食用时伴着注释很容易消化，感兴趣的可前往看个思路。</p>
+</li>
+<li><p>发布订阅的使用和实现，并且如何实现一个可先订阅后发布的机制？<br>上面也提到需要使用到发布订阅模式，且只支持先发布后订阅功能。对于一些较为复杂的场景可能需要先订阅后发布，此时可以移步&gt; <a target="_blank" rel="noopener" href="https://github.com/careteenL/event-emitter">@careteen/event-emitter</a>。其实现原理也挺简单，需要维护一个离线事件栈存放还没发布就订阅的事件，等到订阅时可以取出所有事件执行。</p>
+</li>
+<li><p>为什么使用JSONP而不用socke通信获取更新过的代码？<br>因为通过socket通信获取的是一串字符串需要再做处理。而通过&gt; <code>JSONP</code>获取的代码可以直接执行。<br><a name="item-7-9"></a></p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3></li>
+<li><p>珠峰架构课</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/api/hot-module-replacement/#src/components/Sidebar/Sidebar.jsx">模块热替换 - webpack官网</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/03/11/199-%E3%80%90Webpack%E3%80%91%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E5%B9%B6%E5%AE%9E%E7%8E%B0webpack%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/" data-id="ckts3ejyk00mt4d9kalne8c9k" data-title="199-【Webpack】彻底搞懂并实现webpack热更新原理" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/24/200-%E3%80%90%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%918%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          200-【数据结构】8种常见数据结构
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/24/198-%E3%80%90Webpack%E3%80%91Webpack%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E5%A6%82%E6%AD%A4%E7%AE%80%E5%8D%95%EF%BC%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">198-【Webpack】Webpack插件开发如此简单！</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

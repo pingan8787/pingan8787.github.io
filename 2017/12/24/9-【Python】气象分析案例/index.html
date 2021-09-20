@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>9-【Python】气象分析案例 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="原文地址：打开文章  介绍学习完基础知识，现在需要一些练习项目，所以网上找了些试试。 正文一、实验介绍本实验将对意大利北部沿海地区的气象数据进行分析与可视化。我们在实验过程中先会运用 Python 中 matplotlib 库的对数据进行图表化处理，然后调用 scikit-learn 库当中的的 SVM 库对数据进行回归分析，最终在图表分析的支持下得出我们的结论。   1.1实验知识点 matp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9-【Python】气象分析案例">
+<meta property="og:url" content="http://example.com/2017/12/24/9-%E3%80%90Python%E3%80%91%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原文地址：打开文章  介绍学习完基础知识，现在需要一些练习项目，所以网上找了些试试。 正文一、实验介绍本实验将对意大利北部沿海地区的气象数据进行分析与可视化。我们在实验过程中先会运用 Python 中 matplotlib 库的对数据进行图表化处理，然后调用 scikit-learn 库当中的的 SVM 库对数据进行回归分析，最终在图表分析的支持下得出我们的结论。   1.1实验知识点 matp">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-24T03:12:18.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.743Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-9-【Python】气象分析案例" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/24/9-%E3%80%90Python%E3%80%91%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/" class="article-date">
+  <time class="dt-published" datetime="2017-12-24T03:12:18.000Z" itemprop="datePublished">2017-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      9-【Python】气象分析案例
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>原文地址：<a target="_blank" rel="noopener" href="https://www.shiyanlou.com/courses/running#">打开文章</a></p>
+</blockquote>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>学习完基础知识，现在需要一些练习项目，所以网上找了些试试。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="一、实验介绍"><a href="#一、实验介绍" class="headerlink" title="一、实验介绍"></a>一、实验介绍</h2><p>本实验将对意大利北部沿海地区的气象数据进行分析与可视化。我们在实验过程中先会运用 <code>Python</code> 中 <code>matplotlib</code> 库的对数据进行图表化处理，然后调用 <code>scikit-learn</code> 库当中的的 <code>SVM</code> 库对数据进行回归分析，最终在图表分析的支持下得出我们的结论。  </p>
+<h3 id="1-1实验知识点"><a href="#1-1实验知识点" class="headerlink" title="1.1实验知识点"></a>1.1实验知识点</h3><ul>
+<li>matplotlib 库画出图像</li>
+<li>scikit-learn 库对数据进行回归分析</li>
+<li>numpy 库对数据进行切片</li>
+</ul>
+<h3 id="1-2实验环境"><a href="#1-2实验环境" class="headerlink" title="1.2实验环境"></a>1.2实验环境</h3><ul>
+<li>python2.7</li>
+<li>spyder</li>
+<li>scikit-learn<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/caoeryingzi/article/details/20448223">Windows下安装scikit-learn</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/xiaocanxccc/article/details/48950469">Linux下安装scikit-learn</a><br>Linux可以执行命令<code>sudo pip install scikit-learn</code> 安装。</li>
+</ul>
+<h3 id="1-4-适合人群"><a href="#1-4-适合人群" class="headerlink" title="1.4 适合人群"></a>1.4 适合人群</h3><p>本课程难度为中等，适合具有 <code>Python</code> 基础的用户，如果对 <code>matplotlib</code> 模块有了解会更快的上手。</p>
+<h2 id="二、温度数据分析"><a href="#二、温度数据分析" class="headerlink" title="二、温度数据分析"></a>二、温度数据分析</h2><p>这里省略那些介绍内容，具体查看最上面文章，这里贴代码：</p>
+<h3 id="2-1实验前准备"><a href="#2-1实验前准备" class="headerlink" title="2.1实验前准备"></a>2.1实验前准备</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 本案例源代码  命令行执行</span><br><span class="line">$ wget http://labfile.oss.aliyuncs.com/courses/780/SourceCode.zip</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## 1.下载所需数据源  命令行执行</span><br><span class="line">$ wget http://labfile.oss.aliyuncs.com/courses/780/WeatherData.zip</span><br><span class="line">## unzip WeatherData.zip</span><br><span class="line"></span><br><span class="line">## 2.打开sPyder 并进入目标目录</span><br><span class="line">cd Code</span><br><span class="line">cd WeatherAnalysis</span><br><span class="line">cd WeatherData</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2单座城市气温变化图的绘制（这里以米兰为例）"><a href="#2-2单座城市气温变化图的绘制（这里以米兰为例）" class="headerlink" title="2.2单座城市气温变化图的绘制（这里以米兰为例）"></a>2.2单座城市气温变化图的绘制（这里以米兰为例）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">## 引入模块</span><br><span class="line">import numpy as np</span><br><span class="line">import pandas as pd</span><br><span class="line">import datetime</span><br><span class="line"></span><br><span class="line">## 引入数据</span><br><span class="line">df_ferrara = pd.read_csv(&quot;ferrara_270615.csv&quot;)</span><br><span class="line">df_milano = pd.read_csv(&quot;milano_270615.csv&quot;)</span><br><span class="line">df_mantova = pd.read_csv(&quot;mantova_270615.csv&quot;)</span><br><span class="line">df_ravenna = pd.read_csv(&quot;ravenna_270615.csv&quot;)</span><br><span class="line">df_torino = pd.read_csv(&quot;torino_270615.csv&quot;)</span><br><span class="line">df_asti = pd.read_csv(&quot;asti_270615.csv&quot;)</span><br><span class="line">df_bologna = pd.read_csv(&quot;bologna_270615.csv&quot;)</span><br><span class="line">df_piacenza = pd.read_csv(&quot;piacenza_270615.csv&quot;)</span><br><span class="line">df_cesena = pd.read_csv(&quot;cesena_270615.csv&quot;)</span><br><span class="line">df_faenza = pd.read_csv(&quot;faenza_270615.csv&quot;)</span><br><span class="line"></span><br><span class="line">## 3.导入必要的库 </span><br><span class="line">%matplotlib inline</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import matplotlib.dates as mdates</span><br><span class="line">from dateutil import parser</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.读取米兰的城市气象数据</span><br><span class="line">df_milano = pd.read_csv(&quot;milano_270615.csv&quot;)</span><br><span class="line"></span><br><span class="line">## 5.取出我们要分析的温度和日期数据</span><br><span class="line">y1 = df_milano[&quot;temp&quot;]</span><br><span class="line">x1 = df_milano[&quot;day&quot;]</span><br><span class="line"></span><br><span class="line">## 6.把日期数据转换成 datetime 的格式</span><br><span class="line">day_milano = [parser.parse(x) for x in x1]</span><br><span class="line"></span><br><span class="line">## 7.调用 subplot 函数, fig 是图像对象，ax 是坐标轴对象</span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line"></span><br><span class="line">## 8.调整x轴坐标刻度，使其旋转70度，方便查看</span><br><span class="line">plt.xticks(rotation=70)</span><br><span class="line"></span><br><span class="line">## 9.设定时间的格式</span><br><span class="line">hours = mdates.DateFormatter(&quot;%H:%M&quot;)</span><br><span class="line"></span><br><span class="line">## 10.设定X轴显示的格式</span><br><span class="line">ax.xaxis.set_major_formatter(hours)</span><br><span class="line"></span><br><span class="line">## 11.画出图像，day_milano是X轴数据，y1是Y轴数据，‘r’代表的是&quot;red&quot; 红色</span><br><span class="line">ax.plot(day_milano ,y1, &quot;r&quot;)</span><br><span class="line"></span><br><span class="line">## 12.显示图像</span><br><span class="line">fig</span><br></pre></td></tr></table></figure>
+<p>由生成的图像可见，气温走势接近正弦曲线，从早上开始气温逐渐升高，最高温出现在下午两点到六点之间，随后气温逐渐下降，在第二天早上六点时达到最低值。  </p>
+<p>我们进行数据分析的目的是尝试解释是否能够评估海洋是怎样影响气温的，以及是否能够影响气温趋势，因此我们同时来看几个不同城市的气温趋势。这是检验分析方向是否正确的唯一方式。因此，我们选择三个离海最近以及三个离海最远的城市。    </p>
+<h3 id="2-3离海最近的三座城市和最远的三座城市气温变化图的绘制"><a href="#2-3离海最近的三座城市和最远的三座城市气温变化图的绘制" class="headerlink" title="2.3离海最近的三座城市和最远的三座城市气温变化图的绘制"></a>2.3离海最近的三座城市和最远的三座城市气温变化图的绘制</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">##  1.读取数据文件(之前没读取数据的同学，这里一定要读取啦)</span><br><span class="line">df_ravenna = pd.read_csv(&quot;ravenna_270615.csv&quot;)</span><br><span class="line">df_faenza = pd.read_csv(&quot;faenza_270615.csv&quot;)</span><br><span class="line">df_cesena = pd.read_csv(&quot;cesena_270615.csv&quot;)</span><br><span class="line">df_asti = pd.read_csv(&quot;asti_270615.csv&quot;)</span><br><span class="line">df_torino = pd.read_csv(&quot;torino_270615.csv&quot;)</span><br><span class="line">df_milano = pd.read_csv(&quot;milano_270615.csv&quot;)</span><br><span class="line"></span><br><span class="line">##  2.读取温度和日期数据</span><br><span class="line">y1 = df_ravenna[&quot;temp&quot;]</span><br><span class="line">x1 = df_ravenna[&quot;day&quot;]</span><br><span class="line">y2 = df_faenza[&quot;temp&quot;]</span><br><span class="line">x2 = df_faenza[&quot;day&quot;]</span><br><span class="line">y3 = df_cesena[&quot;temp&quot;]</span><br><span class="line">x3 = df_cesena[&quot;day&quot;]</span><br><span class="line">y4 = df_milano[&quot;temp&quot;]</span><br><span class="line">x4 = df_milano[&quot;day&quot;]</span><br><span class="line">y5 = df_asti[&quot;temp&quot;]</span><br><span class="line">x5 = df_asti[&quot;day&quot;]</span><br><span class="line">y6 = df_torino[&quot;temp&quot;]</span><br><span class="line">x6 = df_torino[&quot;day&quot;]</span><br><span class="line"></span><br><span class="line">##  3.把日期从 string 类型转化为标准的 datetime 类型</span><br><span class="line">day_ravenna = [parser.parse(x) for x in x1]</span><br><span class="line">day_faenza = [parser.parse(x) for x in x2]</span><br><span class="line">day_cesena = [parser.parse(x) for x in x3]</span><br><span class="line">dat_milano = [parser.parse(x) for x in x4]</span><br><span class="line">day_asti = [parser.parse(x) for x in x5]</span><br><span class="line">day_torino = [parser.parse(x) for x in x6]</span><br><span class="line"></span><br><span class="line">##  4.调用 subplots() 函数，重新定义 fig, ax 变量</span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line">plt.xticks(rotation=70)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hours = mdates.DateFormatter(&quot;%H:%M&quot;)</span><br><span class="line">ax.xaxis.set_major_formatter(hours)</span><br><span class="line"></span><br><span class="line">##  5.这里需要画出三根线，所以需要三组参数， &quot;g&quot;代表&quot;green&quot;</span><br><span class="line">ax.plot(day_ravenna,y1,&quot;r&quot;,day_faenza,y2,&quot;r&quot;,day_cesena,y3,&quot;r&quot;)</span><br><span class="line">ax.plot(day_milano,y4,&quot;g&quot;,day_asti,y5,&quot;g&quot;,day_torino,y6,&quot;g&quot;)</span><br><span class="line">fig</span><br></pre></td></tr></table></figure>
+<p>上述代码将生成的图表。离海最近的三个城市的气温曲线使用红色，而离海最远的三个城市的曲线使用绿色。<br>如生成的图像所示，结果看起来不错。离海最近的三个城市的最高气温比离海最远的三个城市低不少，而最低气温看起来差别较小。  </p>
+<p>我们可以沿着这个方向做深入研究，收集10个城市的最高温和最低温，用线性图表示气温最值点和离海远近之间的关系。  </p>
+<h3 id="2-4收集10座城市最高温和最低温，用线形图表示气温最值点和离海远近之间的关系"><a href="#2-4收集10座城市最高温和最低温，用线形图表示气温最值点和离海远近之间的关系" class="headerlink" title="2.4收集10座城市最高温和最低温，用线形图表示气温最值点和离海远近之间的关系"></a>2.4收集10座城市最高温和最低温，用线形图表示气温最值点和离海远近之间的关系</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">##  1.dist 是一个装城市距离海边距离的列表</span><br><span class="line">dist = [df_ravenna[&quot;dist&quot;][0],</span><br><span class="line">    df_cesena[&quot;dist&quot;][0],</span><br><span class="line">    df_faenza[&quot;dist&quot;][0],</span><br><span class="line">    df_ferrara[&quot;dist&quot;][0],</span><br><span class="line">    df_bologna[&quot;dist&quot;][0],</span><br><span class="line">    df_mantova[&quot;dist&quot;][0],</span><br><span class="line">    df_piacenza[&quot;dist&quot;][0],</span><br><span class="line">    df_milano[&quot;dist&quot;][0],</span><br><span class="line">    df_asti[&quot;dist&quot;][0],</span><br><span class="line">    df_torino[&quot;dist&quot;][0]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">##  2.temp_max 是一个存放每个城市最高温度的列表</span><br><span class="line">temp_max = [df_ravenna[&quot;temp&quot;].max(),</span><br><span class="line">    df_cesena[&quot;temp&quot;].max(),</span><br><span class="line">    df_faenza[&quot;temp&quot;].max(),</span><br><span class="line">    df_ferrara[&quot;temp&quot;].max(),</span><br><span class="line">    df_bologna[&quot;temp&quot;].max(),</span><br><span class="line">    df_mantova[&quot;temp&quot;].max(),</span><br><span class="line">    df_piacenza[&quot;temp&quot;].max(),</span><br><span class="line">    df_milano[&quot;temp&quot;].max(),</span><br><span class="line">    df_asti[&quot;temp&quot;].max(),</span><br><span class="line">    df_torino[&quot;temp&quot;].max()</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">##  3.temp_min 是一个存放每个城市最低温度的列表</span><br><span class="line">temp_min = [df_ravenna[&quot;temp&quot;].min(),</span><br><span class="line">    df_cesena[&quot;temp&quot;].min(),</span><br><span class="line">    df_faenza[&quot;temp&quot;].min(),</span><br><span class="line">    df_ferrara[&quot;temp&quot;].min(),</span><br><span class="line">    df_bologna[&quot;temp&quot;].min(),</span><br><span class="line">    df_mantova[&quot;temp&quot;].min(),</span><br><span class="line">    df_piacenza[&quot;temp&quot;].min(),</span><br><span class="line">    df_milano[&quot;temp&quot;].min(),</span><br><span class="line">    df_asti[&quot;temp&quot;].min(),</span><br><span class="line">    df_torino[&quot;temp&quot;].min()</span><br><span class="line">]</span><br><span class="line">##  4.绘图</span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line">ax.plot(dist,temp_max,&quot;ro&quot;)</span><br><span class="line">fig</span><br></pre></td></tr></table></figure>
+<p>如生成的图像所示，现在你可以证实，海洋对气象数据具有一定程度的影响这个假设是正确的（至少这一天如此）。</p>
+<p>进一步观察上图，你会发现海洋的影响衰减得很快，离海60～70公里开外，气温就已攀升到高位。<br>用线性回归算法得到两条直线，分别表示两种不同的气温趋势，这样做很有趣。我们可以使<br>用scikit-learn库的SVR方法。（注意：这段代码会跑比较久的时间）  </p>
+<h2 id="2-5scikit-learn分析两种气温变化趋势"><a href="#2-5scikit-learn分析两种气温变化趋势" class="headerlink" title="2.5scikit-learn分析两种气温变化趋势"></a>2.5scikit-learn分析两种气温变化趋势</h2><p>这里首先要安装 <code>scikit-learn库</code> ，安装方法具体可以 <a target="_blank" rel="noopener" href="http://blog.csdn.net/shizhixin/article/details/50488520">打开链接查看</a>。<br>这里做简单介绍：先通过 <code>easy_install</code> 命令安装 <code>numpy，scipy，matplotlib</code> ， 然后<code>easy_install scikit-learn</code>命令直接安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.svm import SVR</span><br><span class="line"></span><br><span class="line"># dist1是靠近海的城市集合，dist2是远离海洋的城市集合</span><br><span class="line">dist1 = dist[0:5]</span><br><span class="line">dist2 = dist[5:10]</span><br><span class="line"></span><br><span class="line"># 改变列表的结构，dist1现在是5个列表的集合</span><br><span class="line"># 之后我们会看到 numpy 中 reshape() 函数也有同样的作用</span><br><span class="line">dist1 = [[x] for x in dist1]</span><br><span class="line">dist2 = [[x] for x in dist2]</span><br><span class="line"></span><br><span class="line"># temp_max1 是 dist1 中城市的对应最高温度</span><br><span class="line">temp_max1 = temp_max[0:5]</span><br><span class="line"># temp_max2 是 dist2 中城市的对应最高温度</span><br><span class="line">temp_max2 = temp_max[5:10]</span><br><span class="line"></span><br><span class="line"># 我们调用SVR函数，在参数中规定了使用线性的拟合函数</span><br><span class="line"># 并且把 C 设为1000来尽量拟合数据（因为不需要精确预测不用担心过拟合）</span><br><span class="line">svr_lin1 = SVR(kernel=&quot;linear&quot;, C=1e3)</span><br><span class="line">svr_lin2 = SVR(kernel=&quot;linear&quot;, C=1e3)</span><br><span class="line"></span><br><span class="line"># 加入数据，进行拟合（这一步可能会跑很久，大概10多分钟，休息一下:) ）</span><br><span class="line">svr_lin1.fit(dist1, temp_max1)</span><br><span class="line">svr_lin2.fit(dist2, temp_max2)</span><br><span class="line"></span><br><span class="line"># 关于 reshape 函数请看代码后面的详细讨论</span><br><span class="line">xp1 = np.arange(10,100,10).reshape((9,1))</span><br><span class="line">xp2 = np.arange(50,400,50).reshape((7,1))</span><br><span class="line">yp1 = svr_lin1.predict(xp1)</span><br><span class="line">yp2 = svr_lin2.predict(xp2)</span><br><span class="line"></span><br><span class="line"># 限制了 x 轴的取值范围</span><br><span class="line">ax.set_xlim(0,400)</span><br><span class="line"></span><br><span class="line"># 画出图像</span><br><span class="line">ax.plot(xp1, yp1, c=&quot;b&quot;, label=&quot;Strong sea effect&quot;)</span><br><span class="line">ax.plot(xp2, yp2, c=&quot;g&quot;, label=&quot;Light sea effect&quot;)</span><br><span class="line">fig</span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>np.arange(10,100,10)</code> 会返回 <code>[10, 20, 30,..., 90]</code>，如果把列表看成是一个矩阵，那么这个矩阵是 <code>1 9</code> 的。这里 <code>reshape((9,1))</code> 函数就会把该列表变为 <code>9 1</code> 的， <code>[[10], [20], ..., [90]]</code>。这么做的原因是因为 <code>predict()</code> 函数的只能接受一个<code> N 1</code> 的列表，返回一个<code>1 N</code> 的列表。   </p>
+<p>如生成图像所见，离海60公里以内，气温上升速度很快，从28度陡升至31度，随后增速渐趋缓和（如果还继续增长的话），更长的距离才会有小幅上升。这两种趋势可分别用两条直线来表示，直线的表达式为：x = ax + b 其中a为斜率，b为截距。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">print svr_lin1.coef_  #斜率</span><br><span class="line">print svr_lin1.intercept_  # 截距</span><br><span class="line">print svr_lin2.coef_</span><br><span class="line">print svr_lin2.intercept_</span><br><span class="line">[[0.04794118]]</span><br><span class="line">[ 27.65617647]</span><br><span class="line">[[0.00401274]]</span><br><span class="line">[ 29.98745223]</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-6找到受海洋影响和不受海洋影响的区域的分界点"><a href="#2-6找到受海洋影响和不受海洋影响的区域的分界点" class="headerlink" title="2.6找到受海洋影响和不受海洋影响的区域的分界点"></a>2.6找到受海洋影响和不受海洋影响的区域的分界点</h2><p>你可能会考虑将这两条直线的交点作为受海洋影响和不受海洋影响的区域的分界点，或者至少是海洋影响较弱的分界点。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from scipy.optimize import fsolve</span><br><span class="line"></span><br><span class="line"># 定义了第一条拟合直线</span><br><span class="line">def line1(x):</span><br><span class="line">    a1 = svr_lin1.coef_[0][0]</span><br><span class="line">    b1 = svr_lin1.intercept_[0]</span><br><span class="line">    return a1*x + b1</span><br><span class="line"></span><br><span class="line"># 定义了第二条拟合直线</span><br><span class="line">def line2(x):</span><br><span class="line">    a2 = svr_lin2.coef_[0][0]</span><br><span class="line">    b2 = svr_lin2.intercept_[0]</span><br><span class="line">    return a2*x + b2</span><br><span class="line"></span><br><span class="line"># 定义了找到两条直线的交点的 x 坐标的函数</span><br><span class="line">def findIntersection(fun1,fun2,x0):</span><br><span class="line">    return fsolve(lambda x : fun1(x) - fun2(x),x0)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">result = findIntersection(line1,line2,0.0)</span><br><span class="line">print &quot;[x,y] = [ %d , %d ]&quot; % (result,line1(result))</span><br><span class="line"></span><br><span class="line"># x = [0,10,20, ..., 300]</span><br><span class="line">x = np.linspace(0,300,31)</span><br><span class="line">plt.plot(x,line1(x),x,line2(x),result,line1(result),&quot;ro&quot;)</span><br></pre></td></tr></table></figure>
+<p>执行上述代码，将得到交点的坐标 [x,y] = [ 53, 30 ]<br>因此，你可以说海洋对气温产生影响的平均距离（该天的情况）为53公里。<br>现在，我们可以转而分析最低气温。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># axis 函数规定了 x 轴和 y 轴的取值范围</span><br><span class="line">plt.axis((0,400,15,25))</span><br><span class="line">plt.plot(dist,temp_min,&quot;bo&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、湿度数据分析"><a href="#三、湿度数据分析" class="headerlink" title="三、湿度数据分析"></a>三、湿度数据分析</h2><p>10个DataFrame对象中还包含湿度这个气象数据。因此，你也可以考察当天三个近海城市和三个内陆城市的湿度趋势。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 读取湿度数据</span><br><span class="line">y1 = df_ravenna[&quot;humidity&quot;]</span><br><span class="line">x1 = df_ravenna[&quot;day&quot;]</span><br><span class="line">y2 = df_faenza[&quot;humidity&quot;]</span><br><span class="line">x2 = df_faenza[&quot;day&quot;]</span><br><span class="line">y3 = df_cesena[&quot;humidity&quot;]</span><br><span class="line">x3 = df_cesena[&quot;day&quot;]</span><br><span class="line">y4 = df_milano[&quot;humidity&quot;]</span><br><span class="line">x4 = df_milano[&quot;day&quot;]</span><br><span class="line">y5 = df_asti[&quot;humidity&quot;]</span><br><span class="line">x5 = df_asti[&quot;day&quot;]</span><br><span class="line">y6 = df_torino[&quot;humidity&quot;]</span><br><span class="line">x6 = df_torino[&quot;day&quot;]</span><br><span class="line"></span><br><span class="line"># 重新定义 fig 和 ax 变量</span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line">plt.xticks(rotation=70)</span><br><span class="line"></span><br><span class="line"># 把时间从 string 类型转化为标准的 datetime 类型</span><br><span class="line">day_ravenna = [parser.parse(x) for x in x1]</span><br><span class="line">day_faenza = [parser.parse(x) for x in x2]</span><br><span class="line">day_cesena = [parser.parse(x) for x in x3]</span><br><span class="line">day_milano = [parser.parse(x) for x in x4]</span><br><span class="line">day_asti = [parser.parse(x) for x in x5]</span><br><span class="line">day_torino = [parser.parse(x) for x in x6]</span><br><span class="line"></span><br><span class="line"># 规定时间的表示方式</span><br><span class="line">hours = mdates.DateFormatter(&quot;%H:%M&quot;)</span><br><span class="line">ax.xaxis.set_major_formatter(hours)</span><br><span class="line"></span><br><span class="line">#表示在图上</span><br><span class="line">ax.plot(day_ravenna,y1,&quot;r&quot;,day_faenza,y2,&quot;r&quot;,day_cesena,y3,&quot;r&quot;)</span><br><span class="line">ax.plot(day_milano,y4,&quot;g&quot;,day_asti,y5,&quot;g&quot;,day_torino,y6,&quot;g&quot;)</span><br><span class="line">fig</span><br></pre></td></tr></table></figure>
+<p>乍看上去好像近海城市的湿度要大于内陆城市，全天湿度差距在20%左右。我们再来看一下湿度的极值和离海远近之间的关系，是否跟我们的第一印象相符。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 获取最大湿度数据</span><br><span class="line">hum_max = [df_ravenna[&quot;humidity&quot;].max(),</span><br><span class="line">df_cesena[&quot;humidity&quot;].max(),</span><br><span class="line">df_faenza[&quot;humidity&quot;].max(),</span><br><span class="line">df_ferrara[&quot;humidity&quot;].max(),</span><br><span class="line">df_bologna[&quot;humidity&quot;].max(),</span><br><span class="line">df_mantova[&quot;humidity&quot;].max(),</span><br><span class="line">df_piacenza[&quot;humidity&quot;].max(),</span><br><span class="line">df_milano[&quot;humidity&quot;].max(),</span><br><span class="line">df_asti[&quot;humidity&quot;].max(),</span><br><span class="line">df_torino[&quot;humidity&quot;].max()</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">plt.plot(dist,hum_max,&quot;bo&quot;)</span><br></pre></td></tr></table></figure>
+<p>我们把10个城市的最大湿度与离海远近之间的关系做成图表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 获取最小湿度</span><br><span class="line">hum_min = [df_ravenna[&quot;humidity&quot;].min(),</span><br><span class="line">df_cesena[&quot;humidity&quot;].min(),</span><br><span class="line">df_faenza[&quot;humidity&quot;].min(),</span><br><span class="line">df_ferrara[&quot;humidity&quot;].min(),</span><br><span class="line">df_bologna[&quot;humidity&quot;].min(),</span><br><span class="line">df_mantova[&quot;humidity&quot;].min(),</span><br><span class="line">df_piacenza[&quot;humidity&quot;].min(),</span><br><span class="line">df_milano[&quot;humidity&quot;].min(),</span><br><span class="line">df_asti[&quot;humidity&quot;].min(),</span><br><span class="line">df_torino[&quot;humidity&quot;].min()</span><br><span class="line">]</span><br><span class="line">plt.plot(dist,hum_min,&quot;bo&quot;)</span><br></pre></td></tr></table></figure>
+<p>再来把10个城市的最小湿度与离海远近之间的关系做成图表。  </p>
+<p>由上面两张图可以确定，近海城市无论是最大还是最小湿度都要高于内陆城市。然而在我看来，我们还不能说湿度和距离之间存在线性关系或者其他能用曲线表示的关系。我们采集的数据点数量（10）太少，不足以描述这类趋势。  </p>
+<h2 id="四、风向频率玫瑰图"><a href="#四、风向频率玫瑰图" class="headerlink" title="四、风向频率玫瑰图"></a>四、风向频率玫瑰图</h2><p>在我们采集的每个城市的气象数据中，下面两个与风有关：</p>
+<ul>
+<li>风力（风向）</li>
+<li>风速</li>
+</ul>
+<p>分析存放每个城市气象数据的DataFrame就会发现，风速不仅跟一天的时间段相关联，还与一个介于0~360度的方向有关。例如，每一条测量数据也包含风吹来的方向。  </p>
+<p>要是把一个DataFrame中的数据点做成散点图：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(df_ravenna[&quot;wind_deg&quot;],df_ravenna[&quot;wind_speed&quot;],&quot;ro&quot;)</span><br></pre></td></tr></table></figure>
+<p>很显然该图的表现力也有不足。<br>要表示呈360度分布的数据点，最好使用另一种可视化方法：<code>极区图</code>。<br>首先，创建一个直方图，也就是将360度分为八个面元，每个面元为45度，把所有的数据点分到这八个面元中。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hist, bins = np.histogram(df_ravenna[&quot;wind_deg&quot;],8,[0,360])</span><br><span class="line">print hist</span><br><span class="line">print bins</span><br></pre></td></tr></table></figure>
+<p>histogram()函数返回结果中的数组hist为落在每个面元的数据点数量。<br>[ 0 5 11 1 0 1 0 0]  </p>
+<p>返回结果中的数组bins定义了360度范围内各面元的边界。  </p>
+<p>[ 0. 45. 90. 135. 180. 225. 270. 315. 360.]  </p>
+<p>要想正确定义极区图，离不开这两个数组。我们将创建一个函数来绘制极区图，其中部分代码在第7章已讲过。我们把这个函数定义为 <code>showRoseWind()</code> ，它有三个参数：<code>values数组</code>，指的是想为其作图的数据，也就是这里的 <code>hist数组</code> ；第二个参数 <code>city_name</code>为字符串类型，指定图表标题所用的城市名称；最后一个参数 <code>max_value</code> 为整型，指定最大的蓝色值。<br>定义这样一个函数很有用，它既能避免多次重复编写相同的代码，还能增强代码的模块化程度，便于你把精力放到与函数内部操作相关的概念上。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def showRoseWind(values,city_name,max_value):</span><br><span class="line">    N = 8</span><br><span class="line"></span><br><span class="line">    # theta = [pi*1/4, pi*2/4, pi*3/4, ..., pi*2]</span><br><span class="line">    theta = np.arange(0.,2 * np.pi, 2 * np.pi / N)</span><br><span class="line">    radii = np.array(values)</span><br><span class="line">    # 绘制极区图的坐标系</span><br><span class="line">    plt.axes([0.025, 0.025, 0.95, 0.95], polar=True)</span><br><span class="line"></span><br><span class="line">    # 列表中包含的是每一个扇区的 rgb 值，x越大，对应的color越接近蓝色</span><br><span class="line">    colors = [(1-x/max_value, 1-x/max_value, 0.75) for x in radii]</span><br><span class="line"></span><br><span class="line">    # 画出每个扇区</span><br><span class="line">    plt.bar(theta, radii, width=(2*np.pi/N), bottom=0.0, color=colors)</span><br><span class="line"></span><br><span class="line">    # 设置极区图的标题</span><br><span class="line">    plt.title(city_name, x=0.2, fontsize=20)</span><br></pre></td></tr></table></figure>
+<p>你需要修改变量colors存储的颜色表。这里，扇形的颜色越接近蓝色，值越大。定义好函数之后，调用它即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">showRoseWind(hist,&quot;Ravenna&quot;,max(hist))</span><br></pre></td></tr></table></figure>
+<p>由生成图像可见，整个360度的范围被分成八个区域（面元），每个区域弧长为45度，此外每个区域还有一列呈放射状排列的刻度值。在每个区域中，用半径长度可以改变的扇形表示一个数值，半径越长，扇形所表示的数值就越大。为了增强图表的可读性，我们使用与扇形半径相对应的颜色表。半径越长，扇形跨度越大，颜色越接近于深蓝色。  </p>
+<p>从刚得到的极区图可以得知风向在极坐标系中的分布方式。该图表示这一天大部分时间风都吹向西南和正西方向。  </p>
+<p>定义好 <code>showRoseWind()</code> 函数之后，查看其他城市的风向情况也非常简单。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hist, bin = np.histogram(df_ferrara[&quot;wind_deg&quot;],8,[0,360])</span><br><span class="line">print hist</span><br><span class="line">showRoseWind(hist,&quot;Ferrara&quot;, max(hist))</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、计算风速均值的分布情况"><a href="#五、计算风速均值的分布情况" class="headerlink" title="五、计算风速均值的分布情况"></a>五、计算风速均值的分布情况</h2><p>即使是跟风速相关的其他数据，也可以用极区图来表示。<br>定义RoseWind_Speed函数，计算将360度范围划分成的八个面元中每个面元的平均风速。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def RoseWind_Speed(df_city):</span><br><span class="line">    # degs = [45, 90, ..., 360]</span><br><span class="line">    degs = np.arange(45,361,45)</span><br><span class="line">    tmp = []</span><br><span class="line">    for deg in degs:</span><br><span class="line">        # 获取 wind_deg 在指定范围的风速平均值数据</span><br><span class="line">        tmp.append(df_city[(df_city[&quot;wind_deg&quot;]&gt;(deg-46)) &amp; (df_city[&quot;wind_deg&quot;]&lt;deg)]</span><br><span class="line">        [&quot;wind_speed&quot;].mean())</span><br><span class="line">    return np.array(tmp)</span><br></pre></td></tr></table></figure>
+<p>这里 <code>df_city[(df_city[&quot;wind_deg&quot;]&gt;(deg-46)) &amp; (df_city[&quot;wind_deg&quot;]&lt;deg)]</code> 获取的是风向大于 <code>&quot;deg-46&quot;</code> 度和风向小于 <code>&quot;deg&quot;</code> 的数据。  </p>
+<p><code>RoseWind_Speed()</code> 函数返回一个包含八个平均风速值的NumPy数组。该数组将作为先前定义的 <code>showRoseWind()函数</code> 的第一个参数，这个函数是用来绘制极区图的。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">showRoseWind(RoseWind_Speed(df_ravenna),&quot;Ravenna&quot;,max(hist))</span><br></pre></td></tr></table></figure>
+<p>如生成图像所示的风向频率玫瑰图表示风速在360度范围内的分布情况。</p>
+<h2 id="六、实验总结"><a href="#六、实验总结" class="headerlink" title="六、实验总结"></a>六、实验总结</h2><p>本章主要目的是演示如何从原始数据获取信息。其中有些信息无法给出重要结论，而有些信息能够验证假设，增加我们对系统状态的认识，而找出这种信息也就意味着数据分析取得了成功。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/24/9-%E3%80%90Python%E3%80%91%E6%B0%94%E8%B1%A1%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/" data-id="ckts3ejzg00o94d9kee5i0pl6" data-title="9-【Python】气象分析案例" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/24/10-%E3%80%90Python%E3%80%91%E5%B8%B8%E7%94%A8%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          10-【Python】常用高阶函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/23/8-%E3%80%90Python%E3%80%91NumPy%E5%9F%BA%E7%A1%80%E4%B9%8B100%E9%81%93%E7%BB%83%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">8-【Python】NumPy基础之100道练习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

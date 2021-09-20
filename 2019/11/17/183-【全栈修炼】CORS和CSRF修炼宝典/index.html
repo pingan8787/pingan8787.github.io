@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>183-【全栈修炼】CORS和CSRF修炼宝典 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="CORS 和 CSRF 太容易混淆了，看完本文，你就清楚了。 一、CORS 和 CSRF 区别先看下图：  两者概念完全不同，另外常常我们也会看到 XSS ，这里一起介绍：  CORS ： Cross Origin Resourse-Sharing  跨站资源共享  CSRF ： Cross-Site Request Forgery  跨站请求伪造  XSS ： Cross Site Scrit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="183-【全栈修炼】CORS和CSRF修炼宝典">
+<meta property="og:url" content="http://example.com/2019/11/17/183-%E3%80%90%E5%85%A8%E6%A0%88%E4%BF%AE%E7%82%BC%E3%80%91CORS%E5%92%8CCSRF%E4%BF%AE%E7%82%BC%E5%AE%9D%E5%85%B8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="CORS 和 CSRF 太容易混淆了，看完本文，你就清楚了。 一、CORS 和 CSRF 区别先看下图：  两者概念完全不同，另外常常我们也会看到 XSS ，这里一起介绍：  CORS ： Cross Origin Resourse-Sharing  跨站资源共享  CSRF ： Cross-Site Request Forgery  跨站请求伪造  XSS ： Cross Site Scrit">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/blog/CORS-CSRF-1.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/CORS-CSRF-2.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/CORS-CSRF-3.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/CORS-CSRF-4.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/CORS-CSRF-5.png">
+<meta property="og:image" content="http://images.pingan8787.com/blog/2019_10_24guild_page.png">
+<meta property="article:published_time" content="2019-11-17T10:27:32.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.618Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="全栈开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/blog/CORS-CSRF-1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-183-【全栈修炼】CORS和CSRF修炼宝典" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/11/17/183-%E3%80%90%E5%85%A8%E6%A0%88%E4%BF%AE%E7%82%BC%E3%80%91CORS%E5%92%8CCSRF%E4%BF%AE%E7%82%BC%E5%AE%9D%E5%85%B8/" class="article-date">
+  <time class="dt-published" datetime="2019-11-17T10:27:32.000Z" itemprop="datePublished">2019-11-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      183-【全栈修炼】CORS和CSRF修炼宝典
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>CORS 和 CSRF 太容易混淆了，看完本文，你就清楚了。</p>
+<h2 id="一、CORS-和-CSRF-区别"><a href="#一、CORS-和-CSRF-区别" class="headerlink" title="一、CORS 和 CSRF 区别"></a>一、CORS 和 CSRF 区别</h2><p>先看下图：</p>
+<p><img src="http://images.pingan8787.com/blog/CORS-CSRF-1.png" alt="CORS 和 CSRF 区别"></p>
+<p>两者概念完全不同，另外常常我们也会看到 XSS ，这里一起介绍：</p>
+<ol>
+<li><p><strong>CORS</strong> ： Cross Origin Resourse-Sharing  跨站资源共享</p>
+</li>
+<li><p><strong>CSRF</strong> ： Cross-Site Request Forgery  跨站请求伪造</p>
+</li>
+<li><p><strong>XSS</strong> ： Cross Site Scrit 跨站脚本攻击（为与 CSS 区别，所以在安全领域叫 XSS）</p>
+</li>
+</ol>
+<h2 id="二、CORS"><a href="#二、CORS" class="headerlink" title="二、CORS"></a>二、CORS</h2><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h3><blockquote>
+<p>跨来源资源共享（CORS），亦译为跨域资源共享，是一份浏览器技术的规范，提供了 Web 服务从不同网域传来沙盒脚本的方法，以避开浏览器的同源策略，是 JSONP 模式的现代版。与 JSONP 不同，CORS 除了 GET 请求方法以外也支持其他的 HTTP 请求。用 CORS 可以让网页设计师用一般的 XMLHttpRequest，这种方式的错误处理比 JSONP 要来的好。另一方面，JSONP 可以在不支持 CORS 的老旧浏览器上运作。现代的浏览器都支持 CORS。<br>—— <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E4%BE%86%E6%BA%90%E8%B3%87%E6%BA%90%E5%85%B1%E4%BA%AB">维基百科</a></p>
+</blockquote>
+<p><strong>核心知识：</strong> CORS是一个W3C标准，它允许浏览器向跨源服务器，发出<code>XMLHttpRequest</code> 请求，从而克服 AJAX 只能同源使用的限制。</p>
+<p>因此，实现 CORS 通信的关键是服务器。只要服务器实现了 CORS 接口，就可以跨源通信，即为了解决<strong>跨域问题</strong>。</p>
+<h3 id="2-CORS-请求类型"><a href="#2-CORS-请求类型" class="headerlink" title="2. CORS 请求类型"></a>2. CORS 请求类型</h3><p>浏览器将 CORS 请求分成两类：<strong>简单请求</strong>（simple request）和<strong>非简单请求</strong>（not-so-simple request）。</p>
+<p><strong>简单请求</strong>一般包括下面两种情况：</p>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求方法</td>
+<td>请求方法为：<code>HEAD</code> 或 <code>GET</code> 或 <code>POST</code>；</td>
+</tr>
+<tr>
+<td>HTTP 头信息</td>
+<td>HTTP 头信息不超出以下几种字段：<code>Accept</code><br/><code>Accept-Language</code><br/><code>Content-Language</code><br/><code>Last-Event-ID</code><br/><code>Content-Type</code>：只限于三个值 <code>application/x-www-form-urlencoded</code>、<code>multipart/form-data</code>、<code>text/plain</code></td>
+</tr>
+</tbody></table>
+<p>凡是不同时满足上面两个条件，就属于<strong>非简单请求</strong>。</p>
+<h3 id="3-简单请求的-CORS-流程"><a href="#3-简单请求的-CORS-流程" class="headerlink" title="3. 简单请求的 CORS 流程"></a>3. 简单请求的 CORS 流程</h3><p>当浏览器发现我们的 AJAX 请求是个<strong>简单请求</strong>，便会自动在<strong>头信息</strong>中，增加一个 <code>Origin</code> 字段。</p>
+<p><code>Origin</code> 字段用来说明本次请求的来源（包括<strong>协议</strong> + <strong>域名</strong> + <strong>端口号</strong>），服务端根据这个值来决定是否同意此次请求。</p>
+<p><img src="http://images.pingan8787.com/blog/CORS-CSRF-2.png" alt="简单请求的 CORS 流程"></p>
+<p>当 <code>Origin</code> 指定的源不在许可范围，服务器会返回一个正常的 HTTP 回应，但浏览器会在响应头中发现 <code>Access-Control-Allow-Origin</code> 字段，便抛出异常。</p>
+<p>当 <code>Origin</code> 指定的源在许可范围，服务器返回的响应头中会多出几个头信息字段：</p>
+<p><img src="http://images.pingan8787.com/blog/CORS-CSRF-3.png" alt="简单请求的 CORS 流程"></p>
+<p>除了上面图中的头信息，一般会有以下三个相关头信息：</p>
+<ol>
+<li><code>Access-Control-Allow-Origin</code></li>
+</ol>
+<p>该字段是必须的。表示许可范围的域名，通常有两种值：<strong>请求时 Origin 字段的值</strong>或者 <code>*</code>（星号）表示任意域名。</p>
+<ol start="2">
+<li><code>Access-Control-Allow-Credentials</code></li>
+</ol>
+<p>该字段可选。布尔值，表示是否允许在 CORS 请求之中发送 <code>Cookie</code> 。若不携带 <code>Cookie</code> 则不需要设置该字段。</p>
+<p>当设置为 <code>true</code> 则  <code>Cookie</code> 包含在请求中，一起发送给服务器。还需要在 AJAX 请求中开启 <code>withCredentials</code> 属性，否则浏览器也不会发送 <code>Cookie</code> 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.withCredentials = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><code>Access-Control-Expose-Headers</code></li>
+</ol>
+<p>该字段可选。可以设置需要获取的字段。因为默认 CORS 请求时，<code>XMLHttpRequest</code> 对象的<code>getResponseHeader()</code>方法只能拿到以下 6 个基本字段：</p>
+<p><code>Cache-Control</code>、<code>Content-Language</code>、<code>Content-Type</code>、<code>Expires</code>、<code>Last-Modified</code>、<code>Pragma</code>。</p>
+<h3 id="4-非简单请求的-CORS-流程"><a href="#4-非简单请求的-CORS-流程" class="headerlink" title="4. 非简单请求的 CORS 流程"></a>4. 非简单请求的 CORS 流程</h3><p><strong>非简单请求</strong>情况如：请求方法是 <strong>PUT</strong> / <strong>DELETE</strong> 或者 <code>Content-Type:application/json</code> 类型的请求。</p>
+<p>在非简单请求发出 CORS 请求时，会在正式通信之前增加一次 <strong>“预检”请求（OPTIONS方法）</strong>，来询问服务器，本次请求的域名是否在许可名单中，以及使用哪些头信息。</p>
+<p>当 <strong>“预检”请求</strong> 通过以后，才会正式发起 AJAX 请求，否则报错。</p>
+<h4 id="4-1-预检请求"><a href="#4-1-预检请求" class="headerlink" title="4.1 预检请求"></a>4.1 预检请求</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">OPTIONS</span> <span class="string">/cors</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Origin</span><span class="punctuation">: </span>http://api.bob.com</span><br><span class="line"><span class="attribute">Access-Control-Request-Method</span><span class="punctuation">: </span>PUT</span><br><span class="line"><span class="attribute">Access-Control-Request-Headers</span><span class="punctuation">: </span>X-Custom-Header</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><strong>“预检”请求</strong> 信息中包含两个特殊字段：</p>
+<ol>
+<li><code>Access-Control-Request-Method</code></li>
+</ol>
+<p>该字段是必须的，用来列出浏览器的 CORS 请求会用到哪些 HTTP 方法，上例是 <code>PUT</code>。</p>
+<ol start="2">
+<li><code>Access-Control-Request-Headers</code></li>
+</ol>
+<p>指定浏览器 CORS 请求额外发送的头信息字段，上例是 <code>X-Custom-Header</code>。</p>
+<h4 id="4-2-预检响应"><a href="#4-2-预检响应" class="headerlink" title="4.2 预检响应"></a>4.2 预检响应</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Access-Control-Allow-Origin</span><span class="punctuation">: </span>http://api.bob.com</span><br><span class="line"><span class="attribute">Access-Control-Allow-Methods</span><span class="punctuation">: </span>GET, POST, PUT</span><br><span class="line"><span class="attribute">Access-Control-Allow-Headers</span><span class="punctuation">: </span>X-Custom-Header</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>text/html; charset=utf-8</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>Keep-Alive</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>当预检请求<strong>通过</strong>以后，在预检响应头中，会返回 <code>Access-Control-Allow-</code> 开头的信息，其中 <code>Access-Control-Allow-Origin</code> 表示许可范围，值也可以是 <code>*</code>。</p>
+<p>当预检请求<strong>拒绝</strong>以后，在预检响应头中，不会返回 <code>Access-Control-Allow-</code> 开头的信息，并在控制台输出错误信息。</p>
+<h2 id="三、CSRF"><a href="#三、CSRF" class="headerlink" title="三、CSRF"></a>三、CSRF</h2><h3 id="1-概念-1"><a href="#1-概念-1" class="headerlink" title="1. 概念"></a>1. 概念</h3><blockquote>
+<p>跨站请求伪造（英语：Cross-site request forgery），也被称为 one-click attack 或者 session riding，通常缩写为 CSRF 或者 XSRF， 是一种挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。跟跨网站脚本（XSS）相比，XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户网页浏览器的信任。<br>—— <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0">维基百科</a></p>
+</blockquote>
+<p><strong>核心知识：</strong> 跨站点请求伪造请求。</p>
+<p><strong>简单理解：</strong> 攻击者盗用你的身份，以你的名义发送恶意请求。</p>
+<p>常见场景：以你名义发送邮件，发消息，盗取你的账号，甚至于购买商品，虚拟货币转账等等。</p>
+<p>造成影响：个人隐私泄露以及财产安全。</p>
+<h3 id="2-CSRF-攻击流程"><a href="#2-CSRF-攻击流程" class="headerlink" title="2. CSRF 攻击流程"></a>2. CSRF 攻击流程</h3><p><img src="http://images.pingan8787.com/blog/CORS-CSRF-4.png" alt="CSRF 攻击流程"></p>
+<p>上面描述了 CSRF 攻击的流程，其中受害者完成两个步骤：</p>
+<ol>
+<li>登录受信任网站 A ，并在本地生成保存Cookie；</li>
+<li>在不登出 A 情况下，访问病毒网站 B；</li>
+</ol>
+<p>可以理解为：若以上两个步骤没有都完成，则不会受到 CSRF 攻击。</p>
+<h3 id="3-服务端防御-CSRF-攻击"><a href="#3-服务端防御-CSRF-攻击" class="headerlink" title="3. 服务端防御 CSRF 攻击"></a>3. 服务端防御 CSRF 攻击</h3><p>服务端防御的方式有很多，思想类似，都是在客户端页面增加<strong>伪随机数</strong>。</p>
+<h4 id="3-1-Cookie-Hashing（所有表单都包含同一个伪随机数）"><a href="#3-1-Cookie-Hashing（所有表单都包含同一个伪随机数）" class="headerlink" title="3.1 Cookie Hashing（所有表单都包含同一个伪随机数）"></a>3.1 Cookie Hashing（所有表单都包含同一个伪随机数）</h4><p>最简单有效方式，因为攻击者理论上无法获取第三方的Cookie，所以表单数据伪造失败。以 php 代码为例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">//构造加密的Cookie信息</span></span><br><span class="line">    <span class="variable">$value</span> = <span class="string">&quot;LeoDefenseSCRF&quot;</span>;</span><br><span class="line">    setcookie(<span class="string">&quot;cookie&quot;</span>, <span class="variable">$value</span>, time()+<span class="number">3600</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在表单里增加Hash值，以认证这确实是用户发送的请求。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$hash</span> = md5(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;cookie&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;form method=<span class="string">&quot;POST&quot;</span> action=<span class="string">&quot;transfer.php&quot;</span>&gt;</span><br><span class="line">　　&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;toBankId&quot;</span>&gt;</span><br><span class="line">　　&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;money&quot;</span>&gt;</span><br><span class="line">　　&lt;input type=<span class="string">&quot;hidden&quot;</span> name=<span class="string">&quot;hash&quot;</span> value=<span class="string">&quot;&lt;?=<span class="subst">$hash</span>;?&gt;&quot;</span>&gt;</span><br><span class="line">　　&lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;Submit&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后在服务器端进行Hash值验证。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;check&#x27;</span>])) &#123;</span><br><span class="line">　　     <span class="variable">$hash</span> = md5(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;cookie&#x27;</span>]);</span><br><span class="line">    　　 <span class="keyword">if</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;check&#x27;</span>] == <span class="variable">$hash</span>) &#123;</span><br><span class="line">            doJob();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">　　　　　<span class="comment">//...</span></span><br><span class="line">    　　&#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">　　    <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个方法个人觉得已经<strong>可以杜绝99%的CSRF攻击了</strong>，那还有1%呢….由于用户的 Cookie 很容易由于网站的 XSS 漏洞而被盗取，这就另外的1%。</p>
+<p>一般的攻击者看到有需要算Hash值，基本都会放弃了，某些除外，所以如果需要100%的杜绝，这个不是最好的方法。</p>
+<h4 id="3-2-验证码"><a href="#3-2-验证码" class="headerlink" title="3.2 验证码"></a>3.2 验证码</h4><p>思路是：每次用户提交都需要用户在表单中填写一个图片上的随机字符串，这个方案可以完全解决CSRF，但易用性差，并且验证码图片的使用涉及 MHTML 的Bug，可能在某些版本的微软IE中受影响。</p>
+<h4 id="3-3-One-Time-Tokens-不同的表单包含一个不同的伪随机值"><a href="#3-3-One-Time-Tokens-不同的表单包含一个不同的伪随机值" class="headerlink" title="3.3 One-Time Tokens(不同的表单包含一个不同的伪随机值)"></a>3.3 One-Time Tokens(不同的表单包含一个不同的伪随机值)</h4><p>需要注意“<strong>并行会话的兼容</strong>”。如果用户在一个站点上同时打开了两个不同的表单，CSRF保护措施不应该影响到他对任何表单的提交。考虑一下如果每次表单被装入时站点生成一个伪随机值来覆盖以前的伪随机值将会发生什么情况：用户只能成功地提交他最后打开的表单，因为所有其他的表单都含有非法的伪随机值。必须小心操作以确保CSRF保护措施不会影响选项卡式的浏览或者利用多个浏览器窗口浏览一个站点。</p>
+<p>php 实现如下：</p>
+<ol>
+<li>先是 <code>Token</code> 令牌生成函数(<code>gen_token()</code>)和 <code>Session</code> 令牌生成函数(<code>gen_stoken()</code>)：</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">gen_token</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$token</span> = md5(uniqid(rand(), <span class="literal">true</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$token</span>;</span><br><span class="line">    &#125;</span><br><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">gen_stoken</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　　<span class="variable">$pToken</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">　　　　<span class="keyword">if</span>(<span class="variable">$_SESSION</span>[STOKEN_NAME]  == <span class="variable">$pToken</span>)&#123;</span><br><span class="line">　　　　　　<span class="variable">$_SESSION</span>[STOKEN_NAME] = gen_token();</span><br><span class="line">　　　　&#125;    </span><br><span class="line">　　　　<span class="keyword">else</span>&#123; &#125;</span><br><span class="line">　　&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>WEB表单生成隐藏输入域的函数：　</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">gen_input</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        gen_stoken();</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;input type=\&quot;hidden\&quot; name=\&quot;&quot;</span> . FTOKEN_NAME . <span class="string">&quot;\&quot;</span></span><br><span class="line"><span class="string">     　　     value=\&quot;&quot;</span> . <span class="variable">$_SESSION</span>[STOKEN_NAME] . <span class="string">&quot;\&quot;&gt; &quot;</span>;</span><br><span class="line">　　&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>WEB表单结构：</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    session_start();</span><br><span class="line">    <span class="keyword">include</span>(<span class="string">&quot;functions.php&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;form method=<span class="string">&quot;POST&quot;</span> action=<span class="string">&quot;transfer.php&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;toBankId&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;money&quot;</span>&gt;</span><br><span class="line">    <span class="meta">&lt;?</span> gen_input(); <span class="meta">?&gt;</span></span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;Submit&quot;</span>&gt;</span><br><span class="line">&lt;/FORM&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>服务端核对令牌</li>
+</ol>
+<p>这一步很简单，不做详细介绍。</p>
+<h2 id="四、XSS"><a href="#四、XSS" class="headerlink" title="四、XSS"></a>四、XSS</h2><p><strong>注意</strong>： 本文简单介绍 XSS 知识，具体详细可以阅读 <strong>FEWY</strong> 写的 <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020402185">《跨站脚本攻击—XSS》</a><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020402185%E3%80%82">https://segmentfault.com/a/1190000020402185。</a></p>
+<h3 id="1-概念-2"><a href="#1-概念-2" class="headerlink" title="1. 概念"></a>1. 概念</h3><blockquote>
+<p>跨站脚本（英语：Cross-site scripting，通常简称为：XSS）是一种网站应用程序的安全漏洞攻击，是代码注入的一种。它允许恶意用户将代码注入到网页上，其他用户在观看网页时就会受到影响。这类攻击通常包含了HTML以及用户端脚本语言。<br>—— <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC">维基百科</a></p>
+</blockquote>
+<p>XSS 攻击，一般是指攻击者通过在网页中注入恶意脚本，当用户浏览网页时，恶意脚本执行，控制用户浏览器行为的一种攻击方式。</p>
+<p>常见 XSS 危害有：</p>
+<ul>
+<li>窃取用户Cookie，获取用户隐私，盗取用户账号。</li>
+<li>劫持用户（浏览器）会话，从而执行任意操作，例如进行非法转账、强制发表日志、发送电子邮件等。</li>
+<li>强制弹出广告页面，刷流量，传播跨站脚本蠕虫，网页挂马等。</li>
+<li>结合其他漏洞，如 CSRF 漏洞，实施进一步的攻击。</li>
+</ul>
+<h3 id="2-XSS-分类"><a href="#2-XSS-分类" class="headerlink" title="2. XSS 分类"></a>2. XSS 分类</h3><p><img src="http://images.pingan8787.com/blog/CORS-CSRF-5.png" alt="XSS 分类"></p>
+<h3 id="3-XSS-防御"><a href="#3-XSS-防御" class="headerlink" title="3. XSS 防御"></a>3. XSS 防御</h3><h4 id="3-1-方法1：浏览器自带防御-（X-XSS-Protection-）"><a href="#3-1-方法1：浏览器自带防御-（X-XSS-Protection-）" class="headerlink" title="3.1 方法1：浏览器自带防御 （X-XSS-Protection ）"></a>3.1 方法1：浏览器自带防御 （X-XSS-Protection ）</h4><p>现今主流浏览器（Internet Explorer，Chrome 和 Safari）带有 HTTP <code>X-XSS-Protection</code> 响应头，当检测到跨站脚本攻击(XSS)时，浏览器将停止加载页面。</p>
+<p><code>X-XSS-Protection</code> 响应头有以下 4 个值：</p>
+<ul>
+<li><code>X-XSS-Protection: 0</code></li>
+</ul>
+<p>禁止XSS过滤。     </p>
+<ul>
+<li><code>X-XSS-Protection: 1</code></li>
+</ul>
+<p>启用XSS过滤（通常浏览器是默认的）。 如果检测到跨站脚本攻击，浏览器将清除页面（删除不安全的部分）。  </p>
+<ul>
+<li><code>X-XSS-Protection: 1; mode=block</code></li>
+</ul>
+<p>启用XSS过滤。 如果检测到攻击，浏览器将不会清除页面，而是阻止页面加载。  </p>
+<ul>
+<li><code>X-XSS-Protection: 1; report=&lt;reporting-uri&gt;</code></li>
+</ul>
+<p>启用XSS过滤。 如果检测到跨站脚本攻击，浏览器将清除页面并使用CSP report-uri指令的功能发送违规报告。 </p>
+<p><strong>注意：</strong></p>
+<p>这并不能完全防止反射型 XSS，而且也并不是所有浏览器都支持 <code>X-XSS-Protection</code>，存在兼容性问题。</p>
+<p>它只对反射型 XSS 有一定的防御力，其原理也只是检查 URL 和 DOM 中元素的相关性。</p>
+<h4 id="3-2-方法2：转义"><a href="#3-2-方法2：转义" class="headerlink" title="3.2 方法2：转义"></a>3.2 方法2：转义</h4><p>即将常用特殊字符进行转义，避免攻击者使用构造特殊字符来注入脚本。需要在客户端和服务端，都对用户输入的数据进行转义。</p>
+<p>常见需要转义的特殊字符如 <code>&lt;</code>，<code>&gt;</code>，<code>&amp;</code>，<code>&quot;</code>，<code>&#39;</code>。</p>
+<p>转义方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escapeHTML</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!str) <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    str = str.replace(<span class="regexp">/&amp;/g</span>, <span class="string">&quot;&amp;amp;&quot;</span>);</span><br><span class="line">    str = str..replace(<span class="regexp">/&lt;/g</span>, <span class="string">&quot;&amp;lt;&quot;</span>);</span><br><span class="line">    str = str..replace(<span class="regexp">/&gt;/g</span>, <span class="string">&quot;&amp;gt;&quot;</span>);</span><br><span class="line">    str = str..replace(<span class="regexp">/&quot;/g</span>, <span class="string">&quot;&amp;quot;&quot;</span>);</span><br><span class="line">    str = str..replace(<span class="regexp">/&#x27;/g</span>, <span class="string">&quot;&amp;#39;&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-方法3：过滤"><a href="#3-3-方法3：过滤" class="headerlink" title="3.3 方法3：过滤"></a>3.3 方法3：过滤</h4><p>常见于富文本内容，因为其需要保留 HTML，所以不能直接使用转义方法，而可以通过使用白名单，来允许特定的 HTML 标签及属性，来抵御 XSS 攻击。</p>
+<h4 id="3-4-方法4：内容安全策略（CSP）"><a href="#3-4-方法4：内容安全策略（CSP）" class="headerlink" title="3.4 方法4：内容安全策略（CSP）"></a>3.4 方法4：内容安全策略（CSP）</h4><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/09/csp.html">内容安全策略（Content Security Policy，CSP）</a>，实质就是白名单制度，开发者明确告诉客户端，哪些外部资源可以加载和执行，大大增强了网页的安全性。</p>
+<p>两种方法可以启用 CSP。</p>
+<ol>
+<li>通过 HTTP 头信息的 <code>Content-Security-Policy</code> 的字段：</li>
+</ol>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Security-Policy</span><span class="punctuation">: </span>script-src &#x27;self&#x27;; </span><br><span class="line">                         object-src &#x27;none&#x27;;</span><br><span class="line">                         style-src cdn.example.org third-party.org; </span><br><span class="line">                         child-src https:</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过网页的 <code>&lt;meta&gt;</code> 标签</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Security-Policy&quot;</span> <span class="attr">content</span>=<span class="string">&quot;script-src &#x27;self&#x27;; object-src &#x27;none&#x27;; style-src cdn.example.org third-party.org; child-src https:&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，CSP 做了如下配置：</p>
+<ul>
+<li>脚本： 只信任当前域名</li>
+<li><code>&lt;object&gt;</code>标签： 不信任任何 URL，即不加载任何资源</li>
+<li>样式表： 只信任 <code>cdn.example.org </code>和<code> third-party.org</code></li>
+<li>页面子内容，如 <code>&lt;frame&gt;</code>、<code>&lt;iframe&gt;</code>： 必须使用HTTPS协议加载</li>
+<li>其他资源： 没有限制</li>
+<li>启用后，不符合 CSP 的外部资源就会被阻止加载。</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a href="www.ruanyifeng.com/blog/2016/04/cors.html">《跨域资源共享 CORS 详解》</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lailailai/p/4528092.html">《CSRF &amp; CORS》</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html">《浅谈CSRF攻击方式》</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020402185">《跨站脚本攻击—XSS》</a></li>
+</ol>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><blockquote>
+<p>本文首发在 <a target="_blank" rel="noopener" href="http://www.pingan8787.com/">pingan8787个人博客</a>，如需转载请联系本人。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#105;&#110;&#103;&#x61;&#x6e;&#x38;&#x37;&#56;&#55;&#x40;&#x71;&#x71;&#46;&#99;&#111;&#x6d;">&#112;&#105;&#110;&#103;&#x61;&#x6e;&#x38;&#x37;&#56;&#55;&#x40;&#x71;&#x71;&#46;&#99;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>ES小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+</tbody></table>
+<h2 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h2><p><img src="http://images.pingan8787.com/blog/2019_10_24guild_page.png" alt="bg">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/11/17/183-%E3%80%90%E5%85%A8%E6%A0%88%E4%BF%AE%E7%82%BC%E3%80%91CORS%E5%92%8CCSRF%E4%BF%AE%E7%82%BC%E5%AE%9D%E5%85%B8/" data-id="ckts3ejtt004r4d9k75ty1j9v" data-title="183-【全栈修炼】CORS和CSRF修炼宝典" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/22/184-%E3%80%90Webpack%E3%80%91Webpack4%E4%B9%8BTreeShaking%E7%BB%88%E6%9E%81%E4%BC%98%E5%8C%96%E6%8C%87%E5%8D%97/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          184-【Webpack】Webpack4之TreeShaking终极优化指南
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/12/182-%E3%80%90JavaScript%E3%80%91JavaScript%E4%B8%AD%E7%9A%84%E4%BD%8D%E8%BF%90%E7%AE%97%E5%92%8C%E6%9D%83%E9%99%90%E8%AE%BE%E8%AE%A1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">182-【JavaScript】JavaScript中的位运算和权限设计</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

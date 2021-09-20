@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>217-【设计模式】TypeScript设计模式之观察者模式 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="前言在之前两篇自测清单中，和大家分享了很多 JavaScript 基础知识，大家可以一起再回顾下~ 本文是我在我们团队内部“现代 JavaScript 突击队”分享的一篇内容，第二期学习内容为“设计模式”系列，我会将我负责分享的知识整理成文章输出，希望能够和大家一起温故知新！ “现代 JavaScript 突击队”学习总结：  《初中级前端 JavaScript 自测清单 - 1》 《初中级前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="217-【设计模式】TypeScript设计模式之观察者模式">
+<meta property="og:url" content="http://example.com/2020/09/22/217-%E3%80%90%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%91TypeScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言在之前两篇自测清单中，和大家分享了很多 JavaScript 基础知识，大家可以一起再回顾下~ 本文是我在我们团队内部“现代 JavaScript 突击队”分享的一篇内容，第二期学习内容为“设计模式”系列，我会将我负责分享的知识整理成文章输出，希望能够和大家一起温故知新！ “现代 JavaScript 突击队”学习总结：  《初中级前端 JavaScript 自测清单 - 1》 《初中级前端">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/DesignPattern/observer-parttern.png">
+<meta property="og:image" content="http://images.pingan8787.com/DesignPattern/observer-UML.png">
+<meta property="og:image" content="http://images.pingan8787.com/DesignPattern/vue-observer.png">
+<meta property="og:image" content="http://images.pingan8787.com/DesignPattern/observer-watcher.png">
+<meta property="article:published_time" content="2020-09-22T01:36:55.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.658Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/DesignPattern/observer-parttern.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-217-【设计模式】TypeScript设计模式之观察者模式" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/09/22/217-%E3%80%90%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%91TypeScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time class="dt-published" datetime="2020-09-22T01:36:55.000Z" itemprop="datePublished">2020-09-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      217-【设计模式】TypeScript设计模式之观察者模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在之前两篇自测清单中，和大家分享了很多 JavaScript 基础知识，大家可以一起再回顾下~</p>
+<p>本文是我在我们团队内部“<strong>现代 JavaScript 突击队</strong>”分享的一篇内容，第二期学习内容为“<strong>设计模式</strong>”系列，我会将我负责分享的知识整理成文章输出，希望能够和大家一起温故知新！</p>
+<p>“<strong>现代 JavaScript 突击队</strong>”学习总结：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/6846687584710557710">《初中级前端 JavaScript 自测清单 - 1》</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/6857037330113363982">《初中级前端 JavaScript 自测清单 - 2》</a></li>
+</ol>
+<h1 id="一、模式介绍"><a href="#一、模式介绍" class="headerlink" title="一、模式介绍"></a>一、模式介绍</h1><h2 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h2><p>在软件系统中经常碰到这类需求：当一个对象的状态发生改变，某些与它相关的对象也要随之做出相应的变化。这是建立一种<strong>对象与对象之间的依赖关系</strong>，一个对象发生改变时将<strong>自动通知其他对象</strong>，其他对象将<strong>相应做出反应</strong>。</p>
+<p>我们将发生改变的对象称为<strong>观察目标</strong>，将被通知的对象称为<strong>观察者</strong>，<strong>一个观察目标可以对应多个观察者</strong>，而且这些观察者之间没有相互联系，之后可以根据需要增加和删除观察者，使得系统更易于扩展，这就是观察者模式的产生背景。</p>
+<h2 id="2-概念介绍"><a href="#2-概念介绍" class="headerlink" title="2. 概念介绍"></a>2. 概念介绍</h2><p>观察者模式(Observer Pattern)：定义对象间的一种<strong>一对多依赖关系</strong>，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。观察者模式是一种对象行为型模式。</p>
+<h2 id="3-生活场景"><a href="#3-生活场景" class="headerlink" title="3. 生活场景"></a>3. 生活场景</h2><p>在所有浏览器事件（鼠标悬停，按键等事件）都是观察者模式的例子。</p>
+<p>另外还有：</p>
+<p>如我们订阅微信公众号“前端自习课”（<strong>观察目标</strong>），当“前端自习课”群发图文消息后，所有公众号粉丝（<strong>观察者</strong>）都会接收到这篇文章（事件），这篇文章的内容是发布者自定义的（自定义事件），粉丝阅读后作出特定操作（如：点赞，收藏，关注等）。</p>
+<p><img src="http://images.pingan8787.com/DesignPattern/observer-parttern.png" alt="观察者模式.png"></p>
+<h1 id="二、模式特点"><a href="#二、模式特点" class="headerlink" title="二、模式特点"></a>二、模式特点</h1><h2 id="1-模式组成"><a href="#1-模式组成" class="headerlink" title="1. 模式组成"></a>1. 模式组成</h2><p>在观察者模式中，通常包含以下角色：</p>
+<ul>
+<li><strong>目标：Subject</strong></li>
+<li><strong>观察目标：ConcreteSubject</strong></li>
+<li><strong>观察者：Observer</strong></li>
+<li><strong>具体观察者：ConcreteObserver</strong></li>
+</ul>
+<h2 id="2-UML-类图"><a href="#2-UML-类图" class="headerlink" title="2. UML 类图"></a>2. UML 类图</h2><p><img src="http://images.pingan8787.com/DesignPattern/observer-UML.png" alt="UML 类图"></p>
+<p>图片来源：<a target="_blank" rel="noopener" href="https://www.semlinker.com/ts-observer-pattern/">《TypeScript 设计模式之观察者模式》</a> </p>
+<h2 id="3-优点"><a href="#3-优点" class="headerlink" title="3. 优点"></a>3. 优点</h2><ul>
+<li>观察者模式可以实现<strong>表示层和数据逻辑层的分离</strong>，并<strong>降低观察目标和观察者之间耦合度</strong>；</li>
+<li>观察者模式支持<strong>简单广播通信</strong>，<strong>自动通知</strong>所有已经订阅过的对象；</li>
+<li>观察者模式<strong>符合“开闭原则”的要求</strong>；</li>
+<li>观察目标和观察者之间的抽象耦合关系能够<strong>单独扩展以及重用</strong>。</li>
+</ul>
+<h2 id="4-缺点"><a href="#4-缺点" class="headerlink" title="4. 缺点"></a>4. 缺点</h2><ul>
+<li>当一个观察目标<strong>有多个直接或间接的观察者</strong>时，通知所有观察者的过程将会花费很多时间；</li>
+<li>当观察目标和观察者之间存在<strong>循环依赖</strong>时，观察目标会触发它们之间进行循环调用，可能<strong>导致系统崩溃</strong>。</li>
+<li>观察者模式缺少相应机制，让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</li>
+</ul>
+<h1 id="三、使用场景"><a href="#三、使用场景" class="headerlink" title="三、使用场景"></a>三、使用场景</h1><p>在以下情况下可以使用观察者模式：</p>
+<ul>
+<li>在一个抽象模型中，一个对象的行为<strong>依赖于</strong>另一个对象的状态。即当<strong>目标对象</strong>的状态发生改变时，会直接影响到<strong>观察者</strong>的行为；</li>
+<li>一个对象需要通知其他对象发生反应，但不知道这些对象是谁。</li>
+<li>需要在系统中创建一个触发链，A对象的行为将影响B对象，B对象的行为将影响C对象……，可以使用观察者模式创建一种链式触发机制。</li>
+</ul>
+<h1 id="四、实战示例"><a href="#四、实战示例" class="headerlink" title="四、实战示例"></a>四、实战示例</h1><h2 id="1-简单示例"><a href="#1-简单示例" class="headerlink" title="1. 简单示例"></a>1. 简单示例</h2><ol>
+<li><p>定义<strong>观察目标接口</strong>（Subject）和<strong>观察者接口</strong>（Observer）</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ObserverPattern.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 观察目标接口</span></span><br><span class="line"><span class="keyword">interface</span> Subject &#123;</span><br><span class="line">  <span class="attr">addObserver</span>: <span class="function">(<span class="params">observer: Observer</span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">  deleteObserver: <span class="function">(<span class="params">observer: Observer</span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">  notifyObservers: <span class="function">() =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 观察者接口</span></span><br><span class="line"><span class="keyword">interface</span> Observer &#123;</span><br><span class="line">  <span class="attr">notify</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定义<strong>具体观察目标类</strong>（ConcreteSubject）</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ObserverPattern.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 具体观察目标类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span> <span class="title">implements</span> <span class="title">Subject</span></span>&#123; </span><br><span class="line">  <span class="keyword">private</span> observers: Observer[] = [];</span><br><span class="line">	</span><br><span class="line">  <span class="comment">// 添加观察者</span></span><br><span class="line">  <span class="keyword">public</span> addObserver(observer: Observer): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(observer, <span class="string">&quot; is pushed~~&quot;</span>);</span><br><span class="line">    <span class="built_in">this</span>.observers.push(observer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 移除观察者</span></span><br><span class="line">  <span class="keyword">public</span> deleteObserver(observer: Observer): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(observer, <span class="string">&quot; have deleted~~&quot;</span>);</span><br><span class="line">    <span class="keyword">const</span> idx: <span class="built_in">number</span> = <span class="built_in">this</span>.observers.indexOf(observer);</span><br><span class="line">    ~idx &amp;&amp; <span class="built_in">this</span>.observers.splice(idx, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通知观察者</span></span><br><span class="line">  <span class="keyword">public</span> notifyObservers(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;notify all the observers &quot;</span>, <span class="built_in">this</span>.observers);</span><br><span class="line">    <span class="built_in">this</span>.observers.forEach(<span class="function"><span class="params">observer</span> =&gt;</span> &#123; </span><br><span class="line">      <span class="comment">// 调用 notify 方法时可以携带指定参数</span></span><br><span class="line">      observer.notify();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定义<strong>具体观察者类</strong>（ConcreteObserver）</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ObserverPattern.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 具体观</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver</span> <span class="title">implements</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"><span class="keyword">private</span> name: <span class="built_in">string</span></span>)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  notify(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="comment">// 可以处理其他逻辑</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span> has been notified.`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ol start="4">
+<li>测试代码<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ObserverPattern.ts</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useObserver</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> subject: Subject = <span class="keyword">new</span> ConcreteSubject();</span><br><span class="line">  <span class="keyword">const</span> Leo   = <span class="keyword">new</span> ConcreteObserver(<span class="string">&quot;Leo&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> Robin = <span class="keyword">new</span> ConcreteObserver(<span class="string">&quot;Robin&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> Pual  = <span class="keyword">new</span> ConcreteObserver(<span class="string">&quot;Pual&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> Lisa  = <span class="keyword">new</span> ConcreteObserver(<span class="string">&quot;Lisa&quot;</span>);</span><br><span class="line"></span><br><span class="line">  subject.addObserver(Leo);</span><br><span class="line">  subject.addObserver(Robin);</span><br><span class="line">  subject.addObserver(Pual);</span><br><span class="line">  subject.addObserver(Lisa);</span><br><span class="line">  subject.notifyObservers();</span><br><span class="line">  </span><br><span class="line">  subject.deleteObserver(Pual);</span><br><span class="line">  subject.deleteObserver(Lisa);</span><br><span class="line">  subject.notifyObservers();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">useObserver();</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>完整演示代码如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ObserverPattern.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> Subject &#123;</span><br><span class="line">  <span class="attr">addObserver</span>: <span class="function">(<span class="params">observer: Observer</span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">  deleteObserver: <span class="function">(<span class="params">observer: Observer</span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">  notifyObservers: <span class="function">() =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> Observer &#123;</span><br><span class="line">  <span class="attr">notify</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span> <span class="title">implements</span> <span class="title">Subject</span></span>&#123; </span><br><span class="line">  <span class="keyword">private</span> observers: Observer[] = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> addObserver(observer: Observer): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(observer, <span class="string">&quot; is pushed~~&quot;</span>);</span><br><span class="line">    <span class="built_in">this</span>.observers.push(observer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> deleteObserver(observer: Observer): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(observer, <span class="string">&quot; have deleted~~&quot;</span>);</span><br><span class="line">    <span class="keyword">const</span> idx: <span class="built_in">number</span> = <span class="built_in">this</span>.observers.indexOf(observer);</span><br><span class="line">    ~idx &amp;&amp; <span class="built_in">this</span>.observers.splice(idx, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> notifyObservers(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;notify all the observers &quot;</span>, <span class="built_in">this</span>.observers);</span><br><span class="line">    <span class="built_in">this</span>.observers.forEach(<span class="function"><span class="params">observer</span> =&gt;</span> &#123; </span><br><span class="line">      <span class="comment">// 调用 notify 方法时可以携带指定参数</span></span><br><span class="line">      observer.notify();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver</span> <span class="title">implements</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"><span class="keyword">private</span> name: <span class="built_in">string</span></span>)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  notify(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="comment">// 可以处理其他逻辑</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span> has been notified.`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useObserver</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> subject: Subject = <span class="keyword">new</span> ConcreteSubject();</span><br><span class="line">  <span class="keyword">const</span> Leo   = <span class="keyword">new</span> ConcreteObserver(<span class="string">&quot;Leo&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> Robin = <span class="keyword">new</span> ConcreteObserver(<span class="string">&quot;Robin&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> Pual  = <span class="keyword">new</span> ConcreteObserver(<span class="string">&quot;Pual&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> Lisa  = <span class="keyword">new</span> ConcreteObserver(<span class="string">&quot;Lisa&quot;</span>);</span><br><span class="line"></span><br><span class="line">  subject.addObserver(Leo);</span><br><span class="line">  subject.addObserver(Robin);</span><br><span class="line">  subject.addObserver(Pual);</span><br><span class="line">  subject.addObserver(Lisa);</span><br><span class="line">  subject.notifyObservers();</span><br><span class="line">  </span><br><span class="line">  subject.deleteObserver(Pual);</span><br><span class="line">  subject.deleteObserver(Lisa);</span><br><span class="line">  subject.notifyObservers();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">useObserver();</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Vue-js-数据双向绑定实现原理"><a href="#2-Vue-js-数据双向绑定实现原理" class="headerlink" title="2. Vue.js 数据双向绑定实现原理"></a>2. Vue.js 数据双向绑定实现原理</h2><p>在 Vue.js 中，当我们修改数据状时，视图随之更新，这就是 Vue.js 的双向数据绑定（也称响应式原理），这是 Vue.js 中最独特的特性之一。<br>如果你对 Vue.js 的双向数据绑定还不清楚，建议先阅读官方文档《<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/reactivity.html">深入响应式原理</a>》章节。</p>
+<h3 id="2-1-原理介绍"><a href="#2-1-原理介绍" class="headerlink" title="2.1 原理介绍"></a>2.1 原理介绍</h3><p>在官网中提供这么一张流程图，介绍了 Vue.js 响应式系统的整个流程：</p>
+<p><img src="http://images.pingan8787.com/DesignPattern/vue-observer.png" alt="原理介绍"><br>图片来自：Vue.js 官网《<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/reactivity.html">深入响应式原理</a>》</p>
+<p>在 Vue.js 中，每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触”（“Touch” 过程）过的数据 property 记录为依赖（Collect as Dependency 过程）。之后当依赖项的 setter 触发时，会通知 watcher（Notify 过程），从而使它关联的组件重新渲染（Trigger re-render 过程）——这是一个典型的观察者模式。</p>
+<p>这道面试题考察面试者对 Vue.js 底层原理的理解、对观察者模式的实现能力以及一系列重要的JS知识点，具有较强的综合性和代表性。</p>
+<h3 id="2-2-组成部分"><a href="#2-2-组成部分" class="headerlink" title="2.2 组成部分"></a>2.2 组成部分</h3><p>在 Vue.js 数据双向绑定的实现逻辑中，包含三个关键角色：</p>
+<ul>
+<li>observer（监听器）：这里的 observer 不仅是订阅者（<strong>需要监听数据变化</strong>），同时还是发布者（<strong>对监听的数据进行转发</strong>）。</li>
+<li>watcher（订阅者）：watcher对象是**真正的订阅者， **observer 把数据转发给 watcher 对象。watcher 接收到新的数据后，执行视图更新。</li>
+<li>compile（编译器）：MVVM 框架特有的角色，负责对每个节点元素指令进行扫描和解析，处理指令的数据初始化、订阅者的创建等操作。</li>
+</ul>
+<p>这三者的配合过程如图所示：<br><img src="http://images.pingan8787.com/DesignPattern/observer-watcher.png" alt="组成部分"><br>图片来自：掘金小册《JavaScript 设计模式核⼼原理与应⽤实践》</p>
+<h3 id="2-3-实现核心代码-observer"><a href="#2-3-实现核心代码-observer" class="headerlink" title="2.3 实现核心代码 observer"></a>2.3 实现核心代码 observer</h3><p>首先我们需要实现一个方法，这个方法会对需要监听的数据对象进行遍历、给它的属性加上定制的 <code>getter</code> 和 <code>setter</code> 函数。这样但凡这个对象的某个属性发生了改变，就会触发 <code>setter</code> 函数，进而通知到订阅者。这个 <code>setter</code> 函数，就是我们的监听器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// observe方法遍历并包装对象属性</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">target</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 若target是一个对象，则遍历它</span></span><br><span class="line">    <span class="keyword">if</span>(target &amp;&amp; <span class="keyword">typeof</span> target === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.keys(target).forEach(<span class="function">(<span class="params">key</span>)=&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// defineReactive方法会给目标属性装上“监听器”</span></span><br><span class="line">            defineReactive(target, key, target[key])</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 定义defineReactive方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineReactive</span>(<span class="params">target, key, val</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 属性值也可能是object类型，这种情况下需要调用observe进行递归遍历</span></span><br><span class="line">    observe(val)</span><br><span class="line">    <span class="comment">// 为当前属性安装监听器</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(target, key, &#123;</span><br><span class="line">         <span class="comment">// 可枚举</span></span><br><span class="line">        <span class="attr">enumerable</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">// 不可配置</span></span><br><span class="line">        <span class="attr">configurable</span>: <span class="literal">false</span>, </span><br><span class="line">        <span class="attr">get</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> val;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 监听器函数</span></span><br><span class="line">        <span class="attr">set</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;target&#125;</span>属性的<span class="subst">$&#123;key&#125;</span>属性从<span class="subst">$&#123;val&#125;</span>值变成了了<span class="subst">$&#123;value&#125;</span>`</span>)</span><br><span class="line">            val = value</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面实现订阅者 <code>Dep</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义订阅者类Dep</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化订阅队列</span></span><br><span class="line">        <span class="built_in">this</span>.subs = []</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 增加订阅者</span></span><br><span class="line">    <span class="function"><span class="title">addSub</span>(<span class="params">sub</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.subs.push(sub)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通知订阅者（是不是所有的代码都似曾相识？）</span></span><br><span class="line">    <span class="function"><span class="title">notify</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.subs.forEach(<span class="function">(<span class="params">sub</span>)=&gt;</span>&#123;</span><br><span class="line">            sub.update()</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>现在我们可以改写 <code>defineReactive</code> 中的 <code>setter</code> 方法，在监听器里去通知订阅者了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineReactive</span>(<span class="params">target, key, val</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> dep = <span class="keyword">new</span> Dep()</span><br><span class="line">    <span class="comment">// 监听当前属性</span></span><br><span class="line">    observe(val)</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(target, key, &#123;</span><br><span class="line">        <span class="attr">set</span>: <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 通知所有订阅者</span></span><br><span class="line">            dep.notify()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>观察者模式又称发布-订阅模式、模型-视图模式、源-监听器模式或从属者模式。是一种<strong>对象行为型模式</strong>。其定义了一种<strong>对象间的一对多依赖关系</strong>，当观察目标发生状态变化，会通知所有观察者对象，使它们自动更新。</p>
+<p>在实际业务中，如果一个对象的行为<strong>依赖于</strong>另一个对象的状态。或者说当<strong>目标对象</strong>的状态发生改变时，会直接影响到<strong>观察者</strong>的行为，尽量考虑到使用观察者模式来实现。</p>
+<h1 id="六、拓展"><a href="#六、拓展" class="headerlink" title="六、拓展"></a>六、拓展</h1><p>观察者模式和发布-订阅模式两者很像，但其实区别比较大。例如：</p>
+<ul>
+<li>耦合度差异：观察者模式的耦合度就比发布-订阅模式要高；</li>
+<li>关注点不同：观察者模式需要知道彼此的存在，而发布-订阅模式则是通过调度中心来联系发布/订阅者。</li>
+</ul>
+<p>下一篇文章见。</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p>1.<a target="_blank" rel="noopener" href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html">《3. 观察者模式》</a><br>2.<a target="_blank" rel="noopener" href="https://www.semlinker.com/ts-observer-pattern/">《TypeScript 设计模式之观察者模式》</a> <br>3.<a target="_blank" rel="noopener" href="https://juejin.im/book/6844733790204461070">《JavaScript 设计模式核⼼原理与应⽤实践》</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/09/22/217-%E3%80%90%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%91TypeScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" data-id="ckts3ejua00684d9k3jic01pr" data-title="217-【设计模式】TypeScript设计模式之观察者模式" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/09/22/218-%E3%80%90%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%91TypeScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8F%91%E5%B8%83-%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          218-【设计模式】TypeScript设计模式之发布-订阅模式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/22/216-%E3%80%90JavaScript%E3%80%91%E5%89%8D%E7%AB%AF%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E7%B1%BB%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">216-【JavaScript】前端如何优雅处理类数组对象</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

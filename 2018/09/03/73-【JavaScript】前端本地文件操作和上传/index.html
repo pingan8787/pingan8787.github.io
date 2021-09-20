@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>73-【JavaScript】前端本地文件操作和上传 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#x70;&amp;#x69;&amp;#110;&amp;#103;&amp;#97;&amp;#x6e;&amp;#x38;&amp;#x37;&amp;#56;&amp;#55;&amp;#64;&amp;#x71;&amp;#113;&amp;#x2e;&amp;#x63;&amp;#111;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章 https:&#x2F;&#x2F;0x9.me&#x2F;KMrv3    原">
+<meta property="og:type" content="article">
+<meta property="og:title" content="73-【JavaScript】前端本地文件操作和上传">
+<meta property="og:url" content="http://example.com/2018/09/03/73-%E3%80%90JavaScript%E3%80%91%E5%89%8D%E7%AB%AF%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#x70;&amp;#x69;&amp;#110;&amp;#103;&amp;#97;&amp;#x6e;&amp;#x38;&amp;#x37;&amp;#56;&amp;#55;&amp;#64;&amp;#x71;&amp;#113;&amp;#x2e;&amp;#x63;&amp;#111;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章 https:&#x2F;&#x2F;0x9.me&#x2F;KMrv3    原">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac0afefa0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac079ba68?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac05a9b42?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac1f2ebd5?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac3330972?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac408b172?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349af40951d9?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349b104c3494?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349b4c18f7d8?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="article:published_time" content="2018-09-03T07:57:17.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.716Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac0afefa0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-73-【JavaScript】前端本地文件操作和上传" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/09/03/73-%E3%80%90JavaScript%E3%80%91%E5%89%8D%E7%AB%AF%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E4%B8%8A%E4%BC%A0/" class="article-date">
+  <time class="dt-published" datetime="2018-09-03T07:57:17.000Z" itemprop="datePublished">2018-09-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      73-【JavaScript】前端本地文件操作和上传
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#x69;&#110;&#103;&#97;&#x6e;&#x38;&#x37;&#56;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;">&#x70;&#x69;&#110;&#103;&#97;&#x6e;&#x38;&#x37;&#56;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章</td>
+<td><a target="_blank" rel="noopener" href="https://0x9.me/KMrv3">https://0x9.me/KMrv3</a></td>
+</tr>
+</tbody></table>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5a193b4bf265da43052e528a">原文地址</a> </p>
+<p>前端无法像原生APP一样直接操作本地文件，否则的话打开个网页就能把用户电脑上的文件偷光了，所以需要通过用户触发，用户可通过以下三种方式操作触发：  </p>
+<ol>
+<li>通过input type=”file” 选择本地文件   </li>
+<li>通过拖拽的方式把文件拖过来  </li>
+<li>在编辑框里面复制粘贴  </li>
+</ol>
+<h3 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h3><p>第一种是最常用的手段，通常还会自定义一个按钮，然后盖在它上面，因为<code>type=&quot;file&quot;</code>的input不好改变样式。如下代码写一个选择控件，并放在form里面：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;file-input&quot;</span> <span class="attr">name</span>=<span class="string">&quot;fileContent&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后就可以用FormData获取整个表单的内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#file-input&quot;</span>).on(<span class="string">&quot;change&quot;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`file name is <span class="subst">$&#123;<span class="built_in">this</span>.value&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData(<span class="built_in">this</span>.form);</span><br><span class="line">    formData.append(<span class="string">&quot;fileName&quot;</span>, <span class="built_in">this</span>.value);</span><br><span class="line">    <span class="built_in">console</span>.log(formData);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>把input的value和formData打印出来是这样的：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac0afefa0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="预览">  </p>
+<p>可以看到文件的路径是一个假的路径，也就是说在浏览器无法获取到文件的真实存放位置。同时FormData打印出来是一个空的Objet，但并不是说它的内容是空的，只是它对前端开发人员是透明的，无法查看、修改、删除里面的内容，只能<code>append</code>添加字段。  </p>
+<p><code>FormData</code>无法得到文件的内容，而使用<code>FileReader</code>可以读取整个文件的内容。用户选择文件之后，<code>input.files</code>就可以得到用户选中的文件，如下代码：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#file-input&quot;</span>).on(<span class="string">&quot;change&quot;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> fileReader = <span class="keyword">new</span> FileReader(),</span><br><span class="line">        fileType = <span class="built_in">this</span>.files[<span class="number">0</span>].type;</span><br><span class="line">    fileReader.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="regexp">/^image/</span>.test(fileType)) &#123;</span><br><span class="line">            <span class="comment">// 读取结果在fileReader.result里面</span></span><br><span class="line">            $(<span class="string">`&lt;img src=&quot;<span class="subst">$&#123;<span class="built_in">this</span>.result&#125;</span>&quot;&gt;`</span>).appendTo(<span class="string">&quot;body&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 打印原始File对象</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.files[<span class="number">0</span>]);</span><br><span class="line">    <span class="comment">// base64方式读取</span></span><br><span class="line">    fileReader.readAsDataURL(<span class="built_in">this</span>.files[<span class="number">0</span>]);    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>把原始的File对象打印出来是这样的：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac079ba68?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="预览">  </p>
+<p>它是一个window.File的实例，包含了文件的修改时间、文件名、文件的大小、文件的mime类型等。<br>如果需要<code>限制上传文件的大小</code>就可以通过判断<code>size</code>属性有没有超，单位是字节，而要判断是否为图片文件就可以通过type类型是否以image开头。通过判断文件名的后缀可能会不准，而通过这种判断会比较准。上面的代码使用了一个正则判断，如果是一张图片的话就把它赋值给img的src，并添加到dom里面，但其实这段代码有点问题，就是web不是所有的图片都能通过img标签展示出来，通常是jpg/png/gif这三种，所以你应该需要再判断一下图片格式，如可以把判断改成：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^image\/[jpeg|png|gif]/.test(<span class="built_in">this</span>.type)</span><br></pre></td></tr></table></figure>
+<p>然后实例化一个<code>FileReader</code>，调它的<code>readAsDataURL</code>并把<code>File</code>对象传给它，监听它的<code>onload</code>事件，load完读取的结果就在它的<code>result</code>属性里了。它是一个<code>base64</code>格式的，可直接赋值给一个img的src。    </p>
+<p>使用<code>FileReader</code>除了可读取为<code>base64</code>之外，还能读取为以下格式：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按base64的方式读取，结果是base64，任何文件都可转成base64的形式</span></span><br><span class="line">fileReader.readAsDataURL(<span class="built_in">this</span>.files[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以二进制字符串方式读取，结果是二进制内容的utf-8形式，已被废弃了</span></span><br><span class="line">fileReader.readAsBinaryString(<span class="built_in">this</span>.files[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以原始二进制方式读取，读取结果可直接转成整数数组</span></span><br><span class="line">fileReader.readAsArrayBuffer(<span class="built_in">this</span>.files[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+<p>其它的主要是能读取为<code>ArrayBuffer</code>，它是一个原始二进制格式的结果。把<code>ArrayBuffer</code>打印出来是这样的：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac05a9b42?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="预览"><br>可以看到，它对前端开发人员也是透明的，不能够直接读取里面的内容，但可以通过<code>ArrayBuffer.length</code>得到长度，还能转成整型数组，就能知道文件的原始二进制内容了：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> buffer = <span class="built_in">this</span>.result;</span><br><span class="line"><span class="comment">// 依次每字节8位读取，放到一个整数数组</span></span><br><span class="line"><span class="keyword">let</span> view = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(buffer);</span><br><span class="line"><span class="built_in">console</span>.log(view);</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h3><p>如果是通过第二种拖拽的方式，应该怎么读取文件呢？如下html（样式略）：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;img-container&quot;</span>&gt;</span></span><br><span class="line">    drop your image here</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这将在页面显示一个框：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac1f2ebd5?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="预览">  </p>
+<p>然后监听它的拖拽事件：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;.img-container&quot;</span>).on(<span class="string">&quot;dragover&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    event.preventDefault();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">.on(<span class="string">&quot;drop&quot;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    event.preventDefault();</span><br><span class="line">    <span class="comment">// 数据在event的dataTransfer对象里</span></span><br><span class="line">    <span class="keyword">let</span> file = event.originalEvent.dataTransfer.files[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 然后就可以使用FileReader进行操作</span></span><br><span class="line">    fileReader.readAsDataURL(file);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 或者是添加到一个FormData</span></span><br><span class="line">    <span class="keyword">let</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">    formData.append(<span class="string">&quot;fileContent&quot;</span>, file);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>数据在<code>drop</code>事件的<code>event.dataTransfer.files</code>里面，拿到这个<code>File</code>对象之后就可以和输入框进行一样的操作了，即使用<code>FileReader</code>读取，或者是新建一个空的<code>formData</code>，然后把它<code>append</code>到<code>formData</code>里面。</p>
+<h3 id="第三种"><a href="#第三种" class="headerlink" title="第三种"></a>第三种</h3><p>第三种粘贴的方式，通常是在一个编辑框里操作，如把<code>div</code>的<code>contenteditable</code>设置为true：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">contenteditable</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    hello, paste your image here</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>粘贴的数据是在<code>event.clipboardData.files</code>里面：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#editor&quot;</span>).on(<span class="string">&quot;paste&quot;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> file = event.originalEvent.clipboardData.files[<span class="number">0</span>];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>但是Safari的粘贴不是通过<code>event</code>传递的，它是直接在输入框里面添加一张图片，如下图所示：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac3330972?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="预览">  </p>
+<p>它新建了一个<code>img</code>标签，并把<code>img</code>的<code>src</code>指向一个<code>blob</code>的本地数据。什么是<code>blob</code>呢，如何读取<code>blob</code>的内容呢？<br>blob是一种类文件的存储格式，它可以存储几乎任何格式的内容，如json：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = &#123;<span class="attr">hello</span>: <span class="string">&quot;world&quot;</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> blob = <span class="keyword">new</span> Blob([<span class="built_in">JSON</span>.stringify(data)],</span><br><span class="line">  &#123;<span class="attr">type</span> : <span class="string">&#x27;application/json&#x27;</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>为了获取本地的blob数据，我们可以用ajax发个本地的请求：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#editor&quot;</span>).on(<span class="string">&quot;paste&quot;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 需要setTimeout 0等图片出来了再处理</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> img = $(<span class="built_in">this</span>).find(<span class="string">&quot;img[src^=&#x27;blob&#x27;]&quot;</span>)[<span class="number">0</span>];</span><br><span class="line">        <span class="built_in">console</span>.log(img.src);</span><br><span class="line">        <span class="comment">// 用一个xhr获取blob数据</span></span><br><span class="line">        <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(<span class="string">&quot;GET&quot;</span>, img.src);</span><br><span class="line">        <span class="comment">// 改变mime类型</span></span><br><span class="line">        xhr.responseType = <span class="string">&quot;blob&quot;</span>;</span><br><span class="line">        xhr.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// response就是一个Blob对象</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>.response);</span><br><span class="line">        &#125;;</span><br><span class="line">        xhr.send();</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面代码把blob打印出来是这样的：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349ac408b172?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="预览">  </p>
+<p>能得到它的大小和类型，但是具体内容也是不可见的，它有一个<code>slice</code>的方法，可用于切割大文件。和<code>File</code>一样，可以使用<code>FileReader</code>读取它的内容：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readBlob</span>(<span class="params">blobImg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> fileReader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    fileReader.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.result);</span><br><span class="line">    &#125;</span><br><span class="line">    fileReader.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;</span><br><span class="line">    fileReader.readAsDataURL(blobImg);</span><br><span class="line">&#125;</span><br><span class="line">readBlob(<span class="built_in">this</span>.response);</span><br></pre></td></tr></table></figure>
+<p>除此，还能使用<code>window.URL</code>读取，这是一个新的API，经常和<code>Service Worker</code>配套使用，因为SW里面常常要解析url。如下代码：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readBlob</span>(<span class="params">blobImg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> urlCreator = <span class="built_in">window</span>.URL || <span class="built_in">window</span>.webkitURL;</span><br><span class="line">    <span class="comment">// 得到base64结果</span></span><br><span class="line">    <span class="keyword">let</span> imageUrl = urlCreator.createObjectURL(<span class="built_in">this</span>.response);</span><br><span class="line">    <span class="keyword">return</span> imageUrl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">readBlob(<span class="built_in">this</span>.response);</span><br></pre></td></tr></table></figure>
+<p>关于src使用的是blob链接的，除了上面提到的img之外，另外一个很常见的是video标签，如youtobe的视频就是使用的blob：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349af40951d9?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">  </p>
+<p>这种数据不是直接在本地的，而是通过持续请求视频数据，然后再通过<code>blob</code>这个容器媒介添加到<code>video</code>里面，它也是通过URL的API创建的：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> mediaSource = <span class="keyword">new</span> MediaSource();</span><br><span class="line">video.src = URL.createObjectURL(mediaSource);</span><br><span class="line"><span class="keyword">let</span> sourceBuffer = mediaSource.addSourceBuffer(<span class="string">&#x27;video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;&#x27;</span>);</span><br><span class="line">sourceBuffer.appendBuffer(buf);</span><br></pre></td></tr></table></figure>
+<p>具体我也没实践过，不再展开讨论。  </p>
+<p>上面，我们使用了三种方式获取文件内容，最后得到：  </p>
+<ol>
+<li><code>FormData</code>格式</li>
+<li><code>FileReader</code>读取得到的<code>base64</code>或者<code>ArrayBuffer</code>二进制格式  </li>
+</ol>
+<p>如果直接就是一个<code>FormData</code>了，那么直接用<code>ajax</code>发出去就行了，不用做任何处理：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> form = <span class="built_in">document</span>.querySelector(<span class="string">&quot;form&quot;</span>),</span><br><span class="line">    formData = <span class="keyword">new</span> FormData(form),</span><br><span class="line">formData.append(<span class="string">&quot;fileName&quot;</span>, <span class="string">&quot;photo.png&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"><span class="comment">// 假设上传文件的接口叫upload</span></span><br><span class="line">xhr.open(<span class="string">&quot;POST&quot;</span>, <span class="string">&quot;/upload&quot;</span>);</span><br><span class="line">xhr.send(formData);</span><br></pre></td></tr></table></figure>
+<p>如果用jQuery的话，要设置两个属性为false：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&quot;/upload&quot;</span>,</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">    <span class="attr">data</span>: formData,</span><br><span class="line">    <span class="attr">processData</span>: <span class="literal">false</span>,  <span class="comment">// 不处理数据</span></span><br><span class="line">    <span class="attr">contentType</span>: <span class="literal">false</span>   <span class="comment">// 不设置内容类型</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>因为jQuery会自动把内容做一些转义，并且根据<code>data</code>自动设置请求<code>mime</code>类型，这里告诉jQuery直接用<code>xhr.send</code>发出去就行了。  </p>
+<p>观察控制台发请求的数据：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349b104c3494?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="预览">  </p>
+<p>可以看到这是一种区别于用<code>&amp;</code>连接参数的方式，它的编码格式是<code>multipart/form-data</code>，就是上传文件<code>form</code>表单写的<code>enctype</code>：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;fileContent&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果<code>xhr.send</code>的是<code>FormData</code>类型话，它会自动设置<code>enctype</code>，如果你用默认表单提交上传文件的话就得在<code>form</code>上面设置这个属性，因为上传文件只能使用<code>POST</code>的这种编码。常用的<code>POST</code>编码是<code>application/x-www-form-urlencoded</code>，它和<code>GET</code>一样，发送的数据里面，参数和参数之间使用<code>&amp;</code>连接，如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">key1=value1&amp;key2=value2</span><br></pre></td></tr></table></figure>
+<p>特殊字符做转义，这个数据<code>POST</code>是放在请求<code>body</code>里的，而<code>GET</code>是拼在<code>url</code>上面的，如果用jq的话，jq会帮你拼并做转义。</p>
+<p>而上传文件用的这种<code>multipart/form-data</code>，参数和参数之间是且一个相同的字符串隔开的，上面的是使用：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">------WebKitFormBoundary72yvM25iSPYZ4a3F</span><br></pre></td></tr></table></figure>
+<p>这个字符通常会取得比较长、比较随机，因为要保证正常的内容里面不会出现这个字符串，这样内容的特殊字符就不用做转义了。  </p>
+<p>请求的contentType被浏览器设置成：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Content-Type:</span><br><span class="line">multipart/form-data; boundary=----WebKitFormBoundary72yvM25iSPYZ4a3F</span><br></pre></td></tr></table></figure>
+<p>后端服务通过这个就知道怎么解析这么一段数据了。（通常是使用的框架处理了，而具体的接口不需要关心应该怎么解析）  </p>
+<p>如果读取结果是<code>ArrayBuffer</code>的话，也是可以直接用<code>xhr.send</code>发送出去的，但是一般我们不会直接把一个文件的内容发出去，而是用某个字段名等于文件内容的方式。如果你读取为<code>ArrayBuffer</code>的话再上传的话其实作用不是很大，还不如直接用<code>formData</code>添加一个<code>File</code>对象的内容，因为上面三种方式都可以拿到<code>File</code>对象。如果一开始就是一个<code>ArrayBuffer</code>了，那么可以转成<code>blob</code>然后再<code>append</code>到<code>FormData</code>里面。  </p>
+<p>使用比较多的应该是<code>base64</code>，因为前端经常要处理图片，读取为<code>base64</code>之后就可以把它画到一个<code>canvas</code>里面，然后就可以做一些处理，如压缩、裁剪、旋转等。最后再用<code>canvas</code>导出一个<code>base64</code>格式的图片，那怎么上传<code>base64</code>格式的呢？  </p>
+<h3 id="怎么上传base64格式"><a href="#怎么上传base64格式" class="headerlink" title="怎么上传base64格式"></a>怎么上传<code>base64</code>格式</h3><p>第一种是拼一个表单上传的<code>multipart/form-data</code>的格式，再用<code>xhr.sendAsBinary</code>发出去，如下代码：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> base64Data = base64Data.replace(<span class="regexp">/^data:image\/[^;]+;base64,/</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> boundary = <span class="string">&quot;----------boundaryasoifvlkasldvavoadv&quot;</span>;</span><br><span class="line">xhr.sendAsBinary([</span><br><span class="line">    <span class="comment">// name=data</span></span><br><span class="line">    boundary,</span><br><span class="line">        <span class="string">&#x27;Content-Disposition: form-data; name=&quot;data&quot;; filename=&quot;&#x27;</span> + fileName + <span class="string">&#x27;&quot;&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Content-Type: &#x27;</span> + <span class="string">&quot;image/&quot;</span> + fileType, <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        atob(base64Data), boundary,</span><br><span class="line">    <span class="comment">//name=imageType</span></span><br><span class="line">    boundary,</span><br><span class="line">        <span class="string">&#x27;Content-Disposition: form-data; name=&quot;imageType&quot;&#x27;</span>, <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        fileType,</span><br><span class="line">    boundary + <span class="string">&#x27;--&#x27;</span></span><br><span class="line">].join(<span class="string">&#x27;\r\n&#x27;</span>));</span><br></pre></td></tr></table></figure>
+<p>上面代码使用了<code>window.atob</code>的api，它可以把<code>base64</code>还原成原始内容的字符串表示，如下图所示：<br><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349b4c18f7d8?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="预览"></p>
+<p><code>btoa</code>是把内容转化成<code>base64</code>编码，而<code>atob</code>是把<code>base64</code>还原。在调<code>atob</code>之前，需要把表示内容格式的不属于<code>base64</code>内容的字符串去掉，即上面代码第一行的<code>replace</code>处理。  </p>
+<p>这样就和使用<code>formData</code>类似了，但是由于<code>sendAsBinary</code>已经被<code>deprecated</code>了，所以新代码不建议再使用这种方式。那怎么办呢？</p>
+<p>可以把<code>base64</code>转化成<code>blob</code>，然后再<code>append</code>到一个<code>formData</code>里面，下面的函数（来自b64-to-blob）可以把<code>base64</code>转成<code>blob</code>：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b64toBlob</span>(<span class="params">b64Data, contentType, sliceSize</span>) </span>&#123;</span><br><span class="line">    contentType = contentType || <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    sliceSize = sliceSize || <span class="number">512</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> byteCharacters = atob(b64Data);</span><br><span class="line">    <span class="keyword">var</span> byteArrays = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> offset = <span class="number">0</span>; offset &lt; byteCharacters.length; offset += sliceSize) &#123;</span><br><span class="line">      <span class="keyword">var</span> slice = byteCharacters.slice(offset, offset + sliceSize);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> byteNumbers = <span class="keyword">new</span> <span class="built_in">Array</span>(slice.length);</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; slice.length; i++) &#123;</span><br><span class="line">        byteNumbers[i] = slice.charCodeAt(i);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> byteArray = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(byteNumbers);</span><br><span class="line"></span><br><span class="line">      byteArrays.push(byteArray);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> blob = <span class="keyword">new</span> Blob(byteArrays, &#123;<span class="attr">type</span>: contentType&#125;);</span><br><span class="line">    <span class="keyword">return</span> blob;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后就可以<code>append</code>到<code>formData</code>里面：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> blob = b64toBlob(b64Data, <span class="string">&quot;image/png&quot;</span>),</span><br><span class="line">    formData = <span class="keyword">new</span> FormData();</span><br><span class="line">formData.append(<span class="string">&quot;fileContent&quot;</span>, blob);</span><br></pre></td></tr></table></figure>
+<p>这样就不用自己去拼一个<code>multipart/form-data</code>的格式数据了。  </p>
+<p>上面处理和上传文件的API可以兼容到IE10+，如果要兼容老的浏览器应该怎么办呢？  </p>
+<p>可以借助一个<code>iframe</code>，原理是默认的<code>form</code>表单提交会刷新页面，或者跳到<code>target</code>指定的那个url，但是如果把<code>ifrmae</code>的<code>target</code>指向一个<code>iframe</code>，那么刷新的就是<code>iframe</code>，返回结果也会显示在<code>ifame</code>，然后获取这个<code>ifrmae</code>的内容就可得到上传接口返回的结果。  </p>
+<p>如下代码：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">&quot;iframe&quot;</span>);</span><br><span class="line">iframe.display = <span class="string">&quot;none&quot;</span>;</span><br><span class="line">iframe.name = <span class="string">&quot;form-iframe&quot;</span>;</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(iframe);</span><br><span class="line"><span class="comment">// 改变form的target</span></span><br><span class="line">form.target = <span class="string">&quot;form-iframe&quot;</span>;</span><br><span class="line"></span><br><span class="line">iframe.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//获取iframe的内容，即服务返回的数据</span></span><br><span class="line">    <span class="keyword">let</span> responseText = <span class="built_in">this</span>.contentDocument.body.textContent </span><br><span class="line">            || <span class="built_in">this</span>.contentWindow.document.body.textContent;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">form.submit();</span><br></pre></td></tr></table></figure>
+<p><code>form.submit</code>会触发表单提交，当请求完成（成功或者失败）之后就会触发iframe的onload事件，然后在onload事件获取返回的数据，如果请求失败了的话，iframe里的内容就为空，可以用这个判断请求有没有成功。   </p>
+<p>使用iframe没有办法获取上传进度，使用xhr可以获取当前上传的进度，这个是在XMLHttpRequest 2.0引入的：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xhr.upload.onprogress = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event.lengthComputable) &#123;</span><br><span class="line">        <span class="comment">// 当前上传进度的百分比</span></span><br><span class="line">        duringCallback ((event.loaded / event.total)*<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这样就可以做一个真实的loading进度条。  </p>
+<p>本文讨论了3种交互方式的读取方式，通过<code>input</code>控件在<code>input.files</code>可以得到File文件对象，通过拖拽的是在<code>drop</code>事件的<code>event.dataTransfer.files</code>里面，而通过粘贴的<code>paste</code>事件在<code>event.clipboardData.files</code>里面，Safari这个怪胎是在编辑器里面插入一个src指向本地的img标签，可以通过发送一个请求加载本地的<code>blob</code>数据，然后再通过<code>FileReader</code>读取，或者直接<code>append</code>到<code>formData</code>里面。得到的File对象就可以直接添加到<code>FormData</code>里面，如果需要先读取<code>base64</code>格式做处理的，那么可以把处理后的<code>base64</code>转化为<code>blob</code>数据再<code>append</code>到<code>formData</code>里面。对于老浏览器，可以使用一个iframe解决表单提交刷新页面或者跳页的问题。  </p>
+<p>总之，前端处理和上传本地文件应该差不多就是这些内容了，但是应该还有好多细节没有提及到，读者可通过本文列的方向自行实践。如果有其它的上传方式还请告知。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/09/03/73-%E3%80%90JavaScript%E3%80%91%E5%89%8D%E7%AB%AF%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E4%B8%8A%E4%BC%A0/" data-id="ckts3ejze00o44d9k3tkm6jby" data-title="73-【JavaScript】前端本地文件操作和上传" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/03/74-%E3%80%90CSS%E3%80%91%E7%BA%AFCSS%E7%BB%98%E5%88%B6%E9%97%AA%E9%97%AA%E5%8F%91%E5%85%89%E7%9A%84%E9%9C%93%E8%99%B9%E7%81%AF%E6%96%87%E5%AD%97%E6%95%88%E6%9E%9C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          74-【CSS】纯CSS绘制闪闪发光的霓虹灯文字效果
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/31/72-%E3%80%90CSS%E3%80%91%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">72-【CSS】移动端页面开发常见问题和解决</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

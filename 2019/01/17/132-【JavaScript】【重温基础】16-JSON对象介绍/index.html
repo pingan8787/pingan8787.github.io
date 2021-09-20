@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>132-【JavaScript】【重温基础】16.JSON对象介绍 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#112;&amp;#105;&amp;#x6e;&amp;#103;&amp;#x61;&amp;#110;&amp;#56;&amp;#x37;&amp;#56;&amp;#55;&amp;#64;&amp;#x71;&amp;#113;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="132-【JavaScript】【重温基础】16.JSON对象介绍">
+<meta property="og:url" content="http://example.com/2019/01/17/132-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%9116-JSON%E5%AF%B9%E8%B1%A1%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#112;&amp;#105;&amp;#x6e;&amp;#103;&amp;#x61;&amp;#110;&amp;#56;&amp;#x37;&amp;#56;&amp;#55;&amp;#64;&amp;#x71;&amp;#113;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pin">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E5%B0%81%E9%9D%A2.png">
+<meta property="article:published_time" content="2019-01-17T15:49:26.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.581Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="重温基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E5%B0%81%E9%9D%A2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-132-【JavaScript】【重温基础】16-JSON对象介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/01/17/132-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%9116-JSON%E5%AF%B9%E8%B1%A1%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time class="dt-published" datetime="2019-01-17T15:49:26.000Z" itemprop="datePublished">2019-01-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      132-【JavaScript】【重温基础】16.JSON对象介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images.pingan8787.com/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E5%B0%81%E9%9D%A2.png" alt="重温基础封面"></p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#105;&#x6e;&#103;&#x61;&#110;&#56;&#x37;&#56;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#109;">&#112;&#105;&#x6e;&#103;&#x61;&#110;&#56;&#x37;&#56;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+</tbody></table>
+<hr>
+<p>本文是 <strong>重温基础</strong> 系列文章的第十六篇。<br>今日感受：静。   </p>
+<p><strong>本章节复习的是JS中的关于JSON对象相关知识。</strong>    </p>
+<p><strong>前置知识</strong>：<br><code>JSON</code>是一种按照<code>JavaScript</code>对象语法的数据格式。</p>
+<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h1><p>概念有三点：   </p>
+<blockquote>
+<p><code>JSON</code>全称<code>JavaScript</code> 对象表示法（JavaScript Object Notation）。<br><code>JSON</code> 是<strong>存储</strong>和<strong>交换文本信息</strong>的语法。类似 <code>XML</code>。<br><code>JSON</code> 比 <code>XML</code> 更小、更快，更易解析。<br>———— 摘自 <a target="_blank" rel="noopener" href="http://www.w3school.com.cn/json/index.asp">W3school JSON教程</a></p>
+</blockquote>
+<p><code>JSON</code> 使用 <code>JavaScript</code> 语法来描述数据对象，但是 <code>JSON</code> 仍然独立于语言和平台。<code>JSON</code> 解析器和 <code>JSON</code> 库支持许多不同的编程语言。  </p>
+<h1 id="2-语法"><a href="#2-语法" class="headerlink" title="2.语法"></a>2.语法</h1><p><code>JSON</code>在使用过程中可作为一个<strong>对象</strong>或者<strong>字符串</strong>存在，当作为<strong>对象</strong>时，用于获取<code>JSON</code>中的数据，而作为<strong>字符串</strong>时常用于网络数据传输。   </p>
+<p><code>JSON</code>语法规则：   </p>
+<ol>
+<li>数据在名称/值对中   </li>
+<li>数据由逗号分隔   </li>
+<li>花括号保存对象   </li>
+<li>方括号保存数组  </li>
+</ol>
+<p>通常，<code>JSON</code>数据书写格式是<code>名称/键值</code>：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;name&quot;</span> : <span class="string">&quot;pingan&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>而<code>JSON</code>的值可以是 ：    </p>
+<ol>
+<li>数字（整数或浮点数）  </li>
+<li>字符串（在双引号中）  </li>
+<li>逻辑值（<code>true</code> 或 <code>false</code>）  </li>
+<li>数组（在方括号中）  </li>
+<li>对象（在花括号中）  </li>
+<li><code>null</code>   </li>
+</ol>
+<p><strong>JSON常常有三种类型：</strong><br>三种类型：简单之，对象和数组。<br>必须注意：JSON字符串必须是<strong>双引号</strong>，单引号会语法错误。   </p>
+<h2 id="2-1-简单值"><a href="#2-1-简单值" class="headerlink" title="2.1 简单值"></a>2.1 简单值</h2><p>简单值可以是字符串:   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;hello leo!&quot;</span></span><br></pre></td></tr></table></figure>
+<p>也可以是数字,逻辑值：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-对象类型"><a href="#2-2-对象类型" class="headerlink" title="2.2 对象类型"></a>2.2 对象类型</h2><p>内容放在<code>花括号</code>内，是多个键值对。<br>JSON对象 与 js 对象的三个区别：   </p>
+<ol>
+<li>JSON对象 必须加双引号，而 js 对象属性名可以不加双引号。</li>
+<li>JSON对象 没有变量声明，而 js 对象有。</li>
+<li>JSON对象 没有分号，而 js 对象有。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// js 对象</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    <span class="attr">name</span> : <span class="string">&quot;pingan&quot;</span>,</span><br><span class="line">    <span class="attr">age</span>  : <span class="string">&quot;25&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// json 对象</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span> : <span class="string">&quot;pingan&quot;</span>,</span><br><span class="line">    <span class="string">&quot;age&quot;</span>  : <span class="string">&quot;25&quot;</span>,</span><br><span class="line">    <span class="string">&quot;box&quot;</span>  : [</span><br><span class="line">        <span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="2-3-数组类型"><a href="#2-3-数组类型" class="headerlink" title="2.3 数组类型"></a>2.3 数组类型</h2><p>内容放在<code>方括号</code>内。<br>JSON数组也没有分号和变量，常常可以把JSON数组和对象结合使用，构成更复杂的数据集合。    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span> : <span class="string">&quot;leo&quot;</span>,</span><br><span class="line">        <span class="string">&quot;age&quot;</span>  : <span class="number">25</span>,</span><br><span class="line">        <span class="string">&quot;box&quot;</span>  : [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span> : <span class="string">&quot;pingan&quot;</span>,</span><br><span class="line">        <span class="string">&quot;age&quot;</span>  : <span class="number">25</span>,</span><br><span class="line">        <span class="string">&quot;box&quot;</span>  : [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h1><p>JSON最常见的用法就是，从服务端获取JSON数据，再将JSON数据转成JavaScrip对象使用。<br>JSON对象有两个方法：   </p>
+<ul>
+<li><code>JSON.stringify()</code>： 序列化操作，将<code>JavaScript对象</code>转换成<code>JSON字符串</code>。    </li>
+<li><code>JSON.prase()</code>：反序列化操作，将<code>JSON字符串</code>解析成<code>JavaScript值</code>。   </li>
+</ul>
+<h2 id="3-1-序列化操作"><a href="#3-1-序列化操作" class="headerlink" title="3.1 序列化操作"></a>3.1 序列化操作</h2><p>序列化操作常常使用<code>JSON.stringify()</code>。<br>简单例子:   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> leo =  &#123;</span><br><span class="line">    <span class="attr">name</span> : <span class="string">&quot;leo&quot;</span>,</span><br><span class="line">    <span class="attr">age</span>  : <span class="number">25</span>,</span><br><span class="line">    <span class="attr">box</span>  : [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> pingan = <span class="built_in">JSON</span>.stringify(leo);</span><br><span class="line"><span class="built_in">console</span>.log(pingan); <span class="comment">// &quot;&#123;&quot;name&quot;:&quot;leo&quot;,&quot;age&quot;:25,&quot;box&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：   </p>
+<ol>
+<li>默认情况下，<code>JSON.stringify()</code>输出的JSON字符串不包含任何空格字符或缩进，因此结果就像上面那样。   </li>
+<li>序列化<code>JavaScript对象</code>时，所有函数及原型成员都会被忽略，不体现在结果上。   </li>
+<li>值为<code>undefined</code>的任何属性都会被跳过。   </li>
+</ol>
+<p>因此，最终的值都是有效的JSON数据类型的实例属性。   </p>
+<h2 id="3-2-反序列化操作"><a href="#3-2-反序列化操作" class="headerlink" title="3.2 反序列化操作"></a>3.2 反序列化操作</h2><p>序列化操作常常使用<code>JSON.parse()</code>。<br>简单例子：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> copyPingan = <span class="built_in">JSON</span>.parse(pingan);</span><br><span class="line">copyPingan; <span class="comment">// &#123;name: &quot;leo&quot;, age: 25, box: Array(3)&#125;</span></span><br></pre></td></tr></table></figure>
+<p>如果传入<code>JSON.parse()</code>的字符串不是有效的JSON，则会抛出错误。<br><strong>注意</strong>：<br>虽然<code>pingan</code>和<code>copyPingan</code>属性相同，但两者独立，没有任何关系。   </p>
+<h1 id="4-序列化选项"><a href="#4-序列化选项" class="headerlink" title="4.序列化选项"></a>4.序列化选项</h1><p><code>JSON.stringify()</code>除了要传入序列化对象作为参数，还可以接收其他两个参数，用来指定序列化JavaScript对象的方式：      </p>
+<ol>
+<li>过滤器：可以是个<strong>数组</strong>，也可以是个<strong>函数</strong>。   </li>
+<li>选项：表示是否在<code>JSON字符串</code>中<strong>保留缩进</strong>。  </li>
+</ol>
+<p>单独或组合使用两者，可以更加全面深入的控制JSON的序列化。   </p>
+<h2 id="4-1-过滤器"><a href="#4-1-过滤器" class="headerlink" title="4.1 过滤器"></a>4.1 过滤器</h2><p>若过滤器的参数是<strong>数组</strong>，则<code>JSON.stringify()</code>返回的结果将只包含数组中的属性：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> leo =  &#123;</span><br><span class="line">    <span class="attr">name</span> : <span class="string">&quot;leo&quot;</span>,</span><br><span class="line">    <span class="attr">age</span>  : <span class="number">25</span>,</span><br><span class="line">    <span class="attr">box</span>  : [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> pingan = <span class="built_in">JSON</span>.stringify(leo,[<span class="string">&quot;name&quot;</span>,<span class="string">&quot;age&quot;</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(pingan); <span class="comment">// &quot;&#123;&quot;name&quot;:&quot;leo&quot;,&quot;age&quot;:25&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>若过滤器的参数是<strong>函数</strong>，则情况就不一样了，传入的函数需有两个参数（属性名和属性值）：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> leo =  &#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span> : <span class="string">&quot;leo&quot;</span>,</span><br><span class="line">    <span class="string">&quot;age&quot;</span>  : <span class="number">25</span>,</span><br><span class="line">    <span class="string">&quot;box&quot;</span>  : [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> pingan = <span class="built_in">JSON</span>.stringify(leo,<span class="function"><span class="keyword">function</span>(<span class="params">key, value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">switch</span>(key)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;name&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;我叫&quot;</span> + value</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;age&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> value + <span class="string">&quot;岁&quot;</span></span><br><span class="line">        <span class="attr">default</span>:</span><br><span class="line">			<span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(pingan); <span class="comment">// &quot;&#123;&quot;name&quot;:&quot;我叫leo&quot;,&quot;age&quot;:&quot;25岁&quot;,&quot;box&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：使用<code>switch</code>的时候，必须指定<code>default</code>否则会返回<code>undefined</code>。  </p>
+<h2 id="4-2-选项"><a href="#4-2-选项" class="headerlink" title="4.2 选项"></a>4.2 选项</h2><p><code>JSON.stringify()</code>第三个参数是个选项，控制结果中的缩进和空白符。   </p>
+<ol>
+<li>若选项只有一个值，则表示<strong>每个级别缩进的空格数</strong>，最大值为<code>10</code>，超过<code>10</code>则只会是<code>10</code>。    <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> leo =  &#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span> : <span class="string">&quot;leo&quot;</span>,</span><br><span class="line">    <span class="string">&quot;age&quot;</span>  : <span class="number">25</span>,</span><br><span class="line">    <span class="string">&quot;box&quot;</span>  : [<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> pingan = <span class="built_in">JSON</span>.stringify(leo, <span class="literal">null</span>, <span class="number">4</span>);</span><br><span class="line"><span class="built_in">console</span>.log(pingan);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&quot;&#123;</span></span><br><span class="line"><span class="comment">    &quot;name&quot;: &quot;leo&quot;,</span></span><br><span class="line"><span class="comment">    &quot;age&quot;: 25,</span></span><br><span class="line"><span class="comment">    &quot;box&quot;: [</span></span><br><span class="line"><span class="comment">        &quot;a&quot;,</span></span><br><span class="line"><span class="comment">        &quot;b&quot;,</span></span><br><span class="line"><span class="comment">        &quot;c&quot;</span></span><br><span class="line"><span class="comment">    ]</span></span><br><span class="line"><span class="comment">&#125;&quot;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="5-解析选项"><a href="#5-解析选项" class="headerlink" title="5.解析选项"></a>5.解析选项</h1><p><code>JSON.parse()</code>可以接收一个函数作为参数，对每个键值对调用，为了跟<code>JSON.stringify()</code>的<code>过滤函数</code>区别，这个函数成为<code>还原函数</code>。   </p>
+<ul>
+<li>若还原函数返回<code>undefined</code>，则表示要从结果中删除对应的键。   </li>
+<li>若还原函数返回其他值，则将该值插入结果中。   </li>
+</ul>
+<p>还原函数接收两个参数：属性名和属性值。   </p>
+<p>举例，在日期字符串转换为Date对象中，经常要用到还原函数：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> leo =  &#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span> : <span class="string">&quot;leo&quot;</span>,</span><br><span class="line">    <span class="string">&quot;age&quot;</span>  : <span class="number">25</span>,</span><br><span class="line">    <span class="string">&quot;date&quot;</span> : <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1993</span>, <span class="number">9</span>, <span class="number">9</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> pingan = <span class="built_in">JSON</span>.stringify(leo);</span><br><span class="line"><span class="keyword">var</span> copy = <span class="built_in">JSON</span>.parse(pingan,<span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// return key == &quot;date&quot; ? new Date(value) : value;</span></span><br><span class="line">    <span class="keyword">if</span>(key == <span class="string">&quot;date&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>(value);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(copy);</span><br><span class="line"><span class="comment">// &quot;&#123;&quot;name&quot;:&quot;leo&quot;,&quot;age&quot;:25,&quot;date&quot;:&quot;1993-10-08T16:00:00.000Z&quot;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h1><ol>
+<li><a target="_blank" rel="noopener" href="http://www.w3school.com.cn/json/index.asp">W3school JSON教程</a>    </li>
+<li>《JavaScrip高级程序设计》    </li>
+</ol>
+<p><strong>本部分内容到这结束</strong></p>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#x69;&#x6e;&#x67;&#x61;&#x6e;&#x38;&#x37;&#x38;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;">&#x70;&#x69;&#x6e;&#x67;&#x61;&#x6e;&#x38;&#x37;&#x38;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>JS小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/01/17/132-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%9116-JSON%E5%AF%B9%E8%B1%A1%E4%BB%8B%E7%BB%8D/" data-id="ckts3ejst00224d9kad3s44ne" data-title="132-【JavaScript】【重温基础】16.JSON对象介绍" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/20/133-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%9117-WebApi%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          133-【JavaScript】【重温基础】17.WebApi介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/14/131-%E3%80%90JavaScript%E3%80%91%E3%80%90%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80%E3%80%9115-JS%E5%AF%B9%E8%B1%A1%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">131-【JavaScript】【重温基础】15.JS对象介绍</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

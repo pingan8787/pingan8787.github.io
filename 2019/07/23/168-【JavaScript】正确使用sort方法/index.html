@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>168-【JavaScript】正确使用sort方法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="英文原文： 《Usar correctamente el método sort()》注意：内容有做精简和调整。  在过去的几个星期里，我们在不同的团队中看到，一般来说都没有使用 Array.prototype.sort() 的习惯，并且不知道这种方法是如何工作的。今天我们将尝试简要描述它是如何工作的 .sort()，揭示它的一些秘密。 1. 修改原数组在这种情况下，我们必须记住，此方法通过对数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="168-【JavaScript】正确使用sort方法">
+<meta property="og:url" content="http://example.com/2019/07/23/168-%E3%80%90JavaScript%E3%80%91%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8sort%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="英文原文： 《Usar correctamente el método sort()》注意：内容有做精简和调整。  在过去的几个星期里，我们在不同的团队中看到，一般来说都没有使用 Array.prototype.sort() 的习惯，并且不知道这种方法是如何工作的。今天我们将尝试简要描述它是如何工作的 .sort()，揭示它的一些秘密。 1. 修改原数组在这种情况下，我们必须记住，此方法通过对数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/2019_07_12guild_page.png">
+<meta property="article:published_time" content="2019-07-23T14:40:37.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.608Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/2019_07_12guild_page.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-168-【JavaScript】正确使用sort方法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/07/23/168-%E3%80%90JavaScript%E3%80%91%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8sort%E6%96%B9%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2019-07-23T14:40:37.000Z" itemprop="datePublished">2019-07-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      168-【JavaScript】正确使用sort方法
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>英文原文： <a target="_blank" rel="noopener" href="https://www.todojs.com/usar-correctamente-el-metodo-sort/">《Usar correctamente el método sort()》</a><br>注意：内容有做精简和调整。</p>
+</blockquote>
+<p>在过去的几个星期里，我们在不同的团队中看到，一般来说都没有使用 <code>Array.prototype.sort()</code> 的习惯，并且不知道这种方法是如何工作的。今天我们将尝试简要描述它是如何工作的 <code>.sort()</code>，揭示它的一些秘密。</p>
+<h3 id="1-修改原数组"><a href="#1-修改原数组" class="headerlink" title="1. 修改原数组"></a>1. 修改原数组</h3><p>在这种情况下，我们必须记住，此方法通过<strong>对数组进行排序来修改数组</strong>，<strong>返回相同的有序数组，但不返回新数组</strong>。如果我们想要保持数组不可变并获得另一个排序，这一点很重要，我们必须在排序之前制作数组的拷贝。</p>
+<h3 id="2-字符串在-Unicode-代码中的位置比较"><a href="#2-字符串在-Unicode-代码中的位置比较" class="headerlink" title="2. 字符串在 Unicode 代码中的位置比较"></a>2. 字符串在 Unicode 代码中的位置比较</h3><p>默认情况下，<code>.sort()</code> 方法会根据 <code>Unicode</code> 代码中<strong>每个字母的位置</strong>将数组值排序为字符串，因此您可以对此数组进行排序而不会出现问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([<span class="string">&quot;Zaragoza&quot;</span>, <span class="string">&quot;Madrid&quot;</span>, <span class="string">&quot;Barcelona&quot;</span>].sort());</span><br><span class="line"><span class="comment">// [ &#x27;Barcelona&#x27;, &#x27;Madrid&#x27;, &#x27;Zaragoza&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p>这似乎是正确的，但是如果和一些名称<strong>以小写字母开头</strong>，那么排序似乎不正确：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([<span class="string">&quot;Zaragoza&quot;</span>, <span class="string">&quot;madrid&quot;</span>, <span class="string">&quot;Barcelona&quot;</span>].sort());</span><br><span class="line"><span class="comment">// [ &#x27;Barcelona&#x27;, &#x27;Zaragoza&#x27;, &#x27;madrid&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，排序是在 Unicode 代码表中的每个字母的位置之后完成的，并且 <code>m</code> 落后 <code>Z</code> ，因此它已经以这种方式排序。</p>
+<p>如果我们想对<strong>数字排序</strong>，事情就会变得复杂起来:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([<span class="number">80</span>, <span class="number">9</span>, <span class="number">100</span>].sort());</span><br><span class="line"><span class="comment">// [ 100, 80, 9 ]</span></span><br></pre></td></tr></table></figure>
+
+<p>结果似乎很荒谬，但这是有道理的，发生的事情是<strong>数字已被转换为字符串</strong>，因此被比较的是字符串<code>&quot;100&quot;</code>，<code>&quot;80&quot;</code>并且<code>&quot;9&quot;</code>。由于它们在 Unicode 代码中的位置是按顺序的，因此排序是正确的，即使它不是我们最初的预期。</p>
+<p>这些情况的产生导致一些人放弃使用 <code>.sort()</code> 产生混乱的行为。这有点草率，因为只需一点帮助，这种方法可以毫无问题地运行。</p>
+<h3 id="3-Sort-方法参数"><a href="#3-Sort-方法参数" class="headerlink" title="3. Sort() 方法参数"></a>3. Sort() 方法参数</h3><p>该 <code>.sort()</code> 有<strong>一个可选参数</strong>，<strong>允许此方法帮助对内容进行排序</strong>。这是此方法的关键，因为我们对每种情况都感兴趣。</p>
+<p>此函数接收<strong>两个要比较的值</strong>，因此也会有这么三种情况：</p>
+<ul>
+<li>如果第一个值大于第二个值，则返回<strong>正值</strong> (<code>1</code>);</li>
+<li>如果第一个值小于第二个值，则返回<strong>负值</strong> (<code>-1)</code>;</li>
+<li>如果两个值相等或等效于排序，则返回<strong>零值</strong> (<code>0</code>);</li>
+</ul>
+<p>这个函数由 <code>Javascript</code> 调用，只要您需要对数组中的元素进行排序，我们就可以进行必要的<strong>比较和</strong>调整。例如，为了比较数字，我们可以使用类似方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([<span class="number">80</span>, <span class="number">9</span>, <span class="number">100</span>].sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b));</span><br><span class="line"><span class="comment">// [ 9, 80, 100 ]</span></span><br></pre></td></tr></table></figure>
+
+<p>另外，<code>(a, b) =&gt; a – b</code> 还可以这么使用：使用其中一个值 <code>a</code> 去判断是否大于另一个值 <code>b</code> 来返回排序结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = [ <span class="string">&quot;Zaragoza&quot;</span>, <span class="string">&quot;madrid&quot;</span>, <span class="string">&quot;Barcelona&quot;</span> ];</span><br><span class="line">data.sort (<span class="function">(<span class="params">a, b</span>) =&gt;</span> a.toLowerCase () &gt; b.toLowerCase ());</span><br><span class="line"><span class="built_in">console</span>.log (data);</span><br><span class="line"><span class="comment">// [ &#x27;Zaragoza&#x27;, &#x27;madrid&#x27;, &#x27;Barcelona&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p>显然结果不正确，因为我们草率的将函数比较的结果 <code>true</code> 或者 <code>false</code> 返回，我们必须记住支持**函数 <code>.sort()</code> 希望我们返回 <code>-1</code> ， <code>1</code> 或者 <code>0</code>**。为了使它正常运行，我们必须做修改：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = [ <span class="string">&quot;Zaragoza&quot;</span>, <span class="string">&quot;madrid&quot;</span>, <span class="string">&quot;Barcelona&quot;</span> ];</span><br><span class="line">data.sort (<span class="function">(<span class="params">a, b</span>) =&gt;</span></span><br><span class="line">  a.toLowerCase() &gt; b.toLowerCase() ? <span class="number">1</span> :</span><br><span class="line">  a.toLowerCase() &lt; b.toLowerCase() ? -<span class="number">1</span>:</span><br><span class="line">  <span class="number">0</span></span><br><span class="line">);</span><br><span class="line"><span class="built_in">console</span>.log (data);</span><br><span class="line"><span class="comment">// [ &#x27;Barcelona&#x27;, &#x27;madrid&#x27;, &#x27;Zaragoza&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>现在的结果是我们需要的</strong>，因为我们已经对小写和大写也进行了比较，并且我们已经返回<code>-1</code>，<code>1</code>或者<code>0</code>根据每种情况。   </p>
+<p>我们还没有真正完成，因为如果我们<strong>加入一些重音字母</strong>，我们会得到一个不希望的结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = [ <span class="string">&quot;Zaragoza&quot;</span>, <span class="string">&quot;madrid&quot;</span>, <span class="string">&quot;Barcelona&quot;</span>, <span class="string">&quot;Ávila&quot;</span> ];</span><br><span class="line"></span><br><span class="line">data.sort (<span class="function">(<span class="params">a, b</span>) =&gt;</span></span><br><span class="line">  a.toLowerCase() &gt; b.toLowerCase() ? <span class="number">1</span> :</span><br><span class="line">  a.toLowerCase() &lt; b.toLowerCase() ? -<span class="number">1</span>:</span><br><span class="line">  <span class="number">0</span></span><br><span class="line">);</span><br><span class="line"><span class="built_in">console</span>.log (data);</span><br><span class="line"><span class="comment">// [ &#x27;Barcelona&#x27;, &#x27;madrid&#x27;, &#x27;Zaragoza&#x27;, &#x27;Ávila&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p>当我们想对文本字符串进行排序，就非常有必要使用 <code>.localeCompare()</code> 方法，也是非常重要。   </p>
+<h3 id="4-用对象属性排序数组"><a href="#4-用对象属性排序数组" class="headerlink" title="4. 用对象属性排序数组"></a>4. 用对象属性排序数组</h3><p>通常，如果数组包含对象，我们可以使用对象的属性进行比较，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = <span class="built_in">require</span> (<span class="string">&#x27;./municipios.json&#x27;</span>);</span><br><span class="line">data.sort (<span class="function">(<span class="params">a, b</span>) =&gt;</span> a.municipio.localeCompare (b.municipio));</span><br></pre></td></tr></table></figure>
+
+<p>我们可以对数据结构中的日期和任何其他类型的对象执行相同的操作。</p>
+<h3 id="5-关于性能方面"><a href="#5-关于性能方面" class="headerlink" title="5. 关于性能方面"></a>5. 关于性能方面</h3><p>如果我们想对<strong>非常大的数组</strong>进行排序，我们必须记住。<code>sort()</code> 方法的<strong>支持函数将被多次调用</strong>，我们必须<strong>避免在这个函数中执行许多操作或非常重的操作</strong>。我们必须尽可能有效地进行比较。</p>
+<p>例如，在非常大的数组中，可以使用新的方法 <code>Int.Collate().compare</code> 来获得更有效的排序函数，而不是使用 <code>.localecompare()</code>。<code>Int</code> 对象是名为 <code>International API</code> ，也是 <code>ECMA-402</code> 的标准的一部分，</p>
+<p>该标准侧重于<strong>国际化功能</strong>，包括<strong>每种语言的正确排序</strong>。<code>Int</code> 在浏览器和节点中以全局对象的形式呈现，并具有广泛的支持(包括<strong>IE11</strong>)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data    = [ <span class="string">&quot;Zaragoza&quot;</span>, <span class="string">&quot;Ávila&quot;</span>, <span class="string">&quot;madrid&quot;</span>, <span class="string">&quot;Barcelona&quot;</span> ];</span><br><span class="line"><span class="keyword">const</span> compare = <span class="keyword">new</span> <span class="built_in">Intl</span>.Collator ().compare;</span><br><span class="line">data.sort (compare);</span><br><span class="line"><span class="built_in">console</span>.log (data);</span><br><span class="line"><span class="comment">// [ &#x27;Ávila&#x27;, &#x27;Barcelona&#x27;, &#x27;madrid&#x27;, &#x27;Zaragoza&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<p>排序操作很复杂，性能也很差，因此对于非常大的数组，排序方法支持函数速度的任何改进都将对性能产生非常显著的影响。</p>
+<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><p>一般来说，我们应该利用 <code>.sort()</code> 功能和一个支持函数来控制排序应该如何执行：</p>
+<ul>
+<li>数字： <code>(a, b) =&gt; a – b</code></li>
+<li>链式： <code>(a, b) =&gt; a.localeCompare(b)</code></li>
+</ul>
+<p>在没有函数参数的情况下使用 <code>.sort()</code> 是没有意义的，也许在少数情况下是这样，但是如果我们用一个<strong>简单的函数</strong>支持它，那么 <code>.sort</code> 是一个非常有用的工具。</p>
+<p><strong>在许多情况下，排序是一个基本的操作，我们不应该放弃在Javascript中进行这种排序。</strong></p>
+<h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><blockquote>
+<p>本文首发在 <a target="_blank" rel="noopener" href="http://www.pingan8787.com/">pingan8787个人博客</a>，如需转载请保留个人介绍。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#x69;&#110;&#103;&#97;&#110;&#x38;&#55;&#56;&#55;&#64;&#x71;&#x71;&#x2e;&#99;&#111;&#x6d;">&#112;&#x69;&#110;&#103;&#97;&#110;&#x38;&#55;&#56;&#55;&#64;&#x71;&#x71;&#x2e;&#99;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>ES小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+</tbody></table>
+<h3 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h3><p><img src="http://images.pingan8787.com/2019_07_12guild_page.png" alt="bg">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/07/23/168-%E3%80%90JavaScript%E3%80%91%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8sort%E6%96%B9%E6%B3%95/" data-id="ckts3ejtj00404d9k7cnpesrw" data-title="168-【JavaScript】正确使用sort方法" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/08/05/169-%E3%80%90CSS%E3%80%91%E8%A7%A3%E5%86%B3canvas%E5%9C%A8%E9%AB%98%E6%B8%85%E5%B1%8F%E4%B8%AD%E7%BB%98%E5%88%B6%E6%A8%A1%E7%B3%8A%E7%9A%84%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          169-【CSS】解决canvas在高清屏中绘制模糊的问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/18/167-%E3%80%90Webpack%E3%80%91Webpack%E6%80%8E%E4%B9%88%E8%BF%90%E8%A1%8C/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">167-【Webpack】Webpack怎么运行</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>223-【前端探索】探索Snabbdom模块系统原理 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="近几年随着 React、Vue 等前端框架不断兴起，Virtual DOM 概念也越来越火，被用到越来越多的框架、库中。Virtual DOM 是基于真实 DOM 的一层抽象，用简单的 JS 对象描述真实 DOM。本文要介绍的 Snabbdom 就是 Virtual DOM 的一种简单实现，并且 Vue 的 Virtual DOM 也参考了 Snabbdom 实现方式。 对于想要深入学习 Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="223-【前端探索】探索Snabbdom模块系统原理">
+<meta property="og:url" content="http://example.com/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="近几年随着 React、Vue 等前端框架不断兴起，Virtual DOM 概念也越来越火，被用到越来越多的框架、库中。Virtual DOM 是基于真实 DOM 的一层抽象，用简单的 JS 对象描述真实 DOM。本文要介绍的 Snabbdom 就是 Virtual DOM 的一种简单实现，并且 Vue 的 Virtual DOM 也参考了 Snabbdom 实现方式。 对于想要深入学习 Vue">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/cover.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/snabbdom-cover.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-1.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-2.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-3.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-4.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-5.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-6.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-7.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-8.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-9.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-10.png">
+<meta property="og:image" content="https://images.pingan8787.com/Vue/Snabbdom/img-11.png">
+<meta property="article:published_time" content="2021-03-19T06:54:46.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.668Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Vuejs">
+<meta property="article:tag" content="前端探索">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.pingan8787.com/Vue/Snabbdom/cover.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-223-【前端探索】探索Snabbdom模块系统原理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2021-03-19T06:54:46.000Z" itemprop="datePublished">2021-03-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      223-【前端探索】探索Snabbdom模块系统原理
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="https://images.pingan8787.com/Vue/Snabbdom/cover.png" alt="snabbdom-cover"></p>
+<p>近几年随着 React、Vue 等前端框架不断兴起，Virtual DOM 概念也越来越火，被用到越来越多的框架、库中。Virtual DOM 是基于真实 DOM 的一层抽象，用简单的 JS 对象描述真实 DOM。本文要介绍的 <a target="_blank" rel="noopener" href="https://github.com/snabbdom/snabbdom">Snabbdom</a> 就是 Virtual DOM 的一种简单实现，并且 Vue 的 Virtual DOM 也参考了 Snabbdom 实现方式。</p>
+<p>对于想要深入学习 Vue Virtual DOM 的朋友，建议先学习 Snabbdom，对理解 Vue 会很有帮助，并且其核心代码 200 多行。</p>
+<p><strong>本文挑选 Snabbdom 模块系统作为主要核心点介绍，其他内容可以查阅官方文档</strong><a target="_blank" rel="noopener" href="https://github.com/snabbdom/snabbdom">《Snabbdom》</a>。</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/snabbdom-cover.png" alt="snabbdom-cover"></p>
+<h2 id="一、Snabbdom-是什么"><a href="#一、Snabbdom-是什么" class="headerlink" title="一、Snabbdom 是什么"></a>一、Snabbdom 是什么</h2><p>Snabbdom 是一个专注于简单性、模块化、强大特性和性能的虚拟 DOM 库。其中有几个核心特性：</p>
+<ol>
+<li>核心代码 200 行，并且提供丰富的测试用例；</li>
+<li><strong>拥有强大模块系统，并且支持模块拓展和灵活组合；</strong></li>
+<li>在每个 VNode 和全局模块上，都有丰富的钩子，可以在 Diff 和 Patch 阶段使用。</li>
+</ol>
+<p>接下来从一个简单示例来体验一下 Snabbdom。</p>
+<h3 id="1-快速上手"><a href="#1-快速上手" class="headerlink" title="1. 快速上手"></a>1. 快速上手</h3><p>安装 Snabbdom： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install snabbdom -D</span><br></pre></td></tr></table></figure>
+<p>接着新建 index.html，设置入口元素：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后新建 demo1.js 文件，并使用 Snabbdom 提供的函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo1.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; h &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/h&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; init &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/init&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> patch = init([])</span><br><span class="line"><span class="keyword">let</span> vnode = h(<span class="string">&#x27;div#app&#x27;</span>, <span class="string">&#x27;Hello Leo&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;app&#x27;</span>)</span><br><span class="line">patch(app, vnode)</span><br></pre></td></tr></table></figure>
+<p>这样就实现一个简单示例，在浏览器打开 index.html，页面将显示 “Hello Leo” 文本。<br><img src="https://images.pingan8787.com/Vue/Snabbdom/img-1.png" alt="img-1.png"></p>
+<p>接下来，我会以 <a target="_blank" rel="noopener" href="https://github.com/zyycode/snabbdom-demo">snabbdom-demo</a> 项目作为学习示例，从简单示例到模块系统使用的示例，深入学习和分析 Snabbdom 源码，重点分析 Snabbdom 模块系统。</p>
+<h2 id="二、Snabbdom-demo-分析"><a href="#二、Snabbdom-demo-分析" class="headerlink" title="二、Snabbdom-demo 分析"></a>二、Snabbdom-demo 分析</h2><p><a target="_blank" rel="noopener" href="https://github.com/zyycode/snabbdom-demo">Snabbdom-demo</a> 项目中的三个演示代码，为我们展示如何从简单到深入 Snabbdom。<br>首先克隆仓库并安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/zyycode/snabbdom-demo.git</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<p>虽然本项目没有 README.md 文件，但项目目录比较直观，我们可以轻松的从 src 目录找到这三个示例代码的文件：</p>
+<ul>
+<li>01-basicusage.js</li>
+<li>02-basicusage.js</li>
+<li><strong>03-modules.js  -&gt; 本文核心介绍</strong></li>
+</ul>
+<p>接着在 index.html 中引入想要学习的代码文件，默认 <code>&lt;script src=&quot;./src/01-basicusage.js&quot;&gt;&lt;/script&gt;</code>  ，通过 package.json 可知启动命令并启动项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run dev</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="1-简单示例分析"><a href="#1-简单示例分析" class="headerlink" title="1. 简单示例分析"></a>1. 简单示例分析</h3><p><strong>当我们要研究一个库或框架等比较复杂的项目，可以通过官方提供的简单示例代码进行分析</strong>，我们这里选择该项目中最简单的 01-basicusage.js 代码进行分析，其代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/01-basicusage.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; h &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/h&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; init &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/init&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> patch = init([])</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> vnode = h(<span class="string">&#x27;div#container.cls&#x27;</span>, <span class="string">&#x27;Hello World&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;app&#x27;</span>) <span class="comment">// 入口元素</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> oldVNode = patch(app, vnode)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假设时刻</span></span><br><span class="line">vnode = h(<span class="string">&#x27;div&#x27;</span>, <span class="string">&#x27;Hello Snabbdom&#x27;</span>)</span><br><span class="line">patch(oldVNode, vnode)</span><br></pre></td></tr></table></figure>
+<p>运行项目以后，可以看到页面展示了“Hello Snabbdom”文本，这里你会觉得奇怪，<strong>前面的 “Hello World” 文本去哪了</strong>？</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-2.png" alt="img-2.png"></p>
+<p>原因很简单，我们把 demo 中的下面两行代码注释后，页面便显示文本是 “Hello World”：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vnode = h(<span class="string">&#x27;div&#x27;</span>, <span class="string">&#x27;Hello Snabbdom&#x27;</span>)</span><br><span class="line">patch(oldVNode, vnode)</span><br></pre></td></tr></table></figure>
+<p>这里我们可以猜测 <code>patch()</code> 函数可以将 VNode 渲染到页面。更进一步可以理解为，这边第一个执行 <code>patch()</code> 函数为<strong>首次渲染</strong>，第二次执行 <code>patch()</code> 函数为<strong>更新操作</strong>。</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-3.png" alt="img-3.png"></p>
+<h3 id="2-VNode-介绍"><a href="#2-VNode-介绍" class="headerlink" title="2. VNode 介绍"></a>2. VNode 介绍</h3><p>这里可能会有小伙伴疑惑，示例中的 VNode 是什么？这里简单解释下：</p>
+<blockquote>
+<p>VNode，该对象用于描述节点的信息，它的全称是虚拟节点（virtual node）。与 “虚拟节点” 相关联的另一个概念是 “虚拟 DOM”，它是我们对由 Vue 组件树建立起来的整个 VNode 树的称呼。“虚拟 DOM” 由 VNode 组成的。<br>—— 全栈修仙之路 《Vue 3.0 进阶之 VNode 探秘》</p>
+</blockquote>
+<p>其实 VNode 就是一个 JS 对象，在 Snabbdom 中是这么定义 VNode 的类型：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> VNode &#123;</span><br><span class="line">  <span class="attr">sel</span>: <span class="built_in">string</span> | <span class="literal">undefined</span>; <span class="comment">// selector的缩写</span></span><br><span class="line">  data: VNodeData | <span class="literal">undefined</span>; <span class="comment">// 下面VNodeData接口的内容</span></span><br><span class="line">  children: <span class="built_in">Array</span>&lt;VNode | <span class="built_in">string</span>&gt; | <span class="literal">undefined</span>; <span class="comment">// 子节点</span></span><br><span class="line">  elm: Node | <span class="literal">undefined</span>; <span class="comment">// element的缩写，存储了真实的HTMLElement</span></span><br><span class="line">  text: <span class="built_in">string</span> | <span class="literal">undefined</span>; <span class="comment">// 如果是文本节点，则存储text</span></span><br><span class="line">  key: Key | <span class="literal">undefined</span>; <span class="comment">// 节点的key，在做列表时很有用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> VNodeData &#123;</span><br><span class="line">  props?: Props</span><br><span class="line">  attrs?: Attrs</span><br><span class="line">  <span class="class"><span class="keyword">class</span>?: <span class="title">Classes</span></span></span><br><span class="line"><span class="class">  <span class="title">style</span>?: <span class="title">VNodeStyle</span></span></span><br><span class="line"><span class="class">  <span class="title">dataset</span>?: <span class="title">Dataset</span></span></span><br><span class="line"><span class="class">  <span class="title">on</span>?: <span class="title">On</span></span></span><br><span class="line"><span class="class">  <span class="title">hero</span>?: <span class="title">Hero</span></span></span><br><span class="line"><span class="class">  <span class="title">attachData</span>?: <span class="title">AttachData</span></span></span><br><span class="line"><span class="class">  <span class="title">hook</span>?: <span class="title">Hooks</span></span></span><br><span class="line"><span class="class">  <span class="title">key</span>?: <span class="title">Key</span></span></span><br><span class="line"><span class="class">  <span class="title">ns</span>?: <span class="title">string</span> // <span class="title">for</span> <span class="title">SVGs</span></span></span><br><span class="line"><span class="class">  <span class="title">fn</span>?: () </span>=&gt; VNode <span class="comment">// for thunks</span></span><br><span class="line">  args?: <span class="built_in">any</span>[] <span class="comment">// for thunks</span></span><br><span class="line">  [key: <span class="built_in">string</span>]: <span class="built_in">any</span> <span class="comment">// for any other 3rd party module</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 VNode 对象中含描述节点选择器 <code>sel</code> 字段、节点数据 <code>data</code> 字段、节点所包含的子节点 <code>children</code> 字段等。</p>
+<p>在这个 demo 中，我们似乎并没有看到模块系统相关的代码，没事，因为这是最简单的示例，下一节会详细介绍。</p>
+<blockquote>
+<p>我们在学习一个函数时，可以重点了解该函数的“入参”和“出参”，大致就能判断该函数的作用。</p>
+</blockquote>
+<p>从这个 demo 主要执行过程可以看出，主要用到有三个函数： <code>init()</code> / <code>patch()</code> / <code>h()</code> ，它们到底做什么用的呢？我们分析一下 Snabbdom 源码中这三个函数的入参和出参情况：</p>
+<h3 id="3-init-函数分析"><a href="#3-init-函数分析" class="headerlink" title="3. init() 函数分析"></a>3. init() 函数分析</h3><p><code>init()</code> 函数被定义在 <code>package/init.ts</code> 文件中：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node_modules/snabbdom/src/package/init.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span> (<span class="params">modules: <span class="built_in">Array</span>&lt;Partial&lt;Module&gt;&gt;, domApi?: DOMAPI</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 省略其他代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其参数类型如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params">modules: <span class="built_in">Array</span>&lt;Partial&lt;Module&gt;&gt;, domApi?: DOMAPI</span>): (<span class="params">oldVnode: VNode | Element, vnode: VNode</span>) =&gt; <span class="title">VNode</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">export</span> <span class="title">type</span> <span class="title">Module</span> = <span class="title">Partial</span>&lt;</span>&#123;</span><br><span class="line">  <span class="attr">pre</span>: PreHook</span><br><span class="line">  <span class="attr">create</span>: CreateHook</span><br><span class="line">  <span class="attr">update</span>: UpdateHook</span><br><span class="line">  <span class="attr">destroy</span>: DestroyHook</span><br><span class="line">  <span class="attr">remove</span>: RemoveHook</span><br><span class="line">  <span class="attr">post</span>: PostHook</span><br><span class="line">&#125;&gt;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> DOMAPI &#123;</span><br><span class="line">  <span class="attr">createElement</span>: <span class="function">(<span class="params">tagName: <span class="built_in">any</span></span>) =&gt;</span> HTMLElement</span><br><span class="line">  <span class="attr">createElementNS</span>: <span class="function">(<span class="params">namespaceURI: <span class="built_in">string</span>, qualifiedName: <span class="built_in">string</span></span>) =&gt;</span> Element</span><br><span class="line">  <span class="attr">createTextNode</span>: <span class="function">(<span class="params">text: <span class="built_in">string</span></span>) =&gt;</span> Text</span><br><span class="line">  <span class="attr">createComment</span>: <span class="function">(<span class="params">text: <span class="built_in">string</span></span>) =&gt;</span> Comment</span><br><span class="line">  <span class="attr">insertBefore</span>: <span class="function">(<span class="params">parentNode: Node, newNode: Node, referenceNode: Node | <span class="literal">null</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">removeChild</span>: <span class="function">(<span class="params">node: Node, child: Node</span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">appendChild</span>: <span class="function">(<span class="params">node: Node, child: Node</span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">parentNode</span>: <span class="function">(<span class="params">node: Node</span>) =&gt;</span> Node | <span class="literal">null</span></span><br><span class="line">  <span class="attr">nextSibling</span>: <span class="function">(<span class="params">node: Node</span>) =&gt;</span> Node | <span class="literal">null</span></span><br><span class="line">  <span class="attr">tagName</span>: <span class="function">(<span class="params">elm: Element</span>) =&gt;</span> <span class="built_in">string</span></span><br><span class="line">  <span class="attr">setTextContent</span>: <span class="function">(<span class="params">node: Node, text: <span class="built_in">string</span> | <span class="literal">null</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">getTextContent</span>: <span class="function">(<span class="params">node: Node</span>) =&gt;</span> <span class="built_in">string</span> | <span class="literal">null</span></span><br><span class="line">  <span class="attr">isElement</span>: <span class="function">(<span class="params">node: Node</span>) =&gt;</span> node is Element</span><br><span class="line">  <span class="attr">isText</span>: <span class="function">(<span class="params">node: Node</span>) =&gt;</span> node is Text</span><br><span class="line">  <span class="attr">isComment</span>: <span class="function">(<span class="params">node: Node</span>) =&gt;</span> node is Comment</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><code>init()</code> 函数接收一个模块数组 <code>modules</code> 和可选的 <code>domApi</code> 对象作为参数，返回一个函数，即 <code>patch()</code> 函数。<br><code>domApi</code> 对象的接口包含了很多 DOM 操作的方法。<br>这里的 <code>modules</code> 参数本文将重点介绍。</p>
+<h3 id="4-patch-函数分析"><a href="#4-patch-函数分析" class="headerlink" title="4. patch() 函数分析"></a>4. patch() 函数分析</h3><p><code>init()</code> 函数返回了一个 <code>patch()</code> 函数，其类型为：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node_modules/snabbdom/src/package/init.ts</span></span><br><span class="line"></span><br><span class="line">patch(oldVnode: VNode | Element, <span class="attr">vnode</span>: VNode) =&gt; VNode</span><br></pre></td></tr></table></figure>
+<p><code>patch()</code> 函数接收两个 VNode 对象作为参数，并返回一个新 VNode。</p>
+<h3 id="5-h-函数分析"><a href="#5-h-函数分析" class="headerlink" title="5. h() 函数分析"></a>5. h() 函数分析</h3><p><code>h()</code> 函数被定义在 <code>package/h.ts</code> 文件中：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node_modules/snabbdom/src/package/h.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">h</span>(<span class="params">sel: <span class="built_in">string</span></span>): <span class="title">VNode</span></span></span><br><span class="line"><span class="function"><span class="title">export</span> <span class="function"><span class="keyword">function</span> <span class="title">h</span>(<span class="params">sel: <span class="built_in">string</span>, data: VNodeData | <span class="literal">null</span></span>): <span class="title">VNode</span></span></span></span><br><span class="line"><span class="function"><span class="function"><span class="title">export</span> <span class="function"><span class="keyword">function</span> <span class="title">h</span>(<span class="params">sel: <span class="built_in">string</span>, children: VNodeChildren</span>): <span class="title">VNode</span></span></span></span></span><br><span class="line"><span class="function"><span class="function"><span class="function"><span class="title">export</span> <span class="function"><span class="keyword">function</span> <span class="title">h</span>(<span class="params">sel: <span class="built_in">string</span>, data: VNodeData | <span class="literal">null</span>, children: VNodeChildren</span>): <span class="title">VNode</span></span></span></span></span></span><br><span class="line"><span class="function"><span class="function"><span class="function"><span class="function"><span class="title">export</span> <span class="function"><span class="keyword">function</span> <span class="title">h</span> (<span class="params">sel: <span class="built_in">any</span>, b?: <span class="built_in">any</span>, c?: <span class="built_in">any</span></span>): <span class="title">VNode</span></span>&#123;</span></span></span></span></span><br><span class="line"><span class="function"><span class="function"><span class="function"><span class="function">	// 省略其他代码</span></span></span></span></span><br><span class="line"><span class="function"><span class="function"><span class="function"><span class="function">&#125;</span></span></span></span></span><br></pre></td></tr></table></figure>
+<p><code>h()</code> 函数接收多种参数，其中必须有一个 <code>sel</code> 参数，<strong>作用是将节点内容挂载到该容器中</strong>，并返回一个新 VNode。</p>
+<h3 id="6-小结"><a href="#6-小结" class="headerlink" title="6. 小结"></a>6. 小结</h3><p>通过前面介绍，我们在回过头看看这个 demo 的代码，大致调用流程如下：</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-4.png" alt="img-4.png"></p>
+<h2 id="三、深入-Snabbdom-模块系统"><a href="#三、深入-Snabbdom-模块系统" class="headerlink" title="三、深入 Snabbdom 模块系统"></a>三、深入 Snabbdom 模块系统</h2><p>学习完前面这些基础知识后，我们已经知道 Snabbdom 使用方式，并且知道其中三个核心方法入参出参情况和大致作用，接下来开始看本文核心 Snabbdom 模块系统。</p>
+<h3 id="1-Modules-介绍"><a href="#1-Modules-介绍" class="headerlink" title="1. Modules 介绍"></a>1. Modules 介绍</h3><p>Snabbdom 模块系统是 Snabbdom 提供的一套<strong>可拓展</strong>、<strong>可灵活组合</strong>的模块系统，用来为 Snabbdom 提供操作 VNode 时的各种模块支持，如我们组建需要处理 style 则引入对应的 styleModule，需要处理事件，则引入 eventListenersModule 既可，这样就达到灵活组合，可以支持按需引入的效果。</p>
+<p>Snabbdom 模块系统的特点可以概括为：支持按需引入、独立管理、职责单一、方便组合复用、可维护性强。</p>
+<p>当然 Snabbdom 模块系统还有其他内置模块：</p>
+<table>
+<thead>
+<tr>
+<th align="center">模块名称</th>
+<th align="center">模块功能</th>
+<th align="center">示例代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">attributesModule</td>
+<td align="center">为 DOM 元素设置属性，在属性添加和更新时使用 <code>setAttribute</code> 方法。</td>
+<td align="center"><code>h(&#39;a&#39;, &#123; attrs: &#123; href: &#39;/foo&#39; &#125; &#125;, &#39;Go to Foo&#39;)</code></td>
+</tr>
+<tr>
+<td align="center">classModule</td>
+<td align="center">用来动态设置和切换 DOM 元素上的 class 名称。</td>
+<td align="center"><code>h(&#39;a&#39;, &#123; class: &#123; active: true, selected: false &#125; &#125;, &#39;Toggle&#39;)</code></td>
+</tr>
+<tr>
+<td align="center">datasetModule</td>
+<td align="center">为 DOM 元素设置自定义数据属性（<code>data- *</code>）。然后可以使用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset">HTMLElement.dataset</a> 属性访问它们。</td>
+<td align="center"><code>h(&#39;button&#39;, &#123; dataset: &#123; action: &#39;reset&#39; &#125; &#125;, &#39;Reset&#39;)</code></td>
+</tr>
+<tr>
+<td align="center">eventListenersModule</td>
+<td align="center">为 DOM 元素绑定事件监听器。</td>
+<td align="center"><code>h(&#39;div&#39;, &#123; on: &#123; click: clickHandler &#125; &#125;)</code></td>
+</tr>
+<tr>
+<td align="center">propsModule</td>
+<td align="center">为 DOM 元素设置属性，如果同时使用 attributesModule，则会被 attributesModule 覆盖。</td>
+<td align="center"><code>h(&#39;a&#39;, &#123; props: &#123; href: &#39;/foo&#39; &#125; &#125;, &#39;Go to Foo&#39;)</code></td>
+</tr>
+<tr>
+<td align="center">styleModule</td>
+<td align="center">为 DOM 元素设置 CSS 属性。</td>
+<td align="center"><code>h(&#39;span&#39;, &#123;style: &#123; color: &#39;#c0ffee&#39;&#125;&#125;, &#39;Say my name&#39;)</code></td>
+</tr>
+</tbody></table>
+<h3 id="2-Hooks-介绍"><a href="#2-Hooks-介绍" class="headerlink" title="2. Hooks 介绍"></a>2. Hooks 介绍</h3><p>Hooks 也称钩子，是 DOM 节点生命周期的一种方法。Snabbdom 提供丰富的钩子选择。模块既使用钩子来扩展 Snabbdom，也在普通代码中使用钩子，用来在 DOM 节点生命周期中执行任意代码。</p>
+<p>这里大致介绍一下所有的 Hooks：</p>
+<table>
+<thead>
+<tr>
+<th align="center">钩子名称</th>
+<th align="center">触发时机</th>
+<th align="center">回调参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>pre</code></td>
+<td align="center">patch 阶段开始。</td>
+<td align="center">none</td>
+</tr>
+<tr>
+<td align="center"><code>init</code></td>
+<td align="center">已添加一个 VNode。</td>
+<td align="center"><code>vnode</code></td>
+</tr>
+<tr>
+<td align="center"><code>create</code></td>
+<td align="center">基于 VNode 创建了一个 DOM 元素。</td>
+<td align="center"><code>emptyVnode, vnode</code></td>
+</tr>
+<tr>
+<td align="center"><code>insert</code></td>
+<td align="center">一个元素已添加到 DOM 元素中。</td>
+<td align="center"><code>vnode</code></td>
+</tr>
+<tr>
+<td align="center"><code>prepatch</code></td>
+<td align="center">一个元素即将进入 patch 阶段。</td>
+<td align="center"><code>oldVnode, vnode</code></td>
+</tr>
+<tr>
+<td align="center"><code>update</code></td>
+<td align="center">一个元素开始更新。</td>
+<td align="center"><code>oldVnode, vnode</code></td>
+</tr>
+<tr>
+<td align="center"><code>postpatch</code></td>
+<td align="center">一个元素完成 patch 阶段。</td>
+<td align="center"><code>oldVnode, vnode</code></td>
+</tr>
+<tr>
+<td align="center"><code>destroy</code></td>
+<td align="center">一个元素直接或间接被删除。</td>
+<td align="center"><code>vnode</code></td>
+</tr>
+<tr>
+<td align="center"><code>remove</code></td>
+<td align="center">一个元素直接从 DOM 元素中删除。</td>
+<td align="center"><code>vnode, removeCallback</code></td>
+</tr>
+<tr>
+<td align="center"><code>post</code></td>
+<td align="center">patch 阶段结束。</td>
+<td align="center">none</td>
+</tr>
+</tbody></table>
+<p>模块中可以使用这些钩子：<code>pre</code>, <code>create</code>, <code>update</code>, <code>destroy</code>, <code>remove</code>, <code>post</code>。<br>单个元素可以使用这些钩子：<code>init</code>, <code>create</code>, <code>insert</code>, <code>prepatch</code>, <code>update</code>, <code>postpatch</code>, <code>destroy</code>, <code>remove</code>。</p>
+<p>Snabbdom 是这么定义钩子的：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// snabbdom/src/package/hooks.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> PreHook = <span class="function">() =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> InitHook = <span class="function">(<span class="params">vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> CreateHook = <span class="function">(<span class="params">emptyVNode: VNode, vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> InsertHook = <span class="function">(<span class="params">vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> PrePatchHook = <span class="function">(<span class="params">oldVNode: VNode, vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> UpdateHook = <span class="function">(<span class="params">oldVNode: VNode, vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> PostPatchHook = <span class="function">(<span class="params">oldVNode: VNode, vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> DestroyHook = <span class="function">(<span class="params">vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> RemoveHook = <span class="function">(<span class="params">vNode: VNode, removeCallback: () =&gt; <span class="built_in">void</span></span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> PostHook = <span class="function">() =&gt;</span> <span class="built_in">any</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> Hooks &#123;</span><br><span class="line">  pre?: PreHook</span><br><span class="line">  init?: InitHook</span><br><span class="line">  create?: CreateHook</span><br><span class="line">  insert?: InsertHook</span><br><span class="line">  prepatch?: PrePatchHook</span><br><span class="line">  update?: UpdateHook</span><br><span class="line">  postpatch?: PostPatchHook</span><br><span class="line">  destroy?: DestroyHook</span><br><span class="line">  remove?: RemoveHook</span><br><span class="line">  post?: PostHook</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>接下来我们通过 03-modules.js 文件的示例代码，我们需要<strong>样式处理</strong>和<strong>事件操作，</strong>因此引入这两个模块，并进行<strong>灵活组合</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/03-modules.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; h &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/h&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; init &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/init&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 导入模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; styleModule &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/modules/style&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; eventListenersModule &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/modules/eventlisteners&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 注册模块</span></span><br><span class="line"><span class="keyword">const</span> patch = init([ styleModule, eventListenersModule ])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 使用 h() 函数的第二个参数传入模块需要的数据（对象）</span></span><br><span class="line"><span class="keyword">let</span> vnode = h(<span class="string">&#x27;div&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">style</span>: &#123; <span class="attr">backgroundColor</span>: <span class="string">&#x27;#4fc08d&#x27;</span>, <span class="attr">color</span>: <span class="string">&#x27;#35495d&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">on</span>: &#123; <span class="attr">click</span>: eventHandler &#125;</span><br><span class="line">&#125;, [</span><br><span class="line">  h(<span class="string">&#x27;h1&#x27;</span>, <span class="string">&#x27;Hello Snabbdom&#x27;</span>),</span><br><span class="line">  h(<span class="string">&#x27;p&#x27;</span>, <span class="string">&#x27;This is p tag&#x27;</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">eventHandler</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;clicked.&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;app&#x27;</span>)</span><br><span class="line">patch(app, vnode)</span><br></pre></td></tr></table></figure>
+<p>上面代码中，引入了 styleModule 和 eventListenersModule 两个模块，并且作为参数组合，传入 <code>init()</code> 函数中。<br>此时我们可以看到页面上显示的内容已经有包含样式，并且点击事件也能正常输出日志 <code>&#39;clicked.&#39;</code> ：</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-5.png" alt="img-5.png"></p>
+<p>这里我们看下 styleModule 模块源码，把代码精简一下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// snabbdom/src/package/modules/style.ts</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateStyle</span> (<span class="params">oldVnode: VNode, vnode: VNode</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 省略其他代码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forceReflow</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 省略其他代码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">applyDestroyStyle</span> (<span class="params">vnode: VNode</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 省略其他代码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">applyRemoveStyle</span> (<span class="params">vnode: VNode, rm: () =&gt; <span class="built_in">void</span></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 省略其他代码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> styleModule: Module = &#123;</span><br><span class="line">  <span class="attr">pre</span>: forceReflow,</span><br><span class="line">  <span class="attr">create</span>: updateStyle,</span><br><span class="line">  <span class="attr">update</span>: updateStyle,</span><br><span class="line">  <span class="attr">destroy</span>: applyDestroyStyle,</span><br><span class="line">  <span class="attr">remove</span>: applyRemoveStyle</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在看看  eventListenersModule 模块源码：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// snabbdom/src/package/modules/eventlisteners.ts</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateEventListeners</span> (<span class="params">oldVnode: VNode, vnode?: VNode</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 省略其他代码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> eventListenersModule: Module = &#123;</span><br><span class="line">  <span class="attr">create</span>: updateEventListeners,</span><br><span class="line">  <span class="attr">update</span>: updateEventListeners,</span><br><span class="line">  <span class="attr">destroy</span>: updateEventListeners</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>明显可以看出，两个模块返回的都是个对象，并且每个属性为一种钩子，如 <code>pre/create</code> 等，值为对应的处理函数，每个处理函数有统一的入参。</p>
+<p>继续看下 styleModule 中，样式是如何绑定上去的。这里分析它的 <code>updateStyle</code> 方法，因为元素创建（create 钩子）和元素更新（update 钩子）阶段都是通过这个方法处理：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// snabbdom/src/package/modules/style.ts</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateStyle</span> (<span class="params">oldVnode: VNode, vnode: VNode</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> cur: <span class="built_in">any</span></span><br><span class="line">  <span class="keyword">var</span> name: <span class="built_in">string</span></span><br><span class="line">  <span class="keyword">var</span> elm = vnode.elm</span><br><span class="line">  <span class="keyword">var</span> oldStyle = (oldVnode.data <span class="keyword">as</span> VNodeData).style</span><br><span class="line">  <span class="keyword">var</span> style = (vnode.data <span class="keyword">as</span> VNodeData).style</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!oldStyle &amp;&amp; !style) <span class="keyword">return</span></span><br><span class="line">  <span class="keyword">if</span> (oldStyle === style) <span class="keyword">return</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 1. 设置新旧 style 默认值</span></span><br><span class="line">  oldStyle = oldStyle || &#123;&#125;</span><br><span class="line">  style = style || &#123;&#125;</span><br><span class="line">  <span class="keyword">var</span> oldHasDel = <span class="string">&#x27;delayed&#x27;</span> <span class="keyword">in</span> oldStyle</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. 比较新旧 style</span></span><br><span class="line">  <span class="keyword">for</span> (name <span class="keyword">in</span> oldStyle) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!style[name]) &#123;</span><br><span class="line">      <span class="keyword">if</span> (name[<span class="number">0</span>] === <span class="string">&#x27;-&#x27;</span> &amp;&amp; name[<span class="number">1</span>] === <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">        (elm <span class="keyword">as</span> <span class="built_in">any</span>).style.removeProperty(name)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        (elm <span class="keyword">as</span> <span class="built_in">any</span>).style[name] = <span class="string">&#x27;&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (name <span class="keyword">in</span> style) &#123;</span><br><span class="line">    cur = style[name]</span><br><span class="line">    <span class="keyword">if</span> (name === <span class="string">&#x27;delayed&#x27;</span> &amp;&amp; style.delayed) &#123;</span><br><span class="line">      <span class="comment">// 省略部分代码</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (name !== <span class="string">&#x27;remove&#x27;</span> &amp;&amp; cur !== oldStyle[name]) &#123;</span><br><span class="line">      <span class="keyword">if</span> (name[<span class="number">0</span>] === <span class="string">&#x27;-&#x27;</span> &amp;&amp; name[<span class="number">1</span>] === <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">        (elm <span class="keyword">as</span> <span class="built_in">any</span>).style.setProperty(name, cur)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 3. 设置新 style 到元素</span></span><br><span class="line">        (elm <span class="keyword">as</span> <span class="built_in">any</span>).style[name] = cur</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="3-init-分析"><a href="#3-init-分析" class="headerlink" title="3. init() 分析"></a>3. init() 分析</h3><p>接着我们看下 <code>init()</code> 函数内部如何处理这些 Module。</p>
+<p>首先在 init.ts 文件中，可以看到声明了默认支持的 Hooks 钩子列表：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// snabbdom/src/package/init.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hooks: <span class="built_in">Array</span>&lt;keyof Module&gt; = [<span class="string">&#x27;create&#x27;</span>, <span class="string">&#x27;update&#x27;</span>, <span class="string">&#x27;remove&#x27;</span>, <span class="string">&#x27;destroy&#x27;</span>, <span class="string">&#x27;pre&#x27;</span>, <span class="string">&#x27;post&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+
+<p>接着看 <code>hooks</code> 是如何使用的：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// snabbdom/src/package/init.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span> (<span class="params">modules: <span class="built_in">Array</span>&lt;Partial&lt;Module&gt;&gt;, domApi?: DOMAPI</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> i: <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">let</span> j: <span class="built_in">number</span></span><br><span class="line">  <span class="keyword">const</span> cbs: ModuleHooks = &#123;  <span class="comment">// 创建 cbs 对象，用于收集 module 中的 hook</span></span><br><span class="line">    <span class="attr">create</span>: [],</span><br><span class="line">    <span class="attr">update</span>: [],</span><br><span class="line">    <span class="attr">remove</span>: [],</span><br><span class="line">    <span class="attr">destroy</span>: [],</span><br><span class="line">    <span class="attr">pre</span>: [],</span><br><span class="line">    <span class="attr">post</span>: []</span><br><span class="line">  &#125;</span><br><span class="line">	<span class="comment">// 收集 module 中的 hook，并保存在 cbs 中</span></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; hooks.length; ++i) &#123;</span><br><span class="line">    cbs[hooks[i]] = []</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; modules.length; ++j) &#123;</span><br><span class="line">      <span class="keyword">const</span> hook = modules[j][hooks[i]]</span><br><span class="line">      <span class="keyword">if</span> (hook !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">        (cbs[hooks[i]] <span class="keyword">as</span> <span class="built_in">any</span>[]).push(hook)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">	<span class="comment">// 省略其他代码，稍后介绍</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，创建 <code>hooks</code> 变量用来声明默认支持的 Hooks 钩子，在 <code>init()</code> 函数中，创建 <code>cbs</code> 对象，通过两层循环，保存每个 module 中的 hook 函数到 <code>cbs</code> 对象的指定钩子中。</p>
+<p>通过断点可以看到这是 demo 中，<code>cbs</code> 对象是下面这个样子：</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-6.png" alt="img-6.png"></p>
+<p>这里 <code>cbs</code> 对象收集了每个 module 中的 Hooks 处理函数，保存到对应 Hooks 数组中。比如这里的 <code>create</code> 钩子中保存了 <code>updateStyle</code> 函数和 <code>updateEventListeners</code> 函数。</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-7.png" alt="img-7.png"></p>
+<p>到这里， <code>init()</code> 函数已经保存好所有 module 的 Hooks 处理函数，接下来就要看看 <code>init()</code> 函数返回的 <code>patch()</code> 函数，这里面将用到前面保存好的 <code>cbs</code> 对象。</p>
+<h3 id="4-patch-分析"><a href="#4-patch-分析" class="headerlink" title="4. patch() 分析"></a>4. patch() 分析</h3><p><code>init()</code> 函数中最终返回一个 <code>patch()</code> 函数，这边形成一个闭包，闭包里面可以使用到 <code>init()</code> 函数作用域定义的变量和方法，因此在 <code>patch()</code> 函数中能使用 <code>cbs</code> 对象。</p>
+<p><code>patch()</code> 函数会在不同时机点（可以参照前面的 Hooks 介绍），遍历 <code>cbs</code> 对象中不同 Hooks 处理函数列表。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// snabbdom/src/package/init.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span> (<span class="params">modules: <span class="built_in">Array</span>&lt;Partial&lt;Module&gt;&gt;, domApi?: DOMAPI</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 省略其他代码</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">patch</span> (<span class="params">oldVnode: VNode | Element, vnode: VNode</span>): <span class="title">VNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i: <span class="built_in">number</span>, <span class="attr">elm</span>: Node, <span class="attr">parent</span>: Node</span><br><span class="line">    <span class="keyword">const</span> insertedVnodeQueue: VNodeQueue = []</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cbs.pre.length; ++i) cbs.pre[i]()  <span class="comment">// [Hooks]遍历 pre Hooks 处理函数列表</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!isVnode(oldVnode)) &#123;</span><br><span class="line">      oldVnode = emptyNodeAt(oldVnode) <span class="comment">// 当 oldVnode 参数不是 VNode 则创建一个空的 VNode</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sameVnode(oldVnode, vnode)) &#123;  <span class="comment">// 当两个 VNode 为同一个 VNode，则进行比较和更新</span></span><br><span class="line">      patchVnode(oldVnode, vnode, insertedVnodeQueue)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      createElm(vnode, insertedVnodeQueue) <span class="comment">// 当两个 VNode 不同，则创建新元素</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (parent !== <span class="literal">null</span>) &#123;  <span class="comment">// 当该 oldVnode 有父节点，则插入该节点，然后移除原来节点</span></span><br><span class="line">        api.insertBefore(parent, vnode.elm!, api.nextSibling(elm))</span><br><span class="line">        removeVnodes(parent, [oldVnode], <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cbs.post.length; ++i) cbs.post[i]()  <span class="comment">// [Hooks]遍历 post Hooks 处理函数列表</span></span><br><span class="line">    <span class="keyword">return</span> vnode</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>patchVnode()</code> 函数定义如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">patchVnode</span> (<span class="params">oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueue</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 省略其他代码</span></span><br><span class="line">  <span class="keyword">if</span> (vnode.data !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)  <span class="comment">// [Hooks]遍历 update Hooks 处理函数列表</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>createVnode()</code> 函数定义如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createElm</span> (<span class="params">vnode: VNode, insertedVnodeQueue: VNodeQueue</span>): <span class="title">Node</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 省略其他代码</span></span><br><span class="line">  <span class="keyword">const</span> sel = vnode.sel</span><br><span class="line">  <span class="keyword">if</span> (sel === <span class="string">&#x27;!&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// 省略其他代码</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sel !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cbs.create.length; ++i) cbs.create[i](emptyNode, vnode)  <span class="comment">// [Hooks]遍历 create Hooks 处理函数列表</span></span><br><span class="line">    <span class="keyword">const</span> hook = vnode.data!.hook</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> vnode.elm</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>removeNodes()</code> 函数定义如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeVnodes</span> (<span class="params">parentElm: Node,vnodes: VNode[],startIdx: <span class="built_in">number</span>,endIdx: <span class="built_in">number</span></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 省略其他代码</span></span><br><span class="line">  <span class="keyword">for</span> (; startIdx &lt;= endIdx; ++startIdx) &#123;</span><br><span class="line">    <span class="keyword">const</span> ch = vnodes[startIdx]</span><br><span class="line">    <span class="keyword">if</span> (ch != <span class="literal">null</span>) &#123;</span><br><span class="line">      rm = createRmCb(ch.elm!, listeners)</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; cbs.remove.length; ++i) cbs.remove[i](ch, rm) <span class="comment">// [Hooks]遍历 remove Hooks 处理函数列表</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这部分代码跳转较多，总结一下这个过程，如下图：</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-8.png" alt="img-8.png"></p>
+<h2 id="四、自定义-Snabbdom-模块"><a href="#四、自定义-Snabbdom-模块" class="headerlink" title="四、自定义 Snabbdom 模块"></a>四、自定义 Snabbdom 模块</h2><p>前面我们介绍了 Snabbdom 模块系统是如何收集 Hooks 并保存下来，然后在不同时机点执行不同的 Hooks。</p>
+<p>在 Snabbdom 中，所有模块独立在 <code>src/package/modules</code> 下，使用的时候可以灵活组合，也方便做解耦和跨平台，并且所有 Module 返回的对象中每个 Hooks 类型如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// snabbdom/src/package/init.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Module = Partial&lt;&#123;</span><br><span class="line">  <span class="attr">pre</span>: PreHook</span><br><span class="line">  <span class="attr">create</span>: CreateHook</span><br><span class="line">  <span class="attr">update</span>: UpdateHook</span><br><span class="line">  <span class="attr">destroy</span>: DestroyHook</span><br><span class="line">  <span class="attr">remove</span>: RemoveHook</span><br><span class="line">  <span class="attr">post</span>: PostHook</span><br><span class="line">&#125;&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// snabbdom/src/package/hooks.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> PreHook = <span class="function">() =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> CreateHook = <span class="function">(<span class="params">emptyVNode: VNode, vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> UpdateHook = <span class="function">(<span class="params">oldVNode: VNode, vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> DestroyHook = <span class="function">(<span class="params">vNode: VNode</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> RemoveHook = <span class="function">(<span class="params">vNode: VNode, removeCallback: () =&gt; <span class="built_in">void</span></span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> PostHook = <span class="function">() =&gt;</span> <span class="built_in">any</span></span><br></pre></td></tr></table></figure>
+<p>因此，<strong>如果开发者需要自定义模块，只需实现不同 Hooks 并导出即可。</strong></p>
+<p>接下来我们实现一个简单的模块 <strong>replaceTagModule</strong>，用来<strong>将节点文本自动过滤掉 HTML 标签</strong>。</p>
+<h3 id="1-初始化代码"><a href="#1-初始化代码" class="headerlink" title="1. 初始化代码"></a>1. 初始化代码</h3><p>考虑到方便调试，我们直接在 <code>node_modules/snabbdom/src/package/modules/</code> 目录中新建 replaceTag.ts 文件，然后写个最简单的 demo 框架：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; VNode, VNodeData &#125; <span class="keyword">from</span> <span class="string">&#x27;../vnode&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Module &#125; <span class="keyword">from</span> <span class="string">&#x27;./module&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> replaceTagPre = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;run replaceTagPre!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> updateReplaceTag = (oldVnode: VNode, <span class="attr">vnode</span>: VNode): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;run updateReplaceTag!&quot;</span>, oldVnode, vnode)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> removeReplaceTag = (vnode: VNode): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;run removeReplaceTag!&quot;</span>, vnode)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> replaceTagModule: Module = &#123;</span><br><span class="line">    <span class="attr">pre</span>: replaceTagPre,</span><br><span class="line">    <span class="attr">create</span>: updateReplaceTag,</span><br><span class="line">    <span class="attr">update</span>: updateReplaceTag,</span><br><span class="line">    <span class="attr">remove</span>: removeReplaceTag</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来引入到 03-modules.js 代码中，并简化下代码：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; h &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/h&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; init &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/init&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 导入模块</span></span><br><span class="line"><span class="keyword">import</span> &#123; styleModule &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/modules/style&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; eventListenersModule &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/modules/eventlisteners&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; replaceTagModule &#125; <span class="keyword">from</span> <span class="string">&#x27;snabbdom/src/package/modules/replaceTag&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 注册模块</span></span><br><span class="line"><span class="keyword">const</span> patch = init([</span><br><span class="line">  styleModule,</span><br><span class="line">  eventListenersModule,</span><br><span class="line">  replaceTagModule</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 使用 h() 函数的第二个参数传入模块需要的数据（对象）</span></span><br><span class="line"><span class="keyword">let</span> vnode = h(<span class="string">&#x27;div&#x27;</span>, <span class="string">&#x27;&lt;h1&gt;Hello Leo&lt;/h1&gt;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;app&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> oldVNode = patch(app, vnode)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> newVNode = h(<span class="string">&#x27;div&#x27;</span>, <span class="string">&#x27;&lt;div&gt;Hello Leo&lt;/div&gt;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">patch(oldVNode, newVNode)</span><br></pre></td></tr></table></figure>
+<p>刷新浏览器，就可以看到 replaceTagModule 的每个钩子都被正常执行：</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-9.png" alt="img-9.png"></p>
+<h3 id="2-实现-updateReplaceTag-函数"><a href="#2-实现-updateReplaceTag-函数" class="headerlink" title="2. 实现 updateReplaceTag() 函数"></a>2. 实现 updateReplaceTag() 函数</h3><p>我们删除掉多余代码，接下来实现 <code>updateReplaceTag()</code> 函数，当 vnode 创建和更新时，都会调用该方法。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; VNode, VNodeData &#125; <span class="keyword">from</span> <span class="string">&#x27;../vnode&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Module &#125; <span class="keyword">from</span> <span class="string">&#x27;./module&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> regFunction = <span class="function"><span class="params">str</span> =&gt;</span> str &amp;&amp; str.replace(<span class="regexp">/\&lt;|\&gt;|\//g</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> updateReplaceTag = (oldVnode: VNode, <span class="attr">vnode</span>: VNode): <span class="function"><span class="params">void</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> oldVnodeReplace = regFunction(oldVnode.text);</span><br><span class="line">    <span class="keyword">const</span> vnodeReplace = regFunction(vnode.text);</span><br><span class="line">    <span class="keyword">if</span>(oldVnodeReplace === vnodeReplace) <span class="keyword">return</span>;</span><br><span class="line">    vnode.text = vnodeReplace;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> replaceTagModule: Module = &#123;</span><br><span class="line">    <span class="attr">create</span>: updateReplaceTag,</span><br><span class="line">    <span class="attr">update</span>: updateReplaceTag,</span><br><span class="line">&#125;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<p>在 <code>updateReplaceTag()</code> 函数中，比较新旧 vnode 的文本内容是否一致，如果一致则直接返回，否则将新的 vnode 的替换后的文本设置到 vnode 的 text 属性，完成更新。</p>
+<p>其中有个细节：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vnode.text = vnodeReplace;</span><br></pre></td></tr></table></figure>
+<p>这里直接对 <code>vnode.text</code> 进行赋值，页面上的内容也随之发生变化。这是因为 <code>vnode</code> 是个响应式对象，通过调用其 <code>setter</code> 方法，会触发响应式更新，这样就实现页面内容更新。</p>
+<p>于是我们看到页面内容中的 HTML 标签被清空了。</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-10.png" alt="img-10.png"></p>
+<h3 id="3-小结"><a href="#3-小结" class="headerlink" title="3. 小结"></a>3. 小结</h3><p>这个小节中，我们实现一个简单的 <code>replaceTagModule</code> 模块，体验了一下 Snabbdom 模块灵活组合的特点，当我们需要自定义某些模块时，便可以按照 Snabbdom 的模块开发方式，开发自定义模块，然后通过 Snabbdom 的 <code>init()</code> 函数注入模块即可。</p>
+<p>我们再回顾一下 Snabbdom 模块系统特点：支持按需引入、独立管理、职责单一、方便组合复用、可维护性强。</p>
+<h2 id="五、通用模块生命周期模型"><a href="#五、通用模块生命周期模型" class="headerlink" title="五、通用模块生命周期模型"></a>五、通用模块生命周期模型</h2><p>下面我将前面 Snabbdom 的模块系统，抽象为一个通用模块生命周期模型，其中包含三个核心层：</p>
+<ol>
+<li>模块定义层</li>
+</ol>
+<p>在本层可以按照模块开发规范，自定义各种模块。</p>
+<ol start="2">
+<li>模块应用层</li>
+</ol>
+<p>一般是在业务开发层或组件层中，用来导入模块。</p>
+<ol start="3">
+<li>模块初始化层</li>
+</ol>
+<p>一般是在开发的模块系统的插件中，提供初始化函数（init 函数），执行初始化函数会遍历每个 Hooks，并执行对应处理函数列表的每个函数。</p>
+<p>抽象后的模型如下：</p>
+<p><img src="https://images.pingan8787.com/Vue/Snabbdom/img-11.png" alt="image.png"></p>
+<p>在使用 Module 的时候就可以灵活组合搭配使用啦，在模块初始化层，就会做好调用。</p>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>本文主要以 Snabbdom-demo 仓库为学习示例，学习了 Snabbdom 运行流程和 Snabbdom 模块系统的运行流程，还通过手写一个简单的 Snabbdom 模块，带大家领略一下 Snabbdom 模块的魅力，最后为大家总结了一个通用模块插件模型。</p>
+<p>大家好好掌握 Snabbdom 对理解 Vue 会很有帮助。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/" data-id="ckts3ejz400nn4d9kcff5b29t" data-title="223-【前端探索】探索Snabbdom模块系统原理" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          224-【Chrome】5个Chrome调试混合应用的技巧
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/01/30/222-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Vuejs%E5%93%8D%E5%BA%94%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">222-【前端探索】探索Vuejs响应式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

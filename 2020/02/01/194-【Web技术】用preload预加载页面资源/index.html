@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>194-【Web技术】用preload预加载页面资源 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="原文地址：点击查看 作者简介 felix 蚂蚁金服·数据体验技术团队本文主要介绍 preload 的使用，以及与 prefetch 的区别。然后会聊聊浏览器的加载优先级。preload 提供了一种声明式的命令，让浏览器提前加载指定资源(加载后并不执行)，在需要执行的时候再执行。提供的好处主要是  将加载和执行分离开，可不阻塞渲染和 document 的 onload 事件 提前加载指定资源，不再出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="194-【Web技术】用preload预加载页面资源">
+<meta property="og:url" content="http://example.com/2020/02/01/194-%E3%80%90Web%E6%8A%80%E6%9C%AF%E3%80%91%E7%94%A8preload%E9%A2%84%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E8%B5%84%E6%BA%90/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原文地址：点击查看 作者简介 felix 蚂蚁金服·数据体验技术团队本文主要介绍 preload 的使用，以及与 prefetch 的区别。然后会聊聊浏览器的加载优先级。preload 提供了一种声明式的命令，让浏览器提前加载指定资源(加载后并不执行)，在需要执行的时候再执行。提供的好处主要是  将加载和执行分离开，可不阻塞渲染和 document 的 onload 事件 提前加载指定资源，不再出">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://camo.githubusercontent.com/a53b19d02cb36222be6055e57c7c5a9e7c6e118b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366623261393762613f773d39333226683d34313826663d706e6726733d3636343233#align=left&display=inline&height=418&originHeight=418&originWidth=932&status=done&style=none&width=932">
+<meta property="og:image" content="https://camo.githubusercontent.com/32a96d8b852941951a09f21c744b20fcc7181108/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366633038643333653f773d34383326683d373526663d706e6726733d3133363530#align=left&display=inline&height=75&originHeight=75&originWidth=483&status=done&style=none&width=483">
+<meta property="og:image" content="https://camo.githubusercontent.com/2325935bfcdde6523177199c977fb369d43629dd/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366633337393564303f773d34393626683d373526663d706e6726733d3133333737#align=left&display=inline&height=75&originHeight=75&originWidth=496&status=done&style=none&width=496">
+<meta property="og:image" content="https://camo.githubusercontent.com/16c914616946cbfc8204ae9251d5687ca499df98/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366643938336261313f773d35323226683d31393326663d706e6726733d3430343832#align=left&display=inline&height=193&originHeight=193&originWidth=522&status=done&style=none&width=522">
+<meta property="og:image" content="https://camo.githubusercontent.com/8063027c3e5ef347c7de2b90777ad08283cf310b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396430303939666632373f773d37383226683d333426663d706e6726733d3138373537#align=left&display=inline&height=34&originHeight=34&originWidth=782&status=done&style=none&width=782">
+<meta property="og:image" content="https://camo.githubusercontent.com/0bf61a7a7099f6306bd092e76b3ea3d056aa9749/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396430323461383631623f773d36343926683d31313126663d706e6726733d3231353937#align=left&display=inline&height=111&originHeight=111&originWidth=649&status=done&style=none&width=649">
+<meta property="og:image" content="https://camo.githubusercontent.com/3b86da05e9f966d783bbb2da79779ccafd1c8a5f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433396536613335353f773d37313226683d31313126663d706e6726733d3231373938#align=left&display=inline&height=111&originHeight=111&originWidth=712&status=done&style=none&width=712">
+<meta property="og:image" content="https://camo.githubusercontent.com/bb1e8eb2fef3d56d35278677034312b2f1406370/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616134613062643f773d3130333926683d373526663d706e6726733d3231343235#align=left&display=inline&height=75&originHeight=75&originWidth=1039&status=done&style=none&width=1039">
+<meta property="og:image" content="https://camo.githubusercontent.com/05a3695b41e7bfa14ba22f91c8b1e67bf9f34ce3/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616262326637653f773d3130343726683d373526663d706e6726733d3230353038#align=left&display=inline&height=75&originHeight=75&originWidth=1047&status=done&style=none&width=1047">
+<meta property="og:image" content="https://camo.githubusercontent.com/0083c38840fa8d30302642b286aa2a5cedb05515/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433666639663363323f773d36383726683d36303126663d706e6726733d3639323637#align=left&display=inline&height=601&originHeight=601&originWidth=687&status=done&style=none&width=687">
+<meta property="og:image" content="https://camo.githubusercontent.com/fbc06ea64585e49cd2d55143d5886729e7637550/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616463366163343f773d36383926683d31333626663d706e6726733d3232363637#align=left&display=inline&height=136&originHeight=136&originWidth=689&status=done&style=none&width=689">
+<meta property="og:image" content="https://camo.githubusercontent.com/2dcadd29eedeb192aec8f4f4716909155697b35f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396434383161316435333f773d36383626683d31363526663d706e6726733d3235383035#align=left&display=inline&height=165&originHeight=165&originWidth=686&status=done&style=none&width=686">
+<meta property="og:image" content="https://camo.githubusercontent.com/e8a2a2dd896778cbd12d25db3a5a7d8ca0d295a6/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363437356232303f773d35303126683d363926663d706e6726733d3133383735#align=left&display=inline&height=69&originHeight=69&originWidth=501&status=done&style=none&width=501">
+<meta property="og:image" content="https://camo.githubusercontent.com/35db8fc2e39befca82df89f1b6ed65b307435e03/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363535636139653f773d36383426683d31383226663d706e6726733d3238383132#align=left&display=inline&height=182&originHeight=182&originWidth=684&status=done&style=none&width=684">
+<meta property="og:image" content="https://camo.githubusercontent.com/f3339d352fb837f443411d81eade8c1830160086/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363865326430353f773d34373526683d31393126663d706e6726733d3432303037#align=left&display=inline&height=191&originHeight=191&originWidth=475&status=done&style=none&width=475">
+<meta property="og:image" content="https://camo.githubusercontent.com/8d07bf6d105054d9b25a3b37e02b3ed8f3de46f6/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436643335306364343f773d36383626683d32303026663d706e6726733d3335303937#align=left&display=inline&height=200&originHeight=200&originWidth=686&status=done&style=none&width=686">
+<meta property="og:image" content="https://camo.githubusercontent.com/2cc1b27776179ea995f774fbdeca8853277788c7/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396437313465326235643f773d34373626683d32343726663d706e6726733d3439343232#align=left&display=inline&height=247&originHeight=247&originWidth=476&status=done&style=none&width=476">
+<meta property="og:image" content="https://camo.githubusercontent.com/72232d2ff945fd1e52f09747a698202d670b2700/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396437356538396261643f773d36383626683d31363426663d706e6726733d3236373231#align=left&display=inline&height=164&originHeight=164&originWidth=686&status=done&style=none&width=686">
+<meta property="og:image" content="https://camo.githubusercontent.com/cb3fd05528923ceaea1295d1839bbf1b8d4d3bc2/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439323838323537393f773d34373226683d31313426663d706e6726733d3230383030#align=left&display=inline&height=114&originHeight=114&originWidth=472&status=done&style=none&width=472">
+<meta property="og:image" content="https://camo.githubusercontent.com/56687cb66b6fe073c07a1ba3cdf80cb65a8bd39b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439353964313736653f773d3233393626683d3131383826663d706e6726733d363537373039#align=left&display=inline&height=1188&originHeight=1188&originWidth=2396&status=done&style=none&width=2396">
+<meta property="og:image" content="https://camo.githubusercontent.com/e90287962e1e99b941d9ac66c6121ad57a457e0f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439623437616333323f773d3233323226683d3131363226663d706e6726733d363434373738#align=left&display=inline&height=1162&originHeight=1162&originWidth=2322&status=done&style=none&width=2322">
+<meta property="og:image" content="https://camo.githubusercontent.com/2d65a7b5806f1975158bbcc1a406475d66513f5f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439623433343435353f773d34373526683d383126663d706e6726733d3131393234#align=left&display=inline&height=81&originHeight=81&originWidth=475&status=done&style=none&width=475">
+<meta property="og:image" content="https://camo.githubusercontent.com/01e7a480e8bc1700b211dc8d2b51cc4e4246060d/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396461336436663333303f773d3232393826683d3131373626663d706e6726733d353939353832#align=left&display=inline&height=1176&originHeight=1176&originWidth=2298&status=done&style=none&width=2298">
+<meta property="og:image" content="https://camo.githubusercontent.com/eeae7271a728a5b8be46d703fd3ae8e4cbc2d309/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396461623636336332353f773d36363226683d383626663d706e6726733d3131373839#align=left&display=inline&height=86&originHeight=86&originWidth=662&status=done&style=none&width=662">
+<meta property="article:published_time" content="2020-02-01T14:43:33.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.632Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/a53b19d02cb36222be6055e57c7c5a9e7c6e118b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366623261393762613f773d39333226683d34313826663d706e6726733d3636343233#align=left&display=inline&height=418&originHeight=418&originWidth=932&status=done&style=none&width=932">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-194-【Web技术】用preload预加载页面资源" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/02/01/194-%E3%80%90Web%E6%8A%80%E6%9C%AF%E3%80%91%E7%94%A8preload%E9%A2%84%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E8%B5%84%E6%BA%90/" class="article-date">
+  <time class="dt-published" datetime="2020-02-01T14:43:33.000Z" itemprop="datePublished">2020-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      194-【Web技术】用preload预加载页面资源
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>原文地址：<a target="_blank" rel="noopener" href="https://github.com/ProtoTeam/blog/blob/master/021.%E7%94%A8%20preload%20%E9%A2%84%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E8%B5%84%E6%BA%90.md">点击查看</a></p>
+<p><br />作者简介 felix 蚂蚁金服·数据体验技术团队<br />本文主要介绍 preload 的使用，以及与 prefetch 的区别。然后会聊聊浏览器的加载优先级。<br />preload 提供了一种声明式的命令，让浏览器提前加载指定资源(加载后并不执行)，在需要执行的时候再执行。提供的好处主要是</p>
+<ul>
+<li>将加载和执行分离开，可不阻塞渲染和 document 的 onload 事件</li>
+<li>提前加载指定资源，不再出现依赖的 font 字体隔了一段时间才刷出<br><a name="ks6Uq"></a><h2 id="如何使用-preload"><a href="#如何使用-preload" class="headerlink" title="如何使用 preload"></a>如何使用 preload</h2><a name="tsvZn"></a><h3 id="使用-link-标签创建"><a href="#使用-link-标签创建" class="headerlink" title="使用 link 标签创建"></a>使用 link 标签创建</h3></li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 使用 link 标签静态标记需要预加载的资源 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/path/to/style.css&quot;</span> <span class="attr">as</span>=<span class="string">&quot;style&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 或使用脚本动态创建一个 link 标签后插入到 head 头部 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> link = <span class="built_in">document</span>.createElement(<span class="string">&#x27;link&#x27;</span>);</span></span><br><span class="line"><span class="javascript">link.rel = <span class="string">&#x27;preload&#x27;</span>;</span></span><br><span class="line"><span class="javascript">link.as = <span class="string">&#x27;style&#x27;</span>;</span></span><br><span class="line"><span class="javascript">link.href = <span class="string">&#x27;/path/to/style.css&#x27;</span>;</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.head.appendChild(link);</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a name="tgm88"></a></p>
+<h3 id="使用-HTTP-响应头的-Link-字段创建"><a href="#使用-HTTP-响应头的-Link-字段创建" class="headerlink" title="使用 HTTP 响应头的 Link 字段创建"></a>使用 HTTP 响应头的 Link 字段创建</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Link: &lt;https://example.com/other/styles.css&gt;; rel=preload; as=style</span><br></pre></td></tr></table></figure>
+<p>如我们常用到的 antd 会依赖一个 CDN 上的 font.js 字体文件，我们可以设置为提前加载，以及有一些模块虽然是按需异步加载，但在某些场景下知道其必定会加载的，则可以设置 preload 进行预加载，如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">as</span>=<span class="string">&quot;font&quot;</span>   <span class="attr">href</span>=<span class="string">&quot;https://at.alicdn.com/t/font_zck90zmlh7hf47vi.woff&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">as</span>=<span class="string">&quot;script&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://a.xxx.com/xxx/PcCommon.js&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">as</span>=<span class="string">&quot;script&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://a.xxx.com/xxx/TabsPc.js&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a name="cx8Xy"></a></p>
+<h2 id="如何判断浏览器是否支持-preload"><a href="#如何判断浏览器是否支持-preload" class="headerlink" title="如何判断浏览器是否支持 preload"></a>如何判断浏览器是否支持 preload</h2><p>目前我们支持的浏览器主要为高版本 Chrome，所以可放心使用 preload 技术。 其他环境在 caniuse.com 上查到的支持情况如下： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/a53b19d02cb36222be6055e57c7c5a9e7c6e118b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366623261393762613f773d39333226683d34313826663d706e6726733d3636343233"><img src="https://camo.githubusercontent.com/a53b19d02cb36222be6055e57c7c5a9e7c6e118b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366623261393762613f773d39333226683d34313826663d706e6726733d3636343233#align=left&display=inline&height=418&originHeight=418&originWidth=932&status=done&style=none&width=932"></a> 在不支持 preload 的浏览器环境中，会忽略对应的 link 标签，而若需要做特征检测的话，则：<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isPreloadSupported = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> link = <span class="built_in">document</span>.createElement(<span class="string">&#x27;link&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> relList = link.relList;</span><br><span class="line">  <span class="keyword">if</span> (!relList || !relList.supports) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> relList.supports(<span class="string">&#x27;preload&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><a name="OEzNR"></a></p>
+<h2 id="如何区分-preload-和-prefetch"><a href="#如何区分-preload-和-prefetch" class="headerlink" title="如何区分 preload 和 prefetch"></a>如何区分 preload 和 prefetch</h2><ul>
+<li>preload   是告诉浏览器页面<strong>必定</strong>需要的资源，浏览器<strong>一定会</strong>加载这些资源；</li>
+<li>prefetch 是告诉浏览器页面<strong>可能</strong>需要的资源，浏览器<strong>不一定会</strong>加载这些资源。</li>
+</ul>
+<p>preload 是确认会加载指定资源，如在我们的场景中，x-report.js 初始化后一定会加载 PcCommon.js 和 TabsPc.js, 则可以预先 preload 这些资源；<br />prefetch 是预测会加载指定资源，如在我们的场景中，我们在页面加载后会初始化首屏组件，当用户滚动页面时，会拉取第二屏的组件，若能预测用户行为，则可以 prefetch 下一屏的组件。<br><a name="M0Eom"></a></p>
+<h2 id="preload-将提升资源加载的优先级"><a href="#preload-将提升资源加载的优先级" class="headerlink" title="preload 将提升资源加载的优先级"></a>preload 将提升资源加载的优先级</h2><p>使用 preload 前，在遇到资源依赖时进行加载： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/32a96d8b852941951a09f21c744b20fcc7181108/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366633038643333653f773d34383326683d373526663d706e6726733d3133363530"><img src="https://camo.githubusercontent.com/32a96d8b852941951a09f21c744b20fcc7181108/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366633038643333653f773d34383326683d373526663d706e6726733d3133363530#align=left&display=inline&height=75&originHeight=75&originWidth=483&status=done&style=none&width=483"></a> 使用 preload 后，不管资源是否使用都将提前加载： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/2325935bfcdde6523177199c977fb369d43629dd/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366633337393564303f773d34393626683d373526663d706e6726733d3133333737"><img src="https://camo.githubusercontent.com/2325935bfcdde6523177199c977fb369d43629dd/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366633337393564303f773d34393626683d373526663d706e6726733d3133333737#align=left&display=inline&height=75&originHeight=75&originWidth=496&status=done&style=none&width=496"></a> 可以看到，preload 的资源加载顺序将被提前： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/16c914616946cbfc8204ae9251d5687ca499df98/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366643938336261313f773d35323226683d31393326663d706e6726733d3430343832"><img src="https://camo.githubusercontent.com/16c914616946cbfc8204ae9251d5687ca499df98/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396366643938336261313f773d35323226683d31393326663d706e6726733d3430343832#align=left&display=inline&height=193&originHeight=193&originWidth=522&status=done&style=none&width=522"></a><br><a name="OMYMV"></a></p>
+<h2 id="避免滥用-preload"><a href="#避免滥用-preload" class="headerlink" title="避免滥用 preload"></a>避免滥用 preload</h2><p>使用 preload 后，Chrome 会有一个警告： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/8063027c3e5ef347c7de2b90777ad08283cf310b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396430303939666632373f773d37383226683d333426663d706e6726733d3138373537"><img src="https://camo.githubusercontent.com/8063027c3e5ef347c7de2b90777ad08283cf310b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396430303939666632373f773d37383226683d333426663d706e6726733d3138373537#align=left&display=inline&height=34&originHeight=34&originWidth=782&status=done&style=none&width=782"></a><br />如上文所言，若不确定资源是必定会加载的，则不要错误使用 preload，以免本末倒置，给页面带来更沉重的负担。<br />当然，可以在 PC 中使用 preload 来刷新资源的缓存，但在移动端则需要特别慎重，因为可能会浪费用户的带宽。<br><a name="ZhtoH"></a></p>
+<h2 id="避免混用-preload-和-prefetch"><a href="#避免混用-preload-和-prefetch" class="headerlink" title="避免混用 preload 和 prefetch"></a>避免混用 preload 和 prefetch</h2><p>preload 和 prefetch 混用的话，并不会复用资源，而是会重复加载。<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=<span class="string">&quot;preload&quot;</span>   href=<span class="string">&quot;https://at.alicdn.com/t/font_zck90zmlh7hf47vi.woff&quot;</span> <span class="keyword">as</span>=<span class="string">&quot;font&quot;</span>&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;prefetch&quot;</span>  <span class="attr">href</span>=<span class="string">&quot;https://at.alicdn.com/t/font_zck90zmlh7hf47vi.woff&quot;</span> <span class="attr">as</span>=<span class="string">&quot;font&quot;</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p><br />使用 preload 和 prefetch 的逻辑可能不是写到一起，但一旦发生对用一资源 preload 或 prefetch 的话，会带来双倍的网络请求，这点通过 Chrome 控制台的网络面板就能甄别： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/0bf61a7a7099f6306bd092e76b3ea3d056aa9749/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396430323461383631623f773d36343926683d31313126663d706e6726733d3231353937"><img src="https://camo.githubusercontent.com/0bf61a7a7099f6306bd092e76b3ea3d056aa9749/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396430323461383631623f773d36343926683d31313126663d706e6726733d3231353937#align=left&display=inline&height=111&originHeight=111&originWidth=649&status=done&style=none&width=649"></a><br><a name="9HXj8"></a></p>
+<h2 id="避免错用-preload-加载跨域资源"><a href="#避免错用-preload-加载跨域资源" class="headerlink" title="避免错用 preload 加载跨域资源"></a>避免错用 preload 加载跨域资源</h2><p>若 css 中有应用于已渲染到 DOM 树的元素的选择器，且设置了 @font-face 规则时，会触发字体文件的加载。 而字体文件加载中时，DOM 中的这些元素，是处于不可见的状态。对已知必加载的 font 文件进行预加载，除了有性能提升外，更有体验优化的效果。<br />在我们的场景中，已知 antd.css 会依赖 font 文件，所以我们可以对这个字体文件进行 preload:<br /></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">as</span>=<span class="string">&quot;font&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://at.alicdn.com/t/font_zck90zmlh7hf47vi.woff&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然而我发现这个文件加载了两次： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/3b86da05e9f966d783bbb2da79779ccafd1c8a5f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433396536613335353f773d37313226683d31313126663d706e6726733d3231373938"><img src="https://camo.githubusercontent.com/3b86da05e9f966d783bbb2da79779ccafd1c8a5f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433396536613335353f773d37313226683d31313126663d706e6726733d3231373938#align=left&display=inline&height=111&originHeight=111&originWidth=712&status=done&style=none&width=712"></a> <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/bb1e8eb2fef3d56d35278677034312b2f1406370/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616134613062643f773d3130333926683d373526663d706e6726733d3231343235"><img src="https://camo.githubusercontent.com/bb1e8eb2fef3d56d35278677034312b2f1406370/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616134613062643f773d3130333926683d373526663d706e6726733d3231343235#align=left&display=inline&height=75&originHeight=75&originWidth=1039&status=done&style=none&width=1039"></a> <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/05a3695b41e7bfa14ba22f91c8b1e67bf9f34ce3/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616262326637653f773d3130343726683d373526663d706e6726733d3230353038"><img src="https://camo.githubusercontent.com/05a3695b41e7bfa14ba22f91c8b1e67bf9f34ce3/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616262326637653f773d3130343726683d373526663d706e6726733d3230353038#align=left&display=inline&height=75&originHeight=75&originWidth=1047&status=done&style=none&width=1047"></a><br />原因是对跨域的文件进行 preload 的时候，我们必须加上 crossorigin 属性：<br /></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">as</span>=<span class="string">&quot;font&quot;</span> <span class="attr">crossorigin</span> <span class="attr">href</span>=<span class="string">&quot;https://at.alicdn.com/t/font_zck90zmlh7hf47vi.woff&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>再看一下网络请求，就变成一条了。<br />W3 规范是这么解释的：</p>
+<blockquote>
+<p>Preload links for CORS enabled resources, such as fonts or images with a crossorigin attribute, must also include a crossorigin attribute, in order for the resource to be properly used.</p>
+</blockquote>
+<p>那为何会有两条请求，且优先级不一致，又没有命中缓存呢？这就得引出下一个话题来解释了。<br><a name="x337C"></a></p>
+<h2 id="不同资源加载的优先级规则"><a href="#不同资源加载的优先级规则" class="headerlink" title="不同资源加载的优先级规则"></a>不同资源加载的优先级规则</h2><p>我们先来看一张图： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/0083c38840fa8d30302642b286aa2a5cedb05515/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433666639663363323f773d36383726683d36303126663d706e6726733d3639323637"><img src="https://camo.githubusercontent.com/0083c38840fa8d30302642b286aa2a5cedb05515/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433666639663363323f773d36383726683d36303126663d706e6726733d3639323637#align=left&display=inline&height=601&originHeight=601&originWidth=687&status=done&style=none&width=687"></a></p>
+<blockquote>
+<p>这张表详见：Chrome Resource Priorities and Scheduling</p>
+</blockquote>
+<p>这张图表示的是，在 Chrome 46 以后的版本中，不同的资源在浏览器渲染的不同阶段进行加载的优先级。 在这里，我们只需要关注 DevTools Priority 体现的优先级，一共分成五个级别：</p>
+<ul>
+<li>Highest 最高</li>
+<li>Hight 高</li>
+<li>Medium 中等</li>
+<li>Low 低</li>
+<li>Lowest 最低</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/fbc06ea64585e49cd2d55143d5886729e7637550/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616463366163343f773d36383926683d31333626663d706e6726733d3232363637"><img src="https://camo.githubusercontent.com/fbc06ea64585e49cd2d55143d5886729e7637550/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396433616463366163343f773d36383926683d31333626663d706e6726733d3232363637#align=left&display=inline&height=136&originHeight=136&originWidth=689&status=done&style=none&width=689"></a><br><a name="UiMyD"></a></p>
+<h3 id="html-主要资源，其优先级是最高的"><a href="#html-主要资源，其优先级是最高的" class="headerlink" title="html 主要资源，其优先级是最高的"></a>html 主要资源，其优先级是最高的</h3><p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/2dcadd29eedeb192aec8f4f4716909155697b35f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396434383161316435333f773d36383626683d31363526663d706e6726733d3235383035"><img src="https://camo.githubusercontent.com/2dcadd29eedeb192aec8f4f4716909155697b35f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396434383161316435333f773d36383626683d31363526663d706e6726733d3235383035#align=left&display=inline&height=165&originHeight=165&originWidth=686&status=done&style=none&width=686"></a> <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/e8a2a2dd896778cbd12d25db3a5a7d8ca0d295a6/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363437356232303f773d35303126683d363926663d706e6726733d3133383735"><img src="https://camo.githubusercontent.com/e8a2a2dd896778cbd12d25db3a5a7d8ca0d295a6/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363437356232303f773d35303126683d363926663d706e6726733d3133383735#align=left&display=inline&height=69&originHeight=69&originWidth=501&status=done&style=none&width=501"></a><br><a name="NdM9N"></a></p>
+<h3 id="css-样式资源，其优先级也是最高的"><a href="#css-样式资源，其优先级也是最高的" class="headerlink" title="css 样式资源，其优先级也是最高的"></a>css 样式资源，其优先级也是最高的</h3><p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/35db8fc2e39befca82df89f1b6ed65b307435e03/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363535636139653f773d36383426683d31383226663d706e6726733d3238383132"><img src="https://camo.githubusercontent.com/35db8fc2e39befca82df89f1b6ed65b307435e03/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363535636139653f773d36383426683d31383226663d706e6726733d3238383132#align=left&display=inline&height=182&originHeight=182&originWidth=684&status=done&style=none&width=684"></a> CSS(match) 指的是对已有的 DOM 具备规则的有效的样式文件。 <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/f3339d352fb837f443411d81eade8c1830160086/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363865326430353f773d34373526683d31393126663d706e6726733d3432303037"><img src="https://camo.githubusercontent.com/f3339d352fb837f443411d81eade8c1830160086/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436363865326430353f773d34373526683d31393126663d706e6726733d3432303037#align=left&display=inline&height=191&originHeight=191&originWidth=475&status=done&style=none&width=475"></a><br><a name="6nWxH"></a></p>
+<h3 id="script-脚本资源，优先级不一"><a href="#script-脚本资源，优先级不一" class="headerlink" title="script 脚本资源，优先级不一"></a>script 脚本资源，优先级不一</h3><p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/8d07bf6d105054d9b25a3b37e02b3ed8f3de46f6/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436643335306364343f773d36383626683d32303026663d706e6726733d3335303937"><img src="https://camo.githubusercontent.com/8d07bf6d105054d9b25a3b37e02b3ed8f3de46f6/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396436643335306364343f773d36383626683d32303026663d706e6726733d3335303937#align=left&display=inline&height=200&originHeight=200&originWidth=686&status=done&style=none&width=686"></a> <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/2cc1b27776179ea995f774fbdeca8853277788c7/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396437313465326235643f773d34373626683d32343726663d706e6726733d3439343232"><img src="https://camo.githubusercontent.com/2cc1b27776179ea995f774fbdeca8853277788c7/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396437313465326235643f773d34373626683d32343726663d706e6726733d3439343232#align=left&display=inline&height=247&originHeight=247&originWidth=476&status=done&style=none&width=476"></a> 前三个 js 文件是写死在 html 中的静态资源依赖，后三个 js 文件是根据首屏按需异步加载的组件资源依赖，这正验证了这个规则。<br><a name="4tXNd"></a></p>
+<h3 id="font-字体资源，优先级不一"><a href="#font-字体资源，优先级不一" class="headerlink" title="font 字体资源，优先级不一"></a>font 字体资源，优先级不一</h3><p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/72232d2ff945fd1e52f09747a698202d670b2700/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396437356538396261643f773d36383626683d31363426663d706e6726733d3236373231"><img src="https://camo.githubusercontent.com/72232d2ff945fd1e52f09747a698202d670b2700/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396437356538396261643f773d36383626683d31363426663d706e6726733d3236373231#align=left&display=inline&height=164&originHeight=164&originWidth=686&status=done&style=none&width=686"></a> <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/cb3fd05528923ceaea1295d1839bbf1b8d4d3bc2/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439323838323537393f773d34373226683d31313426663d706e6726733d3230383030"><img src="https://camo.githubusercontent.com/cb3fd05528923ceaea1295d1839bbf1b8d4d3bc2/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439323838323537393f773d34373226683d31313426663d706e6726733d3230383030#align=left&display=inline&height=114&originHeight=114&originWidth=472&status=done&style=none&width=472"></a> css 样式文件中有一个 @font-face 依赖一个 font 文件，样式文件中依赖的字体文件加载的优先级是 Highest； 在使用 preload 预加载这个 font 文件时，若不指定 crossorigin 属性(即使同源)，则会采用匿名模式的 CORS 去加载，优先级是 High，看下图对比： 第一条 High 优先级也就是 preload 的请求： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/56687cb66b6fe073c07a1ba3cdf80cb65a8bd39b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439353964313736653f773d3233393626683d3131383826663d706e6726733d363537373039"><img src="https://camo.githubusercontent.com/56687cb66b6fe073c07a1ba3cdf80cb65a8bd39b/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439353964313736653f773d3233393626683d3131383826663d706e6726733d363537373039#align=left&display=inline&height=1188&originHeight=1188&originWidth=2396&status=done&style=none&width=2396"></a><br />第二条 Highest 也就是样式引入的请求： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/e90287962e1e99b941d9ac66c6121ad57a457e0f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439623437616333323f773d3233323226683d3131363226663d706e6726733d363434373738"><img src="https://camo.githubusercontent.com/e90287962e1e99b941d9ac66c6121ad57a457e0f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439623437616333323f773d3233323226683d3131363226663d706e6726733d363434373738#align=left&display=inline&height=1162&originHeight=1162&originWidth=2322&status=done&style=none&width=2322"></a><br />可以看到，在 preload 的请求中，缺少了一个 origin 的请求头字段，表示这个请求是匿名的请求。 让这两个请求能共用缓存的话，目前的解法是给 preload 加上 crossorigin 属性，这样请求头会带上 origin, 且与样式引入的请求同源，从而做到命中缓存：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">as</span>=<span class="string">&quot;font&quot;</span> <span class="attr">crossorigin</span> <span class="attr">href</span>=<span class="string">&quot;https://at.alicdn.com/t/font_zck90zmlh7hf47vi.woff&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这么请求就只剩一个： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/2d65a7b5806f1975158bbcc1a406475d66513f5f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439623433343435353f773d34373526683d383126663d706e6726733d3131393234"><img src="https://camo.githubusercontent.com/2d65a7b5806f1975158bbcc1a406475d66513f5f/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396439623433343435353f773d34373526683d383126663d706e6726733d3131393234#align=left&display=inline&height=81&originHeight=81&originWidth=475&status=done&style=none&width=475"></a> <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/01e7a480e8bc1700b211dc8d2b51cc4e4246060d/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396461336436663333303f773d3232393826683d3131373626663d706e6726733d353939353832"><img src="https://camo.githubusercontent.com/01e7a480e8bc1700b211dc8d2b51cc4e4246060d/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396461336436663333303f773d3232393826683d3131373626663d706e6726733d353939353832#align=left&display=inline&height=1176&originHeight=1176&originWidth=2298&status=done&style=none&width=2298"></a> 在网络瀑布流图中，也显示成功预加载且后续命中缓存不再二次加载： <a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/eeae7271a728a5b8be46d703fd3ae8e4cbc2d309/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396461623636336332353f773d36363226683d383626663d706e6726733d3131373839"><img src="https://camo.githubusercontent.com/eeae7271a728a5b8be46d703fd3ae8e4cbc2d309/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f322f31312f313631383263396461623636336332353f773d36363226683d383626663d706e6726733d3131373839#align=left&display=inline&height=86&originHeight=86&originWidth=662&status=done&style=none&width=662"></a><br><a name="EwGaK"></a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>preload 是个好东西，能告诉浏览器提前加载当前页面必须的资源，将加载与解析执行分离开，做得好可以对首次渲染带来不小的提升，但要避免滥用，区分其与 prefetch 的关系，且需要知道 preload 不同资源时的网络优先级差异。<br />preload 加载页面必需的资源如 CDN 上的字体文件，与 prefetch 预测加载下一屏数据，兴许是个不错的组合。<br />参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/preload/">https://www.w3.org/TR/preload/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/resource-hints/">https://www.w3.org/TR/resource-hints/</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/web/updates/2016/03/link-rel-preload">Prioritizing Your Resources with link rel=’preload’</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/reloading/preload-prefetch-and-priorities-in-chrome-776165961bbf">Preload, Prefetch And Priorities in Chrome</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/reloading/a-link-rel-preload-analysis-from-the-chrome-data-saver-team-5edf54b08715">A Link: rel=preload Analysis From the Chrome Data Saver Team</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/02/01/194-%E3%80%90Web%E6%8A%80%E6%9C%AF%E3%80%91%E7%94%A8preload%E9%A2%84%E5%8A%A0%E8%BD%BD%E9%A1%B5%E9%9D%A2%E8%B5%84%E6%BA%90/" data-id="ckts3ejyi00mp4d9k8o5icbyw" data-title="194-【Web技术】用preload预加载页面资源" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/02/12/195-%E3%80%90Webpack%E3%80%91%E5%88%86%E6%9E%90Webpack%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          195-【Webpack】分析Webpack运行机制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/21/193-%E3%80%90%E4%B8%AD%E9%97%B4%E4%BB%B6%E3%80%91%E4%BB%8Ekoa%E5%92%8Credux%E7%9C%8B%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E4%B8%AD%E9%97%B4%E4%BB%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">193-【中间件】从koa和redux看如何设计中间件</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

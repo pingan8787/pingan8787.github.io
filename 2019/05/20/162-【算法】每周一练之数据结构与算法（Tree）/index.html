@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>162-【算法】每周一练之数据结构与算法（Tree） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#x70;&amp;#x69;&amp;#x6e;&amp;#103;&amp;#97;&amp;#x6e;&amp;#56;&amp;#55;&amp;#x38;&amp;#x37;&amp;#64;&amp;#x71;&amp;#113;&amp;#x2e;&amp;#x63;&amp;#111;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;ping">
+<meta property="og:type" content="article">
+<meta property="og:title" content="162-【算法】每周一练之数据结构与算法（Tree）">
+<meta property="og:url" content="http://example.com/2019/05/20/162-%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%AF%8F%E5%91%A8%E4%B8%80%E7%BB%83%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88Tree%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#x70;&amp;#x69;&amp;#x6e;&amp;#103;&amp;#97;&amp;#x6e;&amp;#56;&amp;#55;&amp;#x38;&amp;#x37;&amp;#64;&amp;#x71;&amp;#113;&amp;#x2e;&amp;#x63;&amp;#111;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;ping">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%B0%81%E9%9D%A2.png">
+<meta property="og:image" content="http://images.pingan8787.com/20190520tree_pre.png">
+<meta property="og:image" content="http://images.pingan8787.com/20190520tree_in.png">
+<meta property="og:image" content="http://images.pingan8787.com/20190520tree_post.png">
+<meta property="article:published_time" content="2019-05-20T13:11:45.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.603Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%B0%81%E9%9D%A2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-162-【算法】每周一练之数据结构与算法（Tree）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/05/20/162-%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%AF%8F%E5%91%A8%E4%B8%80%E7%BB%83%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88Tree%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2019-05-20T13:11:45.000Z" itemprop="datePublished">2019-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      162-【算法】每周一练之数据结构与算法（Tree）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#x69;&#x6e;&#103;&#97;&#x6e;&#56;&#55;&#x38;&#x37;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;">&#x70;&#x69;&#x6e;&#103;&#97;&#x6e;&#56;&#55;&#x38;&#x37;&#64;&#x71;&#113;&#x2e;&#x63;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<p><img src="http://images.pingan8787.com/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%B0%81%E9%9D%A2.png" alt="封面"></p>
+<p>这是第六周的练习题，最近加班比较多，上周主要完成一篇 <a target="_blank" rel="noopener" href="https://juejin.im/post/5cd56b1f6fb9a0321e16bde3">GraphQL入门教程</a> ，有兴趣的小伙伴可以看下哈。    </p>
+<p>下面是之前分享的链接：   </p>
+<ul>
+<li>1.<a target="_blank" rel="noopener" href="https://juejin.im/post/5cb2df0c5188251aca7340a0">每周一练 之 数据结构与算法（Stack）</a>   </li>
+<li>2.<a target="_blank" rel="noopener" href="https://juejin.im/post/5cbdbb1af265da036d79bb35">每周一练 之 数据结构与算法（LinkedList）</a>   </li>
+<li>3.<a target="_blank" rel="noopener" href="https://juejin.im/post/5cc3cbaaf265da03a85ac7f8">每周一练 之 数据结构与算法（Queue）</a>   </li>
+<li>4.<a target="_blank" rel="noopener" href="https://juejin.im/post/5cceee526fb9a0323a01c72e">每周一练 之 数据结构与算法（Set）</a>   </li>
+<li>5.<a target="_blank" rel="noopener" href="https://juejin.im/post/5ce2a196f265da1b7638738b">每周一练 之 数据结构与算法（Dictionary 和 HashTable）</a>   </li>
+</ul>
+<blockquote>
+<p>欢迎关注我的 <a target="_blank" rel="noopener" href="https://github.com/pingan8787">个人主页</a> &amp;&amp;  <a target="_blank" rel="noopener" href="http://www.pingan8787.com/">个人博客</a> &amp;&amp; <a target="_blank" rel="noopener" href="http://js.pingan8787.com/">个人知识库</a> &amp;&amp; 微信公众号“前端自习课”</p>
+</blockquote>
+<p><strong>本周练习内容：数据结构与算法 —— Tree</strong>   </p>
+<p>这些都是数据结构与算法，一部分方法是团队其他成员实现的，一部分我自己做的，有什么其他实现方法或错误，欢迎各位大佬指点，感谢。   </p>
+<h2 id="一、什么是树？"><a href="#一、什么是树？" class="headerlink" title="一、什么是树？"></a>一、什么是树？</h2><p>1.树有什么特点，什么是二叉树和二叉搜索树（BST: Binary Search Tree）？<br>2.生活中常见的例子有哪些？</p>
+<hr>
+<p>解析：   </p>
+<ol>
+<li>树有什么特点，什么是二叉树和二叉搜索树：     </li>
+</ol>
+<ul>
+<li><p><strong>树</strong>是一种<strong>非线性的数据结构</strong>，以<strong>分层方式存储数据</strong>，用来表示<strong>有层级关系的数据</strong>。   </p>
+</li>
+<li><p>每棵树至多只有一个<strong>根结点</strong>，<strong>根结点</strong>会有很多<strong>子节点</strong>，每个<strong>子节点只有一个父结点</strong>。   </p>
+</li>
+<li><p><strong>父结点</strong>和<strong>子节点</strong>是相对的。   </p>
+</li>
+</ul>
+<ol start="2">
+<li>生活中的例子：<br>如：家谱、公司组织架构图。    </li>
+</ol>
+<h2 id="二、请实现二叉搜索树（BST），并实现以下方法："><a href="#二、请实现二叉搜索树（BST），并实现以下方法：" class="headerlink" title="二、请实现二叉搜索树（BST），并实现以下方法："></a>二、请实现二叉搜索树（BST），并实现以下方法：</h2><ul>
+<li><code>insert(key)</code>：向树中插入一个新的键；    </li>
+<li><code>search(key)</code>：树中查找一个键，如果节点存在返回true，不存在返回false；    </li>
+<li><code>min()</code>：返回树中最小的值/键；    </li>
+<li><code>max()</code>：返回树中最大的值/键；    </li>
+<li><code>remove(key)</code>：移除某个键；    </li>
+</ul>
+<blockquote>
+<p>提示：所谓的键对应于之前章节所学的节点（Node）</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.key = key</span><br><span class="line">        <span class="built_in">this</span>.left = <span class="literal">null</span></span><br><span class="line">        <span class="built_in">this</span>.right = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BST</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.root = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入一个节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;*&#125;</span> </span>node 插入的位置节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;*&#125;</span> </span>newNode 插入的节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    insertNode (node, newNode)&#123;</span><br><span class="line">        <span class="keyword">if</span>(newNode.key &lt; node.key)&#123;</span><br><span class="line">            <span class="keyword">if</span>(node.left === <span class="literal">null</span> &amp;&amp; node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">                node.left = newNode</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(node.left !== <span class="literal">null</span> &amp;&amp; node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">                node.right = newNode</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">this</span>.insertNode(node.left, newNode)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(node.left === <span class="literal">null</span> &amp;&amp; node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">                node.left = newNode</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(node.left !== <span class="literal">null</span> &amp;&amp; node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">                node.right = newNode</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">this</span>.insertNode(node.right, newNode)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入操作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;*&#125;</span> </span>key </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    insert (key)&#123;</span><br><span class="line">        <span class="keyword">let</span> newNode = <span class="keyword">new</span> Node(key)</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.root === <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="built_in">this</span>.root = newNode</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.insertNode(<span class="built_in">this</span>.root, newNode)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    searchNode (node, key)&#123;</span><br><span class="line">        <span class="keyword">if</span>(node === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">if</span>(key &lt; node.key)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.searchNode(node.left, key)</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node.key)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.searchNode(node.right, key)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 搜索操作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;*&#125;</span> </span>key </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    search (key)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.searchNode(<span class="built_in">this</span>.root, key)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 最小值的节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    min ()&#123;</span><br><span class="line">        <span class="keyword">let</span> node = <span class="built_in">this</span>.root</span><br><span class="line">        <span class="keyword">if</span>(node === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="keyword">while</span>(node &amp;&amp; node.left !== <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.left</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node.key</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 最大值的节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    max ()&#123;</span><br><span class="line">        <span class="keyword">let</span> node = <span class="built_in">this</span>.root</span><br><span class="line">        <span class="keyword">if</span>(node === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="keyword">while</span>(node &amp;&amp; node.right !== <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.right</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node.key</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 找到最小节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;*&#125;</span> </span>node </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    findMinNode (node)&#123;</span><br><span class="line">        <span class="keyword">if</span>(node === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="keyword">while</span>(node &amp;&amp; node.left !== <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.left</span><br><span class="line">        &#125;   </span><br><span class="line">        <span class="keyword">return</span> node</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除一个节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;*&#125;</span> </span>node </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;*&#125;</span> </span>key </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    removeNode (node, key)&#123;</span><br><span class="line">        <span class="keyword">if</span>(node === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="keyword">if</span>(key &lt; node.key)&#123;</span><br><span class="line">            node.left = <span class="built_in">this</span>.removeNode(node.left, key)</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node.key)&#123;</span><br><span class="line">            node.right = <span class="built_in">this</span>.removeNode(node.right, key)</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">// 1.叶节点</span></span><br><span class="line">            <span class="keyword">if</span>(node.left === <span class="literal">null</span> &amp;&amp; node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">                node = <span class="literal">null</span></span><br><span class="line">                <span class="keyword">return</span> node</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 2.只有一个子节点</span></span><br><span class="line">            <span class="keyword">if</span>(node.left === <span class="literal">null</span>)&#123;</span><br><span class="line">                node = node.right</span><br><span class="line">                <span class="keyword">return</span> node</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">                node = node.left</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 3.有两个子节点</span></span><br><span class="line">            <span class="keyword">let</span> curNode = <span class="built_in">this</span>.findMinNode(node.right)</span><br><span class="line">            node.key = curNode.key</span><br><span class="line">            node.right = <span class="built_in">this</span>.removeNode(node.right, curNode.key)</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除一个节点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;*&#125;</span> </span>key </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    remove (key)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.root === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="built_in">this</span>.root = <span class="built_in">this</span>.removeNode(<span class="built_in">this</span>.root, key)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="三、基于题二实现二叉搜索树扩展以下方法："><a href="#三、基于题二实现二叉搜索树扩展以下方法：" class="headerlink" title="三、基于题二实现二叉搜索树扩展以下方法："></a>三、基于题二实现二叉搜索树扩展以下方法：</h2><ul>
+<li><code>preOrderTraverse()</code>：  通过先序遍历方式遍历所有节点；    </li>
+<li><code>inOrderTraverse()</code>： 通过中序遍历方式遍历所有节点；    </li>
+<li><code>postOrderTraverse()</code>： 通过后序遍历方式遍历所有节点；    </li>
+</ul>
+<p>提示：</p>
+<ul>
+<li>先序：先访问根节点，然后以同样方式访问左子树和右子树；（根==&gt;左==&gt;右） </li>
+</ul>
+<p>输出 =》 11 7 5 3 6 9 8 10 15 13 12 14 20 18 25<br><img src="http://images.pingan8787.com/20190520tree_pre.png" alt="tree_pre"></p>
+<ul>
+<li>中序：先访问左子树，再访问根节点，最后访问右字数；以升序访问所有节点；（左==&gt;根==&gt;右）    </li>
+</ul>
+<p>输出 =》 3 5 6 7 8 9 10 11 12 13 14 15 18 20 25</p>
+<p><img src="http://images.pingan8787.com/20190520tree_in.png" alt="tree_in"></p>
+<ul>
+<li>后序：先访问叶子节点，从左子树到右子树，再到根节点。（左==&gt;右==&gt;根）    </li>
+</ul>
+<p>输出 =》 3 6 5 8 10 9 7 12 14 13 18 25 20 15 11</p>
+<p><img src="http://images.pingan8787.com/20190520tree_post.png" alt="tree_post"></p>
+<hr>
+<p>解析：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 先序</span></span><br><span class="line">BST.prototype.preOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;</span><br><span class="line">        callback(node.key)</span><br><span class="line">        <span class="built_in">this</span>.preOrderTraverseNode(node.left, callback)</span><br><span class="line">        <span class="built_in">this</span>.preOrderTraverseNode(node.right, callback)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">BST.prototype.preOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.preOrderTraverseNode(<span class="built_in">this</span>.root, callback)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 中序</span></span><br><span class="line">BST.prototype.inOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="built_in">this</span>.inOrderTraverseNode(node.left, callback)</span><br><span class="line">        callback(node.key)</span><br><span class="line">        <span class="built_in">this</span>.inOrderTraverseNode(node.right, callback)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">BST.prototype.inOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.inOrderTraverseNode(<span class="built_in">this</span>.root, callback)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 后序</span></span><br><span class="line">BST.prototype.postOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="built_in">this</span>.postOrderTraverseNode(node.left, callback)</span><br><span class="line">        <span class="built_in">this</span>.postOrderTraverseNode(node.right, callback)</span><br><span class="line">        callback(node.key)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">BST.prototype.postOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.postOrderTraverseNode(<span class="built_in">this</span>.root, callback)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、请实现从上往下打印二叉树"><a href="#四、请实现从上往下打印二叉树" class="headerlink" title="四、请实现从上往下打印二叉树"></a>四、请实现从上往下打印二叉树</h2><p>给定的二叉树为：[3, 9 , 20, null, null, 15, 7]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  3</span><br><span class="line"> / \</span><br><span class="line">9  20</span><br><span class="line">   / \</span><br><span class="line">  15  7</span><br></pre></td></tr></table></figure>
+
+<p>请实现一个 <code>printLevelOrder</code> 方法，输出以下结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  [3],</span><br><span class="line">  [9, 20],</span><br><span class="line">  [15, 7]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<hr>
+<p>来源：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/">102.二叉树的层次遍历</a><br>解析：    </p>
+<ul>
+<li><p>方法一：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BST.prototype.printLevelOrder = <span class="function"><span class="keyword">function</span> (<span class="params">root, arr = [], i = <span class="number">0</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (root &amp;&amp; (root.key || root.key === <span class="number">0</span>)) &#123;</span><br><span class="line">      !arr[i] &amp;&amp; (arr[i] = [])</span><br><span class="line">      arr[i].push(root.key)</span><br><span class="line">      i++</span><br><span class="line">      root.left &amp;&amp; <span class="built_in">this</span>.printLevelOrder(root.left, arr, i)</span><br><span class="line">      root.right &amp;&amp; <span class="built_in">this</span>.printLevelOrder(root.right, arr, i)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>方法二：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">BST.prototype.printLevelOrder = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">this</span>.root === <span class="literal">null</span>) <span class="keyword">return</span> []</span><br><span class="line">    <span class="keyword">let</span> result = [], queue = [<span class="built_in">this</span>.root]</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> len = queue.length, arr = []</span><br><span class="line">        <span class="keyword">while</span>(len &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(queue)</span><br><span class="line">            <span class="keyword">let</span> node = queue.shift()</span><br><span class="line">            len -= <span class="number">1</span></span><br><span class="line">            arr.push(node.key)</span><br><span class="line">            <span class="keyword">if</span>(node.left !== <span class="literal">null</span>) queue.push(node.left)</span><br><span class="line">            <span class="keyword">if</span>(node.right !== <span class="literal">null</span>) queue.push(node.right)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(arr.length === <span class="number">0</span>) <span class="keyword">return</span> result</span><br><span class="line">        result.push([...arr])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="五、给定一个二叉树，判断其是否是一个有效的二叉搜索树。"><a href="#五、给定一个二叉树，判断其是否是一个有效的二叉搜索树。" class="headerlink" title="五、给定一个二叉树，判断其是否是一个有效的二叉搜索树。"></a>五、给定一个二叉树，判断其是否是一个有效的二叉搜索树。</h2><p>假设一个二叉搜索树具有如下特征：   </p>
+<ul>
+<li>节点的左子树只包含<strong>小于</strong>当前节点的数。</li>
+<li>节点的右子树只包含<strong>大于</strong>当前节点的数。</li>
+<li>所有左子树和右子树自身必须也是二叉搜索树。</li>
+</ul>
+<p>示例 1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">    2</span><br><span class="line">   / \</span><br><span class="line">  1   3</span><br><span class="line">输出: true</span><br></pre></td></tr></table></figure>
+
+<p>示例 2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">    5</span><br><span class="line">   / \</span><br><span class="line">  1   4</span><br><span class="line">     / \</span><br><span class="line">    3   6</span><br><span class="line">输出: false</span><br><span class="line">解释: 输入为: [5,1,4,null,null,3,6]。</span><br><span class="line">根节点的值为 5 ，但是其右子节点值为 4 。</span><br></pre></td></tr></table></figure>
+
+<p>代码实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二叉树节点定义</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">TreeNode</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.val = val;</span><br><span class="line">  <span class="built_in">this</span>.left = <span class="built_in">this</span>.right = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">- <span class="doctag">@param <span class="type">&#123;TreeNode&#125;</span> <span class="variable">root</span></span></span></span><br><span class="line"><span class="comment">- <span class="doctag">@return <span class="type">&#123;boolean&#125;</span></span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isValidBST</span>(<span class="params">root</span>) </span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>来源：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/validate-binary-search-tree/">99.验证二叉搜索树</a><br>解析：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isValidBST</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = []</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">inOrderTraverse</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node === <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line">        node.left &amp;&amp; inOrderTraverse(node.left);</span><br><span class="line">        arr.push(node.val);</span><br><span class="line">        node.right &amp;&amp; inOrderTraverse(node.right);</span><br><span class="line">    &#125;</span><br><span class="line">    inOrderTraverse(root)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] &gt;= arr[i+<span class="number">1</span>]) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/05/20/162-%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%AF%8F%E5%91%A8%E4%B8%80%E7%BB%83%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88Tree%EF%BC%89/" data-id="ckts3ejti003v4d9k90yz24pa" data-title="162-【算法】每周一练之数据结构与算法（Tree）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/12/163-%E3%80%90TypeScript%E3%80%91TS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          163-【TypeScript】TS学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/05/20/161-%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%AF%8F%E5%91%A8%E4%B8%80%E7%BB%83%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88Dictionary%E5%92%8CHashTable%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">161-【算法】每周一练之数据结构与算法（Dictionary和HashTable）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

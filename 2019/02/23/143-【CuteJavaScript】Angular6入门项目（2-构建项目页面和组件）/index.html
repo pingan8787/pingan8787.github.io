@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>143-【CuteJavaScript】Angular6入门项目（2.构建项目页面和组件） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#112;&amp;#x69;&amp;#110;&amp;#x67;&amp;#x61;&amp;#110;&amp;#56;&amp;#x37;&amp;#x38;&amp;#55;&amp;#x40;&amp;#x71;&amp;#113;&amp;#x2e;&amp;#99;&amp;#x6f;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="143-【CuteJavaScript】Angular6入门项目（2.构建项目页面和组件）">
+<meta property="og:url" content="http://example.com/2019/02/23/143-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%882-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E9%A1%B5%E9%9D%A2%E5%92%8C%E7%BB%84%E4%BB%B6%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#112;&amp;#x69;&amp;#110;&amp;#x67;&amp;#x61;&amp;#110;&amp;#56;&amp;#x37;&amp;#x38;&amp;#55;&amp;#x40;&amp;#x71;&amp;#113;&amp;#x2e;&amp;#99;&amp;#x6f;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;pi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png">
+<meta property="og:image" content="http://images.pingan8787.com/angular_books_3_1.png">
+<meta property="og:image" content="http://images.pingan8787.com/angular_books_3_2.png">
+<meta property="og:image" content="http://images.pingan8787.com/2019_07_12guild_page.png">
+<meta property="article:published_time" content="2019-02-23T03:18:01.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.591Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-143-【CuteJavaScript】Angular6入门项目（2-构建项目页面和组件）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/02/23/143-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%882-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E9%A1%B5%E9%9D%A2%E5%92%8C%E7%BB%84%E4%BB%B6%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2019-02-23T03:18:01.000Z" itemprop="datePublished">2019-02-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      143-【CuteJavaScript】Angular6入门项目（2.构建项目页面和组件）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images.pingan8787.com/angular%E7%B3%BB%E5%88%97%E5%B0%81%E9%9D%A2.png" alt="Angular封面"></p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#x69;&#110;&#x67;&#x61;&#110;&#56;&#x37;&#x38;&#55;&#x40;&#x71;&#113;&#x2e;&#99;&#x6f;&#x6d;">&#112;&#x69;&#110;&#x67;&#x61;&#110;&#56;&#x37;&#x38;&#55;&#x40;&#x71;&#113;&#x2e;&#99;&#x6f;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<h2 id="本文目录"><a href="#本文目录" class="headerlink" title="本文目录"></a>本文目录</h2><ul>
+<li>一、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70ae586fb9a049c64476a0">项目起步</a></li>
+<li>二、<a target="_blank" rel="noopener" href="https://juejin.im/post/5c70ae586fb9a049c64476a0">编写路由组件</a></li>
+<li>三、<strong>编写页面组件</strong>   <ul>
+<li>1.<strong>编写单一组件</strong></li>
+<li>2.<strong>模拟数据</strong></li>
+<li>3.<strong>编写主从组件</strong></li>
+</ul>
+</li>
+<li>四、编写服务<ul>
+<li>1.为什么需要服务</li>
+<li>2.编写服务</li>
+</ul>
+</li>
+<li>五、引入RxJS<ul>
+<li>1.关于RxJS</li>
+<li>2.引入RxJS</li>
+<li>3.改造数据获取方式</li>
+</ul>
+</li>
+<li>六、改造组件<ul>
+<li>1.添加历史记录组件</li>
+<li>2.添加和删除历史记录</li>
+</ul>
+</li>
+<li>七、HTTP改造<ul>
+<li>1.引入HTTP</li>
+<li>2.通过HTTP请求数据</li>
+<li>3.通过HTTP修改数据</li>
+<li>4.通过HTTP增加数据</li>
+<li>5.通过HTTP删除数据</li>
+<li>6.通过HTTP查找数据</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、编写页面组件"><a href="#三、编写页面组件" class="headerlink" title="三、编写页面组件"></a>三、编写页面组件</h2><p>接下来开始编写页面组件，这里我们挑重点来写，一些布局的样式，后面可以看源码。   </p>
+<h3 id="1-编写单一组件"><a href="#1-编写单一组件" class="headerlink" title="1.编写单一组件"></a>1.编写单一组件</h3><p>我们首先写一个书本信息的组件，代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;books_box&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 单个课本 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;books_item&quot;</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of [1,2,3,4,5,6,7,8,9,10]&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;cover&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://img3.doubanio.com/view/subject/m/public/s29988481.jpg&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>像火焰像灰烬<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;author&quot;</span>&gt;</span>程姬<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>知识点</strong>：<br><code>*ngFor</code> 是一个 Angular 的复写器（repeater）指令，就像<strong>angular1</strong>中的<code>ng-for</code>和<strong>vuejs</strong>中的<code>v-for</code>。 它会为列表中的每项数据复写它的宿主元素。<br>这时候可以看到页面变成下面这个样子：<br><img src="http://images.pingan8787.com/angular_books_3_1.png" alt="图片3-1">     </p>
+<p>接下来我们要把写死在HTML上面的数据，抽到JS中：    </p>
+<p>现在先新建一个<code>books.ts</code>文件来定义一个<code>Book</code>类，并添加<code>id</code>，<code>url</code>，<code>title</code>和<code>author</code>四个属性：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/app/books.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="attr">id</span>: number;</span><br><span class="line">    url: string;</span><br><span class="line">    title: string;</span><br><span class="line">    author: string;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后回到<code>index.component.ts</code>文件去引入它，并定义一个<code>books</code>属性，使用导入进来的<code>Book</code>类作为类型：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Book &#125; <span class="keyword">from</span> <span class="string">&#x27;../books&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">  <span class="attr">books</span>: Book = &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;https://img3.doubanio.com/view/subject/m/public/s29988481.jpg&#x27;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;像火焰像灰烬&#x27;</span>,</span><br><span class="line">    <span class="attr">author</span>: <span class="string">&#x27;程姬&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后再改造前面的组件文件<code>index.component.html</code>:   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;books_item&quot;</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of [1,2,3,4,5,6,7,8,9,10]&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;cover&quot;</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;books.url&#125;&#125;&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&#123;&#123;books.id&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span>&gt;</span>&#123;&#123;books.title&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;author&quot;</span>&gt;</span>&#123;&#123;books.author&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着，我们再为每个课本添加一个点击事件，来实现点击封面图能查看大图的效果，现在<code>index.component.ts</code>中定义一个<code>getDetailImage</code>方法，并在<code>index.component.html</code>中绑定该方法：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">getDetailImage</span>(<span class="params">books</span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">`正在查看id为<span class="subst">$&#123;books.id&#125;</span>的大图！`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这边方法的具体实现，不写，不是本文重点。下面是增加点击事件的绑定：     </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;cover&quot;</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;books.url&#125;&#125;&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&#123;&#123;books.id&#125;&#125;&quot;</span> (<span class="attr">click</span>)=<span class="string">&quot;getDetailImage(books)&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>知识点</strong>：<br><code>(click)</code>是Angular用来绑定事件，它会让 Angular 监听这个<code> &lt;img&gt;</code> 元素的 <code>click</code> 事件。 当用户点击 <code>&lt;img&gt;</code> 时，Angular 就会执行表达式 <code>getDetailImage(books)</code>。    </p>
+<p>再来，我们引入前面学到的<strong>路由链接</strong>指令来改造HTML：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/detail/&#123;&#123;books.id&#125;&#125;&quot;</span>&gt;</span>&#123;&#123;books.title&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这时候，我们在点击书本的标题，发现页面跳转到URL地址为<code>http://localhost:4200/detail/1</code>的页面，这就说明，我们页面的路由跳转也成功了~    </p>
+<p>改造完成后，可以看到，页面显示的还是一样，接下来我们先这样放着，因为我们后面会进行数据模拟，和模拟服务器请求。    </p>
+<p>我们就这样写好第一个单一组件，并且数据是从JS中读取的。   </p>
+<h3 id="2-模拟数据"><a href="#2-模拟数据" class="headerlink" title="2.模拟数据"></a>2.模拟数据</h3><p>这时候为了方便后面数据渲染，我们这里需要模拟一些本地数据，我们创建一个本地<code> mock-books.ts</code>文件来存放模拟的数据：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/mock-books.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Books &#125; <span class="keyword">from</span> <span class="string">&#x27;./books&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> BookList: Books[] = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">1</span>, </span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;https://img3.doubanio.com/view/subject/m/public/s29988481.jpg&#x27;</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;像火焰像灰烬&#x27;</span>,</span><br><span class="line">        <span class="attr">author</span>: <span class="string">&#x27;程姬&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 省略其他9条</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>然后在<code>index.component.ts</code>中导入模拟的数据，并将原有的<code>books</code>值修改成导入的模拟数据<code>BookList</code>：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; BookList &#125; <span class="keyword">from</span> <span class="string">&#x27;../mock-books&#x27;</span>;</span><br><span class="line">books = BookList;</span><br></pre></td></tr></table></figure>
+<p>并将原本的<code>*ngFor</code>中修改成这样，绑定真正的数据：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;books_item&quot;</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of books&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;cover&quot;</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;item.url&#125;&#125;&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&#123;&#123;item.id&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span>&gt;</span>&#123;&#123;item.title&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;author&quot;</span>&gt;</span>&#123;&#123;item.author&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-编写主从组件"><a href="#3-编写主从组件" class="headerlink" title="3.编写主从组件"></a>3.编写主从组件</h3><p>当我们写完一个单一组件后，我们会发现，如果我们把每个组件都写到同一个HTML文件中，这是很糟糕的事情，这样做有缺点：   </p>
+<ul>
+<li>代码复用性差；（导致每次相同功能要重新写）   </li>
+<li>代码难维护；（因为一个文件会非常长）</li>
+<li>影响性能；（打开每个页面都要重复加载很多）</li>
+</ul>
+<p>为了解决这个问题，我们这里就要开始使用真正的<strong>组件化思维</strong>，将通用常用组件抽离出来，通过参数传递来控制组件的不同业务形态。<br>这便是我们接下来要写的主从组件。    </p>
+<p>思考一下，我们这里现在能抽成组件作为公共代码的，就是这个单个书本的内容，因为每个书本的内容都一致，只是里面数据的差异，于是我们再新建一个组件：   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g component books</span><br></pre></td></tr></table></figure>
+<p>并将前面<code>index.component.html</code>中关于课本的代码剪切到<code>books.component.html</code>中来，然后删除掉<code>*ngFor</code>的内容，并将原本本地的变量<code>books</code>替换成<code>list</code>，这个变量我们等会会取到：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- books.component.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;books_item&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;cover&quot;</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;list.url&#125;&#125;&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&#123;&#123;list.id&#125;&#125;&quot;</span> (<span class="attr">click</span>)=<span class="string">&quot;getDetailImage(list)&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/detail/&#123;&#123;list.id&#125;&#125;&quot;</span>&gt;</span>&#123;&#123;list.title&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;author&quot;</span>&gt;</span>&#123;&#123;list.author&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>再将这个组件，引用到它的父组件中，这里是要引用到<code>index.component.html</code>的组件中，并将前面的<code>*ngFor</code>再次传入<code>&lt;app-books&gt;</code>：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;books_box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-books</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let item of books&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">app-books</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来要做的就是获取到<code>list</code>变量的值，显然这个值是要从外面组件传进来的，我们需要在<code>books.component.ts</code>引入前面定义的 <code>Books</code>类 和 <code>@Input() 装饰器</code>，还要添加一个带有 <code>@Input() 装饰器</code>的 <code>list</code> 属性，另外还要记得将<code>getDetailImage</code>方法也剪切过来：    </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books.component.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Component, OnInit, Input &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Books &#125; <span class="keyword">from</span> <span class="string">&#x27;../books&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">BooksComponent</span> <span class="title">implements</span> <span class="title">OnInit</span> </span>&#123;</span><br><span class="line">  @Input() list: Books;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123; &#125;</span><br><span class="line">  <span class="function"><span class="title">ngOnInit</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">getDetailImage</span>(<span class="params">books</span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">`正在查看id为<span class="subst">$&#123;books.id&#125;</span>的大图！`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@Input() 装饰器</code>介绍具体可以查看 <a target="_blank" rel="noopener" href="https://angular.cn/guide/template-syntax#inputs-outputs">手册</a>   </p>
+<p>我们要获取的 <code>list</code> 属性必须是一个带有<code>@Input()</code>装饰器的输入属性，因为外部的 <code>IndexComponent</code> 组件将会绑定到它。就像这样：   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-books</span> *<span class="attr">ngFor</span>=<span class="string">&quot;let list of books&quot;</span> [<span class="attr">list</span>]=<span class="string">&quot;item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">app-books</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>知识点</strong>：<br><code>[list]=&quot;item&quot;</code> 是 <code>Angular</code> 的<strong>属性绑定</strong>语法。这是一种<strong>单向数据绑定</strong>。从 <code>IndexComponent</code> 的 <code>item</code> 属性绑定到目标元素的 <code>list</code> 属性，并映射到了 <code>BooksComponent</code> 的 <code>list</code> 属性。</p>
+<p>做到这里，我们已经将<code>BooksComponent</code>作为<code>IndexComponent</code>的子组件来引用了，在实际开发过程中，这样的父子组件关系，会用的非常多。    </p>
+<p>写到这里，看看我们项目，还是一样正常在运行，只是现在项目中组件分工更加明确了。   </p>
+<p>现在的效果图：<br><img src="http://images.pingan8787.com/angular_books_3_2.png" alt="图片3-2"></p>
+<p><strong>本部分内容到这结束</strong></p>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#105;&#x6e;&#103;&#x61;&#110;&#56;&#x37;&#56;&#55;&#64;&#113;&#113;&#46;&#x63;&#x6f;&#109;">&#x70;&#105;&#x6e;&#103;&#x61;&#110;&#56;&#x37;&#56;&#55;&#64;&#113;&#113;&#46;&#x63;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>JS小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+<tr>
+<td>微信公众号</td>
+<td>前端自习课</td>
+</tr>
+</tbody></table>
+<p><img src="http://images.pingan8787.com/2019_07_12guild_page.png" alt="bg">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/02/23/143-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%882-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E9%A1%B5%E9%9D%A2%E5%92%8C%E7%BB%84%E4%BB%B6%EF%BC%89/" data-id="ckts3ejt3002p4d9k60rwhfj8" data-title="143-【CuteJavaScript】Angular6入门项目（2.构建项目页面和组件）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/02/23/144-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%883-%E7%BC%96%E5%86%99%E6%9C%8D%E5%8A%A1%E5%92%8C%E5%BC%95%E5%85%A5RxJS%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          144-【CuteJavaScript】Angular6入门项目（3.编写服务和引入RxJS）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/23/142-%E3%80%90CuteJavaScript%E3%80%91Angular6%E5%85%A5%E9%97%A8%E9%A1%B9%E7%9B%AE%EF%BC%881-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%92%8C%E5%88%9B%E5%BB%BA%E8%B7%AF%E7%94%B1%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">142-【CuteJavaScript】Angular6入门项目（1.构建项目和创建路由）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

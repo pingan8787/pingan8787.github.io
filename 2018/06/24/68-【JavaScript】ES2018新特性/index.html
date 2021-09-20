@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>68-【JavaScript】ES2018新特性 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#112;&amp;#105;&amp;#x6e;&amp;#x67;&amp;#x61;&amp;#110;&amp;#x38;&amp;#55;&amp;#x38;&amp;#55;&amp;#x40;&amp;#x71;&amp;#113;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章 https:&#x2F;&#x2F;0x9.me&#x2F;KMrv3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="68-【JavaScript】ES2018新特性">
+<meta property="og:url" content="http://example.com/2018/06/24/68-%E3%80%90JavaScript%E3%80%91ES2018%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#112;&amp;#105;&amp;#x6e;&amp;#x67;&amp;#x61;&amp;#110;&amp;#x38;&amp;#55;&amp;#x38;&amp;#55;&amp;#x40;&amp;#x71;&amp;#113;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章 https:&#x2F;&#x2F;0x9.me&#x2F;KMrv3">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-06-24T11:42:11.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.710Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-68-【JavaScript】ES2018新特性" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/06/24/68-%E3%80%90JavaScript%E3%80%91ES2018%E6%96%B0%E7%89%B9%E6%80%A7/" class="article-date">
+  <time class="dt-published" datetime="2018-06-24T11:42:11.000Z" itemprop="datePublished">2018-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      68-【JavaScript】ES2018新特性
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#105;&#x6e;&#x67;&#x61;&#110;&#x38;&#55;&#x38;&#55;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#x6d;">&#112;&#105;&#x6e;&#x67;&#x61;&#110;&#x38;&#55;&#x38;&#55;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章</td>
+<td><a target="_blank" rel="noopener" href="https://0x9.me/KMrv3">https://0x9.me/KMrv3</a></td>
+</tr>
+</tbody></table>
+<hr>
+<p>在这篇文章中，我将介绍ES2018（ES9）的新特性，并介绍如何使用它们。  </p>
+<p>JavaScript（ECMAScript）是跨多个平台的许多厂商实施的不断发展的标准。ES6（ECMAScript 2015）花费六年的时间敲定，是一个很大的发行版。新的年度发布流程被制定，以简化流程并更快地添加功能。 ES9（ES2018）是撰写本文时的最新版本。  </p>
+<p>TC39由包括浏览器厂商在内的各方组成，他们开会推动JavaScript提案沿着一条严格的发展道路前进:  </p>
+<ul>
+<li>Stage 0: strawman——最初想法的提交。  </li>
+<li>Stage 1: proposal（提案）——由TC39至少一名成员倡导的正式提案文件，该文件包括API事例。  </li>
+<li>Stage 2: draft（草案）——功能规范的初始版本，该版本包含功能规范的两个实验实现。  </li>
+<li>Stage 3: candidate（候选）——提案规范通过审查并从厂商那里收集反馈  </li>
+<li>Stage 4: finished（完成）——提案准备加入ECMAScript，但是到浏览器或者Nodejs中可能需要更长的时间  </li>
+</ul>
+<h2 id="ES2016"><a href="#ES2016" class="headerlink" title="ES2016"></a>ES2016</h2><p>ES2016添加了两个小的特性来说明标准化过程：  </p>
+<ol>
+<li><p>数组<code>includes()</code>方法，用来判断一个数组是否包含一个指定的值，根据情况，如果包含则返回<code>true</code>，否则返回<code>false</code>。  </p>
+</li>
+<li><p><code>a ** b</code>指数运算符，它与 <code>Math.pow(a, b)</code>相同。  </p>
+</li>
+</ol>
+<h2 id="ES2017"><a href="#ES2017" class="headerlink" title="ES2017"></a>ES2017</h2><p>ES2017提供了更多的新特性：  </p>
+<ol>
+<li><p><code>Async</code> 函数呈现更清晰的 <code>Promise</code> 语法  </p>
+</li>
+<li><p><code>Object.values</code> 方法返回一个给定对象自己的所有可枚举属性值的数组，值的顺序与使用<code>for...in</code>循环的顺序相同（区别在于<code>for...in</code>循环枚举原型链中的属性）  </p>
+</li>
+<li><p><code>Object.entries()</code>方法返回一个给定对象自身可枚举属性的键值对数组，其排列与使用<code>for...in</code>循环遍历改对象时返回的顺序一致（区别在于<code>for...in</code>循环也枚举原型链中的属性）  </p>
+</li>
+<li><p><code>Object.getOwnPropertyDescriptors()</code>返回一个对象的所有自身属性的描述符（<code>.value</code>,<code>.writable</code>,<code>.get</code>,<code>.set</code>,<code>.configurable</code>,<code>enumerable</code>）  </p>
+</li>
+<li><p><code>padStart()</code>和<code>padEnd()</code>，填充字符串达到当前长度  </p>
+</li>
+<li><p>结尾逗号，数组定义和函数参数列表  </p>
+</li>
+<li><p><code>ShareArrayBuffer</code>和<code>Atomics</code>用于从共享内存位置读取和写入  </p>
+</li>
+</ol>
+<p>关于ES2017的更多信息请<a target="_blank" rel="noopener" href="https://www.sitepoint.com/es2017-whats-new/">参阅</a></p>
+<h2 id="ES2018"><a href="#ES2018" class="headerlink" title="ES2018"></a>ES2018</h2><p>ECMAScript 2018（或者叫ES9）现在已经可用了。以下功能已经到达 stage 4，但是在撰写本文时在各个浏览器的实现还不完整。  </p>
+<h3 id="异步迭代"><a href="#异步迭代" class="headerlink" title="异步迭代"></a>异步迭代</h3><p>在<code>async/await</code>的某些时刻，你可能尝试在同步循环中调用异步函数。例如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">process</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> array) &#123;</span><br><span class="line">    <span class="keyword">await</span> doSomething(i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码不会正常运行，下面这段同样也不会：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">process</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  array.forEach(<span class="keyword">async</span> i =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> doSomething(i);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码中，循环本身依旧保持同步，并在在内部异步函数之前全部调用完成。<br>ES2018引入异步迭代器（asynchronous iterators），这就像常规迭代器，除了<code>next()</code>方法返回一个<code>Promise</code>。因此<code>await</code>可以和<code>for...of</code>循环一起使用，以串行的方式运行异步操作。例如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">process</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> <span class="keyword">await</span> (<span class="keyword">let</span> i <span class="keyword">of</span> array) &#123;</span><br><span class="line">    doSomething(i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Promise-finally"><a href="#Promise-finally" class="headerlink" title="Promise.finally()"></a>Promise.finally()</h3><p>一个<code>Promise</code>调用链要么成功到达最后一个<code>.then()</code>，要么失败触发<code>.catch()</code>。在某些情况下，你想要在无论<code>Promise</code>运行成功还是失败，运行相同的代码，例如清除，删除对话，关闭数据库连接等。<br><code>.finally()</code>允许你指定最终的逻辑：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  doSomething1()</span><br><span class="line">  .then(doSomething2)</span><br><span class="line">  .then(doSomething3)</span><br><span class="line">  .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">  &#125;)</span><br><span class="line">  .finally(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// finish here!</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Rest-Spread-属性"><a href="#Rest-Spread-属性" class="headerlink" title="Rest/Spread 属性"></a>Rest/Spread 属性</h2><p>ES2015引入了<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters">Rest参数</a>和<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax">扩展运算符</a>。三个点（…）仅用于数组。Rest参数语法允许我们将一个布丁数量的参数表示为一个数组。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">restParam(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restParam</span>(<span class="params">p1, p2, ...p3</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// p1 = 1</span></span><br><span class="line">  <span class="comment">// p2 = 2</span></span><br><span class="line">  <span class="comment">// p3 = [3, 4, 5]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>展开操作符以相反的方式工作，将数组转换成可传递给函数的单独参数。例如<code>Math.max()</code>返回给定数字中的最大值：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> values = [<span class="number">99</span>, <span class="number">100</span>, -<span class="number">1</span>, <span class="number">48</span>, <span class="number">16</span>];</span><br><span class="line"><span class="built_in">console</span>.log( <span class="built_in">Math</span>.max(...values) ); <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<p>ES2018为对象解构提供了和数组一样的Rest参数（）和展开操作符，一个简单的例子：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myObject = &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">b</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">c</span>: <span class="number">3</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; a, ...x &#125; = myObject;</span><br><span class="line"><span class="comment">// a = 1</span></span><br><span class="line"><span class="comment">// x = &#123; b: 2, c: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者你可以使用它给函数传递参数：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">restParam(&#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">b</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">c</span>: <span class="number">3</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restParam</span>(<span class="params">&#123; a, ...x &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// a = 1</span></span><br><span class="line">  <span class="comment">// x = &#123; b: 2, c: 3 &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟数组一样，Rest参数只能在声明的结尾处使用。此外，它只适用于每个对象的顶层，如果对象中嵌套对象则无法适用。<br>扩展运算符可以在其他对象内使用，例如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj1 = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> obj2 = &#123; ...obj1, <span class="attr">z</span>: <span class="number">26</span> &#125;;</span><br><span class="line"><span class="comment">// obj2 is &#123; a: 1, b: 2, c: 3, z: 26 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用扩展运算符拷贝一个对象，像是这样<code>obj2 = &#123;...obj1&#125;</code>，但是 这只是一个对象的浅拷贝。另外，如果一个对象A的属性是对象B，那么在克隆后的对象cloneB中，该属性指向对象B。  </p>
+<h3 id="正则表达式命名捕获组（Regular-Expression-Named-Capture-Groups）"><a href="#正则表达式命名捕获组（Regular-Expression-Named-Capture-Groups）" class="headerlink" title="正则表达式命名捕获组（Regular Expression Named Capture Groups）"></a>正则表达式命名捕获组（Regular Expression Named Capture Groups）</h3><p>JavaScript正则表达式可以返回一个匹配的对象——一个包含匹配字符串的类数组，例如：以YYYY-MM-DD的格式解析日期：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span></span><br><span class="line">  reDate = <span class="regexp">/([0-9]&#123;4&#125;)-([0-9]&#123;2&#125;)-([0-9]&#123;2&#125;)/</span>,</span><br><span class="line">  match  = reDate.exec(<span class="string">&#x27;2018-04-30&#x27;</span>),</span><br><span class="line">  year   = match[<span class="number">1</span>], <span class="comment">// 2018</span></span><br><span class="line">  month  = match[<span class="number">2</span>], <span class="comment">// 04</span></span><br><span class="line">  day    = match[<span class="number">3</span>]; <span class="comment">// 30</span></span><br></pre></td></tr></table></figure>
+
+<p>这样的代码很难读懂，并且改变正则表达式的结构有可能改变匹配对象的索引。<br>ES2018允许命名捕获组使用符号<code>?&lt;name&gt;</code>，在打开捕获括号(后立即命名，示例如下：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span></span><br><span class="line">  reDate = <span class="regexp">/(?&lt;year&gt;[0-9]&#123;4&#125;)-(?&lt;month&gt;[0-9]&#123;2&#125;)-(?&lt;day&gt;[0-9]&#123;2&#125;)/</span>,</span><br><span class="line">  match  = reDate.exec(<span class="string">&#x27;2018-04-30&#x27;</span>),</span><br><span class="line">  year   = match.groups.year,  <span class="comment">// 2018</span></span><br><span class="line">  month  = match.groups.month, <span class="comment">// 04</span></span><br><span class="line">  day    = match.groups.day;   <span class="comment">// 30</span></span><br></pre></td></tr></table></figure>
+<p>任何匹配失败的命名组都将返回<code>undefined</code>。<br>命名捕获也可以使用在<code>replace()</code>方法中。例如将日期转换为美国的 MM-DD-YYYY 格式：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span></span><br><span class="line">  reDate = <span class="regexp">/(?&lt;year&gt;[0-9]&#123;4&#125;)-(?&lt;month&gt;[0-9]&#123;2&#125;)-(?&lt;day&gt;[0-9]&#123;2&#125;)/</span>,</span><br><span class="line">  d      = <span class="string">&#x27;2018-04-30&#x27;</span>,</span><br><span class="line">  usDate = d.replace(reDate, <span class="string">&#x27;$&lt;month&gt;-$&lt;day&gt;-$&lt;year&gt;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="正则表达式反向断言（lookbehind）"><a href="#正则表达式反向断言（lookbehind）" class="headerlink" title="正则表达式反向断言（lookbehind）"></a>正则表达式反向断言（lookbehind）</h3><p>目前JavaScript在正则表达式中支持先行断言（lookahead）。这意味着匹配会发生，但不会有任何捕获，并且断言没有包含在整个匹配字段中。例如从价格中捕获货币符号：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span></span><br><span class="line">  reLookahead = <span class="regexp">/\D(?=\d+)/</span>,</span><br><span class="line">  match       = reLookahead.exec(<span class="string">&#x27;$123.89&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( match[<span class="number">0</span>] ); <span class="comment">// $</span></span><br></pre></td></tr></table></figure>
+
+<p>ES2018引入以相同方式工作但是匹配前面的反向断言（lookbehind），这样我就可以忽略货币符号，单纯的捕获价格的数字：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span></span><br><span class="line">  reLookbehind = <span class="regexp">/(?&lt;=\D)\d+/</span>,</span><br><span class="line">  match        = reLookbehind.exec(<span class="string">&#x27;$123.89&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( match[<span class="number">0</span>] ); <span class="comment">// 123.89</span></span><br></pre></td></tr></table></figure>
+
+<p>以上是 肯定反向断言，非数字<code>\D</code>必须存在。同样的，还存在 否定反向断言，表示一个值必须不存在，例如：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span></span><br><span class="line">  reLookbehindNeg = <span class="regexp">/(?&lt;!\D)\d+/</span>,</span><br><span class="line">  match           = reLookbehind.exec(<span class="string">&#x27;$123.89&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( match[<span class="number">0</span>] ); <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="正则表达式dotAll模式"><a href="#正则表达式dotAll模式" class="headerlink" title="正则表达式dotAll模式"></a>正则表达式<code>dotAll</code>模式</h3><p>正则表达式中点.匹配除回车外的任何单字符，标记s改变这种行为，允许行终止符的出现，例如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/hello.world/.test(<span class="string">&#x27;hello\nworld&#x27;</span>);  <span class="comment">// false</span></span><br><span class="line"><span class="regexp">/hello.world/</span>s.test(<span class="string">&#x27;hello\nworld&#x27;</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="正则表达式-Unicode-转义"><a href="#正则表达式-Unicode-转义" class="headerlink" title="正则表达式 Unicode 转义"></a>正则表达式 Unicode 转义</h3><p>到目前为止，在正则表达式中本地访问 Unicode 字符属性是不被允许的。ES2018添加了 Unicode 属性转义——形式为<code>\p&#123;...&#125;</code>和<code>\P&#123;...&#125;</code>，在正则表达式中使用标记 <code>u</code> (unicode) 设置，在<code>\p</code>块儿内，可以以键值对的方式设置需要匹配的属性而非具体内容。例如：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reGreekSymbol = <span class="regexp">/\p&#123;Script=Greek&#125;/u</span>;</span><br><span class="line">reGreekSymbol.test(<span class="string">&#x27;π&#x27;</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>此特性可以避免使用特定 Unicode 区间来进行内容类型判断，提升可读性和可维护性。   </p>
+<h3 id="非转义序列的模板字符串"><a href="#非转义序列的模板字符串" class="headerlink" title="非转义序列的模板字符串"></a>非转义序列的模板字符串</h3><p>最后，ES2018 移除对 ECMAScript 在带标签的模版字符串中转义序列的语法限制。<br>之前，<code>\u</code>开始一个 unicode 转义，<code>\x</code>开始一个十六进制转义，<code>\</code>后跟一个数字开始一个八进制转义。这使得创建特定的字符串变得不可能，例如Windows文件路径 <code>C:\uuu\xxx\111</code>。更多细节参考<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/template_strings">模板字符串</a>。<br>这是所有的ES2018的新特性，ES2019已经开始，你有什么期待的功能想在明年看到吗？  </p>
+<h2 id="译者参考"><a href="#译者参考" class="headerlink" title="译者参考"></a>译者参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006824133">javascript正则断言的理解</a>   </li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/33353980">【RPU-A】正则 Unicode 转义提案进入 ES2018</a>   </li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/template_strings">模板字符串——ES2018关于非法转义序列的修订</a>   </li>
+<li><a target="_blank" rel="noopener" href="http://esnext.justjavac.com/proposal/template-literal-revision.html">非转义序列的模板字符串 </a>  </li>
+<li><a target="_blank" rel="noopener" href="http://esnext.justjavac.com/proposal/regexp-named-groups.html">正则表达式命名捕获组</a>   </li>
+</ul>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://juejin.im/post/5b2a186cf265da596d04a648">打开原文</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/06/24/68-%E3%80%90JavaScript%E3%80%91ES2018%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="ckts3ejvp009r4d9kcy4d75pb" data-title="68-【JavaScript】ES2018新特性" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/31/69-%E3%80%90JavaScript%E3%80%91JS%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%E5%92%8C%E5%B8%B8%E8%A7%81%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          69-【JavaScript】JS垃圾回收机制和常见内存泄漏的解决方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/20/67-%E3%80%90CSS%E3%80%91REM%E7%9A%84%E5%90%84%E7%A7%8D%E9%80%82%E9%85%8D%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">67-【CSS】REM的各种适配介绍</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

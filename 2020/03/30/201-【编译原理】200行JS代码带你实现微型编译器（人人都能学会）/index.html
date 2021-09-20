@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>201-【编译原理】200行JS代码带你实现微型编译器（人人都能学会） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="最近看到掘金、前端公众号好多 ES2020 的文章，想说一句：放开我，我还学得动！  先问大家一句，日常项目开发中你能离开 ES6 吗？ 一、前言对于前端同学来说，编译器可能适合神奇的魔盒🎁，表面普通，但常常给我们惊喜。编译器，顾名思义，用来编译，编译什么呢？当然是编译代码咯🌹。其实我们也经常接触到编译器的使用场景：  React 中 JSX 转换成 JS 代码； 通过 Babel 将 E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="201-【编译原理】200行JS代码带你实现微型编译器（人人都能学会）">
+<meta property="og:url" content="http://example.com/2020/03/30/201-%E3%80%90%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%91200%E8%A1%8CJS%E4%BB%A3%E7%A0%81%E5%B8%A6%E4%BD%A0%E5%AE%9E%E7%8E%B0%E5%BE%AE%E5%9E%8B%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%88%E4%BA%BA%E4%BA%BA%E9%83%BD%E8%83%BD%E5%AD%A6%E4%BC%9A%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最近看到掘金、前端公众号好多 ES2020 的文章，想说一句：放开我，我还学得动！  先问大家一句，日常项目开发中你能离开 ES6 吗？ 一、前言对于前端同学来说，编译器可能适合神奇的魔盒🎁，表面普通，但常常给我们惊喜。编译器，顾名思义，用来编译，编译什么呢？当然是编译代码咯🌹。其实我们也经常接触到编译器的使用场景：  React 中 JSX 转换成 JS 代码； 通过 Babel 将 E">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/1585365502950-d474962e-f17c-4aec-bcf4-1252dd5f0e5d.jpeg">
+<meta property="og:image" content="https://st-gdx.dancf.com/gaodingx/0/design/20191125-144728-7a47.gif">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/111.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/112.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/113.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/114.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/115.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%89%E4%B8%AA%E6%A0%B8%E5%BF%83%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="https://st-gdx.dancf.com/gaodingx/46/design/20191206-135932-505a.gif">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/TheSuperTinyCompiler%E7%BC%96%E8%AF%91%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/%E8%A7%A3%E6%9E%90%E9%98%B6%E6%AE%B5-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/%E8%A7%A3%E6%9E%90%E9%98%B6%E6%AE%B5-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/%E8%BD%AC%E6%8D%A2%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="https://st-gdx.dancf.com/gaodingx/0/uxms/design/20200320-163503-12b5.gif">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/TheSuperTinyCompiler%E7%BC%96%E8%AF%91%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%88%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%89.png">
+<meta property="og:image" content="https://st-gdx.dancf.com/gaodingx/0/design/20191030-163349-cca6.gif">
+<meta property="og:image" content="http://images.pingan8787.com/TinyCompiler/Webpack%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B1.png">
+<meta property="og:image" content="https://st0.dancf.com/csc/346/templets/20191106-155044-c33a.gif">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/2/22/1706bb1ea5f680ae?w=885&h=445&f=png&s=80093">
+<meta property="article:published_time" content="2020-03-30T13:31:34.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.641Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.pingan8787.com/TinyCompiler/1585365502950-d474962e-f17c-4aec-bcf4-1252dd5f0e5d.jpeg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-201-【编译原理】200行JS代码带你实现微型编译器（人人都能学会）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/03/30/201-%E3%80%90%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%91200%E8%A1%8CJS%E4%BB%A3%E7%A0%81%E5%B8%A6%E4%BD%A0%E5%AE%9E%E7%8E%B0%E5%BE%AE%E5%9E%8B%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%88%E4%BA%BA%E4%BA%BA%E9%83%BD%E8%83%BD%E5%AD%A6%E4%BC%9A%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2020-03-30T13:31:34.000Z" itemprop="datePublished">2020-03-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      201-【编译原理】200行JS代码带你实现微型编译器（人人都能学会）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images.pingan8787.com/TinyCompiler/1585365502950-d474962e-f17c-4aec-bcf4-1252dd5f0e5d.jpeg"><br /></p>
+<blockquote>
+<p>最近看到掘金、前端公众号好多 ES2020 的文章，想说一句：放开我，我还学得动！</p>
+</blockquote>
+<p><br />先问大家一句，日常项目开发中你能离开 ES6 吗？<br /></p>
+<h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>对于前端同学来说，编译器可能适合神奇的魔盒🎁，表面普通，但常常给我们惊喜。<br />编译器，顾名思义，用来编译，编译什么呢？当然是编译代码咯🌹。<br /><br><img src="https://st-gdx.dancf.com/gaodingx/0/design/20191125-144728-7a47.gif"><br><br />其实我们也经常接触到编译器的使用场景：</p>
+<ul>
+<li>React 中 JSX 转换成 JS 代码；</li>
+<li>通过 Babel 将 ES6 及以上规范的代码转换成 ES5 代码；</li>
+<li>通过各种 Loader 将 Less / Scss 代码转换成浏览器支持的 CSS 代码；</li>
+<li>将 TypeScript 转换为 JavaScript 代码。</li>
+<li>and so on…</li>
+</ul>
+<p><br />使用场景非常之多，我的双手都数不过来了。😄<br />虽然现在社区已经有非常多工具能为我们完成上述工作，但了解一些编译原理是很有必要的。接下来进入本文主题：<strong>200行JS代码，带你实现代码编译器</strong>。<br /></p>
+<h1 id="二、编译器介绍"><a href="#二、编译器介绍" class="headerlink" title="二、编译器介绍"></a>二、编译器介绍</h1><h2 id="2-1-程序运行方式"><a href="#2-1-程序运行方式" class="headerlink" title="2.1 程序运行方式"></a>2.1 程序运行方式</h2><p>现代程序主要有两种编译模式：静态编译和动态解释。推荐一篇文章<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008739157">《Angular 2 JIT vs AOT》</a>介绍得非常详细。<br /></p>
+<h3 id="静态编译"><a href="#静态编译" class="headerlink" title="静态编译"></a>静态编译</h3><p>简称 <strong>AOT</strong>（Ahead-Of-Time）即 <strong>提前编译</strong> ，静态编译的程序会在执行前，会使用指定编译器，将全部代码编译成机器码。<br /><img src="http://images.pingan8787.com/TinyCompiler/111.png"><br />（图片来自：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008739157">https://segmentfault.com/a/1190000008739157</a>）<br /><br><br />在 Angular 的 AOT 编译模式开发流程如下：</p>
+<ul>
+<li>使用 TypeScript 开发 Angular 应用</li>
+<li>运行 ngc 编译应用程序<ul>
+<li>使用 Angular Compiler 编译模板，一般输出 TypeScript 代码</li>
+<li>运行 tsc 编译 TypeScript 代码</li>
+</ul>
+</li>
+<li>使用 Webpack 或 Gulp 等其他工具构建项目，如代码压缩、合并等</li>
+<li>部署应用</li>
+</ul>
+<h3 id="动态解释"><a href="#动态解释" class="headerlink" title="动态解释"></a>动态解释</h3><p>简称 <strong>JIT</strong>（Just-In-Time）即 <strong>即时编译</strong> ，动态解释的程序会使用指定解释器，一边编译一边执行程序。<br /><img src="http://images.pingan8787.com/TinyCompiler/112.png">（图片来自：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008739157" title="https://segmentfault.com/a/1190000008739157">https://segmentfault.com/a/1190000008739157</a>）<br /><br><br />在 Angular 的 JIT 编译模式开发流程如下：</p>
+<ul>
+<li>使用 TypeScript 开发 Angular 应用</li>
+<li>运行 tsc 编译 TypeScript 代码</li>
+<li>使用 Webpack 或 Gulp 等其他工具构建项目，如代码压缩、合并等</li>
+<li>部署应用</li>
+</ul>
+<h3 id="AOT-vs-JIT"><a href="#AOT-vs-JIT" class="headerlink" title="AOT vs JIT"></a>AOT vs JIT</h3><p><strong>AOT 编译流程：</strong><img src="http://images.pingan8787.com/TinyCompiler/113.png">（图片来自：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008739157">https://segmentfault.com/a/1190000008739157</a>）</p>
+<p><strong>JIT 编译流程：</strong><img src="http://images.pingan8787.com/TinyCompiler/114.png">（图片来自：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008739157">https://segmentfault.com/a/1190000008739157</a>）</p>
+<table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">AOT</th>
+<th align="center">JIT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">编译平台</td>
+<td align="center">(Server) 服务器</td>
+<td align="center">(Browser) 浏览器</td>
+</tr>
+<tr>
+<td align="center">编译时机</td>
+<td align="center">Build (构建阶段)</td>
+<td align="center">Runtime (运行时)</td>
+</tr>
+<tr>
+<td align="center">包大小</td>
+<td align="center">较小</td>
+<td align="center">较大</td>
+</tr>
+<tr>
+<td align="center">执行性能</td>
+<td align="center">更好</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">启动时间</td>
+<td align="center">更短</td>
+<td align="center">-</td>
+</tr>
+</tbody></table>
+<p>除此之外 AOT 还有以下优点：</p>
+<ul>
+<li>在客户端我们不需要导入体积庞大的 angular 编译器，这样可以减少我们 JS 脚本库的大小</li>
+<li>使用 AOT 编译后的应用，不再包含任何 HTML 片段，取而代之的是编译生成的 TypeScript 代码，这样的话 TypeScript 编译器就能提前发现错误。总而言之，采用 AOT 编译模式，我们的模板是类型安全的。</li>
+</ul>
+<h2 id="2-2-现代编译器工作流程"><a href="#2-2-现代编译器工作流程" class="headerlink" title="2.2 现代编译器工作流程"></a>2.2 现代编译器工作流程</h2><p>摘抄维基百科中对 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B7%A8%E8%AD%AF%E5%99%A8?wprov=srpw1_0" title="编译器">编译器</a>工作流程介绍：</p>
+<blockquote>
+<p>一个现代编译器的主要工作流程如下：<br>源代码（source code）→ 预处理器（preprocessor）→ 编译器（compiler）→ 汇编程序（assembler）→ 目标代码（object code）→ 链接器（linker）→ 可执行文件（executables），最后打包好的文件就可以给电脑去判读运行了。</p>
+</blockquote>
+<p><img src="http://images.pingan8787.com/TinyCompiler/115.png"></p>
+<p>这里更强调了编译器的作用：<strong>将原始程序作为输入，翻译产生目标语言的等价程序</strong>。</p>
+<p><img src="http://images.pingan8787.com/TinyCompiler/%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%89%E4%B8%AA%E6%A0%B8%E5%BF%83%E9%98%B6%E6%AE%B5.png" alt="编译器三个核心阶段.png"></p>
+<p>目前绝大多数现代编译器工作流程基本类似，包括三个核心阶段：</p>
+<ol>
+<li><strong>解析（_Parsing_）</strong> ：通过词法分析和语法分析，将原始代码字符串解析成<strong>抽象语法树（Abstract Syntax Tree）</strong>；</li>
+<li><strong>转换（_Transformation_）</strong>：对抽象语法树进行转换处理操作；</li>
+<li><strong>生成代码（_Code Generation_）</strong>：将转换之后的 AST 对象生成目标语言代码字符串。</li>
+</ol>
+<h1 id="三、编译器实现"><a href="#三、编译器实现" class="headerlink" title="三、编译器实现"></a>三、编译器实现</h1><p>本文将通过 <strong><a target="_blank" rel="noopener" href="https://the-super-tiny-compiler.glitch.me/" title="The Super Tiny Compiler">The Super Tiny Compiler</a></strong> 源码解读，学习如何实现一个轻量编译器，最终<strong>实现将下面原始代码字符串（Lisp 风格的函数调用）编译成 JavaScript 可执行的代码</strong>。<br /></p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">Lisp 风格（编译前）</th>
+<th align="left">JavaScript 风格（编译后）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">2 + 2</td>
+<td align="left">(add 2 2)</td>
+<td align="left">add(2, 2)</td>
+</tr>
+<tr>
+<td align="left">4 - 2</td>
+<td align="left">(subtract 4 2)</td>
+<td align="left">subtract(4, 2)</td>
+</tr>
+<tr>
+<td align="left">2 + (4 - 2)</td>
+<td align="left">(add 2 (subtract 4 2))</td>
+<td align="left">add(2, subtract(4, 2))</td>
+</tr>
+</tbody></table>
+<p><br />话说 <a target="_blank" rel="noopener" href="https://the-super-tiny-compiler.glitch.me/">The Super Tiny Compiler</a> 号称<strong>可能是有史以来最小的编译器</strong>，并且其作者 James Kyle 也是 Babel 活跃维护者之一。<br /><img src="https://st-gdx.dancf.com/gaodingx/46/design/20191206-135932-505a.gif"><br><br />让我们开始吧~<br /></p>
+<h2 id="3-1-The-Super-Tiny-Compiler-工作流程"><a href="#3-1-The-Super-Tiny-Compiler-工作流程" class="headerlink" title="3.1 The Super Tiny Compiler 工作流程"></a>3.1 The Super Tiny Compiler 工作流程</h2><p>现在对照前面编译器的三个核心阶段，了解下 <a target="_blank" rel="noopener" href="https://the-super-tiny-compiler.glitch.me/">The Super Tiny Compiler</a>  编译器核心工作流程：<br /><img src="http://images.pingan8787.com/TinyCompiler/TheSuperTinyCompiler%E7%BC%96%E8%AF%91%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="The Super Tiny Compiler编译器工作流程.png"><br /></p>
+<p><strong>图中详细流程如下：</strong></p>
+<ol>
+<li>执行<strong>入口函数</strong>，输入<strong>原始代码字符串</strong>作为参数；</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原始代码字符串</span></span><br><span class="line">(add <span class="number">2</span> (subtract <span class="number">4</span> <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>进入<strong>解析阶段（Parsing）</strong>，原始代码字符串通过<strong>词法分析器（Tokenizer）</strong>转换为<strong>词法单元数组，</strong>然后再通过 <strong>语法分析器（Parser）</strong>将<strong>词法单元数组</strong>转换为<strong>抽象语法树（Abstract Syntax Tree 简称 AST）</strong>，并返回；</li>
+</ol>
+<p><img src="http://images.pingan8787.com/TinyCompiler/%E8%A7%A3%E6%9E%90%E9%98%B6%E6%AE%B5-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90.png" alt="解析阶段 - 词法分析.png"><br /><br><img src="http://images.pingan8787.com/TinyCompiler/%E8%A7%A3%E6%9E%90%E9%98%B6%E6%AE%B5-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.png" alt="解析阶段 - 语法分析.png"><br /></p>
+<ol start="3">
+<li>进入<strong>转换阶段（Transformation）</strong>，将上一步生成的 <strong>AST 对象</strong> 导入<strong>转换器（Transformer）</strong>，通过<strong>转换器</strong>中的<strong>遍历器（Traverser）</strong>，将代码转换为我们所需的<strong>新的 AST 对象</strong>；</li>
+</ol>
+<p><img src="http://images.pingan8787.com/TinyCompiler/%E8%BD%AC%E6%8D%A2%E9%98%B6%E6%AE%B5.png" alt="转换阶段.png"><br /></p>
+<ol start="4">
+<li>进入<strong>代码生成阶段（Code Generation）</strong>，将上一步返回的<strong>新 AST 对象</strong>通过<strong>代码生成器（CodeGenerator）</strong>，转换成 <strong>JavaScript Code</strong>；</li>
+</ol>
+<p><img src="http://images.pingan8787.com/TinyCompiler/%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E9%98%B6%E6%AE%B5.png" alt="代码生成阶段.png"><br /></p>
+<ol start="5">
+<li><strong>代码编译结束</strong>，返回 <strong>JavaScript Code</strong>。</li>
+</ol>
+<p><img src="https://st-gdx.dancf.com/gaodingx/0/uxms/design/20200320-163503-12b5.gif"><br /><br><br />上述流程看完后可能一脸懵逼，不过没事，请保持头脑清醒，先有个整个流程的印象，接下来我们开始阅读代码：<br /></p>
+<h2 id="3-2-入口方法"><a href="#3-2-入口方法" class="headerlink" title="3.2 入口方法"></a>3.2 入口方法</h2><p>首先定义一个入口方法 <code>compiler</code> ，接收原始代码字符串作为参数，返回最终 JavaScript Code：<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 编译器入口方法 参数：原始代码字符串 input</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compiler</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> tokens = tokenizer(input);</span><br><span class="line">  <span class="keyword">let</span> ast    = parser(tokens);</span><br><span class="line">  <span class="keyword">let</span> newAst = transformer(ast);</span><br><span class="line">  <span class="keyword">let</span> output = codeGenerator(newAst);</span><br><span class="line">  <span class="keyword">return</span> output;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-解析阶段"><a href="#3-3-解析阶段" class="headerlink" title="3.3 解析阶段"></a>3.3 解析阶段</h2><p>在解析阶段中，我们定义<strong>词法分析器方法</strong> <code>tokenizer</code>  和<strong>语法分析器方法</strong> <code>parser</code> 然后分别实现：<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 词法分析器 参数：原始代码字符串 input</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tokenizer</span>(<span class="params">input</span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 语法分析器 参数：词法单元数组tokens</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parser</span>(<span class="params">tokens</span>) </span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="词法分析器"><a href="#词法分析器" class="headerlink" title="词法分析器"></a>词法分析器</h3><p><strong>词法分析器方法</strong> <code>tokenizer</code> 的主要任务：遍历整个原始代码字符串，将原始代码字符串转换为<strong>词法单元数组（tokens）</strong>，并返回。<br />在遍历过程中，匹配每种字符并处理成<strong>词法单元</strong>压入<strong>词法单元数组</strong>，如当匹配到左括号（ <code>(</code> ）时，将往<strong>词法单元数组（tokens）</strong>压入一个<strong>词法单元对象</strong>（<code>&#123;type: &#39;paren&#39;, value:&#39;(&#39;&#125;</code>）。<br /><img src="http://images.pingan8787.com/TinyCompiler/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="词法分析器工作流程.png"><br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 词法分析器 参数：原始代码字符串 input</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tokenizer</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> current = <span class="number">0</span>;  <span class="comment">// 当前解析的字符索引，作为游标</span></span><br><span class="line">  <span class="keyword">let</span> tokens = [];  <span class="comment">// 初始化词法单元数组</span></span><br><span class="line">  <span class="comment">// 循环遍历原始代码字符串，读取词法单元数组</span></span><br><span class="line">  <span class="keyword">while</span> (current &lt; input.length) &#123;</span><br><span class="line">    <span class="keyword">let</span> char = input[current];</span><br><span class="line">    <span class="comment">// 匹配左括号，匹配成功则压入对象 &#123;type: &#x27;paren&#x27;, value:&#x27;(&#x27;&#125;</span></span><br><span class="line">    <span class="keyword">if</span> (char === <span class="string">&#x27;(&#x27;</span>) &#123;</span><br><span class="line">      tokens.push(&#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&#x27;paren&#x27;</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&#x27;(&#x27;</span></span><br><span class="line">      &#125;);</span><br><span class="line">      current++;</span><br><span class="line">      <span class="keyword">continue</span>; <span class="comment">// 自增current，完成本次循环，进入下一个循环</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 匹配右括号，匹配成功则压入对象 &#123;type: &#x27;paren&#x27;, value:&#x27;)&#x27;&#125;</span></span><br><span class="line">    <span class="keyword">if</span> (char === <span class="string">&#x27;)&#x27;</span>) &#123;</span><br><span class="line">      tokens.push(&#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&#x27;paren&#x27;</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&#x27;)&#x27;</span></span><br><span class="line">      &#125;);</span><br><span class="line">      current++;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 匹配空白字符，匹配成功则跳过</span></span><br><span class="line">    <span class="comment">// 使用 \s 匹配，包括空格、制表符、换页符、换行符、垂直制表符等</span></span><br><span class="line">    <span class="keyword">let</span> WHITESPACE = <span class="regexp">/\s/</span>;</span><br><span class="line">    <span class="keyword">if</span> (WHITESPACE.test(char)) &#123;</span><br><span class="line">      current++;</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 匹配数字字符，使用 [0-9]：匹配</span></span><br><span class="line">    <span class="comment">// 匹配成功则压入&#123;type: &#x27;number&#x27;, value: value&#125;</span></span><br><span class="line">    <span class="comment">// 如 (add 123 456) 中 123 和 456 为两个数值词法单元</span></span><br><span class="line">    <span class="keyword">let</span> NUMBERS = <span class="regexp">/[0-9]/</span>;</span><br><span class="line">    <span class="keyword">if</span> (NUMBERS.test(char)) &#123;</span><br><span class="line">      <span class="keyword">let</span> value = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      <span class="comment">// 匹配连续数字，作为数值</span></span><br><span class="line">      <span class="keyword">while</span> (NUMBERS.test(char)) &#123;</span><br><span class="line">        value += char;</span><br><span class="line">        char = input[++current];</span><br><span class="line">      &#125;</span><br><span class="line">      tokens.push(&#123; <span class="attr">type</span>: <span class="string">&#x27;number&#x27;</span>, value &#125;);</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 匹配形双引号包围的字符串</span></span><br><span class="line">    <span class="comment">// 匹配成功则压入 &#123; type: &#x27;string&#x27;, value: value &#125;</span></span><br><span class="line">    <span class="comment">// 如 (concat &quot;foo&quot; &quot;bar&quot;) 中 &quot;foo&quot; 和 &quot;bar&quot; 为两个字符串词法单元</span></span><br><span class="line">    <span class="keyword">if</span> (char === <span class="string">&#x27;&quot;&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> value = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      char = input[++current]; <span class="comment">// 跳过左双引号</span></span><br><span class="line">      <span class="comment">// 获取两个双引号之间所有字符</span></span><br><span class="line">      <span class="keyword">while</span> (char !== <span class="string">&#x27;&quot;&#x27;</span>) &#123;</span><br><span class="line">        value += char;</span><br><span class="line">        char = input[++current];</span><br><span class="line">      &#125;</span><br><span class="line">      char = input[++current];<span class="comment">// 跳过右双引号</span></span><br><span class="line">      tokens.push(&#123; <span class="attr">type</span>: <span class="string">&#x27;string&#x27;</span>, value &#125;);</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 匹配函数名，要求只含大小写字母，使用 [a-z] 匹配 i 模式</span></span><br><span class="line">    <span class="comment">// 匹配成功则压入 &#123; type: &#x27;name&#x27;, value: value &#125;</span></span><br><span class="line">    <span class="comment">// 如 (add 2 4) 中 add 为一个名称词法单元</span></span><br><span class="line">    <span class="keyword">let</span> LETTERS = <span class="regexp">/[a-z]/i</span>;</span><br><span class="line">    <span class="keyword">if</span> (LETTERS.test(char)) &#123;</span><br><span class="line">      <span class="keyword">let</span> value = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      <span class="comment">// 获取连续字符</span></span><br><span class="line">      <span class="keyword">while</span> (LETTERS.test(char)) &#123;</span><br><span class="line">        value += char;</span><br><span class="line">        char = input[++current];</span><br><span class="line">      &#125;</span><br><span class="line">      tokens.push(&#123; <span class="attr">type</span>: <span class="string">&#x27;name&#x27;</span>, value &#125;);</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 当遇到无法识别的字符，抛出错误提示，并退出</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;I dont know what this character is: &#x27;</span> + char);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 词法分析器的最后返回词法单元数组</span></span><br><span class="line">  <span class="keyword">return</span> tokens;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法分析器"><a href="#语法分析器" class="headerlink" title="语法分析器"></a>语法分析器</h3><p><strong>语法分析器方法</strong> <code>parser</code> 的主要任务：将<strong>词法分析器</strong>返回的<strong>词法单元数组</strong>，转换为能够描述语法成分及其关系的中间形式（<strong>抽象语法树 AST</strong>）。<br /><img src="http://images.pingan8787.com/TinyCompiler/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="语法分析器工作流程.png"><br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 语法分析器 参数：词法单元数组tokens</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parser</span>(<span class="params">tokens</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> current = <span class="number">0</span>; <span class="comment">// 设置当前解析的词法单元的索引，作为游标</span></span><br><span class="line">  <span class="comment">// 递归遍历（因为函数调用允许嵌套），将词法单元转成 LISP 的 AST 节点</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">walk</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 获取当前索引下的词法单元 token</span></span><br><span class="line">    <span class="keyword">let</span> token = tokens[current]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 数值类型词法单元</span></span><br><span class="line">    <span class="keyword">if</span> (token.type === <span class="string">&#x27;number&#x27;</span>) &#123;</span><br><span class="line">      current++; <span class="comment">// 自增当前 current 值</span></span><br><span class="line">      <span class="comment">// 生成一个 AST节点 &#x27;NumberLiteral&#x27;，表示数值字面量</span></span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&#x27;NumberLiteral&#x27;</span>,</span><br><span class="line">        <span class="attr">value</span>: token.value,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 字符串类型词法单元</span></span><br><span class="line">    <span class="keyword">if</span> (token.type === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">      current++;</span><br><span class="line">      <span class="comment">// 生成一个 AST节点 &#x27;StringLiteral&#x27;，表示字符串字面量</span></span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&#x27;StringLiteral&#x27;</span>,</span><br><span class="line">        <span class="attr">value</span>: token.value,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 函数类型词法单元</span></span><br><span class="line">    <span class="keyword">if</span> (token.type === <span class="string">&#x27;paren&#x27;</span> &amp;&amp; token.value === <span class="string">&#x27;(&#x27;</span>) &#123;</span><br><span class="line">      <span class="comment">// 跳过左括号，获取下一个词法单元作为函数名</span></span><br><span class="line">      token = tokens[++current];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">let</span> node = &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="string">&#x27;CallExpression&#x27;</span>,</span><br><span class="line">        <span class="attr">name</span>: token.value,</span><br><span class="line">        <span class="attr">params</span>: []</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 再次自增 current 变量，获取参数词法单元</span></span><br><span class="line">      token = tokens[++current];</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 遍历每个词法单元，获取函数参数，直到出现右括号&quot;）&quot;</span></span><br><span class="line">      <span class="keyword">while</span> ((token.type !== <span class="string">&#x27;paren&#x27;</span>) || (token.type === <span class="string">&#x27;paren&#x27;</span> &amp;&amp; token.value !== <span class="string">&#x27;)&#x27;</span>)) &#123;</span><br><span class="line">        node.params.push(walk());</span><br><span class="line">        token = tokens[current];</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      current++; <span class="comment">// 跳过右括号</span></span><br><span class="line">      <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 无法识别的字符，抛出错误提示</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(token.type);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化 AST 根节点</span></span><br><span class="line">  <span class="keyword">let</span> ast = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;Program&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: [],</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 循环填充 ast.body</span></span><br><span class="line">  <span class="keyword">while</span> (current &lt; tokens.length) &#123;</span><br><span class="line">    ast.body.push(walk());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 最后返回ast</span></span><br><span class="line">  <span class="keyword">return</span> ast;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="3-4-转换阶段"><a href="#3-4-转换阶段" class="headerlink" title="3.4 转换阶段"></a>3.4 转换阶段</h2><p>在转换阶段中，定义了转换器 <code>transformer</code> 函数，使用词法分析器返回的 LISP 的 AST 对象作为参数，将 AST 对象转换成一个新的 AST 对象。<br /><br><br />为了方便代码组织，我们定义一个遍历器 <code>traverser</code> 方法，用来处理每一个节点的操作。<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 遍历器 参数：ast 和 visitor</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverser</span>(<span class="params">ast, visitor</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 定义方法 traverseArray </span></span><br><span class="line">  <span class="comment">// 用于遍历 AST节点数组，对数组中每个元素调用 traverseNode 方法。</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">traverseArray</span>(<span class="params">array, parent</span>) </span>&#123;</span><br><span class="line">    array.forEach(<span class="function"><span class="params">child</span> =&gt;</span> &#123;</span><br><span class="line">      traverseNode(child, parent);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义方法 traverseNode</span></span><br><span class="line">  <span class="comment">// 用于处理每个 AST 节点，接受一个 node 和它的父节点 parent 作为参数</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">traverseNode</span>(<span class="params">node, parent</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 获取 visitor 上对应方法的对象</span></span><br><span class="line">    <span class="keyword">let</span> methods = visitor[node.type];</span><br><span class="line">    <span class="comment">// 获取 visitor 的 enter 方法，处理操作当前 node</span></span><br><span class="line">    <span class="keyword">if</span> (methods &amp;&amp; methods.enter) &#123;</span><br><span class="line">      methods.enter(node, parent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (node.type) &#123;</span><br><span class="line">      <span class="comment">// 根节点</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;Program&#x27;</span>:</span><br><span class="line">        traverseArray(node.body, node);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="comment">// 函数调用</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;CallExpression&#x27;</span>:</span><br><span class="line">        traverseArray(node.params, node);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="comment">// 数值和字符串，忽略</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;NumberLiteral&#x27;</span>:</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;StringLiteral&#x27;</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 当遇到无法识别的字符，抛出错误提示，并退出</span></span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(node.type);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (methods &amp;&amp; methods.exit) &#123;</span><br><span class="line">      methods.exit(node, parent);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 首次执行，开始遍历</span></span><br><span class="line">  traverseNode(ast, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在看<strong>遍历器</strong> <code>traverser</code> 方法时，建议结合下面介绍的<strong>转换器</strong> <code>transformer</code> 方法阅读：<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转化器，参数：ast</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">transformer</span>(<span class="params">ast</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 创建 newAST，与之前 AST 类似，Program：作为新 AST 的根节点</span></span><br><span class="line">  <span class="keyword">let</span> newAst = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;Program&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: [],</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 _context 维护新旧 AST，注意 _context 是一个引用，从旧的 AST 到新的 AST。</span></span><br><span class="line">  ast._context = newAst.body;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过遍历器遍历 处理旧的 AST</span></span><br><span class="line">  traverser(ast, &#123;</span><br><span class="line">    <span class="comment">// 数值，直接原样插入新AST，类型名称 NumberLiteral</span></span><br><span class="line">    <span class="attr">NumberLiteral</span>: &#123;</span><br><span class="line">      <span class="function"><span class="title">enter</span>(<span class="params">node, parent</span>)</span> &#123;</span><br><span class="line">        parent._context.push(&#123;</span><br><span class="line">          <span class="attr">type</span>: <span class="string">&#x27;NumberLiteral&#x27;</span>,</span><br><span class="line">          <span class="attr">value</span>: node.value,</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 字符串，直接原样插入新AST，类型名称 StringLiteral</span></span><br><span class="line">    <span class="attr">StringLiteral</span>: &#123;</span><br><span class="line">      <span class="function"><span class="title">enter</span>(<span class="params">node, parent</span>)</span> &#123;</span><br><span class="line">        parent._context.push(&#123;</span><br><span class="line">          <span class="attr">type</span>: <span class="string">&#x27;StringLiteral&#x27;</span>,</span><br><span class="line">          <span class="attr">value</span>: node.value,</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 函数调用</span></span><br><span class="line">    <span class="attr">CallExpression</span>: &#123;</span><br><span class="line">      <span class="function"><span class="title">enter</span>(<span class="params">node, parent</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 创建不同的AST节点</span></span><br><span class="line">        <span class="keyword">let</span> expression = &#123;</span><br><span class="line">          <span class="attr">type</span>: <span class="string">&#x27;CallExpression&#x27;</span>,</span><br><span class="line">          <span class="attr">callee</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;Identifier&#x27;</span>,</span><br><span class="line">            <span class="attr">name</span>: node.name,</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">arguments</span>: [],</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 函数调用有子类，建立节点对应关系，供子节点使用</span></span><br><span class="line">        node._context = expression.arguments;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 顶层函数调用算是语句，包装成特殊的AST节点</span></span><br><span class="line">        <span class="keyword">if</span> (parent.type !== <span class="string">&#x27;CallExpression&#x27;</span>) &#123;</span><br><span class="line"></span><br><span class="line">          expression = &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;ExpressionStatement&#x27;</span>,</span><br><span class="line">            <span class="attr">expression</span>: expression,</span><br><span class="line">          &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        parent._context.push(expression);</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> newAst;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重要一点，这里通过 <code>_context</code> 引用来<strong>维护新旧 AST 对象</strong>，管理方便，避免污染旧 AST 对象。<br /></p>
+<h2 id="3-5-代码生成"><a href="#3-5-代码生成" class="headerlink" title="3.5 代码生成"></a>3.5 代码生成</h2><p>接下来到了最后一步，我们定义<strong>代码生成器</strong> <code>codeGenerator</code> 方法，通过递归，将新的 AST 对象代码转换成 JavaScript 可执行代码字符串。<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码生成器 参数：新 AST 对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">codeGenerator</span>(<span class="params">node</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">switch</span> (node.type) &#123;</span><br><span class="line">    <span class="comment">// 遍历 body 属性中的节点，且递归调用 codeGenerator，按行输出结果</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;Program&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> node.body.map(codeGenerator)</span><br><span class="line">        .join(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 表达式，处理表达式内容，并用分号结尾</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;ExpressionStatement&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> (</span><br><span class="line">        codeGenerator(node.expression) +</span><br><span class="line">        <span class="string">&#x27;;&#x27;</span></span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 函数调用，添加左右括号，参数用逗号隔开</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;CallExpression&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> (</span><br><span class="line">        codeGenerator(node.callee) +</span><br><span class="line">        <span class="string">&#x27;(&#x27;</span> +</span><br><span class="line">        node.arguments.map(codeGenerator)</span><br><span class="line">          .join(<span class="string">&#x27;, &#x27;</span>) +</span><br><span class="line">        <span class="string">&#x27;)&#x27;</span></span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 标识符，返回其 name</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;Identifier&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> node.name;</span><br><span class="line">    <span class="comment">// 数值，返回其 value</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;NumberLiteral&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> node.value;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 字符串，用双引号包裹再输出</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;StringLiteral&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;&quot;&#x27;</span> + node.value + <span class="string">&#x27;&quot;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当遇到无法识别的字符，抛出错误提示，并退出</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(node.type);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-6-编译器测试"><a href="#3-6-编译器测试" class="headerlink" title="3.6 编译器测试"></a>3.6 编译器测试</h2><p>截止上一步，我们完成简易编译器的代码开发。接下来通过前面原始需求的代码，测试编译器效果如何：<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> add = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b;</span><br><span class="line"><span class="keyword">const</span> subtract = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b;</span><br><span class="line"><span class="keyword">const</span> source = <span class="string">&quot;(add 2 (subtract 4 2))&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> target = compiler(source); <span class="comment">// &quot;add(2, (subtract(4, 2));&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = <span class="built_in">eval</span>(target); <span class="comment">// Ok result is 4</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-7-工作流程小结"><a href="#3-7-工作流程小结" class="headerlink" title="3.7 工作流程小结"></a>3.7 工作流程小结</h2><p>总结 <a target="_blank" rel="noopener" href="https://the-super-tiny-compiler.glitch.me/">The Super Tiny Compiler</a> 编译器整个工作流程：<br /><strong>1、input =&gt; tokenizer =&gt; tokens</strong><br /><strong>2、tokens =&gt; parser =&gt; ast</strong><br /><strong>3、ast =&gt; transformer =&gt; newAst</strong><br /><strong>4、newAst =&gt; generator =&gt; output</strong><br /></p>
+<p>其实多数编译器的工作流程都大致相同：<br><img src="http://images.pingan8787.com/TinyCompiler/TheSuperTinyCompiler%E7%BC%96%E8%AF%91%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%88%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%89.png" alt="The Super Tiny Compiler编译器工作流程（方法实现）.png"></p>
+<h1 id="四、手写-Webpack-编译器"><a href="#四、手写-Webpack-编译器" class="headerlink" title="四、手写 Webpack 编译器"></a>四、手写 Webpack 编译器</h1><p>根据之前介绍的 <a target="_blank" rel="noopener" href="https://the-super-tiny-compiler.glitch.me/">The Super Tiny Compiler</a>编译器核心工作流程，再来手写 Webpack 的编译器，会让你有种众享丝滑的感觉~<br /><img src="https://st-gdx.dancf.com/gaodingx/0/design/20191030-163349-cca6.gif"></p>
+<p><br />话说，有些面试官喜欢问这个呢。当然，手写一遍能让我们更了解 Webpack 的构建流程，这个章节我们简要介绍一下。</p>
+<h2 id="4-1-Webpack-构建流程分析"><a href="#4-1-Webpack-构建流程分析" class="headerlink" title="4.1 Webpack 构建流程分析"></a>4.1 Webpack 构建流程分析</h2><p>从启动构建到输出结果一系列过程：</p>
+<ol>
+<li><strong>初始化参数</strong></li>
+</ol>
+<p>解析 Webpack 配置参数，合并 Shell 传入和 <code>webpack.config.js</code> 文件配置的参数，形成最后的配置结果。<br /></p>
+<ol start="2">
+<li><strong>开始编译</strong></li>
+</ol>
+<p>上一步得到的参数初始化 <code>compiler</code> 对象，注册所有配置的插件，插件监听 Webpack 构建生命周期的事件节点，做出相应的反应，执行对象的 <code>run</code> 方法开始执行编译。<br /></p>
+<ol start="3">
+<li><strong>确定入口</strong></li>
+</ol>
+<p>从配置的 <code>entry</code> 入口，开始解析文件构建 AST 语法树，找出依赖，递归下去。<br /></p>
+<ol start="4">
+<li><strong>编译模块</strong></li>
+</ol>
+<p>递归中根据<strong>文件类型</strong>和 <strong>loader 配置</strong>，调用所有配置的 loader 对文件进行转换，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理。<br /></p>
+<ol start="5">
+<li><strong>完成模块编译并输出</strong></li>
+</ol>
+<p>递归完事后，得到每个文件结果，包含每个模块以及他们之间的依赖关系，根据 <code>entry</code> 配置生成代码块 <code>chunk</code> 。<br /></p>
+<ol start="6">
+<li><strong>输出完成</strong></li>
+</ol>
+<p>输出所有的 <code>chunk</code> 到文件系统。<br /><br><br />注意：在构建生命周期中有一系列插件在做合适的时机做合适事情，比如 <code>UglifyPlugin</code> 会在 loader 转换递归完对结果使用 <code>UglifyJs</code> 压缩<strong>覆盖之前的结果</strong>。<br /><img src="http://images.pingan8787.com/TinyCompiler/Webpack%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B1.png" alt="Webpack构建流程.png"></p>
+<h2 id="4-2-代码实现"><a href="#4-2-代码实现" class="headerlink" title="4.2 代码实现"></a>4.2 代码实现</h2><p>手写 Webpack 需要实现以下三个核心方法：</p>
+<ul>
+<li><code>createAssets</code> : 收集和处理文件的代码；</li>
+<li><code>createGraph</code> ：根据入口文件，返回所有文件依赖图；</li>
+<li><code>bundle</code> : 根据依赖图整个代码并输出；</li>
+</ul>
+<h3 id="1-createAssets"><a href="#1-createAssets" class="headerlink" title="1. createAssets"></a>1. createAssets</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createAssets</span>(<span class="params">filename</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> content = fs.readFileSync(filename, <span class="string">&quot;utf-8&quot;</span>); <span class="comment">// 根据文件名读取文件内容</span></span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 将读取到的代码内容，转换为 AST</span></span><br><span class="line">    <span class="keyword">const</span> ast = parser.parse(content, &#123;</span><br><span class="line">        <span class="attr">sourceType</span>: <span class="string">&quot;module&quot;</span> <span class="comment">// 指定源码类型</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">const</span> dependencies = []; <span class="comment">// 用于收集文件依赖的路径</span></span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 通过 traverse 提供的操作 AST 的方法，获取每个节点的依赖路径</span></span><br><span class="line">    traverse(ast, &#123;</span><br><span class="line">        <span class="attr">ImportDeclaration</span>: <span class="function">(<span class="params">&#123;node&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">            dependencies.push(node.source.value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 通过 AST 将 ES6 代码转换成 ES5 代码</span></span><br><span class="line">    <span class="keyword">const</span> &#123; code &#125; = babel.transformFromAstSync(ast, <span class="literal">null</span>, &#123;</span><br><span class="line">        <span class="attr">presets</span>: [<span class="string">&quot;@babel/preset-env&quot;</span>]</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> id = moduleId++;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        id,</span><br><span class="line">        filename,</span><br><span class="line">        code,</span><br><span class="line">        dependencies</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-createGraph"><a href="#2-createGraph" class="headerlink" title="2. createGraph"></a>2. createGraph</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createGraph</span>(<span class="params">entry</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> mainAsset = createAssets(entry); <span class="comment">// 获取入口文件下的内容</span></span><br><span class="line">    <span class="keyword">const</span> queue = [mainAsset];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">const</span> asset <span class="keyword">of</span> queue)&#123;</span><br><span class="line">        <span class="keyword">const</span> dirname = path.dirname(asset.filename);</span><br><span class="line">        asset.mapping = &#123;&#125;;</span><br><span class="line">        asset.dependencies.forEach(<span class="function"><span class="params">relativePath</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> absolutePath = path.join(dirname, relativePath); <span class="comment">// 转换文件路径为绝对路径</span></span><br><span class="line">            <span class="keyword">const</span> child = createAssets(absolutePath);</span><br><span class="line">            asset.mapping[relativePath] = child.id;</span><br><span class="line">            queue.push(child); <span class="comment">// 递归去遍历所有子节点的文件</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> queue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-bunlde"><a href="#3-bunlde" class="headerlink" title="3. bunlde"></a>3. bunlde</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bundle</span>(<span class="params">graph</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> modules = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    graph.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        modules += <span class="string">`</span></span><br><span class="line"><span class="string">            <span class="subst">$&#123;item.id&#125;</span>: [</span></span><br><span class="line"><span class="string">                function (require, module, exports)&#123;</span></span><br><span class="line"><span class="string">                    <span class="subst">$&#123;item.code&#125;</span></span></span><br><span class="line"><span class="string">                &#125;,</span></span><br><span class="line"><span class="string">                <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(item.mapping)&#125;</span></span></span><br><span class="line"><span class="string">            ],</span></span><br><span class="line"><span class="string">        `</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`</span></span><br><span class="line"><span class="string">        (function(modules)&#123;</span></span><br><span class="line"><span class="string">            function require(id)&#123;</span></span><br><span class="line"><span class="string">                const [fn, mapping] = modules[id];</span></span><br><span class="line"><span class="string">                function localRequire(relativePath)&#123;</span></span><br><span class="line"><span class="string">                    return require(mapping[relativePath]);</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                const module = &#123;</span></span><br><span class="line"><span class="string">                    exports: &#123;&#125;</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                fn(localRequire, module, module.exports);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                return module.exports;</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">            require(0);</span></span><br><span class="line"><span class="string">        &#125;)(&#123;<span class="subst">$&#123;modules&#125;</span>&#125;)</span></span><br><span class="line"><span class="string">    `</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>本文从编译器概念和基本工作流程开始介绍，然后通过 <a target="_blank" rel="noopener" href="https://the-super-tiny-compiler.glitch.me/">The Super Tiny Compiler</a> 译器源码，详细介绍核心工作流程实现，包括<strong>词法分析器</strong>、<strong>语法分析器</strong>、<strong>遍历器</strong>和<strong>转换器</strong>的基本实现，最后通过<strong>代码生成器</strong>，将各个阶段代码结合起来，实现了这个号称<strong>可能是有史以来最小的编译器。</strong><br />本文也简要介绍了<strong>手写 Webpack 的实现</strong>，需要读者自行完善和深入哟！<br>是不是觉得很神奇~<br /><br><img src="https://st0.dancf.com/csc/346/templets/20191106-155044-c33a.gif"><br /><br>当然通过本文学习，也仅仅是编译器相关知识的边山一脚，要学的知识还有非常多，不过好的开头，更能促进我们学习动力。加油！<br /><br><br />最后，文中介绍到的代码，我存放在 Github 上：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo-JavaScript/blob/master/Cute-Frontend/learningSourceCode/%5Blearning%5Dthe-super-tiny-compiler.js" title="[learning]the-super-tiny-compiler.js">[learning]the-super-tiny-compiler.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo-JavaScript/blob/master/Cute-Frontend/learningSourceCode/%5Bwriting%5Dwebpack-compiler.js" title="[writing]webpack-compiler.js">[writing]webpack-compiler.js</a></li>
+</ol>
+<h1 id="六、参考资料"><a href="#六、参考资料" class="headerlink" title="六、参考资料"></a>六、参考资料</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://the-super-tiny-compiler.glitch.me/" title="《The Super Tiny Compiler》">《The Super Tiny Compiler》</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016402699" title="《有史以来最小的编译器源码解析》">《有史以来最小的编译器源码解析》</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008739157" title="《Angular 2 JIT vs AOT》">《Angular 2 JIT vs AOT》</a></li>
+</ol>
+<h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#105;&#110;&#103;&#x61;&#110;&#56;&#x37;&#56;&#x37;&#x40;&#113;&#x71;&#46;&#x63;&#111;&#x6d;">&#x70;&#105;&#110;&#103;&#x61;&#110;&#56;&#x37;&#56;&#x37;&#x40;&#113;&#x71;&#46;&#x63;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+<tr>
+<td>ES小册</td>
+<td>js.pingan8787.com</td>
+</tr>
+</tbody></table>
+<p><img src="https://user-gold-cdn.xitu.io/2020/2/22/1706bb1ea5f680ae?w=885&h=445&f=png&s=80093">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/03/30/201-%E3%80%90%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%91200%E8%A1%8CJS%E4%BB%A3%E7%A0%81%E5%B8%A6%E4%BD%A0%E5%AE%9E%E7%8E%B0%E5%BE%AE%E5%9E%8B%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%88%E4%BA%BA%E4%BA%BA%E9%83%BD%E8%83%BD%E5%AD%A6%E4%BC%9A%EF%BC%89/" data-id="ckts3ejym00mx4d9kbv2j3lrr" data-title="201-【编译原理】200行JS代码带你实现微型编译器（人人都能学会）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/04/15/202-%E3%80%90Babel%E3%80%91%E4%B8%8D%E5%AE%B9%E9%94%99%E8%BF%87%E7%9A%84Babel7%E7%9F%A5%E8%AF%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          202-【Babel】不容错过的Babel7知识
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/24/200-%E3%80%90%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%918%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">200-【数据结构】8种常见数据结构</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

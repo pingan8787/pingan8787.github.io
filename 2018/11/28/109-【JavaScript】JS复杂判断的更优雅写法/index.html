@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>109-【JavaScript】JS复杂判断的更优雅写法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#x70;&amp;#x69;&amp;#x6e;&amp;#103;&amp;#x61;&amp;#x6e;&amp;#x38;&amp;#x37;&amp;#x38;&amp;#x37;&amp;#x40;&amp;#x71;&amp;#x71;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="109-【JavaScript】JS复杂判断的更优雅写法">
+<meta property="og:url" content="http://example.com/2018/11/28/109-%E3%80%90JavaScript%E3%80%91JS%E5%A4%8D%E6%9D%82%E5%88%A4%E6%96%AD%E7%9A%84%E6%9B%B4%E4%BC%98%E9%9B%85%E5%86%99%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#x70;&amp;#x69;&amp;#x6e;&amp;#103;&amp;#x61;&amp;#x6e;&amp;#x38;&amp;#x37;&amp;#x38;&amp;#x37;&amp;#x40;&amp;#x71;&amp;#x71;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#109;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章推荐 https:&#x2F;&#x2F;github.com&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-11-28T14:21:45.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.559Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-109-【JavaScript】JS复杂判断的更优雅写法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/11/28/109-%E3%80%90JavaScript%E3%80%91JS%E5%A4%8D%E6%9D%82%E5%88%A4%E6%96%AD%E7%9A%84%E6%9B%B4%E4%BC%98%E9%9B%85%E5%86%99%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2018-11-28T14:21:45.000Z" itemprop="datePublished">2018-11-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      109-【JavaScript】JS复杂判断的更优雅写法
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#x70;&#x69;&#x6e;&#103;&#x61;&#x6e;&#x38;&#x37;&#x38;&#x37;&#x40;&#x71;&#x71;&#x2e;&#x63;&#x6f;&#109;">&#x70;&#x69;&#x6e;&#103;&#x61;&#x6e;&#x38;&#x37;&#x38;&#x37;&#x40;&#x71;&#x71;&#x2e;&#x63;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章推荐</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/pingan8787/Leo_Reading/issues">https://github.com/pingan8787/Leo_Reading/issues</a></td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5bdfef86e51d453bf8051bf8">阅读原文</a></p>
+</blockquote>
+<h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p>我们编写js代码时经常遇到复杂逻辑判断的情况，通常大家可以用<code>if/else</code>或者<code>switch</code>来实现多个条件判断，但这样会有个问题，随着逻辑复杂度的增加，代码中的<code>if/else/switch</code>会变得越来越臃肿，越来越看不懂，那么如何更优雅的写判断逻辑，本文带你试一下。   </p>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>先看一段代码:   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 按钮点击事件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> </span>status </span></span><br><span class="line"><span class="comment"> * 活动状态：1 开团进行中 2 开团失败 3 商品售罄 4 开团成功 5 系统取消</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(status == <span class="number">1</span>)&#123;</span><br><span class="line">    sendLog(<span class="string">&#x27;processing&#x27;</span>)</span><br><span class="line">    jumpTo(<span class="string">&#x27;IndexPage&#x27;</span>)</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">2</span>)&#123;</span><br><span class="line">    sendLog(<span class="string">&#x27;fail&#x27;</span>)</span><br><span class="line">    jumpTo(<span class="string">&#x27;FailPage&#x27;</span>)</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">3</span>)&#123;</span><br><span class="line">    sendLog(<span class="string">&#x27;fail&#x27;</span>)</span><br><span class="line">    jumpTo(<span class="string">&#x27;FailPage&#x27;</span>)</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">4</span>)&#123;</span><br><span class="line">    sendLog(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">    jumpTo(<span class="string">&#x27;SuccessPage&#x27;</span>)</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">5</span>)&#123;</span><br><span class="line">    sendLog(<span class="string">&#x27;cancel&#x27;</span>)</span><br><span class="line">    jumpTo(<span class="string">&#x27;CancelPage&#x27;</span>)</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    sendLog(<span class="string">&#x27;other&#x27;</span>)</span><br><span class="line">    jumpTo(<span class="string">&#x27;Index&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过代码可以看到这个按钮的点击逻辑：根据不同活动状态做两件事情，发送日志埋点和跳转到对应页面，大家可以很轻易的提出这段代码的改写方案，<code>switch</code>出场：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 按钮点击事件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> </span>status </span></span><br><span class="line"><span class="comment"> * 活动状态：1 开团进行中 2 开团失败 3 商品售罄 4 开团成功 5 系统取消</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (status)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">      sendLog(<span class="string">&#x27;processing&#x27;</span>)</span><br><span class="line">      jumpTo(<span class="string">&#x27;IndexPage&#x27;</span>)</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">      sendLog(<span class="string">&#x27;fail&#x27;</span>)</span><br><span class="line">      jumpTo(<span class="string">&#x27;FailPage&#x27;</span>)</span><br><span class="line">      <span class="keyword">break</span>  </span><br><span class="line">    <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">      sendLog(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">      jumpTo(<span class="string">&#x27;SuccessPage&#x27;</span>)</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">      sendLog(<span class="string">&#x27;cancel&#x27;</span>)</span><br><span class="line">      jumpTo(<span class="string">&#x27;CancelPage&#x27;</span>)</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">      sendLog(<span class="string">&#x27;other&#x27;</span>)</span><br><span class="line">      jumpTo(<span class="string">&#x27;Index&#x27;</span>)</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>嗯，这样看起来比<code>if/else</code>清晰多了，细心的同学也发现了小技巧，<code>case 2</code>和<code>case 3</code>逻辑一样的时候，可以省去执行语句和<code>break</code>，则<code>case 2</code>的情况自动执行<code>case 3</code>的逻辑。<br>这时有同学会说，还有更简单的写法：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">  <span class="string">&#x27;1&#x27;</span>: [<span class="string">&#x27;processing&#x27;</span>,<span class="string">&#x27;IndexPage&#x27;</span>],</span><br><span class="line">  <span class="string">&#x27;2&#x27;</span>: [<span class="string">&#x27;fail&#x27;</span>,<span class="string">&#x27;FailPage&#x27;</span>],</span><br><span class="line">  <span class="string">&#x27;3&#x27;</span>: [<span class="string">&#x27;fail&#x27;</span>,<span class="string">&#x27;FailPage&#x27;</span>],</span><br><span class="line">  <span class="string">&#x27;4&#x27;</span>: [<span class="string">&#x27;success&#x27;</span>,<span class="string">&#x27;SuccessPage&#x27;</span>],</span><br><span class="line">  <span class="string">&#x27;5&#x27;</span>: [<span class="string">&#x27;cancel&#x27;</span>,<span class="string">&#x27;CancelPage&#x27;</span>],</span><br><span class="line">  <span class="string">&#x27;default&#x27;</span>: [<span class="string">&#x27;other&#x27;</span>,<span class="string">&#x27;Index&#x27;</span>],</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 按钮点击事件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> </span>status </span></span><br><span class="line"><span class="comment"> * 活动状态：1开团进行中 2开团失败 3 商品售罄 4 开团成功 5 系统取消</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> action = actions[status] || actions[<span class="string">&#x27;default&#x27;</span>],</span><br><span class="line">      logName = action[<span class="number">0</span>],</span><br><span class="line">      pageName = action[<span class="number">1</span>]</span><br><span class="line">  sendLog(logName)</span><br><span class="line">  jumpTo(pageName)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码确实看起来更清爽了，这种方法的聪明之处在于：将判断条件作为对象的属性名，将处理逻辑作为对象的属性值，在按钮点击的时候，通过对象属性查找的方式来进行逻辑判断，这种写法特别适合一元条件判断的情况。<br>是不是还有其他写法呢？有的：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">  [<span class="number">1</span>, [<span class="string">&#x27;processing&#x27;</span>,<span class="string">&#x27;IndexPage&#x27;</span>]],</span><br><span class="line">  [<span class="number">2</span>, [<span class="string">&#x27;fail&#x27;</span>,<span class="string">&#x27;FailPage&#x27;</span>]],</span><br><span class="line">  [<span class="number">3</span>, [<span class="string">&#x27;fail&#x27;</span>,<span class="string">&#x27;FailPage&#x27;</span>]],</span><br><span class="line">  [<span class="number">4</span>, [<span class="string">&#x27;success&#x27;</span>,<span class="string">&#x27;SuccessPage&#x27;</span>]],</span><br><span class="line">  [<span class="number">5</span>, [<span class="string">&#x27;cancel&#x27;</span>,<span class="string">&#x27;CancelPage&#x27;</span>]],</span><br><span class="line">  [<span class="string">&#x27;default&#x27;</span>, [<span class="string">&#x27;other&#x27;</span>,<span class="string">&#x27;Index&#x27;</span>]]</span><br><span class="line">])</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 按钮点击事件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> </span>status </span></span><br><span class="line"><span class="comment"> * 活动状态：1 开团进行中 2 开团失败 3 商品售罄 4 开团成功 5 系统取消</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> action = actions.get(status) || actions.get(<span class="string">&#x27;default&#x27;</span>)</span><br><span class="line">  sendLog(action[<span class="number">0</span>])</span><br><span class="line">  jumpTo(action[<span class="number">1</span>])</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">`   </span></span><br><span class="line"><span class="string">这样写用到了`</span>es6<span class="string">`里的`</span><span class="built_in">Map</span><span class="string">`对象，是不是更爽了？`</span><span class="built_in">Map</span><span class="string">`对象和`</span><span class="built_in">Object</span><span class="string">`对象有什么区别呢？   </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">* 一个对象通常都有自己的原型，所以一个对象总有一个&quot;`</span>prototype<span class="string">`&quot;键。  </span></span><br><span class="line"><span class="string">* 一个对象的键只能是**字符串**或者**Symbols**，但一个`</span><span class="built_in">Map</span><span class="string">`的键可以是任意值。   </span></span><br><span class="line"><span class="string">你可以通过`</span>size<span class="string">`属性很容易地得到一个`</span><span class="built_in">Map</span><span class="string">`的键值对个数，而对象的键值对个数只能手动确认。   </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">我们需要把问题升级一下，以前按钮点击时候只需要判断`</span>status<span class="string">`，现在还需要判断用户的身份：   </span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 按钮点击事件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> </span>status </span></span><br><span class="line"><span class="comment"> * 活动状态：1开团进行中 2开团失败 3 开团成功 4 商品售罄 5 有库存未开团</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;string&#125;</span> </span>identity </span></span><br><span class="line"><span class="comment"> * 身份标识：guest客态 master主态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">status,identity</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(identity == <span class="string">&#x27;guest&#x27;</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(status == <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">2</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">3</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">4</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">5</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(identity == <span class="string">&#x27;master&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(status == <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">2</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">3</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">4</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(status == <span class="number">5</span>)&#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">//do sth</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原谅我不写每个判断里的具体逻辑了，因为代码太冗长了。<br>原谅我又用了<code>if/else</code>，因为我看到很多人依然在用<code>if/else</code>写这种大段的逻辑判断。<br>从上面的例子我们可以看到，当你的逻辑升级为二元判断时，你的判断量会加倍，你的代码量也会加倍，这时怎么写更清爽呢？   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">  [<span class="string">&#x27;guest_1&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;guest_2&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;guest_3&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;guest_4&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;guest_5&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;master_1&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;master_2&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;master_3&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;master_4&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;master_5&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [<span class="string">&#x27;default&#x27;</span>, <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 按钮点击事件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;string&#125;</span> </span>identity 身份标识：guest客态 master主态</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> </span>status 活动状态：1 开团进行中 2 开团失败 3 开团成功 4 商品售罄 5 有库存未开团</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">identity,status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> action = actions.get(<span class="string">`<span class="subst">$&#123;identity&#125;</span>_<span class="subst">$&#123;status&#125;</span>`</span>) || actions.get(<span class="string">&#x27;default&#x27;</span>)</span><br><span class="line">  action.call(<span class="built_in">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码核心逻辑是：把两个条件拼接成字符串，并通过以条件拼接字符串作为键，以处理函数作为值的Map对象进行查找并执行，这种写法在多元条件判断时候尤其好用。<br>当然上述代码如果用<code>Object</code>对象来实现也是类似的：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">  <span class="string">&#x27;guest_1&#x27;</span>:<span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;,</span><br><span class="line">  <span class="string">&#x27;guest_2&#x27;</span>:<span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;,</span><br><span class="line">  <span class="comment">//....</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">identity,status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> action = actions[<span class="string">`<span class="subst">$&#123;identity&#125;</span>_<span class="subst">$&#123;status&#125;</span>`</span>] || actions[<span class="string">&#x27;default&#x27;</span>]</span><br><span class="line">  action.call(<span class="built_in">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有些同学觉得把查询条件拼成字符串有点别扭，那还有一种方案，就是用<code>Map</code>对象，以<code>Object</code>对象作为<code>key</code>：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">  [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">1</span>&#125;,<span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">2</span>&#125;,<span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;],</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">identity,status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> action = [...actions].filter(<span class="function">(<span class="params">[key,value]</span>)=&gt;</span>(key.identity == identity &amp;&amp; key.status == status))</span><br><span class="line">  action.forEach(<span class="function">(<span class="params">[key,value]</span>)=&gt;</span>value.call(<span class="built_in">this</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是不是又高级了一点点？<br>这里也看出来<code>Map</code>与<code>Object</code>的区别，<code>Map</code>可以用任何类型的数据作为<code>key</code>。<br>我们现在再将难度升级一点点，假如<code>guest</code>情况下，<code>status1-4</code>的处理逻辑都一样怎么办，最差的情况是这样：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">  [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">1</span>&#125;,<span class="function">()=&gt;</span>&#123;<span class="comment">/* functionA */</span>&#125;],</span><br><span class="line">  [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">2</span>&#125;,<span class="function">()=&gt;</span>&#123;<span class="comment">/* functionA */</span>&#125;],</span><br><span class="line">  [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">3</span>&#125;,<span class="function">()=&gt;</span>&#123;<span class="comment">/* functionA */</span>&#125;],</span><br><span class="line">  [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">4</span>&#125;,<span class="function">()=&gt;</span>&#123;<span class="comment">/* functionA */</span>&#125;],</span><br><span class="line">  [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">5</span>&#125;,<span class="function">()=&gt;</span>&#123;<span class="comment">/* functionB */</span>&#125;],</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>好一点的写法是将处理逻辑函数进行缓存：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> functionA = <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;</span><br><span class="line">  <span class="keyword">const</span> functionB = <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">    [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">1</span>&#125;,functionA],</span><br><span class="line">    [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">2</span>&#125;,functionA],</span><br><span class="line">    [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">3</span>&#125;,functionA],</span><br><span class="line">    [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">4</span>&#125;,functionA],</span><br><span class="line">    [&#123;<span class="attr">identity</span>:<span class="string">&#x27;guest&#x27;</span>,<span class="attr">status</span>:<span class="number">5</span>&#125;,functionB],</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  ])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">identity,status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> action = [...actions()].filter(<span class="function">(<span class="params">[key,value]</span>)=&gt;</span>(key.identity == identity &amp;&amp; key.status == status))</span><br><span class="line">  action.forEach(<span class="function">(<span class="params">[key,value]</span>)=&gt;</span>value.call(<span class="built_in">this</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样写已经能满足日常需求了，但认真一点讲，上面重写了4次<code>functionA</code>还是有点不爽，假如判断条件变得特别复杂，比如<code>identity</code>有3种状态，<code>status</code>有10种状态，那你需要定义30条处理逻辑，而往往这些逻辑里面很多都是相同的，这似乎也是笔者不想接受的，那可以这样实现:   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> functionA = <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;</span><br><span class="line">  <span class="keyword">const</span> functionB = <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">    [<span class="regexp">/^guest_[1-4]$/</span>,functionA],</span><br><span class="line">    [<span class="regexp">/^guest_5$/</span>,functionB],</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  ])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">identity,status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> action = [...actions()].filter(<span class="function">(<span class="params">[key,value]</span>)=&gt;</span>(key.test(<span class="string">`<span class="subst">$&#123;identity&#125;</span>_<span class="subst">$&#123;status&#125;</span>`</span>)))</span><br><span class="line">  action.forEach(<span class="function">(<span class="params">[key,value]</span>)=&gt;</span>value.call(<span class="built_in">this</span>))</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里Map的优势更加凸显，可以用正则类型作为<code>key</code>了，这样就有了无限可能，假如需求变成，凡是<code>guest</code>情况都要发送一个日志埋点，不同<code>status</code>情况也需要单独的逻辑处理，那我们可以这样写:   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> functionA = <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;</span><br><span class="line">  <span class="keyword">const</span> functionB = <span class="function">()=&gt;</span>&#123;<span class="comment">/*do sth*/</span>&#125;</span><br><span class="line">  <span class="keyword">const</span> functionC = <span class="function">()=&gt;</span>&#123;<span class="comment">/*send log*/</span>&#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">    [<span class="regexp">/^guest_[1-4]$/</span>,functionA],</span><br><span class="line">    [<span class="regexp">/^guest_5$/</span>,functionB],</span><br><span class="line">    [<span class="regexp">/^guest_.*$/</span>,functionC],</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  ])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> onButtonClick = <span class="function">(<span class="params">identity,status</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> action = [...actions()].filter(<span class="function">(<span class="params">[key,value]</span>)=&gt;</span>(key.test(<span class="string">`<span class="subst">$&#123;identity&#125;</span>_<span class="subst">$&#123;status&#125;</span>`</span>)))</span><br><span class="line">  action.forEach(<span class="function">(<span class="params">[key,value]</span>)=&gt;</span>value.call(<span class="built_in">this</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是说利用数组循环的特性，符合正则条件的逻辑都会被执行，那就可以同时执行公共逻辑和单独逻辑，因为正则的存在，你可以打开想象力解锁更多的玩法，本文就不赘述了。   </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文已经教你了8种逻辑判断写法，包括：</p>
+<ul>
+<li><code>if/else</code>   </li>
+<li><code>switch</code>   </li>
+<li>一元判断时：存到<code>Object</code>里   </li>
+<li>一元判断时：存到<code>Map</code>里   </li>
+<li>多元判断时：将<code>condition</code>拼接成字符串存到<code>Object</code>里   </li>
+<li>多元判断时：将<code>condition</code>拼接成字符串存到<code>Map</code>里   </li>
+<li>多元判断时：将<code>condition</code>存为<code>Object</code>存到<code>Map</code>里   </li>
+<li>多元判断时：将<code>condition</code>写作正则存到<code>Map</code>里   </li>
+</ul>
+<p>至此，本文也将告一段落，愿你未来的人生里，不只是有<code>if/else/switch</code>。<br>如果你对本文感兴趣，请关注作者微信公众号：“大转转fe”   </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/11/28/109-%E3%80%90JavaScript%E3%80%91JS%E5%A4%8D%E6%9D%82%E5%88%A4%E6%96%AD%E7%9A%84%E6%9B%B4%E4%BC%98%E9%9B%85%E5%86%99%E6%B3%95/" data-id="ckts3ejs7000m4d9k65u6c24a" data-title="109-【JavaScript】JS复杂判断的更优雅写法" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/01/110-%E3%80%90JavaScript%E3%80%91%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80-instanceof%E6%93%8D%E4%BD%9C%E7%AC%A6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          110-【JavaScript】重温基础-instanceof操作符
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/27/108-%E3%80%90JavaScript%E3%80%91%E7%A7%92%E6%87%82this/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">108-【JavaScript】秒懂this</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

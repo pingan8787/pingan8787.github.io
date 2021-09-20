@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>47-【JavaScript】小知识点整理 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="介绍这是些零散的知识点，整理整理。涉及ES5&#x2F;ES6&#x2F;ES7。 1、数据类型 &#x2F; 转换JavaScript 默认内置其中数据类型：6种原始类型：null,undefined, boolean,number,string和ES6新出的symbol；1种其他类型：object。 123456typeof 0              &#x2F;&#x2F; numbertypeof true           &#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="47-【JavaScript】小知识点整理">
+<meta property="og:url" content="http://example.com/2018/02/07/47-%E3%80%90JavaScript%E3%80%91%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="介绍这是些零散的知识点，整理整理。涉及ES5&#x2F;ES6&#x2F;ES7。 1、数据类型 &#x2F; 转换JavaScript 默认内置其中数据类型：6种原始类型：null,undefined, boolean,number,string和ES6新出的symbol；1种其他类型：object。 123456typeof 0              &#x2F;&#x2F; numbertypeof true           &#x2F;&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-07T14:11:20.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.692Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-47-【JavaScript】小知识点整理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/02/07/47-%E3%80%90JavaScript%E3%80%91%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2018-02-07T14:11:20.000Z" itemprop="datePublished">2018-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      47-【JavaScript】小知识点整理
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>这是些零散的知识点，整理整理。涉及ES5/ES6/ES7。</p>
+<h3 id="1、数据类型-转换"><a href="#1、数据类型-转换" class="headerlink" title="1、数据类型 / 转换"></a>1、数据类型 / 转换</h3><p><code>JavaScript</code> 默认内置其中数据类型：<br>6种原始类型：<code>null</code>,<code>undefined</code>, <code>boolean</code>,<code>number</code>,<code>string</code>和ES6新出的<code>symbol</code>；<br>1种其他类型：<code>object</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="number">0</span>              <span class="comment">// number</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span>           <span class="comment">// boolean</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">&#x27;Leo&#x27;</span>          <span class="comment">// string</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>           <span class="comment">// object</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>           <span class="comment">// object</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Symbol</span>(<span class="string">&#x27;Leo&#x27;</span>)  <span class="comment">// symbol (New ES6) </span></span><br></pre></td></tr></table></figure>
+
+<h5 id="①对比-null-和-undefined"><a href="#①对比-null-和-undefined" class="headerlink" title="①对比 null 和 undefined"></a>①对比 null 和 undefined</h5><p><code>undefined</code> 表示尚未定义，常作为变量，函数参数，对象属性的默认值。当函数没有返回值时也会默认返回<code>undefined</code>。<br><code>null</code> 表示空值，常被赋值给一个变量表示<code>没有值</code>。  </p>
+<h5 id="②隐式转换类型"><a href="#②隐式转换类型" class="headerlink" title="②隐式转换类型"></a>②隐式转换类型</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> leo = <span class="string">&#x27;leo&#x27;</span></span><br><span class="line"><span class="keyword">if</span>(leo) <span class="built_in">console</span>.log(leo + <span class="string">&#x27;is good boy!&#x27;</span>)  # leo is good boy!</span><br></pre></td></tr></table></figure>
+<p>此时字符串变量 <code>leo</code> 会被转换成 <code>true</code> ，并执行后面的代码。<br><code>Falsy</code> 类型的值，指在强制类型转换时会被转成布尔 <code>false</code> 的值。包括： <code>&quot;&quot;</code>,<code>0</code>,<code>null</code>,<code>undefined</code>,<code>NaN</code>,<code>false</code>。<br>除了 <code>Falsy</code> 类型的值，其他都成为 <code>truthy</code> 类型的值，并转换成 <code>true</code> 。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Boolean</span>(<span class="literal">null</span>)         <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="string">&#x27;leo&#x27;</span>)        <span class="comment">// true </span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="string">&#x27;0&#x27;</span>)          <span class="comment">// true </span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="string">&#x27; &#x27;</span>)          <span class="comment">// true </span></span><br><span class="line"><span class="built_in">Boolean</span>([])           <span class="comment">// true </span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;) <span class="comment">// true </span></span><br></pre></td></tr></table></figure>
+
+<h5 id="③String-和-Number-转换"><a href="#③String-和-Number-转换" class="headerlink" title="③String 和 Number 转换"></a>③String 和 Number 转换</h5><p><code>+</code> 既可以作为算术运算也可以连接字符串。<br>但是 <code>*</code>,<code>/</code>和<code>-</code>与字符串一起使用，会强制将字符串转换成数字类型。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">&quot;2&quot;</span>        = <span class="string">&quot;12&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;</span> + <span class="number">1</span> + <span class="number">0</span>     = <span class="string">&quot;10&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;</span> - <span class="number">1</span> + <span class="number">0</span>     = -<span class="number">1</span></span><br><span class="line"><span class="string">&quot;-9\n&quot;</span> + <span class="number">5</span>     = <span class="string">&quot;-9\n5&quot;</span></span><br><span class="line"><span class="string">&quot;-9\n&quot;</span> - <span class="number">5</span>     = -<span class="number">14</span></span><br><span class="line"><span class="string">&quot;2&quot;</span> * <span class="string">&quot;3&quot;</span>      = <span class="number">6</span></span><br><span class="line"><span class="number">4</span> + <span class="number">5</span> + <span class="string">&quot;px&quot;</span>   = <span class="string">&quot;9px&quot;</span></span><br><span class="line"><span class="string">&quot;$&quot;</span> + <span class="number">4</span> + <span class="number">5</span>    = <span class="string">&quot;$45&quot;</span></span><br><span class="line"><span class="string">&quot;4&quot;</span> - <span class="number">2</span>        = <span class="number">2</span></span><br><span class="line"><span class="string">&quot;4px&quot;</span> - <span class="number">2</span>      = <span class="literal">NaN</span></span><br><span class="line"><span class="literal">null</span> + <span class="number">1</span>       = <span class="number">1</span></span><br><span class="line"><span class="literal">undefined</span> + <span class="number">1</span>  = <span class="literal">NaN</span> </span><br></pre></td></tr></table></figure>
+
+<h5 id="④-和"><a href="#④-和" class="headerlink" title="④== 和 ==="></a>④== 和 ===</h5><p><code>==</code> 比较强制类型转换后的结果，而 <code>===</code> 是直接比较。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> == <span class="string">&#x27;1&#x27;</span>            <span class="comment">// True</span></span><br><span class="line"><span class="number">1</span> === <span class="string">&#x27;1&#x27;</span>           <span class="comment">// False</span></span><br><span class="line"><span class="literal">undefined</span> == <span class="literal">null</span>   <span class="comment">// True</span></span><br><span class="line"><span class="literal">undefined</span> === <span class="literal">null</span>  <span class="comment">// False </span></span><br></pre></td></tr></table></figure>
+<p>强制类型转换会造成一些混乱，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let a1 = &#x27;0&#x27;,a2 = false,a3 = 0;</span><br><span class="line">Boolean(a1)          // True</span><br><span class="line">Boolean(a2)          // False</span><br><span class="line">Boolean(a3)          // False  </span><br><span class="line">a1 == a2             // True</span><br><span class="line">a1 == a3             // True</span><br><span class="line">a1 === a2            // False </span><br><span class="line">a1 === a3            // False </span><br></pre></td></tr></table></figure>
+<p>即：<br><code>其他类型</code> 与 <code>Boolean</code> 对比，会先把 <code>其他类型</code> 转换成 <code>Boolean类型</code> 再比较；<br><code>string类型</code> 与 <code>Number</code> 对比，会先把 <code>string类型</code> 转换成 <code>Number类型</code> 再比较；<br>还有一些特殊的比较：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">false</span> == <span class="string">&quot;&quot;</span>  <span class="comment">// true</span></span><br><span class="line"><span class="literal">false</span> == []  <span class="comment">// true</span></span><br><span class="line"><span class="literal">false</span> == &#123;&#125;  <span class="comment">// false</span></span><br><span class="line"><span class="string">&quot;&quot;</span> == <span class="number">0</span>      <span class="comment">// true</span></span><br><span class="line"><span class="string">&quot;&quot;</span> == []     <span class="comment">// true</span></span><br><span class="line"><span class="string">&quot;&quot;</span> == &#123;&#125;     <span class="comment">// false</span></span><br><span class="line"><span class="number">0</span> == []      <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == &#123;&#125;      <span class="comment">// false</span></span><br><span class="line"><span class="number">0</span> == <span class="literal">null</span>    <span class="comment">// false </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、函数表达式-和-函数声明"><a href="#2、函数表达式-和-函数声明" class="headerlink" title="2、函数表达式 和 函数声明"></a>2、函数表达式 和 函数声明</h3><p>函数表达式只有被执行后才可用，它不会被提升（相当于赋值函数表达式给变量）：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> leo = <span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数声明则可以在定义前后被任意调用，因为它始终会被提升：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">leo</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、var-let-const"><a href="#3、var-let-const" class="headerlink" title="3、var let const"></a>3、var let const</h3><p><code>var</code> 在某一函数内部声明的变量和方法只能在其函数作用域内部访问到。<br><code>let</code> 所声明的变量，不会被提升，只在 <code>let</code> 命令所在的代码块内有效。<br><code>const</code> 所声明的变量，不能被重新赋值，但其指向的值是可以被操作的。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funvar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> a = <span class="string">&#x27;这是funvar&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">funlet</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> b = <span class="string">&#x27;这是funlet&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(b);</span><br><span class="line">&#125;</span><br><span class="line">funvar();      <span class="comment">// 这是funvar</span></span><br><span class="line">funlet();      <span class="comment">// &lt;b is not defined&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> leo = <span class="string">&#x27;my name is leo~&#x27;</span>;</span><br><span class="line">leo = <span class="string">&#x27;try to change name&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(leo)            <span class="comment">//  TypeError: Assignment to constant variable.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> leoArr = [<span class="string">&#x27;hello&#x27;</span>,<span class="string">&#x27;my&#x27;</span>,<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;is&#x27;</span>,<span class="string">&#x27;leo&#x27;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(loeArr[<span class="number">0</span>]);     <span class="comment">//  [&#x27;hello&#x27;,&#x27;my&#x27;,&#x27;name&#x27;,&#x27;is&#x27;,&#x27;leo&#x27;]</span></span><br><span class="line">leoArr[<span class="number">0</span>] = <span class="string">&#x27;Hi&#x27;</span>;  </span><br><span class="line">cconsole.log(leoArr)        <span class="comment">//  [&quot;Hi&quot;, &quot;my&quot;, &quot;name&quot;, &quot;is&quot;, &quot;leo&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4、上下文"><a href="#4、上下文" class="headerlink" title="4、上下文"></a>4、上下文</h3><p>上下文的概念经常会同作用域之间混淆。为了保持条理清晰，我们需要注意以下两条：  </p>
+<blockquote>
+<p> 上下文是在函数被调用时确定的。它通常指的是你的代码当中某一部分的值。<br> 作用域值的则是变量能过被访问到的范围。  </p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 作用域</span></span><br><span class="line"><span class="keyword">var</span> param = <span class="number">1</span>;             <span class="comment">// global scope</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myScope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> param = <span class="number">2</span>;         <span class="comment">// local scope</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 上下文</span></span><br><span class="line"><span class="built_in">this</span>.prop = <span class="number">1</span>;            <span class="comment">// global context</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myContext</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.prop = <span class="number">2</span>;        <span class="comment">// local context</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myInstance = <span class="keyword">new</span> myContext(); </span><br></pre></td></tr></table></figure>
+<p>例如上述实例当中调用 <code>this</code> 的位置不同，<code>this</code> 的指向也是不同的，也就表示着不同的上下文；而作用域则是我们在编写代码时使用 <code>var</code> 关键字来确定的。</p>
+<h3 id="5、函数调用方式：call-apply-bind"><a href="#5、函数调用方式：call-apply-bind" class="headerlink" title="5、函数调用方式：call apply bind"></a>5、函数调用方式：call apply bind</h3><p>这三种方法可以改变函数调用时 this 的指向，区别则在于函数调用的时候。  </p>
+<blockquote>
+<p> .call() 会立即调用函数，并要求你按次序一个个传入参数。<br> .apply() 也会立即调用函数，不过你需要以数组的形式传参。<br> .call() 和 .apply() 效用几乎是相同的，它们都可以用来调用对象中的某个方法，具体怎么使用取决于你的使用场景里如何传参更方便。  </p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Snow = &#123;<span class="attr">username</span>: <span class="string">&#x27;Snow&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">const</span> char = &#123;</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;Stark&#x27;</span>,</span><br><span class="line">  <span class="attr">knows</span>: <span class="function"><span class="keyword">function</span>(<span class="params">arg, name</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`You know <span class="subst">$&#123;arg&#125;</span>, <span class="subst">$&#123;name&#125;</span> <span class="subst">$&#123;<span class="built_in">this</span>.username&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">char.knows(<span class="string">&#x27;something&#x27;</span>, <span class="string">&#x27;Bran&#x27;</span>);              <span class="comment">// You know something, Bran Stark</span></span><br><span class="line">char.knows.call(Snow, <span class="string">&#x27;nothing&#x27;</span>, <span class="string">&#x27;Jon&#x27;</span>);      <span class="comment">// You know nothing, Jon Snow</span></span><br><span class="line">char.knows.apply(Snow, [<span class="string">&#x27;nothing&#x27;</span>, <span class="string">&#x27;Jon&#x27;</span>]);   <span class="comment">// You know nothing, Jon Snow </span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 注意： 如果你在使用 .call() 时传入了数组形式的参数，它会把整个数组当作一个参数使用。    </p>
+</blockquote>
+<p>不过在 ES6 里你倒是可以试试展开操作符的方法进行传参：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char.knows.call(Snow, ...[<span class="string">&quot;nothing&quot;</span>, <span class="string">&quot;Jon&quot;</span>]);  <span class="comment">// You know nothing, Jon Snow </span></span><br></pre></td></tr></table></figure>
+<p><code>.bind()</code> 不会直接触发某个方法，而是根据你传入的参数和上下文返回一个新的方法。<br>当你想要在程序之后的某些上下文环境中调用一个方法时可以使用 <code>.bind()</code> 这种方式。  </p>
+<p>这在我们使用一些异步操作或者事件处理函数时非常有用。<code>.bind()</code> 的传参形式则类似于 <code>.call()</code> 你需要讲参数以逗号分隔传入：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Snow = &#123;<span class="attr">surename</span>: <span class="string">&#x27;Snow&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">const</span> char = &#123;</span><br><span class="line">  <span class="attr">surename</span>: <span class="string">&#x27;Stark&#x27;</span>,</span><br><span class="line">  <span class="attr">knows</span>: <span class="function"><span class="keyword">function</span>(<span class="params">arg, name</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`You know <span class="subst">$&#123;arg&#125;</span>, <span class="subst">$&#123;name&#125;</span> <span class="subst">$&#123;<span class="built_in">this</span>.surename&#125;</span>`</span>);&#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">const</span> whoKnowsNothing = char.knows.bind(Snow, <span class="string">&#x27;nothing&#x27;</span>);</span><br><span class="line">whoKnowsNothing(<span class="string">&#x27;Jon&#x27;</span>);  <span class="comment">// You know nothing, Jon Snow </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5、严格模式"><a href="#5、严格模式" class="headerlink" title="5、严格模式"></a>5、严格模式</h3><p>我们可以通过使用 <code>&quot;use strict&quot;</code> 指令来启用 <code>JavaScript</code> 的严格模式。它会为你的代码添加更多的限制及错误处理。<br>使用严格模式的好处有：</p>
+<blockquote>
+<p>   更方便调试 你能够看到更多的报错，例如在你试图为只读的全局对象或属性赋值时。<br>   防止意外产生全局变量 对未声明的变量进行赋值时会报错。<br>   禁止无效的删除操作 尝试删除变量、函数、不可删除的属性时会报错。<br>   禁止重复的属性名及参数 如果有命名重复的属性名或者参数值就会报错。<br>   让 <code>eval()</code> 的调用更加安全 在 <code>eval()</code> 方法内部定义的变量及函数不会污染其他作用域。<br>   禁止 <code>this</code> 指向全局对象 当 <code>this</code> 的值为<code> null</code> 或者 <code>undefined</code> 时不会再默认指向到全局对象。这也就意味着在函数内部的 <code>this</code> 不会再默认指向 <code>window</code> 对象了。    </p>
+</blockquote>
+<h3 id="6、Object-keys"><a href="#6、Object-keys" class="headerlink" title="6、Object.keys()"></a>6、Object.keys()</h3><p><code>Object.keys()</code> 方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用 <code>for...in</code> 循环遍历该对象时返回的顺序一致 （两者的主要区别是 一个 for-in 循环还会枚举其原型链上的属性）。<br>详细：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/keys">点击查看</a><br>🌰栗子：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Array 对象 */</span> </span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.keys(arr));   <span class="comment">// [&#x27;0&#x27;, &#x27;1&#x27;, &#x27;2&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Object 对象 */</span> </span><br><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">foo</span>: <span class="string">&quot;bar&quot;</span>, <span class="attr">baz</span>: <span class="number">42</span> &#125;, </span><br><span class="line">    keys = <span class="built_in">Object</span>.keys(obj);     <span class="comment">// [&quot;foo&quot;,&quot;baz&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 类数组 对象 */</span> </span><br><span class="line"><span class="keyword">let</span> obj = &#123; <span class="number">0</span> : <span class="string">&quot;a&quot;</span>, <span class="number">1</span> : <span class="string">&quot;b&quot;</span>, <span class="number">2</span> : <span class="string">&quot;c&quot;</span>&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.keys(obj));   <span class="comment">// [&#x27;0&#x27;, &#x27;1&#x27;, &#x27;2&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 类数组 对象, 随机 key 排序 </span></span><br><span class="line"><span class="keyword">let</span> anObj = &#123; <span class="number">100</span>: <span class="string">&#x27;a&#x27;</span>, <span class="number">2</span>: <span class="string">&#x27;b&#x27;</span>, <span class="number">7</span>: <span class="string">&#x27;c&#x27;</span> &#125;; </span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.keys(anObj)); <span class="comment">// [&#x27;2&#x27;, &#x27;7&#x27;, &#x27;100&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* getFoo 是个不可枚举的属性 */</span> </span><br><span class="line"><span class="keyword">var</span> my_obj = <span class="built_in">Object</span>.create(</span><br><span class="line">   &#123;&#125;, </span><br><span class="line">   &#123; <span class="attr">getFoo</span> : &#123; <span class="attr">value</span> : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">this</span>.foo &#125; &#125; &#125;</span><br><span class="line">);</span><br><span class="line">my_obj.foo = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.keys(my_obj)); <span class="comment">// [&#x27;foo&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7、”void”运算符"><a href="#7、”void”运算符" class="headerlink" title="7、”void”运算符"></a>7、”void”运算符</h3><blockquote>
+<p>查看原文 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/void">MDN介绍</a><br>这个运算符能向期望一个表达式的值是<code>undefined</code>的地方插入会产生副作用的表达式。<br>void 运算符通常只用于获取 <code>undefined</code> 的原始值，一般使用<code>void(0)</code>（等同于<code>void0</code>）。在上述情况中，也可以使用全局变量<code>undefined</code> 来代替（假定其仍是默认值）。   </p>
+</blockquote>
+<p>在MDN上的定义是：<code>void运算符</code>对给定的表达式进行求值，然后返回<code>undefined</code>。<br>使用它来实现立即执行的函数表达式（<code>IIFE</code>），如下：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;hello Leo&#x27;</span>)</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 与下面等效</span></span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;hello Leo&#x27;</span>)</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<p>使用<code>void</code>必须注意的是，无论给定表达式返回结果如何，<code>void运算符</code>整体返回的结果都是空的(<code>undefined</code>)！  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> w1 = <span class="keyword">void</span> <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello leo&#x27;</span> </span><br><span class="line">&#125;()      <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> w2 = (<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello leo&#x27;</span></span><br><span class="line">&#125;)()     <span class="comment">// hello</span></span><br></pre></td></tr></table></figure>
+<p>与 <code>async</code> 一起使用，这样就能把函数作为异步代码的入口：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> fetch(<span class="string">&#x27;air.ghost.io&#x27;</span>);</span><br><span class="line">        <span class="keyword">const</span> text = <span class="keyword">await</span> res.text();</span><br><span class="line">        <span class="built_in">console</span>.log(text);</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 与下面等效</span></span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> fetch(<span class="string">&#x27;air.ghost.io&#x27;</span>);</span><br><span class="line">        <span class="keyword">const</span> text = <span class="keyword">await</span> res.text();</span><br><span class="line">        <span class="built_in">console</span>.log(text);</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>另外，经常也用在 <code>URI操作</code> 上，当用户点击一个以 <code>javascript: URI</code> 时，它会评估URI中的代码，然后用返回的值替换页面内容，除非返回的值是<code>undefined</code>。<code>void运算符</code>可用于返回<code>undefined</code>。例如：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:void(0);&quot;</span>&gt;</span></span><br><span class="line">  这个链接点击之后不会做任何事情，如果去掉 void()，</span><br><span class="line">  点击之后整个页面会被替换成一个字符 0。</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span> chrome中即使<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:0;&quot;</span>&gt;</span>也没变化，firefox中会变成一个字符串0 <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:void(document.body.style.backgroundColor=&#x27;green&#x27;);&quot;</span>&gt;</span></span><br><span class="line">  点击这个链接会让页面背景变成绿色。</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意，虽然这么做是可行的，但利用 <code>javascript:</code> 伪协议来执行<code> JavaScript</code> 代码是不推荐的，推荐的做法是为链接元素绑定事件。   </p>
+<h3 id="8、简单介绍闭包"><a href="#8、简单介绍闭包" class="headerlink" title="8、简单介绍闭包"></a>8、简单介绍闭包</h3><p><code>闭包</code>，又一个老生常谈的话题，可以用一句话对之概括：有权访问另一个函数作用域内变量的函数都是闭包。例如：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">inner</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a++);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> inner;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> closure = outer();</span><br><span class="line">closure();   <span class="comment">// 1</span></span><br><span class="line">closure();   <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>这里返回的<code>inner函数</code>就是能够访问<code>outer函数</code>中变量的闭包，除<code>inner函数</code>之外的外部作用域都无法访问<code>outer函数</code>中的变量<code>a</code>。  </p>
+<p><em>闭包特性：</em>  </p>
+<ul>
+<li>1.函数返回嵌套的函数形成闭包  </li>
+<li>2.闭包内部可以访问外部的参数和变量  </li>
+<li>3.外部参数和变量在被闭包引用时不会被垃圾回收机制回收  </li>
+</ul>
+<p><em>闭包优点：</em>  </p>
+<ul>
+<li>1.可避免变量对全局的污染</li>
+<li>2.允许函数私有成员的存在</li>
+<li>3.允许变量长驻内存</li>
+</ul>
+<p><em>闭包缺点：</em><br>由于变量常驻内存，增大内存使用量，使用不当很容易造成内存泄漏。   </p>
+<p><em>闭包应用场景：</em>  </p>
+<ul>
+<li>1.采用函数引用方式的setTimeout调用  </li>
+<li>2.将函数关联到对象的实例方法  </li>
+<li>3.封装相关的功能集  </li>
+</ul>
+<h3 id="最近更新-2018-02-07"><a href="#最近更新-2018-02-07" class="headerlink" title="最近更新 2018.02.07"></a>最近更新 2018.02.07</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/02/07/47-%E3%80%90JavaScript%E3%80%91%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" data-id="ckts3ejuy00864d9kafkg7p8x" data-title="47-【JavaScript】小知识点整理" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/13/48-%E3%80%90JavaScript%E3%80%91%E4%B8%80%E6%AC%A1%E6%80%A7%E8%AE%B0%E4%BD%8Fjs%E7%9A%846%E4%B8%AA%E6%AD%A3%E5%88%99%E6%96%B9%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          48-【JavaScript】一次性记住js的6个正则方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/07/46-%E3%80%90JavaScript%E3%80%91js%E4%B8%AD%E7%9A%84void%E6%93%8D%E4%BD%9C%E7%AC%A6%E6%95%B4%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">46-【JavaScript】js中的void操作符整理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

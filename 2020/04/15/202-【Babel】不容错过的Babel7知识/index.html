@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>202-【Babel】不容错过的Babel7知识 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="不容错过的 Babel7 知识  https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5ddff3abe51d4502d56bd143  对 Babel 的配置项的作用不那么了解，是否会影响日常开发呢？老实说，大多情况下没有特别大的影响（毕竟有搜索引擎）。不过呢，还是想更进一步了解下，于是最近认真阅读了 Babel 的文档，外加不断编译验证，输出了本篇文章，为了更好的阅读体验，修修改改，最终算是以我个人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="202-【Babel】不容错过的Babel7知识">
+<meta property="og:url" content="http://example.com/2020/04/15/202-%E3%80%90Babel%E3%80%91%E4%B8%8D%E5%AE%B9%E9%94%99%E8%BF%87%E7%9A%84Babel7%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="不容错过的 Babel7 知识  https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5ddff3abe51d4502d56bd143  对 Babel 的配置项的作用不那么了解，是否会影响日常开发呢？老实说，大多情况下没有特别大的影响（毕竟有搜索引擎）。不过呢，还是想更进一步了解下，于是最近认真阅读了 Babel 的文档，外加不断编译验证，输出了本篇文章，为了更好的阅读体验，修修改改，最终算是以我个人">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/webp/186051/1585576545113-2af624c5-4388-470e-a4ab-4e2ee545a29a.webp#align=left&display=inline&height=260&originHeight=260&originWidth=250&size=0&status=done&style=none&width=250">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545153-848f1a8d-ad56-4ec3-a9df-383b6de5f33a.jpeg#align=left&display=inline&height=245&originHeight=245&originWidth=316&size=0&status=done&style=none&width=316">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/webp/186051/1585576545151-8518e5ef-31ad-47fc-91ae-812c51e02256.webp#align=left&display=inline&height=301&originHeight=301&originWidth=300&size=0&status=done&style=none&width=300">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545130-83449582-6602-48c3-b141-a8e88ec06001.jpeg#align=left&display=inline&height=255&originHeight=255&originWidth=255&size=0&status=done&style=none&width=255">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/gif/186051/1585576545283-9cb5b8df-7d37-4cea-92ad-1afdad005035.gif#align=left&display=inline&height=232&originHeight=232&originWidth=188&size=0&status=done&style=none&width=188">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545179-fbe6fba2-bab7-4b61-8a50-a19bab6d74d5.jpeg#align=left&display=inline&height=300&originHeight=300&originWidth=300&size=0&status=done&style=none&width=300">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545179-2c767cc2-48ba-4f1a-8e42-aa3febf5604c.jpeg#align=left&display=inline&height=240&originHeight=240&originWidth=240&size=0&status=done&style=none&width=240">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545195-d06e89e4-eee3-4316-8a96-244554496a45.jpeg#align=left&display=inline&height=180&originHeight=180&originWidth=180&size=0&status=done&style=none&width=180">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/gif/186051/1585576545181-dd51b87f-bc43-413d-815f-858922073cb7.gif#align=left&display=inline&height=300&originHeight=300&originWidth=300&size=0&status=done&style=none&width=300">
+<meta property="article:published_time" content="2020-04-15T15:14:47.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.642Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/webp/186051/1585576545113-2af624c5-4388-470e-a4ab-4e2ee545a29a.webp#align=left&display=inline&height=260&originHeight=260&originWidth=250&size=0&status=done&style=none&width=250">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-202-【Babel】不容错过的Babel7知识" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/04/15/202-%E3%80%90Babel%E3%80%91%E4%B8%8D%E5%AE%B9%E9%94%99%E8%BF%87%E7%9A%84Babel7%E7%9F%A5%E8%AF%86/" class="article-date">
+  <time class="dt-published" datetime="2020-04-15T15:14:47.000Z" itemprop="datePublished">2020-04-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      202-【Babel】不容错过的Babel7知识
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>不容错过的 Babel7 知识  <a target="_blank" rel="noopener" href="https://juejin.im/post/5ddff3abe51d4502d56bd143">https://juejin.im/post/5ddff3abe51d4502d56bd143</a><br /></p>
+<hr>
+<p>对 <code>Babel</code> 的配置项的作用不那么了解，是否会影响日常开发呢？老实说，大多情况下没有特别大的影响（毕竟有搜索引擎）。<br />不过呢，还是想更进一步了解下，于是最近认真阅读了 <code>Babel</code> 的文档，外加不断编译验证，输出了本篇文章，为了更好的阅读体验，修修改改，最终算是以我个人比较喜欢的方式推进了每个知识点（每一个配置的引入都是有原因的），希望能够帮助你对 <code>Babel</code> 的各种配置有一个更清晰的认识 (已经很懂的小伙伴，无视本文) 。<br /></p>
+<blockquote>
+<p>Babel 是一个 JS 编译器</p>
+</blockquote>
+<p><br />Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中。<br />我们先看看 <code>Babel</code> 能够做什么：</p>
+<ul>
+<li>语法转换</li>
+<li>通过 <code>Polyfill</code> 方式在目标环境中添加缺失的特性(<code>@babel/polyfill模块</code>)</li>
+<li>源码转换(codemods)</li>
+</ul>
+<p><br />本篇文章的目的是搞明白 <code>Babel</code> 的使用和配置，搞清楚 <code>@babel/runtime</code>，<code>@babel/polyfill</code>，<code>@babel/plugin-transform-runtime</code> 这些作用是什么，插件和预设都是用来干什么的，我们为什么需要配置它们，而不是讲如何进行 <code>AST</code> 转换，如果你对 <code>AST</code> 转换非常感兴趣，欢迎阅读我们的 <a target="_blank" rel="noopener" href="https://github.com/areslabs/alita">RN转小程序引擎 Alita</a> 的源码，其中应用了大量的 <code>AST</code> 转换。<br /></p>
+<blockquote>
+<p>更多文章可戳（如Star，谢谢你）：<a target="_blank" rel="noopener" href="https://github.com/YvetteLau/Blog">https://github.com/YvetteLau/Blog</a></p>
+</blockquote>
+<p><br />为了更清晰的了解每一步，首先创建一个新项目，例如 <code>babelTemp</code>(你爱取啥名取啥名)，使用 <code>npm init -y</code> 进行初始化，创建 <code>src/index.js</code>，文件内容如下（你也可以随便写点什么）:<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>OK，创建好的项目先放在一边，先了解下理论知识:<br><a name="2KaSH"></a></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><br /></h3><p><a name="qkcsg"></a></p>
+<h3 id="核心库-babel-core"><a href="#核心库-babel-core" class="headerlink" title="核心库 @babel/core"></a>核心库 @babel/core</h3><p>Babel 的核心功能包含在 <code>@babel/core</code> 模块中。看到 <code>core</code> 这个词了吧，意味着<strong>核心</strong>，没有它，在 <code>babel</code> 的世界里注定寸步难行。不安装 <code>@babel/core</code>，无法使用 <code>babel</code> 进行编译。<br /></p>
+<p><a name="TC6LJ"></a></p>
+<h3 id="CLI命令行工具-babel-cli"><a href="#CLI命令行工具-babel-cli" class="headerlink" title="CLI命令行工具 @babel/cli"></a>CLI命令行工具 @babel/cli</h3><p><code>babel</code> 提供的命令行工具，主要是提供 <code>babel</code> 这个命令，适合安装在项目里。<br /><code>@babel/node</code> 提供了 <code>babel-node</code> 命令，但是 <code>@babel/node</code> 更适合全局安装，不适合安装在项目里。<br /></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @babel/core @babel/cli</span><br></pre></td></tr></table></figure>
+
+<p><br />现在你就可以在项目中使用 <code>babel</code> 进行编译啦（如果不安装 <code>@babel/core</code>，会报错噢）<br />将命令配置在 <code>package.json</code> 文件的 <code>scripts</code> 字段中:<br /></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;compiler&quot;</span>: <span class="string">&quot;babel src --out-dir lib --watch&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><br />使用 <code>npm run compiler</code> 来执行编译，现在我们没有配置任何插件，编译前后的代码是完全一样的。<br />因为 <code>Babel</code> 虽然开箱即用，但是什么动作也不做，如果想要 <code>Babel</code> 做一些实际的工作，就需要为其添加插件(<code>plugin</code>)。<br><a name="WRy33"></a></p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p><code>Babel</code> 构建在插件之上，使用现有的或者自己编写的插件可以组成一个转换通道，<code>Babel</code> 的插件分为两种: 语法插件和转换插件。<br /></p>
+<blockquote>
+<p>语法插件</p>
+</blockquote>
+<p><br />这些插件只允许 <code>Babel</code> <strong>解析（parse）</strong> 特定类型的语法（不是转换），可以在 <code>AST</code> 转换时使用，以支持解析新语法，例如：<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> babel <span class="keyword">from</span> <span class="string">&quot;@babel/core&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> code = babel.transformFromAstSync(ast, &#123;</span><br><span class="line">    <span class="comment">//支持可选链</span></span><br><span class="line">    <span class="attr">plugins</span>: [<span class="string">&quot;@babel/plugin-proposal-optional-chaining&quot;</span>],</span><br><span class="line">    <span class="attr">babelrc</span>: <span class="literal">false</span></span><br><span class="line">&#125;).code;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>转换插件</p>
+</blockquote>
+<p>转换插件会启用相应的语法插件(因此不需要同时指定这两种插件)，这点很容易理解，如果不启用相应的语法插件，意味着无法解析，连解析都不能解析，又何谈转换呢？<br><a name="AQ3WX"></a></p>
+<h4 id="插件的使用"><a href="#插件的使用" class="headerlink" title="插件的使用"></a>插件的使用</h4><p>如果插件发布在 <code>npm</code> 上，可以直接填写插件的名称， <code>Babel</code> 会自动检查它是否已经被安装在 <code>node_modules</code> 目录下，在项目目录下新建 <code>.babelrc</code> 文件 (下文会具体介绍配置文件)，配置如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//.babelrc</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;plugins&quot;</span>: [<span class="string">&quot;@babel/plugin-transform-arrow-functions&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><br />也可以指定插件的相对/绝对路径<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;plugins&quot;</span>: [<span class="string">&quot;./node_modules/@babel/plugin-transform-arrow-functions&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><br />执行 <code>npm run compiler</code>，可以看到箭头函数已经被编译OK， <code>lib/index.js</code> 内容如下:<br /></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>现在，我们仅支持转换箭头函数，如果想将其它的新的JS特性转换成低版本，需要使用其它对应的 <code>plugin</code> 。如果我们一个个配置的话，会非常繁琐，因为你可能需要配置几十个插件，这显然非常不便，那么有没有什么办法可以简化这个配置呢？<br />有！预设！(感谢强大的 <code>Babel</code>)<br /><img src="https://cdn.nlark.com/yuque/0/2020/webp/186051/1585576545113-2af624c5-4388-470e-a4ab-4e2ee545a29a.webp#align=left&display=inline&height=260&originHeight=260&originWidth=250&size=0&status=done&style=none&width=250"><br><a name="lQ9Nw"></a></p>
+<h3 id="预设"><a href="#预设" class="headerlink" title="预设"></a>预设</h3><p>通过使用或创建一个 <code>preset</code> 即可<strong>轻松</strong>使用一组插件。</p>
+<blockquote>
+<p>官方 Preset</p>
+</blockquote>
+<ul>
+<li>@babel/preset-env</li>
+<li>@babel/preset-flow</li>
+<li>@babel/preset-react</li>
+<li>@babel/preset-typescript</li>
+</ul>
+<p><strong>注:</strong> 从 Babel v7 开始，所有针对标准提案阶段的功能所编写的预设(stage preset)都已被弃用，官方已经移除了 <code>@babel/preset-stage-x</code>。<br><a name="0KCWe"></a></p>
+<h4 id="babel-preset-env"><a href="#babel-preset-env" class="headerlink" title="@babel/preset-env"></a>@babel/preset-env</h4><p><code>@babel/preset-env</code> 主要作用是对我们所使用的并且目标浏览器中缺失的功能进行代码转换和加载 <code>polyfill</code>，在不进行任何配置的情况下，<code>@babel/preset-env</code> 所包含的插件将支持所有最新的JS特性(ES2015,ES2016等，不包含 stage 阶段)，将其转换成ES5代码。例如，如果你的代码中使用了可选链(目前，仍在 stage 阶段)，那么只配置 <code>@babel/preset-env</code>，转换时会抛出错误，需要另外安装相应的插件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//.babelrc</span><br><span class="line">&#123;</span><br><span class="line">    &quot;presets&quot;: [&quot;@babel/preset-env&quot;]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>需要说明的是，<code>@babel/preset-env</code> 会根据你配置的目标环境，生成插件列表来编译。对于基于浏览器或 <code>Electron</code> 的项目，官方推荐使用 <code>.browserslistrc</code> 文件来指定目标环境。默认情况下，如果你没有在 <code>Babel</code> 配置文件中(如 .babelrc)设置 <code>targets</code> 或 <code>ignoreBrowserslistConfig</code>，<code>@babel/preset-env</code> 会使用 <code>browserslist</code> 配置源。<br />如果你不是要兼容所有的浏览器和环境，推荐你指定目标环境，这样你的编译代码能够保持最小。<br />例如，仅包括浏览器市场份额超过0.25％的用户所需的 <code>polyfill</code> 和代码转换（忽略没有安全更新的浏览器，如 IE10 和 BlackBerry）:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//.browserslistrc</span><br><span class="line">&gt; 0.25%</span><br><span class="line">not dead</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>查看 <a target="_blank" rel="noopener" href="https://github.com/browserslist/browserslist"><code>browserslist</code> 的更多配置</a><br />例如，你将 <code>.browserslistrc</code> 的内容配置为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">last 2 Chrome versions</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>然后再执行 <code>npm run compiler</code>，你会发现箭头函数不会被编译成ES5，因为 <code>chrome</code> 的最新2个版本都能够支持箭头函数。现在，我们将 <code>.browserslistrc</code> 仍然换成之前的配置。<br />就咱们目前的代码来说，当前的配置似乎已经是OK的了。<br /><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545153-848f1a8d-ad56-4ec3-a9df-383b6de5f33a.jpeg#align=left&display=inline&height=245&originHeight=245&originWidth=316&size=0&status=done&style=none&width=316"><br />我们修改下 <code>src/index.js</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const isHas = [1,2,3].includes(2);</span><br><span class="line">const p = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    resolve(100);</span><br><span class="line">&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>编译出来的结果为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;</span><br><span class="line">var isHas = [1, 2, 3].includes(2);</span><br><span class="line">var p = new Promise(function (resolve, reject) &#123;</span><br><span class="line">  resolve(100);</span><br><span class="line">&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>这个编译出来的代码在低版本浏览器中使用的话，显然是有问题的，因为低版本浏览器中数组实例上没有 <code>includes</code> 方法，也没有 <code>Promise</code> 构造函数。<br />这是为什么呢？因为语法转换只是将高版本的语法转换成低版本的，但是新的内置函数、实例方法无法转换。这时，就需要使用 <code>polyfill</code> 上场了，顾名思义，<code>polyfill</code>的中文意思是垫片，所谓垫片就是垫平不同浏览器或者不同环境下的差异，让新的内置函数、实例方法等在低版本浏览器中也可以使用。<br /><img src="https://cdn.nlark.com/yuque/0/2020/webp/186051/1585576545151-8518e5ef-31ad-47fc-91ae-812c51e02256.webp#align=left&display=inline&height=301&originHeight=301&originWidth=300&size=0&status=done&style=none&width=300"><br><a name="i3hpv"></a></p>
+<h3 id="Polyfill"><a href="#Polyfill" class="headerlink" title="Polyfill"></a>Polyfill</h3><p><code>@babel/polyfill</code> 模块包括 <code>core-js</code> 和一个自定义的 <code>regenerator runtime</code> 模块，可以模拟完整的 ES2015+ 环境（不包含第4阶段前的提议）。<br />这意味着可以使用诸如 <code>Promise</code> 和 <code>WeakMap</code> 之类的新的内置组件、 <code>Array.from</code> 或 <code>Object.assign</code> 之类的静态方法、<code>Array.prototype.includes</code> 之类的实例方法以及生成器函数(前提是使用了 <code>@babel/plugin-transform-regenerator</code> 插件)。为了添加这些功能，<code>polyfill</code> 将添加到全局范围和类似 <code>String</code> 这样的内置原型中(会对全局环境造成污染，后面我们会介绍不污染全局环境的方法)。<br /><strong>补充说明 (2020/01/07)：</strong>V7.4.0 版本开始，<code>@babel/polyfill</code> 已经被废弃(前端发展日新月异)，需单独安装 <code>core-js</code> 和 <code>regenerator-runtime</code> 模块。<br />首先，安装 <code>@babel/polyfill</code> 依赖:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --save @babel/polyfill</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>注意：不使用 <code>--save-dev</code>，因为这是一个需要在源码之前运行的垫片。<br />我们需要将完整的 <code>polyfill</code> 在代码之前加载，修改我们的 <code>src/index.js</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#x27;@babel/polyfill&#x27;;</span><br><span class="line">const isHas = [1,2,3].includes(2);</span><br><span class="line">const p = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    resolve(100);</span><br><span class="line">&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><code>@babel/polyfill</code> 需要在其它代码之前引入，我们也可以在 <code>webpack</code> 中进行配置。<br />例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">entry: [</span><br><span class="line">    require.resolve(&#x27;./polyfills&#x27;),</span><br><span class="line">    path.resolve(&#x27;./index&#x27;)</span><br><span class="line">]</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><code>polyfills.js</code> 文件内容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//当然，还可能有一些其它的 polyfill，例如 stage 4之前的一些 polyfill</span><br><span class="line">import &#x27;@babel/polyfill&#x27;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>现在，我们的代码不管在低版本还是高版本浏览器(或node环境)中都能正常运行了。不过，很多时候，我们未必需要完整的 <code>@babel/polyfill</code>，这会导致我们最终构建出的包的体积增大，<code>@babel/polyfill</code>的包大小为89K (当前 <code>@babel/polyfill</code> 版本为 7.7.0)。<br />我们更期望的是，如果我使用了某个新特性，再引入对应的 <code>polyfill</code>，避免引入无用的代码。<br />值得庆幸的是， <code>Babel</code> 已经考虑到了这一点。<br /><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545130-83449582-6602-48c3-b141-a8e88ec06001.jpeg#align=left&display=inline&height=255&originHeight=255&originWidth=255&size=0&status=done&style=none&width=255"><br /><code>@babel/preset-env</code> 提供了一个 <code>useBuiltIns</code> 参数，设置值为 <code>usage</code> 时，就只会包含代码需要的 <code>polyfill</code> 。有一点需要注意：配置此参数的值为 <code>usage</code> ，必须要同时设置 <code>corejs</code> (如果不设置，会给出警告，默认使用的是”corejs”: 2) ，注意: 这里仍然需要安装 <code>@babel/polyfill</code>(当前 <code>@babel/polyfill</code> 版本默认会安装 “corejs”: 2):<br />首先说一下使用 <code>core-js@3</code> 的原因，<code>core-js@2</code> 分支中已经不会再添加新特性，新特性都会添加到 <code>core-js@3</code>。例如你使用了 <code>Array.prototype.flat()</code>，如果你使用的是 <code>core-js@2</code>，那么其不包含此新特性。为了可以使用更多的新特性，建议大家使用 <code>core-js@3</code>。<br />安装依赖依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --save core-js@3</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/zloirock/core-js">core-js (点击了解更多)</a> : JavaScript 的模块化标准库，包含 <code>Promise</code>、<code>Symbol</code>、<code>Iterator</code>和许多其他的特性，它可以让你仅加载必需的功能。</p>
+</blockquote>
+<p>现在，修改 <code>Babel</code> 的配置文件如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//.babelrc</span><br><span class="line">const presets = [</span><br><span class="line">    [</span><br><span class="line">        &quot;@babel/env&quot;,</span><br><span class="line">        &#123;   </span><br><span class="line">            &quot;useBuiltIns&quot;: &quot;usage&quot;,</span><br><span class="line">            &quot;corejs&quot;: 3</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">]</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><code>Babel</code> 会检查所有代码，以便查找在目标环境中缺失的功能，然后仅仅把需要的 <code>polyfill</code> 包含进来。<br />例如，<code>src/index.js</code> 代码不变：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const isHas = [1,2,3].includes(2);</span><br><span class="line">const p = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    resolve(100);</span><br><span class="line">&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>我们看看编译出来的文件(<code>lib/index</code>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;</span><br><span class="line">require(&quot;core-js/modules/es.array.includes&quot;);</span><br><span class="line">require(&quot;core-js/modules/es.object.to-string&quot;);</span><br><span class="line">require(&quot;core-js/modules/es.promise&quot;);</span><br><span class="line">var isHas = [1, 2, 3].includes(2);</span><br><span class="line">var p = new Promise(function (resolve, reject) &#123;</span><br><span class="line">    resolve(100);</span><br><span class="line">&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>同样的代码，我们用 <code>webpack</code> 构建一下(<code>production</code> 模式)，能看到最终的代码大小仅为: 20KB。而如果我们引入整个 <code>@babel/polyfill</code> 的话，构建出的包大小为：89KB<br />前面曾提到，在 <code>useBuiltIns</code> 参数值为 <code>usage</code> 时，仍然需要安装 <code>@babel/polyfill</code>，虽然我们上面的代码转换中看起来并没有使用到，但是，如果我们源码中使用到了 <code>async/await</code>，那么编译出来的代码需要 <code>require(&quot;regenerator-runtime/runtime&quot;)</code>，在 <code>@babel/polyfill</code> 的依赖中，当然啦，你也可以只安装 <code>regenerator-runtime/runtime</code> 取代安装 <code>@babel/polyfill</code>。<br />到了这一步，已经很棒棒了，是不是想跳起来转个圈圈？<br /><img src="https://cdn.nlark.com/yuque/0/2020/gif/186051/1585576545283-9cb5b8df-7d37-4cea-92ad-1afdad005035.gif#align=left&display=inline&height=232&originHeight=232&originWidth=188&size=0&status=done&style=none&width=188"><br />下面我要说的内容，也许你已经知道，也许你还不知道，这都不重要，但是此刻起，你要知道了: <code>Babel</code> 会使用很小的辅助函数来实现类似 <code>_createClass</code> 等公共方法。默认情况下，它将被添加(<code>inject</code>)到需要它的每个文件中。<br />假如，我们的 <code>src/index.js</code> 是这样的:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Point &#123;</span><br><span class="line">    constructor(x, y) &#123;</span><br><span class="line">        this.x = x;</span><br><span class="line">        this.y = y;</span><br><span class="line">    &#125;;</span><br><span class="line">    getX() &#123;</span><br><span class="line">        return this.x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">let cp = new ColorPoint(25, 8);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>编译出来的 <code>lib/index.js</code>，如下所示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;</span><br><span class="line">require(&quot;core-js/modules/es.object.define-property&quot;);</span><br><span class="line">function _classCallCheck(instance, Constructor) &#123; if (!(instance instanceof Constructor)) &#123; throw new TypeError(&quot;Cannot call a class as a function&quot;); &#125; &#125;</span><br><span class="line">function _defineProperties(target, props) &#123; for (var i = 0; i &lt; props.length; i++) &#123; var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (&quot;value&quot; in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); &#125; &#125;</span><br><span class="line">function _createClass(Constructor, protoProps, staticProps) &#123; if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; &#125;</span><br><span class="line">var Point =</span><br><span class="line">    /*#__PURE__*/</span><br><span class="line">    function () &#123;</span><br><span class="line">        function Point(x, y) &#123;</span><br><span class="line">            _classCallCheck(this, Point);</span><br><span class="line">            this.x = x;</span><br><span class="line">            this.y = y;</span><br><span class="line">        &#125;</span><br><span class="line">        _createClass(Point, [&#123;</span><br><span class="line">            key: &quot;getX&quot;,</span><br><span class="line">            value: function getX() &#123;</span><br><span class="line">                return this.x;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;]);</span><br><span class="line">        return Point;</span><br><span class="line">    &#125;();</span><br><span class="line">var cp = new ColorPoint(25, 8);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>看起来，似乎并没有什么问题，但是你想一下，如果你有10个文件中都使用了这个 <code>class</code>，是不是意味着 <code>_classCallCheck</code>、<code>_defineProperties</code>、<code>_createClass</code> 这些方法被 <code>inject</code> 了10次。这显然会导致包体积增大，最关键的是，我们并不需要它 <code>inject</code> 多次。<br />这个时候，就是 <code>@babel/plugin-transform-runtime</code> 插件大显身手的时候了，使用 <code>@babel/plugin-transform-runtime</code> 插件，所有帮助程序都将引用模块 <code>@babel/runtime</code>，这样就可以避免编译后的代码中出现重复的帮助程序，有效减少包体积。<br /><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545179-fbe6fba2-bab7-4b61-8a50-a19bab6d74d5.jpeg#align=left&display=inline&height=300&originHeight=300&originWidth=300&size=0&status=done&style=none&width=300"><br><a name="kGvQm"></a></p>
+<h3 id="babel-plugin-transform-runtime"><a href="#babel-plugin-transform-runtime" class="headerlink" title="@babel/plugin-transform-runtime"></a>@babel/plugin-transform-runtime</h3><p><code>@babel/plugin-transform-runtime</code> 是一个可以重复使用 <code>Babel</code> 注入的帮助程序，以节省代码大小的插件。</p>
+<blockquote>
+<p>注意：诸如 <code>Array.prototype.flat()</code> 等实例方法将不起作用，因为这需要修改现有的内置函数(可以使用 <code>@babel/polyfill</code> 来解决这个问题) ——&gt; 对此需要说明的是如果你配置的是<code>corejs3</code>， <strong><code>core-js@3</code> 现在已经支持原型方法，同时不污染原型</strong>。</p>
+</blockquote>
+<p>另外，<code>@babel/plugin-transform-runtime</code> 需要和 <code>@babel/runtime</code> 配合使用。<br />首先安装依赖，<code>@babel/plugin-transform-runtime</code> 通常仅在开发时使用，但是运行时最终代码需要依赖 <code>@babel/runtime</code>，所以 <code>@babel/runtime</code> 必须要作为生产依赖被安装，如下 :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @babel/plugin-transform-runtime</span><br><span class="line">npm install --save @babel/runtime</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>除了前文所说的，<code>@babel/plugin-transform-runtime</code> 可以减少编译后代码的体积外，我们使用它还有一个好处，它可以为代码创建一个沙盒环境，如果使用 <code>@babel/polyfill</code> 及其提供的内置程序（例如 <code>Promise</code> ，<code>Set</code> 和 <code>Map</code> ），则它们将污染全局范围。虽然这对于应用程序或命令行工具可能是可以的，但是如果你的代码是要发布供他人使用的库，或者无法完全控制代码运行的环境，则将成为一个问题。<br /><code>@babel/plugin-transform-runtime</code> 会将这些内置别名作为 <code>core-js</code> 的别名，因此您可以无缝使用它们，而无需 <code>polyfill</code>。<br />修改 <code>.babelrc</code> 的配置，如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//.babelrc</span><br><span class="line">&#123;</span><br><span class="line">    &quot;presets&quot;: [</span><br><span class="line">        [</span><br><span class="line">            &quot;@babel/preset-env&quot;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;useBuiltIns&quot;: &quot;usage&quot;,</span><br><span class="line">                &quot;corejs&quot;: 3</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    ],</span><br><span class="line">    &quot;plugins&quot;: [</span><br><span class="line">        [</span><br><span class="line">            &quot;@babel/plugin-transform-runtime&quot;</span><br><span class="line">        ]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>重新编译 <code>npm run compiler</code> , 现在，编译出来的内容为(<code>lib/index.js</code>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;</span><br><span class="line">var _interopRequireDefault = require(&quot;@babel/runtime/helpers/interopRequireDefault&quot;);</span><br><span class="line">var _classCallCheck2 = _interopRequireDefault(require(&quot;@babel/runtime/helpers/classCallCheck&quot;));</span><br><span class="line">var _createClass2 = _interopRequireDefault(require(&quot;@babel/runtime/helpers/createClass&quot;));</span><br><span class="line">var Point =</span><br><span class="line">    /*#__PURE__*/</span><br><span class="line">    function () &#123;</span><br><span class="line">        function Point(x, y) &#123;</span><br><span class="line">            (0, _classCallCheck2.default)(this, Point);</span><br><span class="line">            this.x = x;</span><br><span class="line">            this.y = y;</span><br><span class="line">        &#125;</span><br><span class="line">        (0, _createClass2.default)(Point, [&#123;</span><br><span class="line">            key: &quot;getX&quot;,</span><br><span class="line">            value: function getX() &#123;</span><br><span class="line">                return this.x;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;]);</span><br><span class="line">        return Point;</span><br><span class="line">    &#125;();</span><br><span class="line">var cp = new ColorPoint(25, 8);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>可以看出，帮助函数现在不是直接被 <code>inject</code> 到代码中，而是从 <code>@babel/runtime</code> 中引入。前文说了使用 <code>@babel/plugin-transform-runtime</code> 可以避免全局污染，我们来看看是如何避免污染的。<br />修改 <code>src/index.js</code> 如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let isHas = [1,2,3].includes(2);</span><br><span class="line">new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    resolve(100);</span><br><span class="line">&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>编译出来的代码如下(<code>lib/index.js</code>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;</span><br><span class="line">require(&quot;core-js/modules/es.array.includes&quot;);</span><br><span class="line">require(&quot;core-js/modules/es.object.to-string&quot;);</span><br><span class="line">require(&quot;core-js/modules/es.promise&quot;);</span><br><span class="line">var isHas = [1, 2, 3].includes(2);</span><br><span class="line">new Promise(function (resolve, reject) &#123;</span><br><span class="line">    resolve(100);</span><br><span class="line">&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><code>Array.prototype</code> 上新增了 <code>includes</code> 方法，并且新增了全局的 <code>Promise</code> 方法，污染了全局环境，这跟不使用 <code>@babel/plugin-transform-runtime</code> 没有区别嘛。<br /><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545179-2c767cc2-48ba-4f1a-8e42-aa3febf5604c.jpeg#align=left&display=inline&height=240&originHeight=240&originWidth=240&size=0&status=done&style=none&width=240"><br />如果我们希望 <code>@babel/plugin-transform-runtime</code> 不仅仅处理帮助函数，同时也能加载 <code>polyfill</code> 的话，我们需要给 <code>@babel/plugin-transform-runtime</code> 增加配置信息。<br />首先新增依赖 <code>@babel/runtime-corejs3</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install @babel/runtime-corejs3 --save</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>修改配置文件如下(移除了 <code>@babel/preset-env</code> 的 <code>useBuiltIns</code> 的配置，不然不就重复了嘛嘛嘛，不信的话，你用 <code>async/await</code> 编译下试试咯):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;presets&quot;: [</span><br><span class="line">        [</span><br><span class="line">            &quot;@babel/preset-env&quot;</span><br><span class="line">        ]</span><br><span class="line">    ],</span><br><span class="line">    &quot;plugins&quot;: [</span><br><span class="line">        [</span><br><span class="line">            &quot;@babel/plugin-transform-runtime&quot;,&#123;</span><br><span class="line">                &quot;corejs&quot;: 3</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>然后重新编译，看一下，编译出来的结果(<code>lib/index.js</code>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;</span><br><span class="line">var _interopRequireDefault = require(&quot;@babel/runtime-corejs3/helpers/interopRequireDefault&quot;);</span><br><span class="line">var _promise = _interopRequireDefault(require(&quot;@babel/runtime-corejs3/core-js-stable/promise&quot;));</span><br><span class="line">var _includes = _interopRequireDefault(require(&quot;@babel/runtime-corejs3/core-js-stable/instance/includes&quot;));</span><br><span class="line">var _context;</span><br><span class="line">var isHas = (0, _includes.default)(_context = [1, 2, 3]).call(_context, 2);</span><br><span class="line">new _promise.default(function (resolve, reject) &#123;</span><br><span class="line">  resolve(100);</span><br><span class="line">&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>可以看出，没有直接去修改 <code>Array.prototype</code>，或者是新增 <code>Promise</code> 方法，避免了全局污染。如果上面 <code>@babel/plugin-transform-runtime</code> 配置的 <code>core-js</code> 是 “2”，其中不包含实例的 <code>polyfill</code> 需要单独引入。</p>
+<blockquote>
+<p>划重点：如果我们配置的 <code>corejs</code> 是 <code>3</code> 版本，那么不管是实例方法还是全局方法，都不会再污染全局环境。</p>
+</blockquote>
+<p>看到这里，不知道大家有没有这样一个疑问？给 <code>@babel/plugin-transform-runtime</code> 配置 <code>corejs</code> 是如此的完美，既可以将帮助函数变成引用的形式，又可以动态引入 <code>polyfill</code>，并且不会污染全局环境。何必要给 <code>@babel/preset-env</code> 提供 <code>useBuiltIns</code> 功能呢，看起来似乎不需要呀。<br />带着这样的疑问，我新建了几个文件(内容简单且基本一致，使用了些新特性)，然后使用 <code>webpack</code> 构建，以下是我对比的数据:</p>
+<table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">.babelrc 配置</th>
+<th align="left">webpack mode production</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0</td>
+<td align="left">不使用 <code>@babel/plugin-transform-runtime</code></td>
+<td align="left">36KB</td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">使用<code>@babel/plugin-transform-runtime</code>，并配置参数 <code>corejs</code>: 3。不会污染全局环境</td>
+<td align="left">37KB</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">使用<code>@babel/plugin-transform-runtime</code>，不配置 <code>corejs</code></td>
+<td align="left">22KB</td>
+</tr>
+</tbody></table>
+<p>我猜测是 <code>@babel/runtime-corejs3/XXX</code> 的包本身比 <code>core-js/modules/XXX</code> 要大一些~<br /><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/186051/1585576545195-d06e89e4-eee3-4316-8a96-244554496a45.jpeg#align=left&display=inline&height=180&originHeight=180&originWidth=180&size=0&status=done&style=none&width=180"><br><a name="V6jys"></a></p>
+<h3 id="插件-预设补充知识"><a href="#插件-预设补充知识" class="headerlink" title="插件/预设补充知识"></a>插件/预设补充知识</h3><blockquote>
+<p><strong>插件的排列顺序很重要！！！</strong></p>
+</blockquote>
+<p>如果两个转换插件都将处理“程序（Program）”的某个代码片段，则将根据转换插件或 <code>preset</code> 的排列顺序依次执行。</p>
+<ul>
+<li>插件在 Presets 前运行。</li>
+<li>插件顺序从前往后排列。</li>
+<li>Preset 顺序是颠倒的（从后往前）。</li>
+</ul>
+<p>例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;plugins&quot;: [&quot;@babel/plugin-proposal-class-properties&quot;, &quot;@babel/plugin-syntax-dynamic-import&quot;]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>先执行 <code>@babel/plugin-proposal-class-properties</code>，后执行 <code>@babel/plugin-syntax-dynamic-import</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;presets&quot;: [&quot;@babel/preset-env&quot;, &quot;@babel/preset-react&quot;]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><code>preset</code> 的执行顺序是<strong>颠倒</strong>的，先执行 <code>@babel/preset-react</code>， 后执行 <code>@babel/preset-env</code>。<br><a name="b0nQx"></a></p>
+<h4 id="插件参数"><a href="#插件参数" class="headerlink" title="插件参数"></a>插件参数</h4><p>插件和 <code>preset</code> 都可以接受参数，参数由插件名和参数对象组成一个数组。<code>preset</code> 设置参数也是这种格式。<br />如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;plugins&quot;: [</span><br><span class="line">        [</span><br><span class="line">            &quot;@babel/plugin-proposal-class-properties&quot;, </span><br><span class="line">            &#123; &quot;loose&quot;: true &#125;</span><br><span class="line">        ]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><a name="vpDVE"></a></p>
+<h5 id="插件的短名称"><a href="#插件的短名称" class="headerlink" title="插件的短名称"></a>插件的短名称</h5><p>如果插件名称为 <code>@babel/plugin-XXX</code>，可以使用短名称<code>@babel/XXX</code> :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;plugins&quot;: [</span><br><span class="line">        &quot;@babel/transform-arrow-functions&quot; //同 &quot;@babel/plugin-transform-arrow-functions&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>如果插件名称为 <code>babel-plugin-XXX</code>，可以使用短名称 <code>XXX</code>，该规则同样适用于带有 <code>scope</code> 的插件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;plugins&quot;: [</span><br><span class="line">        &quot;newPlugin&quot;, //同 &quot;babel-plugin-newPlugin&quot;</span><br><span class="line">        &quot;@scp/myPlugin&quot; //同 &quot;@scp/babel-plugin-myPlugin&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><a name="vusUk"></a></p>
+<h4 id="创建-Preset"><a href="#创建-Preset" class="headerlink" title="创建 Preset"></a>创建 Preset</h4><blockquote>
+<p>可以简单的返回一个插件数组</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        plugins: [</span><br><span class="line">            &quot;A&quot;,</span><br><span class="line">            &quot;B&quot;,</span><br><span class="line">            &quot;C&quot;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>preset</code> 中也可以包含其他的 <code>preset</code>，以及带有参数的插件。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        presets: [</span><br><span class="line">            require(&quot;@babel/preset-env&quot;)</span><br><span class="line">        ],</span><br><span class="line">        plugins: [</span><br><span class="line">            [require(&quot;@babel/plugin-proposal-class-properties&quot;), &#123; loose: true &#125;],</span><br><span class="line">            require(&quot;@babel/plugin-proposal-object-rest-spread&quot;)</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><a name="SIthI"></a></p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>Babel 支持多种格式的配置文件。这部分内容补充了解下即可，谁管你用哪种配置文件，只要你的配置是OK的就可以了(敷衍)~<br />所有的 <code>Babel</code> API 参数都可以被配置，但是如果该参数需要使用的 JS 代码，那么可能需要使用 JS 代码版的配置文件。</p>
+<blockquote>
+<p>根据使用场景可以选择不同的配置文件:</p>
+</blockquote>
+<p>如果希望以编程的方式创建配置文件或者希望编译 <code>node_modules</code> 目录下的模块：那么 <code>babel.config.js</code> 可以满足你的需求。<br />如果只是需要一个简单的并且中用于单个软件包的配置：那么 <code>.babelrc</code> 即可满足你的需求。<br><a name="XAeLF"></a></p>
+<h4 id="babel-config-js"><a href="#babel-config-js" class="headerlink" title="babel.config.js"></a>babel.config.js</h4><p>在项目根目录下创建一个名为 <code>babel.config.js</code> 的文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(api) &#123;</span><br><span class="line">    api.cache(true);</span><br><span class="line">    const presets = [...];</span><br><span class="line">    const plugins = [...];</span><br><span class="line">    return &#123;</span><br><span class="line">        presets,</span><br><span class="line">        plugins</span><br><span class="line">    &#125;;</span><br><span class="line">&#125; </span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>具体的配置可以查看：<a target="_blank" rel="noopener" href="https://www.babeljs.cn/docs/config-files#project-wide-configuration">babel.config.js 文档</a><br><a name="otlk1"></a></p>
+<h4 id="babelrc"><a href="#babelrc" class="headerlink" title=".babelrc"></a>.babelrc</h4><p>在项目根目录下创建一个名为 <code>.babelrc</code> 的文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;presets&quot;: [],</span><br><span class="line">    &quot;plugins&quot;: []</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>具体的配置可以参考 <a target="_blank" rel="noopener" href="https://www.babeljs.cn/docs/config-files#file-relative-configuration">.babelrc 文档 </a><br><a name="bSz1c"></a></p>
+<h4 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h4><p>可以将 <code>.babelrc</code> 中的配置信息作为 <code>babel</code> 键(key) 添加到 <code>package.json</code> 文件中:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;my-package&quot;,</span><br><span class="line">    &quot;babel&quot;: &#123;</span><br><span class="line">        &quot;presets&quot;: [],</span><br><span class="line">        &quot;plugins&quot;: []</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><a name="VDxQV"></a></p>
+<h4 id="babelrc-js"><a href="#babelrc-js" class="headerlink" title=".babelrc.js"></a>.babelrc.js</h4><p>与 <code>.babelrc</code> 配置相同，但是可以使用JS编写。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//可以在其中调用 Node.js 的API</span><br><span class="line">const presets = [];</span><br><span class="line">const plugins = [];</span><br><span class="line">module.exports = &#123; presets, plugins &#125;;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/gif/186051/1585576545181-dd51b87f-bc43-413d-815f-858922073cb7.gif#align=left&display=inline&height=300&originHeight=300&originWidth=300&size=0&status=done&style=none&width=300"><br />不知道是否全面，不过真的写不动了（如有不全，后续再补充）<del>就酱</del>如果有错误，欢迎指正。</p>
+<blockquote>
+<p>参考链接</p>
+</blockquote>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.babeljs.cn/docs/">babel文档</a><br /></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/cbd48919a0cc">babel 7 的使用的个人理解</a><br /></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5c19c5e0e51d4502a232c1c6">一口(很长的)气了解 babel</a><br /></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sefaultment/p/11631314.html">core-js@3带来的惊喜</a><br /></li>
+</ol>
+<p><br />作者：刘小夕<br />链接：<a target="_blank" rel="noopener" href="https://juejin.im/post/5ddff3abe51d4502d56bd143">https://juejin.im/post/5ddff3abe51d4502d56bd143</a><br />来源：掘金<br />著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/04/15/202-%E3%80%90Babel%E3%80%91%E4%B8%8D%E5%AE%B9%E9%94%99%E8%BF%87%E7%9A%84Babel7%E7%9F%A5%E8%AF%86/" data-id="ckts3ejyo00n04d9k8nw3ewqd" data-title="202-【Babel】不容错过的Babel7知识" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/04/27/203-%E3%80%90JavaScript%E3%80%91%E9%80%81%E5%AD%A6%E5%A6%B9%E6%BB%A1%E5%B1%8F%E5%B9%95%E5%B0%8F%E7%88%B1%E5%BF%83/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          203-【JavaScript】送学妹满屏幕小爱心
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/30/201-%E3%80%90%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%91200%E8%A1%8CJS%E4%BB%A3%E7%A0%81%E5%B8%A6%E4%BD%A0%E5%AE%9E%E7%8E%B0%E5%BE%AE%E5%9E%8B%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%88%E4%BA%BA%E4%BA%BA%E9%83%BD%E8%83%BD%E5%AD%A6%E4%BC%9A%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">201-【编译原理】200行JS代码带你实现微型编译器（人人都能学会）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>5-【Python】廖雪峰课程笔记（一） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="廖雪峰课程 Python笔记（一）一、学习网站 廖雪峰 Python课程：点击打开  二、补充前面知识 由于 python2.x 和 python3.x 不互相兼容，并且官方宣布2020年即将停止对 python2.x 的维护，所以我开始学习 python3.x 版本，这个部分主要是对之前学习的内容进行补充，新的内容会在后面更新。    1、print ()在 python3.x 中，不再使用 p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5-【Python】廖雪峰课程笔记（一）">
+<meta property="og:url" content="http://example.com/2017/12/21/5-%E3%80%90Python%E3%80%91%E5%BB%96%E9%9B%AA%E5%B3%B0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="廖雪峰课程 Python笔记（一）一、学习网站 廖雪峰 Python课程：点击打开  二、补充前面知识 由于 python2.x 和 python3.x 不互相兼容，并且官方宣布2020年即将停止对 python2.x 的维护，所以我开始学习 python3.x 版本，这个部分主要是对之前学习的内容进行补充，新的内容会在后面更新。    1、print ()在 python3.x 中，不再使用 p">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-21T13:56:18.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.695Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-5-【Python】廖雪峰课程笔记（一）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/12/21/5-%E3%80%90Python%E3%80%91%E5%BB%96%E9%9B%AA%E5%B3%B0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2017-12-21T13:56:18.000Z" itemprop="datePublished">2017-12-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      5-【Python】廖雪峰课程笔记（一）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="廖雪峰课程-Python笔记（一）"><a href="#廖雪峰课程-Python笔记（一）" class="headerlink" title="廖雪峰课程 Python笔记（一）"></a>廖雪峰课程 Python笔记（一）</h2><h3 id="一、学习网站"><a href="#一、学习网站" class="headerlink" title="一、学习网站"></a>一、学习网站</h3><blockquote>
+<p>廖雪峰 Python课程：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">点击打开</a></p>
+</blockquote>
+<h3 id="二、补充前面知识"><a href="#二、补充前面知识" class="headerlink" title="二、补充前面知识"></a>二、补充前面知识</h3><blockquote>
+<p>由于 <code>python2.x</code> 和 <code>python3.x</code> 不互相兼容，并且官方宣布2020年即将停止对 <code>python2.x</code> 的维护，所以我开始学习 <code>python3.x</code> 版本，这个部分主要是对之前学习的内容进行补充，新的内容会在后面更新。  </p>
+</blockquote>
+<h4 id="1、print"><a href="#1、print" class="headerlink" title="1、print ()"></a>1、print ()</h4><p>在 <code>python3.x</code> 中，不再使用 <code>print ...</code> 打印内容，而是换成更直观的 <code>print()</code> 方法，写法依旧：   </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> (<span class="string">&quot;hello&quot;</span>)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;&quot;&quot;line1</span></span><br><span class="line"><span class="string">    line2</span></span><br><span class="line"><span class="string">    line3&quot;&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="2、格式化"><a href="#2、格式化" class="headerlink" title="2、格式化"></a>2、格式化</h4><p>经常我们需要输出类似 <code>&quot;亲爱的xxx你好！你xx月的话费是xx，余额是xx&quot;</code> 之类的字符串，而xxx的内容都是根据变量变化的，所以，需要一种简便的格式化字符串的方式。<br>这里我们可以使用占位符进行操作：<br>格式如下：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;内容 + 占位符1 + 内容 + 占位符2&quot;</span> % (占位符对应内容值<span class="number">1</span>,占位符对应内容值<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;Hello, %s&quot;</span> % <span class="string">&quot;world&quot;</span>                               <span class="comment"># &quot;Hello, world&quot;</span></span><br><span class="line"><span class="string">&quot;Hi, %s, you have $%d.&quot;</span> % (<span class="string">&quot;Michael&quot;</span>, <span class="number">1000000</span>)      <span class="comment"># &quot;Hi, Michael, you have $1000000.&quot;</span></span><br></pre></td></tr></table></figure>
+<h5 id="常用占位符："><a href="#常用占位符：" class="headerlink" title="常用占位符："></a>常用占位符：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%d   <span class="comment"># 整数</span></span><br><span class="line">%f   <span class="comment"># 浮点数</span></span><br><span class="line">%s   <span class="comment"># 字符串</span></span><br><span class="line">%x   <span class="comment"># 十六进制整数</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3、format"><a href="#3、format" class="headerlink" title="3、format()"></a>3、format()</h4><p>使用字符串的 <code>format()</code> 方法，用参数 <code>&#123;0&#125;、&#123;1&#125;...</code> 来替换字符串占位符，比较麻烦。   </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;Hello, &#123;0&#125;, 成绩提升了 &#123;1:.1f&#125;%&quot;</span>.<span class="built_in">format</span>(<span class="string">&quot;小明&quot;</span>, <span class="number">17.125</span>)</span><br><span class="line"><span class="comment"># &quot;Hello, 小明, 成绩提升了 17.1%&quot;</span></span><br><span class="line"><span class="comment"># 这边的 &#123;1:.1f&#125;  .1f表示保留小数点后一位, .2f即保留到小数点后两位, .3f ..依次类推。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4、tuple"><a href="#4、tuple" class="headerlink" title="4、tuple"></a>4、tuple</h4><p>由于 <code>tuple（名称：元组）</code> 一旦初始化就不能修改，没有 <code>append()</code> , <code>insert()</code> 方法，所以比较安全，如果能用 <code>tuple</code> 代替 <code>list</code> 的话尽量用 <code>tuple</code> 。  </p>
+<h5 id="补充1："><a href="#补充1：" class="headerlink" title="补充1："></a>补充1：</h5><p>但是有种情况可以修改 <code>tuple</code> 的值，就是 <code>tuple</code> 里面含有 <code>list</code> ，如下：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test1 = [<span class="string">&quot;hi&quot;</span>,<span class="string">&quot;nihao&quot;</span>]</span><br><span class="line">test2 = (<span class="string">&quot;zhe&quot;</span>,<span class="string">&quot;shi&quot;</span>,<span class="string">&quot;tuple&quot;</span>,test1)</span><br><span class="line"><span class="built_in">print</span> (test2)       <span class="comment">#  (&quot;zhe&quot;,&quot;shi&quot;,&quot;tuple&quot;,[&quot;hi&quot;,&quot;nihao&quot;])</span></span><br><span class="line">test2[<span class="number">3</span>][<span class="number">1</span>] = <span class="string">&quot;leo&quot;</span></span><br><span class="line"><span class="built_in">print</span> (test2)       <span class="comment">#  (&quot;zhe&quot;,&quot;shi&quot;,&quot;tuple&quot;,[&quot;hi&quot;,&quot;leo])</span></span><br></pre></td></tr></table></figure>
+<h5 id="补充2："><a href="#补充2：" class="headerlink" title="补充2："></a>补充2：</h5><p>如果 <code>tuple</code> 只有 <code>1</code> 个元素，需要添加一个 <code>,</code> 都好，以免误解成数学计算意义上的符号。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test3 = (<span class="number">1</span>,)        <span class="comment"># (1,)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5、input-和-raw-input"><a href="#5、input-和-raw-input" class="headerlink" title="5、input() 和 raw_input()"></a>5、input() 和 raw_input()</h4><h5 id="python3-x中已经没有raw-input-！！"><a href="#python3-x中已经没有raw-input-！！" class="headerlink" title="python3.x中已经没有raw_input()！！"></a>python3.x中已经没有raw_input()！！</h5><blockquote>
+<p>相同：都是用来获取控制台的输入，并且都能接收字符串。<br>不同：  </p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">input</span>()      对纯数字输入，也将返回数字类型（<span class="built_in">int</span>,<span class="built_in">float</span>）。  </span><br><span class="line">raw_input()  将所有输入作为字符串看待，并返回字符串类型。  </span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">input</span>()      需要接收一个合法的python表达式，即输入内容需要用括号括起来，不然报错。  </span><br><span class="line">raw_input()  直接读取空事态输入的任何类型的内容。  </span><br></pre></td></tr></table></figure>
+<p>除非对 <code>input()</code> 有特别需求，不然一般推荐使用 <code>raw_input()</code> 和用户交互。<br><code>input()</code> 需要输入 <code>python</code> 表达式:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="built_in">input</span>(<span class="string">&quot;input:&quot;</span>) </span><br><span class="line"><span class="built_in">input</span>:<span class="number">123</span>              <span class="comment"># 输入整数 </span></span><br><span class="line"><span class="built_in">type</span>(a)                 <span class="comment">#&lt;type &quot;int&quot;&gt; # 整型</span></span><br><span class="line">a = <span class="built_in">input</span>(<span class="string">&quot;input:&quot;</span>) </span><br><span class="line"><span class="built_in">input</span>:<span class="string">&quot;runoob&quot;</span>         <span class="comment"># 正确，字符串表达式</span></span><br><span class="line"><span class="built_in">type</span>(a)                <span class="comment"># &lt;type &quot;str&quot;&gt; # 字符串 </span></span><br><span class="line">a = <span class="built_in">input</span>(<span class="string">&quot;input:&quot;</span>) </span><br><span class="line"><span class="built_in">input</span>:runoob           <span class="comment"># 报错，不是表达式 ...NameError: name &quot;runoob&quot; is not defined &lt;type &quot;str&quot;&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>raw_input()</code> 将所有输入作为字符串看待:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = raw_input(<span class="string">&quot;input:&quot;</span>)</span><br><span class="line"><span class="built_in">input</span>:<span class="number">123</span></span><br><span class="line"><span class="built_in">type</span>(a)                <span class="comment"># &lt;type &quot;str&quot;&gt; # 字符串</span></span><br><span class="line">a = raw_input(<span class="string">&quot;input:&quot;</span>) </span><br><span class="line"><span class="built_in">input</span>:runoob</span><br><span class="line"><span class="built_in">type</span>(a)                <span class="comment"># &lt;type &quot;str&quot;&gt; # 字符串</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="6、循环"><a href="#6、循环" class="headerlink" title="6、循环"></a>6、循环</h4><h5 id="补充a、break，退出循环"><a href="#补充a、break，退出循环" class="headerlink" title="补充a、break，退出循环"></a>补充a、break，退出循环</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">n = 1<span class="keyword">while</span> n &lt;= <span class="number">100</span>:</span><br><span class="line">    <span class="keyword">if</span> n &gt; <span class="number">10</span>:         <span class="comment"># 当n = 11时，条件满足，执行break语句</span></span><br><span class="line">        <span class="keyword">break</span>          <span class="comment"># break语句会结束当前循环</span></span><br><span class="line">    <span class="built_in">print</span>(n)</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;END&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="补充b、continue，跳过这次循环"><a href="#补充b、continue，跳过这次循环" class="headerlink" title="补充b、continue，跳过这次循环"></a>补充b、continue，跳过这次循环</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> n &lt; <span class="number">10</span>:</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">0</span>:     <span class="comment"># 如果n是偶数，执行continue语句</span></span><br><span class="line">        <span class="keyword">continue</span>       <span class="comment"># continue语句会直接继续下一轮循环，后续的print()语句不会执行</span></span><br><span class="line">    <span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+<p><code>循环</code>是让计算机做重复任务的有效的方法。<br><code>break语句</code> 可以在循环过程中直接<code>退出循环</code>，而 <code>continue语句</code> 可以提前<code>结束本轮循环</code>，并直接开始下一轮循环。这两个语句通常都必须配合<code>if语句</code>使用。  </p>
+<blockquote>
+<p>注意，不要滥用 <code>break</code> 和 <code>continue</code> 语句。 <code>break</code> 和 <code>continue</code> 会造成代码执行逻辑分叉过多，容易出错。<br>大多数循环并不需要用到 <code>break</code> 和 <code>continue</code> 语句，上面的两个例子，都可以通过改写循环条件或者修改循环逻辑，去掉 <code>break</code> 和 <code>continue</code> 语句。</p>
+</blockquote>
+<h4 id="7、关于数值类型的补充"><a href="#7、关于数值类型的补充" class="headerlink" title="7、关于数值类型的补充"></a>7、关于数值类型的补充</h4><h5 id="a、整数类型："><a href="#a、整数类型：" class="headerlink" title="a、整数类型："></a>a、整数类型：</h5><p>在 <code>python3.x</code> 中，只要内存允许，整型数据的值可以拓展到 <code>任意长度</code> ，整数取值范围几乎包括全部整数，这给 <code>大数据的计算</code> 带来便利。</p>
+<h5 id="b、实型数据："><a href="#b、实型数据：" class="headerlink" title="b、实型数据："></a>b、实型数据：</h5><p>实型也称 <code>浮点型</code> ，Python语言中，实数只采用十进制。它有两种表示形式： <code>十进制形式</code> 和 <code>指数形式</code> 。</p>
+<blockquote>
+<p>十进制数形式由数码0~9和小数点组成，如345.0、12.2、0.0等。实型数据允许小数点后面没有任何数字，表示小数部分为0，如23.表示23.0。  </p>
+</blockquote>
+<blockquote>
+<p>指数形式即由科学计数法表示的浮点数，由十进制数加阶码标志E或e组成。e之前为数字部分，之后为指数部分，且两部分必须同时出现，指数必须为整数。如45e-5，9.34e2等，分别代表45x10-5、9.34x102，而e4，3.4e3.4、34e等是非法的浮点型常量。</p>
+</blockquote>
+<h5 id="c、复合型数据："><a href="#c、复合型数据：" class="headerlink" title="c、复合型数据："></a>c、复合型数据：</h5><p>科学计算中经常遇到 <code>复数</code> 运算问题，如数学中求方程的复根，电工学中交流电路的计算等都用到复数运算。<br>python提供了 <code>复数类型</code> ，形式为 <code>a+bj</code> ，其中 <code>a是复数的实部</code> ，<code>b是虚部</code> ，<code>j表示-1的平方根</code> （虚数单位）。代码：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">12</span> +<span class="number">34</span> j</span><br><span class="line">x                <span class="comment"># (12 + 34j)</span></span><br></pre></td></tr></table></figure>
+<p>通过 <code>x.real</code> 和 <code>x.imag</code> 来分别获取复数x的实部和虚部，结果都是 <code>浮点型</code>   </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x.real           <span class="comment"># 12.0</span></span><br><span class="line">x.imag           <span class="comment"># 34.0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="8、数据类型转换-和-最值"><a href="#8、数据类型转换-和-最值" class="headerlink" title="8、数据类型转换 和 最值"></a>8、数据类型转换 和 最值</h4><p>Python内置的常用函数还包括 <code>数据类型转换函数</code>，比如 <code>int()函数</code> 可以把其他数据类型转换为 <code>整数</code>： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span>(<span class="string">&quot;123&quot;</span>)       <span class="comment"># 123</span></span><br><span class="line"><span class="built_in">int</span>(<span class="number">12.34</span>)       <span class="comment"># 12</span></span><br><span class="line"><span class="built_in">float</span>(<span class="string">&quot;12.34&quot;</span>)   <span class="comment"># 12.34</span></span><br><span class="line"><span class="built_in">str</span>(<span class="number">1.23</span>)        <span class="comment"># &quot;1.23&quot;</span></span><br><span class="line"><span class="built_in">str</span>(<span class="number">100</span>)         <span class="comment"># &quot;100&quot;</span></span><br><span class="line"><span class="built_in">bool</span>(<span class="number">1</span>)          <span class="comment"># True</span></span><br><span class="line"><span class="built_in">bool</span>(<span class="string">&quot;&quot;</span>)         <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+<p>函数名其实就是指向一个函数对象的引用，完全可以把函数名赋给一个变量，相当于给这个函数起了一个 <code>“别名”</code> ：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="built_in">abs</span>          <span class="comment"># 变量a指向abs函数</span></span><br><span class="line">a(-<span class="number">1</span>)            <span class="comment"># 1 所以也可以通过a调用abs函数</span></span><br></pre></td></tr></table></figure>
+<p>max函数 <code>max()</code> 可以接收任意多个参数，并返回最大的那个：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">max</span>(<span class="number">1</span>, <span class="number">2</span>)        <span class="comment"># 2</span></span><br><span class="line"><span class="built_in">max</span>(<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, -<span class="number">5</span>) <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="9、空函数-pass语句"><a href="#9、空函数-pass语句" class="headerlink" title="9、空函数 pass语句"></a>9、空函数 pass语句</h4><p>空函数实际上什么也不做，一般用来作为 <code>占位符</code> ，比如现在没想好写什么内容，可以先写个 <code>pass</code> 让代码运行起来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nop</span>():</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>还可以放在其他语句中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h4 id="10、python运算符"><a href="#10、python运算符" class="headerlink" title="10、python运算符"></a>10、python运算符</h4><p>运算符详细介绍：<a target="_blank" rel="noopener" href="http://www.runoob.com/python/python-operators.html">点击查看</a><br><code>^</code> <code>异或运算</code>  比如，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> ^ <span class="number">1</span> = <span class="number">0</span></span><br><span class="line"><span class="number">0</span> ^ <span class="number">0</span> = <span class="number">0</span></span><br><span class="line"><span class="number">1</span> ^ <span class="number">0</span> = <span class="number">1</span></span><br><span class="line"><span class="number">0</span> ^ <span class="number">1</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h4 id="11、默认参数的补充"><a href="#11、默认参数的补充" class="headerlink" title="11、默认参数的补充"></a>11、默认参数的补充</h4><p>可以不按照顺序传递参数：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span>(<span class="params">a,b,c=<span class="string">&quot;5&quot;</span>,d=<span class="string">&quot;&quot;</span></span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这是a&quot;</span>,a)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这是b&quot;</span>,b)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这是c&quot;</span>,c)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这是d&quot;</span>,d)</span><br><span class="line"><span class="built_in">print</span>(f1(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>))</span><br><span class="line"><span class="built_in">print</span> (f1(<span class="number">1</span>,<span class="number">3</span>,d=<span class="string">&quot;666&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>定义默认参数要牢记一点：<code>默认参数必须指向不变对象</code>！</p>
+<h4 id="12、可变参数的补充"><a href="#12、可变参数的补充" class="headerlink" title="12、可变参数的补充"></a>12、可变参数的补充</h4><p>在参数前面加了一个 <code>*</code> 号。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span>(<span class="params">a,b,*<span class="built_in">list</span></span>):</span></span><br><span class="line">    <span class="built_in">print</span> (a,b,<span class="built_in">list</span>)</span><br><span class="line">    <span class="built_in">print</span> (<span class="built_in">list</span>[<span class="number">0</span>][<span class="number">0</span>])</span><br><span class="line">    <span class="built_in">print</span> (<span class="built_in">list</span>[<span class="number">0</span>][<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">print</span> (<span class="built_in">list</span>[<span class="number">0</span>][<span class="number">2</span>])</span><br><span class="line">f1(<span class="number">1</span>,<span class="number">2</span>,[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="13、关键字参数的补充"><a href="#13、关键字参数的补充" class="headerlink" title="13、关键字参数的补充"></a>13、关键字参数的补充</h4><p>关键字参数允许你传入 <code>0个</code> 或者<code>任意个</code> 参数名的参数，这些关键字参数在函数内部会自动组装成一个 <code>dict</code>： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span>(<span class="params">name, age, **kw</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;name:&quot;</span>, name, <span class="string">&quot;age:&quot;</span>, age, <span class="string">&quot;other:&quot;</span>, kw)</span><br><span class="line">person(<span class="string">&quot;Bob&quot;</span>, <span class="number">35</span>, city=<span class="string">&quot;Beijing&quot;</span>)</span><br><span class="line"><span class="comment"># name: Bob age: 35 other: &#123;&quot;city&quot;: &quot;Beijing&quot;&#125;</span></span><br><span class="line">person(<span class="string">&quot;Adam&quot;</span>, <span class="number">45</span>, gender=<span class="string">&quot;M&quot;</span>, job=<span class="string">&quot;Engineer&quot;</span>)</span><br><span class="line"><span class="comment"># name: Adam age: 45 other: &#123;&quot;gender&quot;: &quot;M&quot;, &quot;job&quot;: &quot;Engineer&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+<p><code>**extra</code> 表示把 <code>extra</code> 这个 <code>dict</code> 的所有 <code>key-value</code> 用关键字参数传入到函数的 <code>**kw</code> 参数， <code>kw</code> 将获得一个 <code>dict</code> ，注意 <code>kw</code> 获得的 <code>dict</code> 是 <code>extra</code> 的一份拷贝，对 <code>kw</code> 的改动不会影响到函数外的 <code>extra</code> 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">extra = &#123;<span class="string">&quot;city&quot;</span>: <span class="string">&quot;Beijing&quot;</span>, <span class="string">&quot;job&quot;</span>: <span class="string">&quot;Engineer&quot;</span>&#125;</span><br><span class="line">person(<span class="string">&quot;Jack&quot;</span>, <span class="number">24</span>, **extra)</span><br><span class="line"><span class="comment"># name: Jack age: 24 other: &#123;&quot;city&quot;: &quot;Beijing&quot;, &quot;job&quot;: &quot;Engineer&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="14、迭代的补充"><a href="#14、迭代的补充" class="headerlink" title="14、迭代的补充"></a>14、迭代的补充</h4><p><code>for ... in</code>循环：<br>多个变量迭代 <code>key</code> 和 <code>value</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">&quot;x&quot;</span>: <span class="string">&quot;A&quot;</span>, <span class="string">&quot;y&quot;</span>: <span class="string">&quot;B&quot;</span>, <span class="string">&quot;z&quot;</span>: <span class="string">&quot;C&quot;</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 迭代方法1：</span></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> d.items():</span><br><span class="line">    <span class="built_in">print</span>(k, <span class="string">&quot;=&quot;</span>, v)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 迭代方法2：</span></span><br><span class="line">[k + <span class="string">&quot;=&quot;</span> + v <span class="keyword">for</span> k, v <span class="keyword">in</span> d.items()]</span><br><span class="line"><span class="comment"># y = B</span></span><br><span class="line"><span class="comment"># x = A</span></span><br><span class="line"><span class="comment"># z = C</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="15、生成器的补充"><a href="#15、生成器的补充" class="headerlink" title="15、生成器的补充"></a>15、生成器的补充</h4><p>第一种方法很简单，只要把一个列表生成式的 <code>[]</code> 改成 <code>()</code> ：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">L = [x * x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)]</span><br><span class="line">L        <span class="comment">#  [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span></span><br><span class="line">g = (x * x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>))</span><br><span class="line">g        <span class="comment">#  &lt;generator object &lt;genexpr&gt; at 0x1022ef630&gt;</span></span><br><span class="line">h = (x * x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>))</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> h:</span><br><span class="line">        <span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/21/5-%E3%80%90Python%E3%80%91%E5%BB%96%E9%9B%AA%E5%B3%B0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" data-id="ckts3ejv2008g4d9k2u2q8wie" data-title="5-【Python】廖雪峰课程笔记（一）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/21/6-%E3%80%90Python%E3%80%91%E5%BB%96%E9%9B%AA%E5%B3%B0%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          6-【Python】廖雪峰课程笔记（二）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/21/4-%E3%80%90Python%E3%80%91%E6%85%95%E8%AF%BE%E7%BD%91%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">4-【Python】慕课网视频笔记（四）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

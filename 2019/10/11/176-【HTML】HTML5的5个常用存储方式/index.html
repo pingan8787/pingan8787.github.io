@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>176-【HTML】HTML5的5个常用存储方式 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、介绍在 HTML5 规范之前，存储主要是用 cookies 。cookies 的缺点有：     在请求头上带着数据； 大小是 4k 之内； 主 Domain 污染；  cookies 的主要应用： 购物车、客户登录。 由于存在这么多缺点，因此我们需要解决以下问题：     解决 4k 的大小问题；  解决请求头常带存储信息的问题；  解决关系型存储的问题；  跨浏览器；   三、五种存储方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="176-【HTML】HTML5的5个常用存储方式">
+<meta property="og:url" content="http://example.com/2019/10/11/176-%E3%80%90HTML%E3%80%91HTML5%E7%9A%845%E4%B8%AA%E5%B8%B8%E7%94%A8%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、介绍在 HTML5 规范之前，存储主要是用 cookies 。cookies 的缺点有：     在请求头上带着数据； 大小是 4k 之内； 主 Domain 污染；  cookies 的主要应用： 购物车、客户登录。 由于存在这么多缺点，因此我们需要解决以下问题：     解决 4k 的大小问题；  解决请求头常带存储信息的问题；  解决关系型存储的问题；  跨浏览器；   三、五种存储方式">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_jpg/34uGBxmCnto7TzbpZnGA5yGCqrOJyu2vib5SdR7mb0u6oAzF3nyTHNBdLDxjJ1xMh2EyfBb2QapsjicHdGEwmSrQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/34uGBxmCnto7TzbpZnGA5yGCqrOJyu2v1WDAITbPXPicjIskPQK5pM8FhT8OAdXvFq2TsI2N9O9hDmrpR9pyxibQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/34uGBxmCnto7TzbpZnGA5yGCqrOJyu2vyYezL9lNFpqFLJQwibAseZSoE0CzApfbbZYeznRKRJFBSDDCRyxjdYg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="article:published_time" content="2019-10-11T13:58:21.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.613Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mmbiz.qpic.cn/mmbiz_jpg/34uGBxmCnto7TzbpZnGA5yGCqrOJyu2vib5SdR7mb0u6oAzF3nyTHNBdLDxjJ1xMh2EyfBb2QapsjicHdGEwmSrQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-176-【HTML】HTML5的5个常用存储方式" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/11/176-%E3%80%90HTML%E3%80%91HTML5%E7%9A%845%E4%B8%AA%E5%B8%B8%E7%94%A8%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time class="dt-published" datetime="2019-10-11T13:58:21.000Z" itemprop="datePublished">2019-10-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      176-【HTML】HTML5的5个常用存储方式
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><p>在 HTML5 规范之前，存储主要是用 <code>cookies</code> 。<br><code>cookies</code> 的缺点有：   </p>
+<ul>
+<li><strong>在请求头上带着数据</strong>；</li>
+<li>大小是 <code>4k</code> 之内；</li>
+<li>主 <code>Domain</code> 污染；</li>
+</ul>
+<p><code>cookies</code> 的主要应用：</p>
+<p>购物车、客户登录。</p>
+<p>由于存在这么多缺点，因此我们需要解决以下问题：   </p>
+<ul>
+<li><p>解决 <code>4k</code> 的大小问题；</p>
+</li>
+<li><p>解决请求头常带存储信息的问题；</p>
+</li>
+<li><p>解决关系型存储的问题；</p>
+</li>
+<li><p>跨浏览器；</p>
+</li>
+</ul>
+<h2 id="三、五种存储方式"><a href="#三、五种存储方式" class="headerlink" title="三、五种存储方式"></a>三、五种存储方式</h2><h3 id="1-本地存储-localstorage"><a href="#1-本地存储-localstorage" class="headerlink" title="1. 本地存储 localstorage"></a>1. 本地存储 localstorage</h3><ul>
+<li><strong>存储方式</strong>：</li>
+</ul>
+<p>以键值对( <code>Key-Value </code>)的方式存储，永久存储，永不失效，除非手动删除。</p>
+<ul>
+<li><strong>大小</strong>：</li>
+</ul>
+<p>每个域名5M。</p>
+<ul>
+<li><strong>支持情况</strong>：</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/34uGBxmCnto7TzbpZnGA5yGCqrOJyu2vib5SdR7mb0u6oAzF3nyTHNBdLDxjJ1xMh2EyfBb2QapsjicHdGEwmSrQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="1"></p>
+<p>注意：IE9 <code>localStorage</code> 不支持本地文件，需要将项目署到服务器，才可以支持！</p>
+<ul>
+<li><strong>检测方法</strong>：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">window</span>.localStorage)&#123;</span><br><span class="line"> alert(<span class="string">&#x27;This browser supports localStorage&#x27;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"> alert(<span class="string">&#x27;This browser does NOT support localStorage&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>常用API</strong>：</li>
+</ul>
+<p>取记录: <code>getItem</code>；</p>
+<p>设置记录：<code>setIten</code>；</p>
+<p>移除记录：<code>removeItem</code>；</p>
+<p>取 <code>key </code>所对应的值：<code>key</code>；</p>
+<p>清除记录：<code>clear</code>；</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/34uGBxmCnto7TzbpZnGA5yGCqrOJyu2v1WDAITbPXPicjIskPQK5pM8FhT8OAdXvFq2TsI2N9O9hDmrpR9pyxibQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="2"></p>
+<ul>
+<li><strong>存储的内容</strong>：</li>
+</ul>
+<p>数组，图片，json，样式，脚本。。。（只要是能序列化成字符串的内容都可以存储）。</p>
+<h3 id="2-本地存储-sessionstorage"><a href="#2-本地存储-sessionstorage" class="headerlink" title="2. 本地存储 sessionstorage"></a>2. 本地存储 sessionstorage</h3><p>HTML5 的本地存储 API 中的 <code>localStorage</code> 与 <code>sessionStorage</code> 在使用方法上是相同的，区别在于 <code>sessionStorage</code> 在关闭页面后即被清空，而 <code>localStorage</code> 则会一直保存。</p>
+<h3 id="3-离线缓存-application-cache"><a href="#3-离线缓存-application-cache" class="headerlink" title="3. 离线缓存 application cache"></a>3. 离线缓存 application cache</h3><p>本地缓存应用所需的文件。</p>
+<ul>
+<li><strong>使用方法</strong>：</li>
+</ul>
+<p>需要配置 <code>manifest</code> 文件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">manifest</span>=<span class="string">&quot;demo.appcache&quot;</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Manifest</code> 文件：</li>
+</ul>
+<p><code>manifest</code> 文件是简单的文本文件，它告知浏览器被缓存的内容（以及不缓存的内容）。</p>
+<p><code>manifest</code> 文件可分为三个部分：</p>
+<p>1.1 <code>CACHE MANIFEST</code> - 在此标题下列出的文件将在首次下载后进行缓存；</p>
+<p>1.2 <code>NETWORK</code> - 在此标题下列出的文件需要与服务器的连接，且不会被缓存；</p>
+<p>1.3 <code>FALLBACK</code> - 在此标题下列出的文件规定当页面无法访问时的回退页面（比如 404 页面）；</p>
+<ul>
+<li><strong>完整demo</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CACHE MANIFEST</span><br><span class="line"># 2016-07-24 v1.0.0</span><br><span class="line">/theme.css</span><br><span class="line">/main.js</span><br><span class="line"></span><br><span class="line">NETWORK:</span><br><span class="line">login.jsp</span><br><span class="line"></span><br><span class="line">FALLBACK:</span><br><span class="line">/html/ /offline.html</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>服务器上</strong>：</li>
+</ul>
+<p><code>manifest</code> 文件需要配置正确的 <code>MIME-type</code> ，即 “<code>text/cache-manifest</code>”。</p>
+<p>如 Tomcat:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;mime-mapping&gt;</span><br><span class="line">     &lt;extension&gt;manifest&lt;/extension&gt;</span><br><span class="line">     &lt;mime-type&gt;text/cache-manifest&lt;/mime-type&gt;</span><br><span class="line">&lt;/mime-mapping&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>常用API</strong>：</li>
+</ul>
+<p>核心是 <code>applicationCache</code> 对象，有个 <code>status</code> 属性，表示应用缓存的当前状态：</p>
+<p>0（UNCACHED） :  无缓存， 即没有与页面相关的应用缓存</p>
+<p>1（IDLE） : 闲置，即应用缓存未得到更新</p>
+<p>2 （CHECKING） : 检查中，即正在下载描述文件并检查更新</p>
+<p>3 （DOWNLOADING） : 下载中，即应用缓存正在下载描述文件中指定的资源</p>
+<p>4 （UPDATEREADY） : 更新完成，所有资源都已下载完毕</p>
+<p>5 （IDLE） :  废弃，即应用缓存的描述文件已经不存在了，因此页面无法再访问应用缓存</p>
+<ul>
+<li><strong>相关事件</strong>：</li>
+</ul>
+<p>表示应用缓存状态的改变。</p>
+<p><code>checking</code> : 在浏览器为应用缓存查找更新时触发</p>
+<p><code>error</code> : 在检查更新或下载资源期间发送错误时触发</p>
+<p><code>noupdate</code> : 在检查描述文件发现文件无变化时触发</p>
+<p><code>downloading</code> : 在开始下载应用缓存资源时触发</p>
+<p><code>progress</code>：在文件下载应用缓存的过程中持续不断地下载地触发</p>
+<p><code>updateready</code> : 在页面新的应用缓存下载完毕触发</p>
+<p>cached : 在应用缓存完整可用时触发</p>
+<ul>
+<li><code>Application Cache</code> 的三个优势：</li>
+</ul>
+<p>① 离线浏览</p>
+<p>② 提升页面载入速度</p>
+<p>③ 降低服务器压力</p>
+<ul>
+<li>注意事项：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1. 浏览器对缓存数据的容量限制可能不太一样（某些浏览器设置的限制是每个站点 5MB）</span><br><span class="line"></span><br><span class="line">2. 如果manifest文件，或者内部列举的某一个文件不能正常下载，整个更新过程将视为失败，浏览器继续全部使用老的缓存</span><br><span class="line"></span><br><span class="line">3. 引用manifest的html必须与manifest文件同源，在同一个域下</span><br><span class="line"></span><br><span class="line">4. 浏览器会自动缓存引用manifest文件的HTML文件，这就导致如果改了HTML内容，也需要更新版本才能做到更新。</span><br><span class="line"></span><br><span class="line">5. manifest文件中CACHE则与NETWORK，FALLBACK的位置顺序没有关系，如果是隐式声明需要在最前面</span><br><span class="line"></span><br><span class="line">6. FALLBACK中的资源必须和manifest文件同源</span><br><span class="line"></span><br><span class="line">7. 更新完版本后，必须刷新一次才会启动新版本（会出现重刷一次页面的情况），需要添加监听版本事件。</span><br><span class="line"></span><br><span class="line">8. 站点中的其他页面即使没有设置manifest属性，请求的资源如果在缓存中也从缓存中访问</span><br><span class="line"></span><br><span class="line">9. 当manifest文件发生改变时，资源请求本身也会触发更新</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>离线缓存与传统浏览器缓存区别</strong>：</li>
+</ul>
+<ol>
+<li><p>离线缓存是针对整个应用，浏览器缓存是单个文件</p>
+</li>
+<li><p>离线缓存断网了还是可以打开页面，浏览器缓存不行</p>
+</li>
+<li><p>离线缓存可以主动通知浏览器更新资源</p>
+</li>
+</ol>
+<h3 id="4-Web-SQL"><a href="#4-Web-SQL" class="headerlink" title="4. Web SQL"></a>4. Web SQL</h3><p>关系数据库，通过SQL语句访问。</p>
+<p><code>Web SQL</code> 数据库 API 并不是 HTML5 规范的一部分，但是它是一个独立的规范，引入了一组使用 SQL 操作客户端数据库的 APIs。</p>
+<ul>
+<li><strong>支持情况</strong>：</li>
+</ul>
+<p><code>Web SQL</code> 数据库可以在最新版的 Safari, Chrome 和 Opera 浏览器中工作。</p>
+<ul>
+<li><strong>核心方法</strong>：</li>
+</ul>
+<p>①<code>openDatabase</code>：这个方法使用现有的数据库或者新建的数据库创建一个数据库对象。</p>
+<p>②<code>transaction</code>：这个方法让我们能够控制一个事务，以及基于这种情况执行提交或者回滚。</p>
+<p>③<code>executeSql</code>：这个方法用于执行实际的 SQL 查询。</p>
+<ul>
+<li><strong>打开数据库</strong>：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> db = openDatabase(<span class="string">&#x27;mydb&#x27;</span>, <span class="string">&#x27;1.0&#x27;</span>, <span class="string">&#x27;Test DB&#x27;</span>, <span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>,fn);</span><br><span class="line"><span class="comment">// openDatabase() 方法对应的五个参数</span></span><br><span class="line"><span class="comment">// 分别为：数据库名称、版本号、描述文本、数据库大小、创建回调</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>执行查询操作</strong>：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> db = openDatabase(<span class="string">&#x27;mydb&#x27;</span>, <span class="string">&#x27;1.0&#x27;</span>, <span class="string">&#x27;Test DB&#x27;</span>, <span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line">db.transaction(<span class="function"><span class="keyword">function</span> (<span class="params">tx</span>) </span>&#123;  </span><br><span class="line">   tx.executeSql(<span class="string">&#x27;CREATE TABLE IF NOT EXISTS WIN (id unique, name)&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>插入数据</strong>：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> db = openDatabase(<span class="string">&#x27;mydb&#x27;</span>, <span class="string">&#x27;1.0&#x27;</span>, <span class="string">&#x27;Test DB&#x27;</span>, <span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line">db.transaction(<span class="function"><span class="keyword">function</span> (<span class="params">tx</span>) </span>&#123;</span><br><span class="line">   tx.executeSql(<span class="string">&#x27;CREATE TABLE IF NOT EXISTS WIN (id unique, name)&#x27;</span>);</span><br><span class="line">   tx.executeSql(<span class="string">&#x27;INSERT INTO WIN (id, name) VALUES (1, &quot;winty&quot;)&#x27;</span>);</span><br><span class="line">   tx.executeSql(<span class="string">&#x27;INSERT INTO WIN (id, name) VALUES (2, &quot;LuckyWinty&quot;)&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>读取数据</strong>：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">db.transaction(<span class="function"><span class="keyword">function</span> (<span class="params">tx</span>) </span>&#123;</span><br><span class="line">   tx.executeSql(<span class="string">&#x27;SELECT * FROM WIN&#x27;</span>, [], <span class="function"><span class="keyword">function</span> (<span class="params">tx, results</span>) </span>&#123;</span><br><span class="line"><span class="keyword">var</span> len = results.rows.length, i;</span><br><span class="line">      msg = <span class="string">&quot;&lt;p&gt;查询记录条数: &quot;</span> + len + <span class="string">&quot;&lt;/p&gt;&quot;</span>;</span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">&#x27;#status&#x27;</span>).innerHTML +=  msg;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">         alert(results.rows.item(i).name );</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">   &#125;, <span class="literal">null</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>由这些操作可以看出，基本上都是用SQL语句进行数据库的相关操作，如果你会MySQL的话，这个应该比较容易用。</p>
+<h3 id="5-IndexedDB"><a href="#5-IndexedDB" class="headerlink" title="5. IndexedDB"></a>5. IndexedDB</h3><p>索引数据库 (IndexedDB) API（作为 HTML5 的一部分）对创建具有丰富本地存储数据的数据密集型的离线 HTML5 Web 应用程序很有用。</p>
+<p>同时它还有助于本地缓存数据，使传统在线 Web 应用程序（比如移动 Web 应用程序）能够更快地运行和响应。</p>
+<ul>
+<li><strong>异步API</strong>：</li>
+</ul>
+<p>在 IndexedDB 大部分操作并不是我们常用的调用方法，返回结果的模式，而是请求——响应的模式，比如打开数据库的操作:</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/34uGBxmCnto7TzbpZnGA5yGCqrOJyu2vyYezL9lNFpqFLJQwibAseZSoE0CzApfbbZYeznRKRJFBSDDCRyxjdYg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="3"></p>
+<p>这样，我们打开数据库的时候，实质上返回了一个DB对象，而这个对象就在result中。</p>
+<p>由上图可以看出，除了 <code>result</code> 之外。还有几个重要的属性就是 <code>onerror</code> 、 <code>onsuccess</code> 、 <code>onupgradeneeded</code> （我们请求打开的数据库的版本号和已经存在的数据库版本号不一致的时候调用）。</p>
+<p>这就类似于我们的 <code>ajax</code> 请求那样。我们发起了这个请求之后并不能确定它什么时候才请求成功，所以需要在回调中处理一些逻辑。</p>
+<ul>
+<li><strong>关闭与删除</strong>：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">closeDB</span>(<span class="params">db</span>)</span>&#123;</span><br><span class="line">     db.close();</span><br><span class="line">&#125;<span class="function"><span class="keyword">function</span> <span class="title">deleteDB</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">     indexedDB.deleteDatabase(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>数据存储</strong>：</li>
+</ul>
+<p>indexedDB 中没有表的概念，而是 <code>objectStore</code> ，一个数据库中可以包含多个<code>objectStore</code>，<code>objectStore</code>是一个灵活的数据结构，可以存放多种类型数据。</p>
+<p>也就是说一个 <code>objectStore</code> 相当于一张表，里面存储的每条数据和一个键相关联。</p>
+<p>我们可以使用每条记录中的某个指定字段作为键值（ <code>keyPath</code> ），也可以使用自动生成的递增数字作为键值（ <code>keyGenerator</code> ），也可以不指定。</p>
+<p>选择键的类型不同， <code>objectStore</code> 可以存储的数据结构也有差异。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/11/176-%E3%80%90HTML%E3%80%91HTML5%E7%9A%845%E4%B8%AA%E5%B8%B8%E7%94%A8%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F/" data-id="ckts3ejtp004f4d9k2lrd6ak9" data-title="176-【HTML】HTML5的5个常用存储方式" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/21/177-%E3%80%90JavaScript%E3%80%91%E6%A8%A1%E5%9D%97%E5%8C%96%E6%96%B9%E6%A1%88%E6%80%BB%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          177-【JavaScript】模块化方案总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/11/175-%E3%80%90Webpack%E3%80%91%E4%B8%80%E7%9C%8B%E5%B0%B1%E6%87%82%E4%B9%8Bwebpack%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BC%98%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">175-【Webpack】一看就懂之webpack高级配置与优化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

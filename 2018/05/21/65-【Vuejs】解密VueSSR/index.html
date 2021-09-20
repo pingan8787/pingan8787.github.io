@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>65-【Vuejs】解密VueSSR | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Author 王平安    E-mail &amp;#112;&amp;#x69;&amp;#x6e;&amp;#x67;&amp;#97;&amp;#110;&amp;#x38;&amp;#55;&amp;#56;&amp;#55;&amp;#x40;&amp;#x71;&amp;#x71;&amp;#46;&amp;#x63;&amp;#111;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章 https:&#x2F;&#x2F;0x9.me&#x2F;KMrv3    1.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="65-【Vuejs】解密VueSSR">
+<meta property="og:url" content="http://example.com/2018/05/21/65-%E3%80%90Vuejs%E3%80%91%E8%A7%A3%E5%AF%86VueSSR/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Author 王平安    E-mail &amp;#112;&amp;#x69;&amp;#x6e;&amp;#x67;&amp;#97;&amp;#110;&amp;#x38;&amp;#55;&amp;#56;&amp;#55;&amp;#x40;&amp;#x71;&amp;#x71;&amp;#46;&amp;#x63;&amp;#111;&amp;#x6d;   博  客 www.pingan8787.com   微  信 pingan8787   每日文章 https:&#x2F;&#x2F;0x9.me&#x2F;KMrv3    1.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-8f5dc75e94e8cfe49416e460f6bd2a0e_hd.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-8354c78be3249def1cfc6b40d795c3a4_hd.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-8354c78be3249def1cfc6b40d795c3a4_hd.jpg">
+<meta property="article:published_time" content="2018-05-21T15:26:16.000Z">
+<meta property="article:modified_time" content="2021-09-20T03:31:47.708Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Vuejs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-8f5dc75e94e8cfe49416e460f6bd2a0e_hd.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-65-【Vuejs】解密VueSSR" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/05/21/65-%E3%80%90Vuejs%E3%80%91%E8%A7%A3%E5%AF%86VueSSR/" class="article-date">
+  <time class="dt-published" datetime="2018-05-21T15:26:16.000Z" itemprop="datePublished">2018-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      65-【Vuejs】解密VueSSR
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <hr>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>王平安</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E-mail</td>
+<td><a href="mailto:&#112;&#x69;&#x6e;&#x67;&#97;&#110;&#x38;&#55;&#56;&#55;&#x40;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;">&#112;&#x69;&#x6e;&#x67;&#97;&#110;&#x38;&#55;&#56;&#55;&#x40;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;</a></td>
+</tr>
+<tr>
+<td>博  客</td>
+<td><a target="_blank" rel="noopener" href="http://www.pingan8787.com/">www.pingan8787.com</a></td>
+</tr>
+<tr>
+<td>微  信</td>
+<td>pingan8787</td>
+</tr>
+<tr>
+<td>每日文章</td>
+<td><a target="_blank" rel="noopener" href="https://0x9.me/KMrv3">https://0x9.me/KMrv3</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h2><p>最近笔者和小伙伴在研究Vue SSR，但是市面上充斥了太多的从0到1的文章，对大家理解这其中的原理帮助并不是很大，因此，本文将从 <em>Vue SSR的构建流程、运行流程、SSR的特点和利弊</em> 这几方面对Vue SSR有一个较为详细的介绍。最后还将附上一个笔者实现的 <em>去除Vue全家桶的Demo案例</em> 。  </p>
+<h2 id="2-剖析构建流程"><a href="#2-剖析构建流程" class="headerlink" title="2.剖析构建流程"></a>2.剖析构建流程</h2><p>首先我们镇上一张官网给出的构建图：<br><img src="https://pic3.zhimg.com/80/v2-8f5dc75e94e8cfe49416e460f6bd2a0e_hd.jpg" alt="Vue SSR构建流程">  </p>
+<h3 id="app-js入口文件"><a href="#app-js入口文件" class="headerlink" title="app.js入口文件"></a>app.js入口文件</h3><p><code>app.js</code> 是我们的通用<code>entry</code>，它的作用就是构建一个Vue的实例以供服务端和客户端使用，注意一下，在纯客户端的程序中我们的<code>app.js</code>将会挂载实例到<code>dom</code>中，而在<code>ssr</code>中这一部分的功能放到了<code>Client entry</code>中去做了。  </p>
+<h3 id="两个entry"><a href="#两个entry" class="headerlink" title="两个entry"></a>两个entry</h3><p>接下里我们来看<code>Client entry</code>和<code>Server entry</code>，这两者分别是客户端的入口和服务端的入口。<em>Client entry的功能很简单，就是挂载我们的Vue实例到指定的dom元素上</em>；<code>Server entry</code>是一个使用<code>export</code>导出的函数。主要负责调用组件内定义的获取数据的方法，获取到SSR渲染所需数据，并存储到上下文环境中。<em>这个函数会在每一次的渲染中重复的调用</em>。  </p>
+<h3 id="webpack打包构建"><a href="#webpack打包构建" class="headerlink" title="webpack打包构建"></a>webpack打包构建</h3><p>然后我们的服务端代码和客户端代码通过<code>webpack</code>分别打包，生成<code>Server Bundle</code>和<code>Client Bundle</code>，前者会运行在服务器上通过node生成预渲染的<code>HTML字符串</code>，发送到我们的客户端以便完成初始化渲染；而客户端bundle就自由了，初始化渲染完全不依赖它了。客户端拿到服务端返回的HTML字符串后，会去“激活”这些静态HTML，是其变成由<code>Vue动态管理</code>的DOM，以便响应后续数据的变化。  </p>
+<h2 id="3-剖析运行流程"><a href="#3-剖析运行流程" class="headerlink" title="3.剖析运行流程"></a>3.剖析运行流程</h2><p>到这里我们该谈谈<code>ssr</code>的程序是怎么跑起来的了。首先我们得去构建一个vue的实例，也就是我们前面构建流程中说到的<code>app.js</code>做的事情，但是这里不同于传统的客户端渲染的程序，我们<em>需要用一个工厂函数去封装它，以便每一个用户的请求都能够返回一个新的实例，也就是官网说到的避免交叉污染了</em>。  </p>
+<p>然后我们可以暂时移步到服务端的<code>entry</code>中了，这里要做的就是拿到当前路由匹配的组件，调用组件里定义的一个方法（官网取名叫<code>asyncData</code>）拿到初始化渲染的数据，而这个方法要做的也很简单，就是去调用我们<code>vuex store</code>中的方法去异步获取数据。  </p>
+<p>接下来<code>node服务器</code>如期启动了，跑的是我们刚写好的服务端<code>entry</code>里的函数。在这里还要做的就是将我们刚刚构建好的Vue实例渲染成<code>HTML字符串</code>，然后将拿到的数据混入我们的<code>HTML字符串</code>中，最后发送到我们客户端。  </p>
+<p>打开浏览器的network，我们看到了初始化渲染的HTML，并且是我们想要初始化的结构，且完全不依赖于客户端的js文件了。再仔细研究研究，里面有初始化的dom结构，有css，还有一个script标签。script标签里把我们在服务端<code>entry</code>拿到的数据挂载了<code>window</code>上。原来只是一个纯静态的HTML页面啊，没有任何的交互逻辑，所以啊，现在知道为啥子需要服务端跑一个<code>vue客户端</code>再跑一个<code>vue</code>了，服务端的<code>vue</code>只是混入了个数据渲染了个静态页面，客户端的<code>vue</code>才是去实现交互的！<br><img src="https://pic1.zhimg.com/80/v2-8354c78be3249def1cfc6b40d795c3a4_hd.jpg" alt="chrome network">   </p>
+<p>顺着前面的思路，我们该看客户端的<code>entry</code>了。在这里客户端拿到存在<code>window</code>中的数据混入我们客户端的<code>vuex</code>中，然后分析数据去执行我们熟悉的其余客户端操作了。  </p>
+<h2 id="4-SSR独特之处"><a href="#4-SSR独特之处" class="headerlink" title="4.SSR独特之处"></a>4.SSR独特之处</h2><p>在SSR中，创建<code>Vue实例</code>、创建<code>store</code>和创建<code>router</code>都是套了一层<code>工厂函数</code>的，目的就是<code>避免数据的交叉污染</code>。  </p>
+<p>在服务端只能执行生命周期中的<code>created</code>和<code>beforeCreate</code>，原因是在服务端是无法操纵dom的，所以可想而知其他的周期也就是不能执行的了。  </p>
+<p>服务端渲染和客户端渲染不同，需要创建两个<code>entry</code>分别跑在<code>服务端</code>和<code>客户端</code>，并且需要<em>webpack对其分别打包</em>；  </p>
+<p>SSR服务端请求不带<code>cookie</code>，需要手动拿到浏览器的<code>cookie</code>传给服务端的请求。<a target="_blank" rel="noopener" href="https://www.mmxiaowu.com/article/596cbb2d436eb550a5423c30">实现方式戳这里</a>。  </p>
+<p>SSR要求dom结构规范，因为浏览器会自动给HTML添加一些结构比如tbody，但是客户端进行混淆服务端放回的HTML时，不会添加这些标签，导致混淆后的HTML和浏览器渲染的HTML不匹配。    </p>
+<p><em>性能问题需要多加关注</em>。  </p>
+<ul>
+<li>vue.mixin、axios拦截请求使用不当，会内存泄漏。<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue/issues/5089">原因戳这里</a>  </li>
+<li>lru-cache向内存中缓存数据，需要合理缓存改动不频繁的资源。  </li>
+</ul>
+<h2 id="5-可能是把双刃剑"><a href="#5-可能是把双刃剑" class="headerlink" title="5.可能是把双刃剑"></a>5.可能是把双刃剑</h2><h3 id="SSR的优点"><a href="#SSR的优点" class="headerlink" title="SSR的优点"></a>SSR的优点</h3><ul>
+<li>更利于SEO。</li>
+</ul>
+<p>不同爬虫工作原理类似，只会爬取源码，不会执行网站的任何脚本（Google除外，据说Googlebot可以运行javaScript）。<br>使用了<code>Vue</code>或者其它<code>MVVM框架</code>之后，页面大多数DOM元素都是在客户端根据js动态生成，可供爬虫抓取分析的内容大大减少。<br>另外，浏览器爬虫不会等待我们的数据完成之后再去抓取我们的页面数据。服务端渲染返回给客户端的是已经获取了异步数据并执行JavaScript脚本的最终HTML，网络爬中就可以抓取到完整页面的信息。  </p>
+<ul>
+<li>更利于首屏渲染<br>首屏的渲染是node发送过来的html字符串，并不依赖于js文件了，这就会使用户更快的看到页面的内容。尤其是针对大型单页应用，打包后文件体积比较大，普通客户端渲染加载所有所需文件时间较长，首页就会有一个很长的白屏等待时间。  </li>
+</ul>
+<h2 id="6-SSR的局限"><a href="#6-SSR的局限" class="headerlink" title="6.SSR的局限"></a>6.SSR的局限</h2><ul>
+<li><p>服务端压力较大<br>本来是通过客户端完成渲染，现在统一到服务端node服务去做。尤其是高并发访问的情况，会大量占用服务端CPU资源；  </p>
+</li>
+<li><p>开发条件受限<br>在服务端渲染中，<code>created</code>和<code>beforeCreate</code>之外的生命周期钩子不可用，因此项目引用的第三方的库也不可用其它生命周期钩子，这对引用库的选择产生了很大的限制；  </p>
+</li>
+<li><p>学习成本相对较高<br>除了对<code>webpack</code>、<code>Vue</code>要熟悉，还需要掌握<code>node</code>、<code>Express</code>相关技术。相对于客户端渲染，项目构建、部署过程更加复杂。  </p>
+</li>
+</ul>
+<h2 id="6-去除VUEX的SSR实践"><a href="#6-去除VUEX的SSR实践" class="headerlink" title="6.去除VUEX的SSR实践"></a>6.去除VUEX的SSR实践</h2><p>先附上demo地址，<a target="_blank" rel="noopener" href="https://github.com/LNoe-lzy/vue-ssr-demo/tree/vue-ssr-without-vuex">戳这里</a>！  </p>
+<p>说在前面：  </p>
+<ul>
+<li>vue-router不是必须的，不用router其实做个vue的<a target="_blank" rel="noopener" href="https://github.com/chrisvfritz/prerender-spa-plugin">preRender</a>就可以了，完全没必要做ssr；  </li>
+<li>vuex不是必须的，vuex是实现我们客户端和服务端的状态共享的关键，我们可以不使用vuex，但是我们得去实现一套数据预取的逻辑；  </li>
+</ul>
+<p>官网的demo大而全，集成了<code>vue-router</code>和<code>vuex</code>，想想我们的项目如果没有使用到这两者，光引入就又需要改造成本，这并不是我们想搞的“丝滑般”过渡，接下来笔者将带领大家一步一步的做个“啥都没有的”demo。   </p>
+<p>在此笔者的思路是：<em>构造一个Vue的实例，那么我们可以用这个实例的data来存储我们的预取数据，而用methods中的方法去做数据的异步获取，这样我们只在需要预取数据的组件中去调用这个方法就可以了</em>。   </p>
+<p>首先我们需要让我们的组件“共享”这个EventBus，为此笔者简单的封装了一个plugin：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line"> install (Vue) &#123;</span><br><span class="line">   <span class="keyword">const</span> EventBus = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">     data () &#123;</span><br><span class="line">       <span class="keyword">return</span> &#123;</span><br><span class="line">	      <span class="attr">list</span>: [],</span><br><span class="line">	      <span class="attr">nav</span>: []</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="attr">methods</span>: &#123;</span><br><span class="line">       getList () &#123;</span><br><span class="line">	      <span class="comment">// get list</span></span><br><span class="line">		&#125;,</span><br><span class="line">       getNav () &#123;</span><br><span class="line">         <span class="comment">// get nav</span></span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;)</span><br><span class="line">   </span><br><span class="line">   Vue.prototype.$events = EventBus</span><br><span class="line">   Vue.$events = EventBus</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们需要在<code>main.js</code>中<code>export</code>出我们的<code>EventBus</code>以便两个<code>entry</code>使用。这样我们的<code>main.js</code>就像下面这样：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> EventBus <span class="keyword">from</span> <span class="string">&#x27;./event&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(EventBus)</span><br><span class="line">Vue.config.devtools = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createApp</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">   <span class="comment">// 注入 router 到根 Vue 实例</span></span><br><span class="line">   router,</span><br><span class="line">   <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line"> &#125;)</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">return</span> &#123; app, router, <span class="attr">eventBus</span>: app.$events &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来是我们的两个<code>entry</code>了。<code>server</code>用来匹配我们的组件并调用组件的<code>asyncData</code>方法去获取数据，<code>client</code>用来将预渲染的数据存储到我们<code>eventBus</code>中的<code>data</code>中。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// server</span></span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;./main&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="keyword">const</span> &#123; app, eventBus, App &#125; = createApp()</span><br><span class="line">   <span class="comment">// 这里笔者的demo比较简单，仅app组件需要预取数据，复杂业务可以递归遍历哈；</span></span><br><span class="line">   <span class="keyword">const</span> matchedComponents = [App]</span><br><span class="line"></span><br><span class="line">   <span class="built_in">Promise</span>.all(matchedComponents.map(<span class="function">(<span class="params">&#123; asyncData &#125;</span>) =&gt;</span> asyncData &amp;&amp; asyncData(&#123;</span><br><span class="line">     eventBus</span><br><span class="line">   &#125;))).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">     context.state = eventBus._data</span><br><span class="line">     resolve(app)</span><br><span class="line">   &#125;).catch(reject)</span><br><span class="line"> &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// client</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;./main&#x27;</span></span><br><span class="line"><span class="keyword">const</span> &#123; app, eventBus &#125; = createApp()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">window</span>.__INITIAL_STATE__) &#123;</span><br><span class="line"> eventBus._data = <span class="built_in">window</span>.__INITIAL_STATE__</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后我们需要改造我们的组件了，只需要定义一个<code>async</code>方法去调用<code>EventBus</code>中的方法获取，考虑到服务端只会执行<code>beforeCreate</code>和<code>created</code>两个生命周期而<code>beforeCreate</code>不能拿到<code>data</code>，所以我们需要在<code>created</code>中去做数据的获取。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务端渲染数据预取；</span></span><br><span class="line">asyncData (&#123; store, eventBus &#125;) &#123;</span><br><span class="line"> <span class="keyword">return</span> eventBus.getNav()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将服务端拿到的数据混入vue组件中；</span></span><br><span class="line">created () &#123;</span><br><span class="line"> <span class="built_in">this</span>.nav = <span class="built_in">this</span>.$events.nav</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后是<code>webpack</code>的改造了，<code>webpack</code>的配置其实和纯客户端应用类似，为了区分客户端和服务端两个环境我们将配置分为<code>base</code>、<code>client</code>和<code>server</code>三部分，<code>base</code>就是我们的通用基础配置，而<code>client</code>和<code>server</code>分别用来打包我们的客户端和服务端代码。  </p>
+<p>首先是<code>webpack.server.conf.js</code>，用于生成<code>server bundle</code>来传递给<code>createBundleRenderer函数</code>在node服务器上调用，入口文件是我们的<code>entry-server</code>：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">&#x27;webpack&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">&#x27;webpack-merge&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> nodeExternals = <span class="built_in">require</span>(<span class="string">&#x27;webpack-node-externals&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> baseConfig = <span class="built_in">require</span>(<span class="string">&#x27;./webpack.base.conf.js&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> VueSSRServerPlugin = <span class="built_in">require</span>(<span class="string">&#x27;vue-server-renderer/server-plugin&#x27;</span>)</span><br><span class="line"><span class="comment">// 去除打包css的配置</span></span><br><span class="line">baseConfig.module.rules[<span class="number">1</span>].options = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = merge(baseConfig, &#123;</span><br><span class="line"> <span class="attr">entry</span>: <span class="string">&#x27;./src/entry-server.js&#x27;</span>,</span><br><span class="line"> <span class="comment">// 以 Node 适用方式导入</span></span><br><span class="line"> <span class="attr">target</span>: <span class="string">&#x27;node&#x27;</span>,</span><br><span class="line"> <span class="comment">// 对 bundle renderer 提供 source map 支持</span></span><br><span class="line"> <span class="attr">devtool</span>: <span class="string">&#x27;#source-map&#x27;</span>,</span><br><span class="line"> <span class="attr">output</span>: &#123;</span><br><span class="line">   <span class="attr">filename</span>: <span class="string">&#x27;server-bundle.js&#x27;</span>,</span><br><span class="line">   <span class="attr">libraryTarget</span>: <span class="string">&#x27;commonjs2&#x27;</span></span><br><span class="line"> &#125;,</span><br><span class="line"> <span class="attr">externals</span>: nodeExternals(&#123;</span><br><span class="line">   <span class="attr">whitelist</span>: <span class="regexp">/\.css$/</span></span><br><span class="line"> &#125;),</span><br><span class="line"> <span class="attr">plugins</span>: [</span><br><span class="line">   <span class="keyword">new</span> webpack.DefinePlugin(&#123;</span><br><span class="line">     <span class="string">&#x27;process.env.NODE_ENV&#x27;</span>: <span class="built_in">JSON</span>.stringify(process.env.NODE_ENV || <span class="string">&#x27;development&#x27;</span>),</span><br><span class="line">     <span class="string">&#x27;process.env.VUE_ENV&#x27;</span>: <span class="string">&#x27;&quot;server&quot;&#x27;</span></span><br><span class="line">   &#125;),</span><br><span class="line">   <span class="comment">// 这是将服务器的整个输出</span></span><br><span class="line">   <span class="comment">// 构建为单个 JSON 文件的插件。</span></span><br><span class="line">   <span class="comment">// 默认文件名为 `vue-ssr-server-bundle.json`</span></span><br><span class="line">   <span class="keyword">new</span> VueSSRServerPlugin()</span><br><span class="line"> ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>其次是<code>webpack.client.conf.js</code>，这里我们可以根据官方的配置生成<code>clientManifest</code>，自动推断和注入资源预加载，以及 css 链接 / script 标签到所渲染的 HTML。入口是我们的<code>client-server</code>:  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">&#x27;webpack&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">&#x27;webpack-merge&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> base = <span class="built_in">require</span>(<span class="string">&#x27;./webpack.base.conf&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> VueSSRClientPlugin = <span class="built_in">require</span>(<span class="string">&#x27;vue-server-renderer/client-plugin&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = merge(base, &#123;</span><br><span class="line"> <span class="attr">entry</span>: &#123;</span><br><span class="line">   <span class="attr">app</span>: <span class="string">&#x27;./src/entry-client.js&#x27;</span></span><br><span class="line"> &#125;,</span><br><span class="line"> <span class="attr">plugins</span>: [</span><br><span class="line">   <span class="keyword">new</span> webpack.DefinePlugin(&#123;</span><br><span class="line">     <span class="string">&#x27;process.env.NODE_ENV&#x27;</span>: <span class="built_in">JSON</span>.stringify(process.env.NODE_ENV || <span class="string">&#x27;development&#x27;</span>),</span><br><span class="line">     <span class="string">&#x27;process.env.VUE_ENV&#x27;</span>: <span class="string">&#x27;&quot;client&quot;&#x27;</span></span><br><span class="line">   &#125;),</span><br><span class="line">   <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">     <span class="attr">name</span>: <span class="string">&#x27;vendor&#x27;</span>,</span><br><span class="line">     <span class="attr">minChunks</span>: <span class="function"><span class="keyword">function</span> (<span class="params"><span class="built_in">module</span></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> (</span><br><span class="line">         <span class="regexp">/node_modules/</span>.test(<span class="built_in">module</span>.context) &amp;&amp;</span><br><span class="line">         !<span class="regexp">/\.css$/</span>.test(<span class="built_in">module</span>.request)</span><br><span class="line">       )</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;),</span><br><span class="line">   <span class="comment">// 这将 webpack 运行时分离到一个引导 chunk 中，</span></span><br><span class="line">   <span class="comment">// 以便可以在之后正确注入异步 chunk。</span></span><br><span class="line">   <span class="comment">// 这也为你的 应用程序/vendor 代码提供了更好的缓存。</span></span><br><span class="line">   <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">     <span class="attr">name</span>: <span class="string">&#x27;manifest&#x27;</span></span><br><span class="line">   &#125;),</span><br><span class="line">   <span class="keyword">new</span> VueSSRClientPlugin()</span><br><span class="line"> ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>从<code>localhost</code>中我们看到<code>ssr</code>预取的数据已经成功出来了，大功告成！<br><img src="https://pic1.zhimg.com/80/v2-8354c78be3249def1cfc6b40d795c3a4_hd.jpg" alt="localhost">  </p>
+<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7.结语"></a>7.结语</h2><p>本文介绍了Vue的SSR的构建和运行流程，也分析了SSR的特点和利弊，希望对大家了解SSR有一定的帮助。最后针对不使用vuex的SSR实现方案进行了介绍，如果感兴趣或者有疑问，欢迎大家留言交流。  </p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35871344">阅读原文</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/05/21/65-%E3%80%90Vuejs%E3%80%91%E8%A7%A3%E5%AF%86VueSSR/" data-id="ckts3ejvm009j4d9k3t7maacd" data-title="65-【Vuejs】解密VueSSR" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/26/66-%E3%80%90CSS%E3%80%91CSS%E5%AE%9E%E7%8E%B0%E5%AE%BD%E9%AB%98%E7%AD%89%E6%AF%94%E4%BE%8B%E8%87%AA%E9%80%82%E5%BA%94%E7%9F%A9%E5%BD%A2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          66-【CSS】CSS实现宽高等比例自适应矩形
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/21/64-%E3%80%90%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E3%80%91%E4%BD%9C%E4%B8%BA%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE%E7%9F%A5%E8%AF%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">64-【前端开发】作为前端开发需要了解的开源协议知识</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS%E5%8A%A8%E7%94%BB/" rel="tag">CSS动画</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/" rel="tag">Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6-ES7-ES8/" rel="tag">ES6/ES7/ES8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eslint/" rel="tag">Eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/" rel="tag">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" rel="tag">HTTP协议</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/" rel="tag">Hybrid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPM/" rel="tag">NPM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/" rel="tag">Numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TyeScript/" rel="tag">TyeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vuejs/" rel="tag">Vuejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/" rel="tag">WebSocket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/demo/" rel="tag">demo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" rel="tag">全栈开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" rel="tag">前端探索</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" rel="tag">前端知乎系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" rel="tag">常用技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag">微前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81/" rel="tag">源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" rel="tag">源码精读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%83%AD%E9%97%A8/" rel="tag">热门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" rel="tag">生活杂记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" rel="tag">网络请求</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" rel="tag">重温基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">面试题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Angular/" style="font-size: 11.88px;">Angular</a> <a href="/tags/CSS/" style="font-size: 18.13px;">CSS</a> <a href="/tags/CSS%E5%8A%A8%E7%94%BB/" style="font-size: 12.5px;">CSS动画</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/ES6-ES7-ES8/" style="font-size: 10.63px;">ES6/ES7/ES8</a> <a href="/tags/Eslint/" style="font-size: 10px;">Eslint</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/H5/" style="font-size: 10px;">H5</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 11.88px;">HTTP</a> <a href="/tags/HTTP%E5%8D%8F%E8%AE%AE/" style="font-size: 11.25px;">HTTP协议</a> <a href="/tags/Hybrid/" style="font-size: 10.63px;">Hybrid</a> <a href="/tags/JavaScript/" style="font-size: 19.38px;">JavaScript</a> <a href="/tags/NPM/" style="font-size: 10px;">NPM</a> <a href="/tags/Nodejs/" style="font-size: 11.25px;">Nodejs</a> <a href="/tags/Numpy/" style="font-size: 10.63px;">Numpy</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/React/" style="font-size: 12.5px;">React</a> <a href="/tags/Tensorflow/" style="font-size: 10.63px;">Tensorflow</a> <a href="/tags/TyeScript/" style="font-size: 10px;">TyeScript</a> <a href="/tags/TypeScript/" style="font-size: 11.25px;">TypeScript</a> <a href="/tags/Vuejs/" style="font-size: 14.38px;">Vuejs</a> <a href="/tags/WebSocket/" style="font-size: 10px;">WebSocket</a> <a href="/tags/Webpack/" style="font-size: 15.63px;">Webpack</a> <a href="/tags/demo/" style="font-size: 10.63px;">demo</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 16.25px;">人工智能</a> <a href="/tags/%E5%85%A8%E6%A0%88%E5%BC%80%E5%8F%91/" style="font-size: 11.25px;">全栈开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 20px;">前端开发</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2/" style="font-size: 11.25px;">前端探索</a> <a href="/tags/%E5%89%8D%E7%AB%AF%E7%9F%A5%E4%B9%8E%E7%B3%BB%E5%88%97/" style="font-size: 10.63px;">前端知乎系列</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 18.75px;">原创</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E6%8A%80%E6%9C%AF/" style="font-size: 10.63px;">常用技术</a> <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">微前端</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 13.75px;">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">机器学习</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10.63px;">构建工具</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10.63px;">正则表达式</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E6%BA%90%E7%A0%81%E7%B2%BE%E8%AF%BB/" style="font-size: 10px;">源码精读</a> <a href="/tags/%E7%83%AD%E9%97%A8/" style="font-size: 10px;">热门</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E6%9D%82%E8%AE%B0/" style="font-size: 10px;">生活杂记</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13.13px;">算法</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 10px;">编译原理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" style="font-size: 10px;">网络请求</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">设计模式</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 14.38px;">读书笔记</a> <a href="/tags/%E9%87%8D%E6%B8%A9%E5%9F%BA%E7%A1%80/" style="font-size: 16.88px;">重温基础</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 10px;">面试题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/07/28/227-%E3%80%90%E6%80%BB%E7%BB%93%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BD%BF%E7%94%A8SVG%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87/">227-【总结】如何优雅的在微信小程序使用SVG字体图标</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/226-%E3%80%90HTTP%E3%80%91%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86HTTP%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%9F/">226-【HTTP】如何优雅的管理HTTP请求和响应拦截器？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/28/225-%E3%80%90Vue%E3%80%91%E4%BB%8E%E6%89%8B%E5%86%99Vue3%E7%9A%84Reactivity%E5%BC%80%E5%A7%8B%E6%B7%B1%E5%85%A5Vue3%E6%BA%90%E7%A0%81/">225-【Vue】从手写Vue3的Reactivity开始深入Vue3源码</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/224-%E3%80%90Chrome%E3%80%915%E4%B8%AAChrome%E8%B0%83%E8%AF%95%E6%B7%B7%E5%90%88%E5%BA%94%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7/">224-【Chrome】5个Chrome调试混合应用的技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/19/223-%E3%80%90%E5%89%8D%E7%AB%AF%E6%8E%A2%E7%B4%A2%E3%80%91%E6%8E%A2%E7%B4%A2Snabbdom%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86/">223-【前端探索】探索Snabbdom模块系统原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
